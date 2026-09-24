@@ -1,28 +1,29 @@
 import {
   isValidRoomCode,
   normalizeRoomCode,
-  strings,
+  t,
   type ErrorCode,
-  type Lang,
   type PlayerSession,
   type PlayerView,
+  type RoomClosedReason,
 } from '@trivia/shared';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { roughSync, syncClock } from '../net/clock.ts';
 import { ACK_TIMEOUT_MS } from '../net/socket.ts';
 import { KEYS, readJson, removeKey, writeJson } from '../net/storage.ts';
 import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
+import { useWakeLock } from '../net/useWakeLock.ts';
 import { JoinForm } from './JoinForm.tsx';
-import { PhoneLobby } from './PhoneLobby.tsx';
+import { PhoneStage } from './PhoneStage.tsx';
 import styles from './Phone.module.css';
 
-type Screen = { kind: 'boot' } | { kind: 'join' } | { kind: 'live'; view: PlayerView | null } | { kind: 'closed' };
-
-/** Before we know the room's language, guess from the phone's settings. */
-function deviceLang(): Lang {
-  return navigator.language.toLowerCase().startsWith('hu') ? 'hu' : 'en';
-}
+type Screen =
+  | { kind: 'boot' }
+  | { kind: 'join' }
+  | { kind: 'live'; view: PlayerView | null }
+  | { kind: 'closed'; reason: RoomClosedReason };
 
 export function PhoneApp() {
   const params = useParams();
@@ -34,8 +35,11 @@ export function PhoneApp() {
   const [error, setError] = useState<ErrorCode | null>(null);
   const [joining, setJoining] = useState(false);
 
+  useWakeLock(screen.kind === 'live');
+
   useEffect(() => {
     async function onConnect() {
+      void syncClock(socket);
       const session = readJson<PlayerSession>(KEYS.playerSession);
       // A QR scan for a different room wins over an old saved seat.
       const usable = session && (!urlCode || session.roomCode === urlCode) ? session : null;
@@ -56,20 +60,27 @@ export function PhoneApp() {
       setScreen({ kind: 'join' });
     }
 
-    const onView = (view: PlayerView) => setScreen({ kind: 'live', view });
-    const onClosed = () => {
-      removeKey(KEYS.playerSession);
-      setScreen({ kind: 'closed' });
+    const onView = (view: PlayerView) => {
+      roughSync(view.serverNow);
+      setScreen({ kind: 'live', view });
     };
+    const onClosed = ({ reason }: { reason: RoomClosedReason }) => {
+      removeKey(KEYS.playerSession);
+      setScreen({ kind: 'closed', reason });
+    };
+    // The server times these round trips to credit slow connections fairly.
+    const onProbe = (_payload: object, ack: (ok: boolean) => void) => ack(true);
 
     socket.on('connect', onConnect);
     socket.on('view:player', onView);
     socket.on('room:closed', onClosed);
+    socket.on('latency:probe', onProbe);
     if (socket.connected) void onConnect();
     return () => {
       socket.off('connect', onConnect);
       socket.off('view:player', onView);
       socket.off('room:closed', onClosed);
+      socket.off('latency:probe', onProbe);
     };
   }, [socket, urlCode]);
 
@@ -102,27 +113,18 @@ export function PhoneApp() {
     }
   }
 
-  const lang = screen.kind === 'live' && screen.view ? screen.view.lang : deviceLang();
-  const t = strings(lang);
-
   return (
     <main className={styles.phone}>
       {screen.kind === 'join' && (
-        <JoinForm
-          initialCode={urlCode}
-          onJoin={join}
-          busy={joining || !connected}
-          error={error ? t.errors[error] : null}
-          t={t}
-        />
+        <JoinForm initialCode={urlCode} onJoin={join} busy={joining || !connected} error={error ? t.errors[error] : null} />
       )}
-      {screen.kind === 'live' && screen.view && <PhoneLobby view={screen.view} />}
+      {screen.kind === 'live' && screen.view && <PhoneStage view={screen.view} socket={socket} />}
       {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
         <p className={styles.message}>{t.connecting}</p>
       )}
       {screen.kind === 'closed' && (
         <div className={styles.message}>
-          <p>{t.roomClosed}</p>
+          <p>{screen.reason === 'kicked' ? t.kicked : t.roomClosed}</p>
           <p className={styles.hint}>{t.playAgainHint}</p>
           <button
             className={styles.primary}

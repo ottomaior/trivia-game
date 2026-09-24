@@ -1,4 +1,4 @@
-import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH, type Strings } from '@trivia/shared';
+import { NAME_MAX_LENGTH, ROOM_CODE_LENGTH, t } from '@trivia/shared';
 import { useState, type FormEvent } from 'react';
 import { Logo } from '../ui/Logo.tsx';
 import styles from './Phone.module.css';
@@ -8,10 +8,9 @@ interface Props {
   onJoin: (code: string, name: string) => void;
   busy: boolean;
   error: string | null;
-  t: Strings;
 }
 
-export function JoinForm({ initialCode, onJoin, busy, error, t }: Props) {
+export function JoinForm({ initialCode, onJoin, busy, error }: Props) {
   const [code, setCode] = useState(initialCode);
   const [name, setName] = useState('');
 

@@ -2,12 +2,14 @@
 
 ## 0. Context
 
-This is a couch party trivia game for 2–6 friends in the same room, inspired by *Knowledge is Power* and Jackbox. One TV runs a browser tab (the **host screen**). Players join from their phone browsers with a QR code or a 4-letter room code. The look is a retro 70s–80s TV quiz show hosted by **Otto**, a mustached host character, with blob avatars for the players. The repo is empty, so this is a greenfield plan.
+This is a couch party trivia game for 2–6 friends in the same room, inspired by *Knowledge is Power* and Jackbox. One TV runs a browser tab (the **host screen**). Players join from their phone browsers with a QR code or a 4-letter room code. The look is a retro 70s–80s TV quiz show hosted by **Otto**, a mustached host character, with blob avatars for the players. The game is **Hungarian only**: all UI text, Otto's lines, and questions are in Hungarian.
+
+**Status:** Phase 0 and Phase 1 are built and tested locally (see §6). What's left for Phase 1 is deploying to Railway and a real game night.
 
 **Decisions already made in Q&A:**
 | Topic | Decision |
 |---|---|
-| Language | **One language per room** (HU or EN), picked on the TV at room creation. Each language gets its own natively generated questions (no translation pairs). The UI strings follow the room language. |
+| Language | **Hungarian only.** (Originally one language per room, HU or EN; English was dropped.) No language column anywhere, and questions are generated natively in Hungarian. |
 | "Group" identity | **TV browser identity.** The host tab stores a random `householdId` in localStorage. "Already seen" questions are tracked per household. |
 | Frontend | **React + Vite** |
 | Game length | **About 15 minutes, 10 questions** (the finale gets added in a later phase) |
@@ -43,7 +45,7 @@ trivia-game/
 │        views.ts        # HostView, PlayerView (what each screen may know)
 │        schemas.ts      # zod: payloads + question kinds
 │        rules.ts        # timings, scoring formula, limits (single source of truth)
-│        i18n/{hu,en}.ts # UI strings + Otto's lines
+│        strings.ts      # all Hungarian UI text + Otto's lines
 ├─ apps/
 │  ├─ server/
 │  │  └─ src/
@@ -52,7 +54,8 @@ trivia-game/
 │  │     game/           # engine: phases, timers (injectable clock), scoring, views
 │  │     content/        # question selection, household "seen" tracking, flags
 │  │     db/             # drizzle schema + migrations
-│  │  └─ scripts/        # gen-questions.ts, verify.ts, import-opentdb.ts, flagged.ts
+│  │  └─ scripts/        # gen-questions.ts (generate + blind verify), flagged.ts
+│  │  seed/              # hand-written starter questions (loaded on every deploy)
 │  └─ web/
 │     └─ src/
 │        main.tsx        # routes: /tv (host), /:code? (phone join), /credits
@@ -99,7 +102,7 @@ Cross-cutting: PAUSED (TV disconnected mid-game → timers frozen, resumes on TV
 
 **Target time per question:** 8 + 2 + ≤20 + 6 + 4, so ≤40 seconds and usually about 30 because phases end early. With intro and results, 10 questions take roughly 8–10 minutes, which leaves room for special rounds and the finale later. To keep things moving, the category vote and the power-play pick happen **on the same phone screen at the same time**, never as separate phases.
 
-**Category vote:** the server offers 3 categories that still have enough unseen questions for this household and language. The most votes wins, and a tie is broken randomly (this is an open decision, see §7). Question difficulty follows a curve: easy for rounds 1–3, medium for 4–7, hard for 8–10.
+**Category vote:** the server offers 3 categories that still have unseen questions for this household (never the previous round's category, when there's a choice). The most votes wins, and a tie is broken randomly (this is an open decision, see §7). Question difficulty follows a curve: easy for rounds 1–3, medium for 4–7, hard for 8–10.
 
 **Scoring** (constants in `shared/rules.ts`):
 `points = correct ? round(500 + 500 × (1 − responseMs / openMs)) : 0`, which gives 500–1000 per correct answer.
@@ -112,12 +115,12 @@ Cross-cutting: PAUSED (TV disconnected mid-game → timers frozen, resumes on TV
 
 **Pattern: state snapshots, not deltas.** On every change the server sends each socket a **role-specific view** that is complete for its phase: `HostView` to the TV and a personalized `PlayerView` to each phone. That makes reconnection trivial (the next snapshot *is* the resync) and keeps clients as pure renderers. A few one-shot events handle animations and sounds.
 
-Every view carries `{ phase, round, totalRounds, phaseEndsAt, serverNow, lang }`. Clients compute their clock offset from `serverNow` plus `time:ping` samples and count down to `phaseEndsAt`.
+Every view carries `{ stage, round, totalRounds, phaseEndsAt, serverNow, paused }`. Clients compute their clock offset from `serverNow` plus `time:ping` samples and count down to `phaseEndsAt`.
 
 ### Client → Server
 | Event | Sender | Payload | Ack |
 |---|---|---|---|
-| `host:create` | TV | `{ householdId, lang }` | `{ roomCode, hostToken }` |
+| `host:create` | TV | `{ householdId }` | `{ roomCode, hostToken }` |
 | `host:resume` | TV | `{ roomCode, hostToken }` | `ok \| NOT_FOUND` |
 | `player:join` | phone | `{ roomCode, name }` | `{ playerId, sessionToken, avatar } \| ROOM_FULL \| NAME_TAKEN \| IN_PROGRESS \| NOT_FOUND` |
 | `player:resume` | phone | `{ roomCode, playerId, sessionToken }` | `ok \| NOT_FOUND` |
@@ -147,30 +150,29 @@ Every view carries `{ phase, round, totalRounds, phaseEndsAt, serverNow, lang }`
 - A disconnected player keeps their slot. The game **doesn't wait** for them: timers run, their answer counts as none, and they're shown dimmed on the TV. In the lobby, a player disconnected for more than 60s is removed. If the VIP drops, the VIP role passes to the next connected player.
 - There's no mid-game joining (rejoin only) in the MVP.
 
-**Room codes:** 4 consonants from `BCDFGHJKLMNPQRSTVWXZ`. Leaving out vowels avoids accidentally spelling real words in either language. The join URL is `https://<domain>/ABCD`, and the QR code encodes it.
+**Room codes:** 4 consonants from `BCDFGHJKLMNPQRSTVWXZ`. Leaving out vowels avoids accidentally spelling real words. The join URL is `https://<domain>/ABCD`, and the QR code encodes it.
 
 ## 5. Database schema (Postgres, Drizzle)
 
 ```sql
-categories            (id serial pk, slug text unique, name_hu text, name_en text, active bool)
+categories            (id serial pk, slug text unique, name text, active bool)
 
 questions             (id uuid pk,
-                       lang text check in ('hu','en'),
                        category_id int fk,
                        kind text check in ('mc','link','sort')   -- future-proof for special rounds
                        difficulty smallint 1..3,
                        prompt text,
                        payload jsonb,        -- mc: {choices[4], correct}; link: {pairs}; sort: {groups, items}
                        explanation text,     -- one-liner Otto can say at reveal
-                       source text check in ('claude','opentdb','manual'),
-                       source_ref text,      -- gen batch id / OpenTDB attribution
+                       source text check in ('claude','manual'),
+                       source_ref text,      -- gen batch id, or 'seed'
                        status text check in ('active','retired'),
                        verifier_score real,
                        flag_count int default 0,
                        times_shown int default 0, times_correct int default 0,  -- difficulty calibration
-                       norm_hash text,       -- normalized prompt+answer, unique per lang
+                       norm_hash text,       -- normalized prompt+answer, unique
                        created_at timestamptz)
-  idx (lang, category_id, kind, status, difficulty); unique(lang, norm_hash); gin trgm(prompt)
+  idx (category_id, kind, status, difficulty); unique(norm_hash); gin trgm(prompt)
 
 question_flags        (id serial pk, question_id fk, match_id fk, player_name text,
                        reason text check in ('wrong_answer','ambiguous','typo','offensive','other'),
@@ -179,55 +181,55 @@ question_flags        (id serial pk, question_id fk, match_id fk, player_name te
 households            (id uuid pk, created_at, last_seen_at)
 household_seen        (household_id fk, question_id fk, seen_at, pk(household_id, question_id))
 
-matches               (id uuid pk, household_id fk, room_code, lang, settings jsonb,
+matches               (id uuid pk, household_id fk, room_code, settings jsonb,
                        started_at, ended_at)
 match_players         (match_id fk, seat smallint, name, avatar jsonb, final_score int, rank smallint,
                        pk(match_id, seat))
 match_answers         (match_id fk, round smallint, question_id fk, seat smallint,
                        choice smallint null, correct bool, response_ms int, points int)
 
-generation_batches    (id uuid pk, model, prompt_version, lang, category_id, difficulty,
+generation_batches    (id uuid pk, model, prompt_version, category_id, difficulty,
                        requested int, accepted int, rejected int, input_tokens, output_tokens, created_at)
 ```
 
-**Selection query:** `status='active' AND lang=$1 AND category=$2 AND kind='mc' AND difficulty=$3 AND id NOT IN household_seen` in random order. If nothing's left, relax the difficulty, then fall back to the least-recently-seen question. **Flags:** a question retires automatically when flags come from **2 different matches** (the threshold is a constant). The `flagged.ts` script lists flagged and retired questions and can re-verify them with Claude.
+**Selection query:** `status='active' AND category=$1 AND kind='mc'`, ordered unseen-by-this-household first, then closest difficulty, then least recently seen (random among ties), skipping questions already asked this game. **Flags:** a question retires automatically when flags come from **2 different matches** (the threshold is a constant). The `flagged.ts` script lists flagged and retired questions and can retire or restore one by hand.
 
-**Content pipeline** (`pnpm gen --lang hu --category history --difficulty 2 --count 40`):
-1. **Generate:** Haiku writes the questions natively in the target language. Hungarian prompts ask for a mix of Hungarian and international topics. Output is structured JSON validated by zod, and each call includes existing prompts from that category to steer away from duplicates.
+**Content pipeline** (`pnpm gen --category tortenelem --difficulty 2 --count 10`):
+1. **Generate:** Haiku writes the questions natively in Hungarian, mixing Hungarian and international topics. Output is structured JSON validated by zod, and each call includes existing prompts from that category to steer away from duplicates.
 2. **Verify:** a separate call answers each question *blind* (without seeing the answer key) and rates ambiguity and confidence. The question is kept only if the blind answer matches and confidence is at or above a threshold.
-3. **Dedupe:** exact `norm_hash` matches, then `pg_trgm` similarity above 0.6 within the same language and category.
+3. **Dedupe:** exact `norm_hash` matches, then `pg_trgm` similarity above 0.6 within the same category.
 4. **Insert** as `active` and record a `generation_batches` row.
 
-The MVP seed is 8 categories × 3 difficulties × about 15 questions × 2 languages, roughly 700 questions for a few dollars of Haiku usage.
+**Starter set:** 120 hand-written questions (8 categories × 3 difficulties × 5) ship in `apps/server/seed/`, so the game is playable before any AI generation. The deploy's pre-deploy step loads new ones idempotently. Growing the bank to about 700 with the generator costs a few dollars of Haiku usage.
 
 ## 6. Phases and milestones
 
-### Phase 0 — Skeleton and deploy (goal: the pipeline works end-to-end)
+### Phase 0 — Skeleton and deploy (goal: the pipeline works end-to-end) — built; Railway deploy pending
 - Monorepo scaffold, shared package, Fastify + Socket.IO, Vite app with `/tv` and `/:code` routes.
 - Drizzle schema and first migration. Railway service + Postgres, Dockerfile, health check.
 - Design tokens (palette, Shrikhand + Archivo **with the `latin-ext` subset** for ő/ű), marquee border component.
 - ✅ **Milestone:** open the Railway URL `/tv` on the TV and it shows a room code and QR. Scan with a phone, enter a name, and the name and blob appear on the TV. Works over the real internet.
 
-### Phase 1 — Playable MVP (goal: game night with friends)
+### Phase 1 — Playable MVP (goal: game night with friends) — built and tested locally
 - Room engine: every phase in §3 with an injectable clock and early-ending phases. Scoring and latency compensation.
 - Lobby: VIP badge, "Start" on the VIP phone, blob avatars (SVG with color and face variants), kick.
 - Category vote → question (read, then open) → reveal (who picked what) → scoreboard → final results with a podium. Play again.
 - TV "click to start" overlay, needed for audio unlock and fullscreen (audio itself comes in Phase 2).
 - Phone: Screen Wake Lock (re-acquired on `visibilitychange`), large A–D tiles at least 64px tall, haptic `navigator.vibrate` on lock-in where supported.
 - Reconnection (phone and TV), VIP handoff, TV-disconnect pause.
-- Otto as a static SVG with **text speech-bubble** lines picked from i18n (for example "Lightning fast!" or "Nobody? Really?").
+- Otto as an SVG (idle blink and mustache wiggle) with **text speech-bubble** lines (for example "Lightning fast!" or "Nobody? Really?").
 - Flag button on the phone during reveal. Household "seen" tracking. `matches`, `match_players`, and `match_answers` are written.
-- Minimal generator (generate + verify + hash dedupe) and the initial HU + EN seed.
+- Generator (generate + blind verify + hash and trigram dedupe) and a hand-written Hungarian starter set.
 - Tests: engine unit tests (phase transitions, early end, scoring, secrecy: no `correct` field in pre-reveal views, reconnect), plus a Playwright test running 1 TV and 3 phones through a full game.
-- ✅ **Milestone:** a full 10-question HU game and a full EN game on your TV with 3+ phones. Refreshing a phone mid-question restores the same player. Refreshing the TV resumes the game. A second game from the same TV shows no repeated questions.
+- ✅ **Milestone:** a full 10-question game on your TV with 3+ phones. Refreshing a phone mid-question restores the same player. Refreshing the TV resumes the game. A second game from the same TV shows no repeated questions.
 
 ### Phase 2 — Juice and content quality
 - Sound system: music bed, SFX (tick, lock-in, reveal, fanfare), per-cue volumes, mute toggle.
 - Otto animation (idle blink, mustache wiggle, reactions). Staged reveal animations with Framer Motion. Score count-up.
 - Otto line engine: event triggers (streaks, everyone wrong, blowout lead, comeback).
-- Content: `pg_trgm` dedupe, Message Batches bulk generation, `flagged.ts` re-verification, difficulty recalibration from `times_correct/times_shown`, optional **Open Trivia DB** EN import (HTML-entity decoding, per-question attribution on reveal, and a `/credits` page for CC BY-SA 4.0).
+- Content: `pg_trgm` dedupe, Message Batches bulk generation, `flagged.ts` re-verification, difficulty recalibration from `times_correct/times_shown`, and a `flagged.ts` option to re-verify flagged questions with Claude.
 - Smart-TV pass: `@vitejs/plugin-legacy` for the `/tv` route, a reduced-motion or low-end mode, and a test on your TV's browser.
-- ✅ **Milestone:** a game with full audio and animation, and a question bank of at least 1,500 per language. The flagged-question workflow gets used once for real.
+- ✅ **Milestone:** a game with full audio and animation, and a question bank of at least 1,500. The flagged-question workflow gets used once for real.
 
 ### Phase 3 — Power Plays
 - One power play per player, granted every N rounds. The player picks it **during the category vote**, on the same screen, so no extra phase is added.
@@ -246,14 +248,14 @@ The MVP seed is 8 categories × 3 difficulties × about 15 questions × 2 langua
 - ✅ **Milestone:** a close finale that the leader can lose. The final results show the pyramid winner.
 
 ### Phase 6 — Voice and presentation
-- Otto voice lines in both languages (production method still to decide, §7), with subtitles. Intro and outro sequences and an attract loop in the lobby.
+- Otto voice lines in Hungarian (production method still to decide, §7), with subtitles. Intro and outro sequences and an attract loop in the lobby.
 
 ## 7. Risks and open decisions
 
 ### Risks
 | Risk | Mitigation |
 |---|---|
-| **AI factual errors, especially in Hungarian** (Haiku is weaker there) | Blind verification pass, flags with auto-retire, and an `explanation` field that makes errors easier to spot. Consider a stronger model for the *verify* step only (decision below). Sample 20 HU questions yourself before game night. |
+| **AI factual errors, especially in Hungarian** (Haiku is weaker there) | Blind verification pass, flags with auto-retire, and an `explanation` field that makes errors easier to spot. Consider a stronger model for the *verify* step only (decision below). Sample 20 generated questions yourself before game night. |
 | **A Railway deploy or restart wipes live games** (state is in memory) | Don't deploy during game night. Clients show "Server restarted — new room" cleanly. Snapshotting rooms to Postgres is out of scope unless it becomes a problem. |
 | **Smart-TV browsers** (old JS engines, weak GPUs, remote-only input) | Chrome over HDMI is the main target. The TV screen needs no input after "click to start", which works with a remote OK button. Legacy build and a low-motion mode in Phase 2. |
 | **Wake Lock needs HTTPS and isn't supported everywhere** | Railway gives us HTTPS. For local LAN testing we use `@vitejs/plugin-basic-ssl`. Fallback: a small muted looping video trick on iOS if needed. Reconnect covers the rest. |
@@ -262,7 +264,6 @@ The MVP seed is 8 categories × 3 difficulties × about 15 questions × 2 langua
 | **Autoplay audio blocked** | Mandatory "click to start" on the TV unlocks an `AudioContext`. Phones stay silent apart from haptics. |
 | **QR readability from the couch** | QR at least 30% of the TV height, a 4-letter code in huge Shrikhand, and a short custom domain. |
 | **IP and branding** | Original name, characters, and art. No assets or names from *Knowledge is Power*. |
-| **OpenTDB CC BY-SA share-alike** | Attribution is required, and edited OpenTDB questions stay under BY-SA. Keep them flagged with `source='opentdb'`. The game code isn't affected. |
 | **Diacritics** (ő, ű) | Load the Google Fonts `latin-ext` subset and add a visual test string. |
 
 ### Decisions still open for you (current defaults in parentheses)
@@ -272,7 +273,7 @@ The MVP seed is 8 categories × 3 difficulties × about 15 questions × 2 langua
 4. **Flag auto-retire threshold:** (flags from 2 different matches)
 5. **Verify model:** Haiku (cheapest) or a stronger model for verification only (better HU accuracy, still cheap per batch).
 6. **Categories:** the default 8 are History, Geography, Science, Film & TV, Music, Sport, Food, Hungary / Pop culture. Want to swap any?
-7. **Otto's voice (Phase 6):** record a real person (for example you) in HU and EN, or use TTS.
+7. **Otto's voice (Phase 6):** record a real person (for example you), or use Hungarian TTS.
 8. **Domain:** a short custom domain for the join URL, or `*.up.railway.app`.
 9. **Content tone:** family-friendly only, or allow edgier categories?
 10. **Game name** (Otto's show needs a title for the logo).

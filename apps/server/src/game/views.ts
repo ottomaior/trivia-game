@@ -1,8 +1,10 @@
-import type { HostView, PlayerSummary, PlayerView } from '@trivia/shared';
+import type { HostView, PlayerSummary, PlayerView, PublicQuestion, Stage } from '@trivia/shared';
+import type { Question } from '../content/types.ts';
 import type { Player, Room } from '../rooms/Room.ts';
 
 // Builds the snapshots each screen receives. Only public information may pass
-// through here; tests assert on these to guarantee secrecy.
+// through here: the answer key appears in the reveal stage and nowhere else.
+// Tests assert on these to guarantee it.
 
 function summarize(room: Room, p: Player): PlayerSummary {
   return {
@@ -15,23 +17,70 @@ function summarize(room: Room, p: Player): PlayerSummary {
   };
 }
 
+function publicQuestion(q: Question): PublicQuestion {
+  return { id: q.id, category: q.category, difficulty: q.difficulty, prompt: q.prompt, choices: q.choices };
+}
+
+function stage(room: Room): Stage {
+  const q = room.question;
+  switch (room.phase) {
+    case 'lobby':
+    case 'intro':
+      return { phase: room.phase };
+    case 'vote':
+      return {
+        phase: 'vote',
+        options: room.voteOptions.map((o) => ({ id: o.category.id, name: o.category.name })),
+        votes: Object.fromEntries(room.votes),
+      };
+    case 'question_read':
+      return { phase: 'question_read', question: publicQuestion(q!) };
+    case 'question_open':
+      return { phase: 'question_open', question: publicQuestion(q!), answered: [...room.answers.keys()] };
+    case 'reveal':
+      return {
+        phase: 'reveal',
+        question: publicQuestion(q!),
+        correct: q!.correct,
+        explanation: q!.explanation,
+        picks: room.picks,
+      };
+    case 'scoreboard':
+    case 'final':
+      return { phase: room.phase, standings: room.standings };
+  }
+}
+
 function base(room: Room, now: number) {
   return {
     roomCode: room.code,
-    lang: room.lang,
-    phase: room.phase,
+    stage: stage(room),
+    round: room.round,
+    totalRounds: room.totalRounds,
     serverNow: now,
-    phaseEndsAt: null,
+    phaseEndsAt: room.phaseEndsAt,
+    paused: room.paused,
     players: [...room.players.values()].map((p) => summarize(room, p)),
   };
 }
 
 export function toHostView(room: Room, now: number): HostView {
-  return { role: 'host', ...base(room, now) };
+  return { role: 'host', ...base(room, now), otto: room.otto };
 }
 
 export function toPlayerView(room: Room, playerId: string, now: number): PlayerView | null {
   const player = room.players.get(playerId);
   if (!player) return null;
-  return { role: 'player', ...base(room, now), me: summarize(room, player) };
+  const inVote = room.phase === 'vote';
+  const q = room.question;
+  return {
+    role: 'player',
+    ...base(room, now),
+    me: summarize(room, player),
+    mine: {
+      vote: inVote ? (room.votes.get(playerId) ?? null) : null,
+      choice: q && !inVote ? (room.answers.get(playerId)?.choice ?? null) : null,
+      flagged: q ? room.hasFlagged(playerId, q.id) : false,
+    },
+  };
 }

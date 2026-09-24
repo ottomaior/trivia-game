@@ -23,8 +23,7 @@ const createdAt = () => timestamp('created_at', { withTimezone: true }).notNull(
 export const categories = pgTable('categories', {
   id: serial('id').primaryKey(),
   slug: text('slug').notNull().unique(),
-  nameHu: text('name_hu').notNull(),
-  nameEn: text('name_en').notNull(),
+  name: text('name').notNull(),
   active: boolean('active').notNull().default(true),
 });
 
@@ -32,7 +31,6 @@ export const generationBatches = pgTable('generation_batches', {
   id: uuid('id').primaryKey().defaultRandom(),
   model: text('model').notNull(),
   promptVersion: text('prompt_version').notNull(),
-  lang: text('lang').notNull(),
   categoryId: integer('category_id').references(() => categories.id),
   difficulty: smallint('difficulty'),
   requested: integer('requested').notNull(),
@@ -47,7 +45,6 @@ export const questions = pgTable(
   'questions',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    lang: text('lang').notNull(),
     categoryId: integer('category_id')
       .notNull()
       .references(() => categories.id),
@@ -58,7 +55,7 @@ export const questions = pgTable(
     payload: jsonb('payload').notNull(),
     explanation: text('explanation'),
     source: text('source').notNull(),
-    /** Generation batch id, or attribution for imported questions. */
+    /** Generation batch id for AI questions, or a note for manual ones. */
     sourceRef: text('source_ref'),
     status: text('status').notNull().default('active'),
     verifierScore: real('verifier_score'),
@@ -69,13 +66,12 @@ export const questions = pgTable(
     createdAt: createdAt(),
   },
   (t) => [
-    check('questions_lang_check', sql`${t.lang} in ('hu', 'en')`),
     check('questions_kind_check', sql`${t.kind} in ('mc', 'link', 'sort')`),
     check('questions_difficulty_check', sql`${t.difficulty} between 1 and 3`),
-    check('questions_source_check', sql`${t.source} in ('claude', 'opentdb', 'manual')`),
+    check('questions_source_check', sql`${t.source} in ('claude', 'manual')`),
     check('questions_status_check', sql`${t.status} in ('active', 'retired')`),
-    unique('questions_lang_norm_hash_unique').on(t.lang, t.normHash),
-    index('questions_selection_idx').on(t.lang, t.categoryId, t.kind, t.status, t.difficulty),
+    unique('questions_norm_hash_unique').on(t.normHash),
+    index('questions_selection_idx').on(t.categoryId, t.kind, t.status, t.difficulty),
     index('questions_prompt_trgm_idx').using('gin', sql`${t.prompt} gin_trgm_ops`),
   ],
 );
@@ -106,7 +102,6 @@ export const matches = pgTable('matches', {
     .notNull()
     .references(() => households.id),
   roomCode: text('room_code').notNull(),
-  lang: text('lang').notNull(),
   settings: jsonb('settings').notNull().default({}),
   startedAt: timestamp('started_at', { withTimezone: true }).notNull().defaultNow(),
   endedAt: timestamp('ended_at', { withTimezone: true }),

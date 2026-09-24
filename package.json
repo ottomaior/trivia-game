@@ -14,7 +14,10 @@
     "test": "pnpm -r test",
     "e2e": "playwright test",
     "db:generate": "pnpm --filter @trivia/server db:generate",
-    "db:migrate": "pnpm --filter @trivia/server db:migrate"
+    "db:migrate": "pnpm --filter @trivia/server db:migrate",
+    "db:seed": "pnpm --filter @trivia/server db:seed",
+    "gen": "pnpm --filter @trivia/server gen",
+    "flagged": "pnpm --filter @trivia/server flagged"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

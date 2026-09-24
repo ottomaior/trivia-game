@@ -1,10 +1,15 @@
 import type { Avatar } from './rules.ts';
 import type {
+  AnswerPayload,
+  FlagPayload,
   HostCreatePayload,
   HostResumePayload,
+  KickPayload,
   PlayerJoinPayload,
   PlayerResumePayload,
+  SetAvatarPayload,
   TimePingPayload,
+  VotePayload,
 } from './schemas.ts';
 import type { HostView, PlayerView } from './views.ts';
 
@@ -16,7 +21,11 @@ export type ErrorCode =
   | 'NOT_FOUND'
   | 'ROOM_FULL'
   | 'NAME_TAKEN'
-  | 'IN_PROGRESS';
+  | 'IN_PROGRESS'
+  | 'NOT_ALLOWED'
+  | 'TOO_FEW_PLAYERS'
+  | 'NO_QUESTIONS'
+  | 'COLOR_TAKEN';
 
 export type Result<T extends object = object> =
   | ({ ok: true } & T)
@@ -40,6 +49,14 @@ export interface ClientToServerEvents {
   'host:resume': (payload: HostResumePayload, ack: Ack) => void;
   'player:join': (payload: PlayerJoinPayload, ack: Ack<PlayerSession & { avatar: Avatar }>) => void;
   'player:resume': (payload: PlayerResumePayload, ack: Ack) => void;
+  'player:setAvatar': (payload: SetAvatarPayload, ack: Ack) => void;
+  'vip:start': (payload: object, ack: Ack) => void;
+  'vip:kick': (payload: KickPayload, ack: Ack) => void;
+  'vip:playAgain': (payload: object, ack: Ack) => void;
+  'vip:newLobby': (payload: object, ack: Ack) => void;
+  'vote:cast': (payload: VotePayload, ack: Ack) => void;
+  'answer:submit': (payload: AnswerPayload, ack: Ack) => void;
+  'question:flag': (payload: FlagPayload, ack: Ack) => void;
   'time:ping': (payload: TimePingPayload, ack: (res: { t: number; serverNow: number }) => void) => void;
 }
 
@@ -49,4 +66,6 @@ export interface ServerToClientEvents {
   'view:host': (view: HostView) => void;
   'view:player': (view: PlayerView) => void;
   'room:closed': (payload: { reason: RoomClosedReason }) => void;
+  /** Server-initiated round trip; the server measures each phone's latency itself. */
+  'latency:probe': (payload: object, ack: (ok: boolean) => void) => void;
 }

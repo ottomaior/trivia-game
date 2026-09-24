@@ -1,33 +1,17 @@
-import { devices, expect, test, type Browser } from '@playwright/test';
+import { expect, test } from '@playwright/test';
+import { joinByLink, openPhone, openTv } from './helpers.ts';
 
-async function phone(browser: Browser) {
-  const context = await browser.newContext({ ...devices['Pixel 7'] });
-  return context.newPage();
-}
+test('TV creates a room; phones join by QR link and by typing the code', async ({ browser }) => {
+  const { tv, code } = await openTv(browser);
 
-test('TV creates a room; phones join by QR link and by typing the code', async ({ page: tv, browser }) => {
-  await tv.setViewportSize({ width: 1920, height: 1080 });
-  await tv.goto('/tv');
-  await tv.getByRole('button', { name: 'English' }).click();
-
-  const codeEl = tv.getByTestId('room-code');
-  await expect(codeEl).toHaveText(/^[A-Z]{4}$/);
-  const code = (await codeEl.textContent())!;
-
-  // Phone 1 arrives via the QR link, so the code is prefilled.
-  const p1 = await phone(browser);
-  await p1.goto(`/${code}`);
-  await p1.locator('input[name=name]').fill('Anna');
-  await p1.getByRole('button', { name: 'Join' }).click();
-  await expect(p1.getByTestId('my-name')).toHaveText('Anna');
+  const p1 = await joinByLink(browser, code, 'Anna');
   await expect(p1.getByText('VIP', { exact: true })).toBeVisible();
 
   // Phone 2 types the code (lowercase) on the bare URL.
-  const p2 = await phone(browser);
-  await p2.goto('/');
+  const p2 = await openPhone(browser);
   await p2.locator('input[name=code]').fill(code.toLowerCase());
   await p2.locator('input[name=name]').fill('Győző');
-  await p2.getByRole('button', { name: 'Join' }).click();
+  await p2.getByRole('button', { name: 'Belépés' }).click();
   await expect(p2.getByTestId('my-name')).toHaveText('Győző');
 
   await expect(tv.getByTestId('seat')).toHaveCount(2);
@@ -39,17 +23,24 @@ test('TV creates a room; phones join by QR link and by typing the code', async (
   await expect(p2.getByTestId('my-name')).toHaveText('Győző');
   await expect(tv.getByTestId('seat')).toHaveCount(2);
 
-  // Refreshing the TV resumes the same room.
+  // Refreshing the TV resumes the same room. Chrome usually keeps the earlier
+  // click across a reload; if not, the TV asks for one to re-enable sound.
   await tv.reload();
+  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
+  if (await again.isVisible().catch(() => false)) await again.click();
   await expect(tv.getByTestId('room-code')).toHaveText(code);
   await expect(tv.getByTestId('seat')).toHaveCount(2);
+
+  // The VIP can remove a player.
+  await p1.getByRole('button', { name: 'Kiküld' }).click();
+  await expect(p2.getByText('A VIP kiküldött a szobából.')).toBeVisible();
+  await expect(tv.getByTestId('seat')).toHaveCount(1);
 });
 
 test('joining an unknown room shows a friendly error', async ({ browser }) => {
-  const p = await phone(browser);
-  await p.goto('/');
+  const p = await openPhone(browser);
   await p.locator('input[name=code]').fill('ZZZZ');
   await p.locator('input[name=name]').fill('Anna');
-  await p.getByRole('button', { name: 'Join' }).click();
-  await expect(p.getByRole('alert')).toHaveText('No room with that code.');
+  await p.getByRole('button', { name: 'Belépés' }).click();
+  await expect(p.getByRole('alert')).toHaveText('Nincs ilyen kódú szoba.');
 });

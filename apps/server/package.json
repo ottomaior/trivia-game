@@ -8,7 +8,10 @@
     "typecheck": "tsc -p .",
     "test": "vitest run",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "tsx src/migrate.ts"
+    "db:migrate": "tsx src/release.ts --no-seed",
+    "db:seed": "tsx src/release.ts",
+    "gen": "tsx scripts/gen-questions.ts",
+    "flagged": "tsx scripts/flagged.ts"
   },
   "dependencies": {
     "@fastify/static": "^10.1.4",
@@ -20,6 +23,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.128.0",
     "drizzle-kit": "^0.31.11",
     "esbuild": "^0.27.0",
     "socket.io-client": "^4.8.3",

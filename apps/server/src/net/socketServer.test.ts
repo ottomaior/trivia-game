@@ -9,10 +9,9 @@ import { io as connect, type Socket } from 'socket.io-client';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createApp } from '../app.ts';
 import { MemoryStore } from '../db/store.ts';
+import { fixtureContent, HOUSEHOLD } from '../testing.ts';
 
 type Client = Socket<ServerToClientEvents, ClientToServerEvents>;
-
-const HOUSEHOLD = '6f1c1c2e-8d2b-4f7a-9a51-0c7a0c9b1d11';
 
 let url = '';
 let store: MemoryStore;
@@ -20,8 +19,9 @@ let close: () => Promise<void>;
 const clients: Client[] = [];
 
 beforeEach(async () => {
-  store = new MemoryStore();
-  const { app } = await createApp({ store, logger: false });
+  store = new MemoryStore(fixtureContent());
+  // 2% of real phase lengths: a full game takes a few seconds.
+  const { app } = await createApp({ store, logger: false, timingScale: 0.02 });
   await app.listen({ port: 0, host: '127.0.0.1' });
   url = `http://127.0.0.1:${(app.server.address() as AddressInfo).port}`;
   close = () => app.close();
@@ -34,6 +34,7 @@ afterEach(async () => {
 
 function client(): Promise<Client> {
   const socket: Client = connect(url, { transports: ['websocket'], forceNew: true });
+  socket.on('latency:probe', (_payload, ack) => ack(true));
   clients.push(socket);
   return new Promise((resolve) => socket.on('connect', () => resolve(socket)));
 }
@@ -58,7 +59,7 @@ function next<E extends 'view:host' | 'view:player'>(
 describe('lobby over sockets', () => {
   it('creates a room, joins a phone, and shows the player on the TV', async () => {
     const tv = await client();
-    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD, lang: 'hu' });
+    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD });
     expect(created.ok).toBe(true);
     if (!created.ok) return;
     expect(created.roomCode).toMatch(/^[BCDFGHJKLMNPQRSTVWXZ]{4}$/);
@@ -77,7 +78,6 @@ describe('lobby over sockets', () => {
     expect(hostView.players[0]).toMatchObject({ name: 'Anna', isVip: true, connected: true });
     const view = await phoneView;
     expect(view.me.name).toBe('Anna');
-    expect(view.lang).toBe('hu');
   });
 
   it('rejects bad payloads and unknown rooms without crashing', async () => {
@@ -94,7 +94,7 @@ describe('lobby over sockets', () => {
 
   it('lets a phone that dropped resume the same seat', async () => {
     const tv = await client();
-    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD, lang: 'en' });
+    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD });
     if (!created.ok) throw new Error('create failed');
 
     const phone = await client();
@@ -120,7 +120,7 @@ describe('lobby over sockets', () => {
 
   it('lets a refreshed TV resume its room, but not with a wrong token', async () => {
     const tv = await client();
-    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD, lang: 'en' });
+    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD });
     if (!created.ok) throw new Error('create failed');
     tv.disconnect();
 
@@ -138,5 +138,77 @@ describe('lobby over sockets', () => {
     const res = await phone.emitWithAck('time:ping', { t: 42 });
     expect(res.t).toBe(42);
     expect(Math.abs(res.serverNow - Date.now())).toBeLessThan(1000);
+  });
+});
+
+describe('a game over sockets', () => {
+  async function lobbyWith(names: string[]) {
+    const tv = await client();
+    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD });
+    if (!created.ok) throw new Error('create failed');
+    const phones = [];
+    for (const name of names) {
+      const phone = await client();
+      const joined = await phone.emitWithAck('player:join', { roomCode: created.roomCode, name });
+      if (!joined.ok) throw new Error('join failed');
+      phones.push({ phone, id: joined.playerId });
+    }
+    return { tv, phones, code: created.roomCode };
+  }
+
+  it('runs from VIP start to the final standings', async () => {
+    const { tv, phones } = await lobbyWith(['Anna', 'Béla']);
+    const [anna, bela] = phones;
+
+    expect(await bela!.phone.emitWithAck('vip:start', {})).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+
+    // Every phone votes for the first option and answers choice 0 whenever asked.
+    for (const { phone } of phones) {
+      phone.on('view:player', (v) => {
+        if (v.stage.phase === 'vote' && v.mine.vote === null) phone.emit('vote:cast', { option: 0 }, () => {});
+        if (v.stage.phase === 'question_open' && v.mine.choice === null) {
+          phone.emit('answer:submit', { questionId: v.stage.question.id, choice: 0 }, () => {});
+        }
+      });
+    }
+    const finalView = next(tv, 'view:host', (v) => v.stage.phase === 'final');
+    expect(await anna!.phone.emitWithAck('vip:start', {})).toEqual({ ok: true });
+    const view = await finalView;
+    if (view.stage.phase !== 'final') throw new Error();
+    expect(view.round).toBe(10);
+    expect(view.stage.standings).toHaveLength(2);
+    expect(view.otto?.key === 'winner' || view.otto?.key === 'tie').toBe(true);
+  }, 20_000);
+
+  it('lets the VIP kick a player, who is told so', async () => {
+    const { tv, phones } = await lobbyWith(['Anna', 'Béla']);
+    const [anna, bela] = phones;
+    const closed = new Promise((resolve) => bela!.phone.on('room:closed', resolve));
+    const tvSeesOne = next(tv, 'view:host', (v) => v.players.length === 1);
+    expect(await anna!.phone.emitWithAck('vip:kick', { playerId: bela!.id })).toEqual({ ok: true });
+    expect(await closed).toEqual({ reason: 'kicked' });
+    await tvSeesOne;
+  });
+
+  it('pauses when the TV drops mid-game and resumes when it returns', async () => {
+    const tv = await client();
+    const created = await tv.emitWithAck('host:create', { householdId: HOUSEHOLD });
+    if (!created.ok) throw new Error();
+    const a = await client();
+    const b = await client();
+    await a.emitWithAck('player:join', { roomCode: created.roomCode, name: 'Anna' });
+    await b.emitWithAck('player:join', { roomCode: created.roomCode, name: 'Béla' });
+    const inVote = next(a, 'view:player', (v) => v.stage.phase === 'vote');
+    await a.emitWithAck('vip:start', {});
+    await inVote;
+
+    const paused = next(a, 'view:player', (v) => v.paused);
+    tv.disconnect();
+    expect((await paused).phaseEndsAt).toBeNull();
+
+    const tv2 = await client();
+    const resumed = next(a, 'view:player', (v) => !v.paused);
+    expect(await tv2.emitWithAck('host:resume', created)).toEqual({ ok: true });
+    expect((await resumed).stage.phase).toBe('vote');
   });
 });

@@ -1,13 +1,12 @@
-import { MAX_PLAYERS, MIN_PLAYERS, strings, type HostView } from '@trivia/shared';
-import { Blob } from '../ui/Blob.tsx';
-import { Logo } from '../ui/Logo.tsx';
-import { QrCode } from '../ui/QrCode.tsx';
-import styles from './Tv.module.css';
+import { MAX_PLAYERS, MIN_PLAYERS, t, type HostView } from '@trivia/shared';
+import { Blob } from '../../ui/Blob.tsx';
+import { Logo } from '../../ui/Logo.tsx';
+import { QrCode } from '../../ui/QrCode.tsx';
+import styles from '../Tv.module.css';
 
 export function Lobby({ view }: { view: HostView }) {
-  const t = strings(view.lang);
   const joinUrl = `${window.location.origin}/${view.roomCode}`;
-  const missing = Math.max(0, MIN_PLAYERS - view.players.length);
+  const missing = Math.max(0, MIN_PLAYERS - view.players.filter((p) => p.connected).length);
   const seats = Array.from({ length: MAX_PLAYERS }, (_, i) => view.players[i] ?? null);
 
   return (
@@ -44,7 +43,7 @@ export function Lobby({ view }: { view: HostView }) {
             ),
           )}
         </ul>
-        <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.waitForVip}</p>
+        <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.vipStartsOnPhone}</p>
       </section>
     </div>
   );

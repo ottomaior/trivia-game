@@ -1,0 +1,1342 @@
+[
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik évben kezdődött az első világháború?",
+    "answer": "1914",
+    "wrong": [
+      "1918",
+      "1939",
+      "1905"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Ki volt az Amerikai Egyesült Államok első elnöke?",
+    "answer": "George Washington",
+    "wrong": [
+      "Abraham Lincoln",
+      "Thomas Jefferson",
+      "John Adams"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik ókori nép építette a gízai piramisokat?",
+    "answer": "Az egyiptomiak",
+    "wrong": [
+      "A rómaiak",
+      "A görögök",
+      "A perzsák"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik évben omlott le a berlini fal?",
+    "answer": "1989",
+    "wrong": [
+      "1991",
+      "1985",
+      "1961"
+    ],
+    "explanation": "1989. november 9-én nyitották meg a határátkelőket."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik francia császárt győzték le Waterloonál?",
+    "answer": "Napóleon",
+    "wrong": [
+      "XIV. Lajos",
+      "Nagy Károly",
+      "XVI. Lajos"
+    ],
+    "explanation": "A waterlooi csata 1815-ben zajlott."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik évben lépett ember először a Holdra?",
+    "answer": "1969",
+    "wrong": [
+      "1965",
+      "1972",
+      "1961"
+    ],
+    "explanation": "Neil Armstrong az Apollo–11 küldetéssel érkezett."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik birodalom fővárosát, Konstantinápolyt foglalták el az oszmánok 1453-ban?",
+    "answer": "Bizánci Birodalom",
+    "wrong": [
+      "Nyugatrómai Birodalom",
+      "Német-római Birodalom",
+      "Perzsa Birodalom"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Ki írta Friedrich Engelsszel közösen a Kommunista Kiáltványt?",
+    "answer": "Karl Marx",
+    "wrong": [
+      "Vlagyimir Lenin",
+      "Joszif Sztálin",
+      "Lev Trockij"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik hajó süllyedt el 1912-ben az első útján, miután jéghegynek ütközött?",
+    "answer": "Titanic",
+    "wrong": [
+      "Lusitania",
+      "Britannic",
+      "Olympic"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik ország adott elsőként országos választójogot a nőknek, 1893-ban?",
+    "answer": "Új-Zéland",
+    "wrong": [
+      "Finnország",
+      "Egyesült Királyság",
+      "Svédország"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik évben írták alá Angliában a Magna Chartát?",
+    "answer": "1215",
+    "wrong": [
+      "1066",
+      "1348",
+      "1492"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Ki volt az utolsó orosz cár?",
+    "answer": "II. Miklós",
+    "wrong": [
+      "III. Sándor",
+      "I. Péter",
+      "II. Sándor"
+    ],
+    "explanation": "1917-ben mondott le, 1918-ban kivégezték."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik csatában győzte le döntően Nagy Sándor III. Dareioszt Kr. e. 331-ben?",
+    "answer": "Gaugamélai csata",
+    "wrong": [
+      "Isszoszi csata",
+      "Marathóni csata",
+      "Thermopülai csata"
+    ]
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik évben ért véget a harmincéves háború?",
+    "answer": "1648",
+    "wrong": [
+      "1618",
+      "1713",
+      "1598"
+    ],
+    "explanation": "A vesztfáliai békével zárult."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik mai ország területén állt az ókori Karthágó?",
+    "answer": "Tunézia",
+    "wrong": [
+      "Líbia",
+      "Egyiptom",
+      "Marokkó"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Mi Ausztrália fővárosa?",
+    "answer": "Canberra",
+    "wrong": [
+      "Sydney",
+      "Melbourne",
+      "Perth"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik a Föld legnagyobb óceánja?",
+    "answer": "Csendes-óceán",
+    "wrong": [
+      "Atlanti-óceán",
+      "Indiai-óceán",
+      "Északi-Jeges-tenger"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik kontinensen található Kenya?",
+    "answer": "Afrika",
+    "wrong": [
+      "Ázsia",
+      "Dél-Amerika",
+      "Óceánia"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik a világ legmagasabb hegycsúcsa?",
+    "answer": "Mount Everest",
+    "wrong": [
+      "K2",
+      "Kancsendzönga",
+      "Mont Blanc"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik ország fővárosa Lisszabon?",
+    "answer": "Portugália",
+    "wrong": [
+      "Spanyolország",
+      "Brazília",
+      "Olaszország"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik folyó ömlik a tengerbe Szentpétervárnál?",
+    "answer": "Néva",
+    "wrong": [
+      "Volga",
+      "Dnyeper",
+      "Don"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik ország fővárosa Ottawa?",
+    "answer": "Kanada",
+    "wrong": [
+      "Egyesült Államok",
+      "Ausztrália",
+      "Új-Zéland"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik a világ legnagyobb forró sivataga?",
+    "answer": "Szahara",
+    "wrong": [
+      "Góbi",
+      "Kalahári",
+      "Atacama"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Oroszországot nem számítva melyik európai országnak van a legtöbb lakosa?",
+    "answer": "Németország",
+    "wrong": [
+      "Franciaország",
+      "Egyesült Királyság",
+      "Olaszország"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik ország területén emelkedik a Kilimandzsáró?",
+    "answer": "Tanzánia",
+    "wrong": [
+      "Kenya",
+      "Uganda",
+      "Etiópia"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Mi Kazahsztán fővárosa?",
+    "answer": "Asztana",
+    "wrong": [
+      "Almati",
+      "Taskent",
+      "Biskek"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik a világ legmélyebb tava?",
+    "answer": "Bajkál-tó",
+    "wrong": [
+      "Tanganyika-tó",
+      "Kaszpi-tenger",
+      "Viktória-tó"
+    ],
+    "explanation": "Legmélyebb pontja több mint 1600 méter."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik országban található az Atacama-sivatag nagy része?",
+    "answer": "Chile",
+    "wrong": [
+      "Peru",
+      "Argentína",
+      "Bolívia"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik afrikai ország fővárosa Addisz-Abeba?",
+    "answer": "Etiópia",
+    "wrong": [
+      "Kenya",
+      "Szudán",
+      "Eritrea"
+    ]
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik Európa leghosszabb folyója?",
+    "answer": "Volga",
+    "wrong": [
+      "Duna",
+      "Rajna",
+      "Dnyeper"
+    ],
+    "explanation": "A Volga kb. 3500 km hosszú, a Duna kb. 2850 km."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik bolygó kering a legközelebb a Naphoz?",
+    "answer": "Merkúr",
+    "wrong": [
+      "Vénusz",
+      "Mars",
+      "Föld"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Mi a víz kémiai képlete?",
+    "answer": "H2O",
+    "wrong": [
+      "CO2",
+      "O2",
+      "H2O2"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Hány lába van egy póknak?",
+    "answer": "8",
+    "wrong": [
+      "6",
+      "10",
+      "12"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik bolygót nevezik „vörös bolygónak”?",
+    "answer": "Mars",
+    "wrong": [
+      "Jupiter",
+      "Vénusz",
+      "Szaturnusz"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik a legnagyobb ma élő állat?",
+    "answer": "Kék bálna",
+    "wrong": [
+      "Afrikai elefánt",
+      "Ámbráscet",
+      "Zsiráf"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Mi a vas vegyjele?",
+    "answer": "Fe",
+    "wrong": [
+      "Ir",
+      "V",
+      "Au"
+    ],
+    "explanation": "A latin ferrum szóból."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Hány csontja van egy felnőtt embernek?",
+    "answer": "206",
+    "wrong": [
+      "186",
+      "212",
+      "300"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Ki dolgozta ki az általános relativitáselméletet?",
+    "answer": "Albert Einstein",
+    "wrong": [
+      "Isaac Newton",
+      "Niels Bohr",
+      "Max Planck"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Nagyjából mekkora a fény sebessége vákuumban?",
+    "answer": "300 000 km/s",
+    "wrong": [
+      "30 000 km/s",
+      "3 000 000 km/s",
+      "150 000 km/s"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Melyik szerv termeli az inzulint?",
+    "answer": "Hasnyálmirigy",
+    "wrong": [
+      "Máj",
+      "Vese",
+      "Lép"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik a legkisebb rendszámú nemesgáz?",
+    "answer": "Hélium",
+    "wrong": [
+      "Neon",
+      "Argon",
+      "Kripton"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Hány kromoszóma van egy egészséges emberi testi sejtben?",
+    "answer": "46",
+    "wrong": [
+      "23",
+      "44",
+      "48"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Ki fedezte fel a penicillint?",
+    "answer": "Alexander Fleming",
+    "wrong": [
+      "Louis Pasteur",
+      "Robert Koch",
+      "Joseph Lister"
+    ],
+    "explanation": "1928-ban, egy penészes baktériumtenyészeten vette észre."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Milyen elemből áll a gyémánt?",
+    "answer": "Szén",
+    "wrong": [
+      "Szilícium",
+      "Bór",
+      "Kalcium"
+    ]
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik atomi részecskének nincs elektromos töltése?",
+    "answer": "Neutron",
+    "wrong": [
+      "Proton",
+      "Elektron",
+      "Pozitron"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik filmsorozatban hangzik el: „Az Erő legyen veled!”?",
+    "answer": "Csillagok háborúja",
+    "wrong": [
+      "Star Trek",
+      "Mátrix",
+      "A Gyűrűk Ura"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a Simpson család apját?",
+    "answer": "Homer",
+    "wrong": [
+      "Bart",
+      "Ned",
+      "Moe"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik rajzfilmfigura kérdezi: „Mi újság, doki?”",
+    "answer": "Tapsi Hapsi",
+    "wrong": [
+      "Donald kacsa",
+      "Dagobert bácsi",
+      "Scooby-Doo"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Ki rendezte a Jurassic Parkot?",
+    "answer": "Steven Spielberg",
+    "wrong": [
+      "James Cameron",
+      "George Lucas",
+      "Ridley Scott"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik autómárkából építették az időgépet a Vissza a jövőbe című filmben?",
+    "answer": "DeLorean",
+    "wrong": [
+      "Ford",
+      "Chevrolet",
+      "Volkswagen"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik film nyerte a legjobb filmnek járó Oscar-díjat 1998-ban?",
+    "answer": "Titanic",
+    "wrong": [
+      "Good Will Hunting",
+      "L.A. bizalmas",
+      "Lesz ez még így se"
+    ],
+    "explanation": "A Titanic összesen 11 Oscar-díjat kapott."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Mi a neve a kávézónak a Jóbarátok című sorozatban?",
+    "answer": "Central Perk",
+    "wrong": [
+      "Monk's Café",
+      "MacLaren's",
+      "Luke's Diner"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik magyar film nyerte el a legjobb idegen nyelvű filmnek járó Oscar-díjat 2016-ban?",
+    "answer": "Saul fia",
+    "wrong": [
+      "Testről és lélekről",
+      "Kontroll",
+      "Mindenki"
+    ],
+    "explanation": "Nemes Jeles László rendezése."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik színész alakította Jack Sparrow kapitányt?",
+    "answer": "Johnny Depp",
+    "wrong": [
+      "Orlando Bloom",
+      "Brad Pitt",
+      "Keanu Reeves"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik sorozat játszódik Westeros földjén?",
+    "answer": "Trónok harca",
+    "wrong": [
+      "Vikingek",
+      "Vaják",
+      "Az utolsó királyság"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Ki rendezte a Ponyvaregényt?",
+    "answer": "Quentin Tarantino",
+    "wrong": [
+      "Martin Scorsese",
+      "Guy Ritchie",
+      "David Fincher"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik magyar rövidfilm nyert Oscar-díjat 2017-ben?",
+    "answer": "Mindenki",
+    "wrong": [
+      "A légy",
+      "Saul fia",
+      "Kontroll"
+    ],
+    "explanation": "Deák Kristóf filmje egy kórusról szól."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Hány Oscar-díjat nyert A Gyűrűk Ura: A király visszatér?",
+    "answer": "11",
+    "wrong": [
+      "9",
+      "12",
+      "7"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik filmben szerepel a HAL 9000 nevű számítógép?",
+    "answer": "2001: Űrodüsszeia",
+    "wrong": [
+      "Szárnyas fejvadász",
+      "A nyolcadik utas: a Halál",
+      "Terminátor"
+    ]
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Ki alakította Hannibal Lectert A bárányok hallgatnak című filmben?",
+    "answer": "Anthony Hopkins",
+    "wrong": [
+      "Jack Nicholson",
+      "Gary Oldman",
+      "Robert De Niro"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik együttes tagja volt John Lennon?",
+    "answer": "The Beatles",
+    "wrong": [
+      "The Rolling Stones",
+      "Queen",
+      "The Who"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Hány húrja van egy hagyományos gitárnak?",
+    "answer": "6",
+    "wrong": [
+      "4",
+      "5",
+      "7"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Kit neveznek a „pop királyának”?",
+    "answer": "Michael Jackson",
+    "wrong": [
+      "Elvis Presley",
+      "Prince",
+      "Freddie Mercury"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik zeneszerző veszítette el élete második felében a hallását?",
+    "answer": "Ludwig van Beethoven",
+    "wrong": [
+      "Wolfgang Amadeus Mozart",
+      "Johann Sebastian Bach",
+      "Frédéric Chopin"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Ki volt a Queen énekese?",
+    "answer": "Freddie Mercury",
+    "wrong": [
+      "Brian May",
+      "Mick Jagger",
+      "David Bowie"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik magyar zeneszerző írta a Magyar rapszódiákat?",
+    "answer": "Liszt Ferenc",
+    "wrong": [
+      "Bartók Béla",
+      "Kodály Zoltán",
+      "Erkel Ferenc"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik országból származik az ABBA?",
+    "answer": "Svédország",
+    "wrong": [
+      "Norvégia",
+      "Dánia",
+      "Finnország"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Hány szimfóniát fejezett be Beethoven?",
+    "answer": "9",
+    "wrong": [
+      "7",
+      "10",
+      "12"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik együttes adta ki a The Dark Side of the Moon című albumot?",
+    "answer": "Pink Floyd",
+    "wrong": [
+      "Led Zeppelin",
+      "Genesis",
+      "Deep Purple"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik hangszeren játszott Jimi Hendrix?",
+    "answer": "Gitár",
+    "wrong": [
+      "Dob",
+      "Zongora",
+      "Szaxofon"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Ki komponálta A kékszakállú herceg vára című operát?",
+    "answer": "Bartók Béla",
+    "wrong": [
+      "Kodály Zoltán",
+      "Erkel Ferenc",
+      "Liszt Ferenc"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik évben nyerte meg az ABBA az Eurovíziós Dalfesztivált a Waterloo című dallal?",
+    "answer": "1974",
+    "wrong": [
+      "1972",
+      "1976",
+      "1979"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Ki szerezte a magyar Himnusz zenéjét?",
+    "answer": "Erkel Ferenc",
+    "wrong": [
+      "Egressy Béni",
+      "Liszt Ferenc",
+      "Kodály Zoltán"
+    ],
+    "explanation": "Egressy Béni a Szózat zenéjét írta."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Ki komponálta A négy évszak című hegedűverseny-sorozatot?",
+    "answer": "Antonio Vivaldi",
+    "wrong": [
+      "Johann Sebastian Bach",
+      "Georg Friedrich Händel",
+      "Joseph Haydn"
+    ]
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik zenekar énekese volt Kurt Cobain?",
+    "answer": "Nirvana",
+    "wrong": [
+      "Pearl Jam",
+      "Soundgarden",
+      "Foo Fighters"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Hány játékos van egy labdarúgócsapatból egyszerre a pályán?",
+    "answer": "11",
+    "wrong": [
+      "10",
+      "9",
+      "12"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik városban rendezték a 2012-es nyári olimpiát?",
+    "answer": "London",
+    "wrong": [
+      "Peking",
+      "Rio de Janeiro",
+      "Athén"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik sportágban lett világhírű Michael Jordan?",
+    "answer": "Kosárlabda",
+    "wrong": [
+      "Tenisz",
+      "Amerikai futball",
+      "Golf"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Milyen színű trikót visel a Tour de France összetettjének vezetője?",
+    "answer": "Sárga",
+    "wrong": [
+      "Zöld",
+      "Pöttyös",
+      "Rózsaszín"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Hány karika van az olimpiai zászlón?",
+    "answer": "5",
+    "wrong": [
+      "4",
+      "6",
+      "7"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik ország nyerte a 2018-as labdarúgó-világbajnokságot?",
+    "answer": "Franciaország",
+    "wrong": [
+      "Horvátország",
+      "Németország",
+      "Brazília"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Hány pontot ér egy touchdown az amerikai futballban?",
+    "answer": "6",
+    "wrong": [
+      "3",
+      "7",
+      "2"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Milyen hosszú a maratoni futás távja?",
+    "answer": "42 195 méter",
+    "wrong": [
+      "40 000 méter",
+      "42 000 méter",
+      "45 195 méter"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Hány nyert szett kell a győzelemhez egy férfi Grand Slam-mérkőzésen?",
+    "answer": "3",
+    "wrong": [
+      "2",
+      "4",
+      "5"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik településen található a Hungaroring?",
+    "answer": "Mogyoród",
+    "wrong": [
+      "Gödöllő",
+      "Fót",
+      "Kerepes"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Hány olimpiai aranyérmet nyert Egerszegi Krisztina?",
+    "answer": "5",
+    "wrong": [
+      "3",
+      "4",
+      "6"
+    ],
+    "explanation": "1988 és 1996 között nyerte őket."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik évben rendezték Athénban az első újkori olimpiát?",
+    "answer": "1896",
+    "wrong": [
+      "1900",
+      "1888",
+      "1908"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik stadionban győzte le az Aranycsapat Angliát 6:3-ra 1953-ban?",
+    "answer": "Wembley",
+    "wrong": [
+      "Népstadion",
+      "Maracanã",
+      "Old Trafford"
+    ],
+    "explanation": "Ez volt Anglia első hazai veresége kontinentális csapattól."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Hány játékos van egy vízilabdacsapatból egyszerre a vízben, a kapussal együtt?",
+    "answer": "7",
+    "wrong": [
+      "6",
+      "8",
+      "11"
+    ]
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Ki nyerte a legtöbb Grand Slam-tornát a férfiak között 2024 végéig?",
+    "answer": "Novak Djokovics",
+    "wrong": [
+      "Rafael Nadal",
+      "Roger Federer",
+      "Pete Sampras"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik országból származik a pizza?",
+    "answer": "Olaszország",
+    "wrong": [
+      "Görögország",
+      "Franciaország",
+      "Spanyolország"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Mi a guacamole fő alapanyaga?",
+    "answer": "Avokádó",
+    "wrong": [
+      "Uborka",
+      "Cukkini",
+      "Kivi"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik gabona a sushi alapja?",
+    "answer": "Rizs",
+    "wrong": [
+      "Búza",
+      "Kukorica",
+      "Árpa"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Milyen ital készül erjesztett szőlőléből?",
+    "answer": "Bor",
+    "wrong": [
+      "Sör",
+      "Whisky",
+      "Szaké"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik ország nemzeti étele a paella?",
+    "answer": "Spanyolország",
+    "wrong": [
+      "Portugália",
+      "Mexikó",
+      "Olaszország"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik fűszert tartják tömegre vetítve a világ legdrágábbjának?",
+    "answer": "Sáfrány",
+    "wrong": [
+      "Vanília",
+      "Kardamom",
+      "Fahéj"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Milyen formájú tészta a farfalle?",
+    "answer": "Masni alakú",
+    "wrong": [
+      "Cső alakú",
+      "Csiga alakú",
+      "Hosszú, vékony szál"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik ország konyhájából származik a tzatziki?",
+    "answer": "Görögország",
+    "wrong": [
+      "Olaszország",
+      "Spanyolország",
+      "Franciaország"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik gabona malátájából készül a single malt skót whisky?",
+    "answer": "Árpa",
+    "wrong": [
+      "Rozs",
+      "Kukorica",
+      "Búza"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Mi a hummusz fő alapanyaga?",
+    "answer": "Csicseriborsó",
+    "wrong": [
+      "Lencse",
+      "Fehér bab",
+      "Zöldborsó"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik francia borvidékről kapta a nevét a pezsgő egyik leghíresebb fajtája?",
+    "answer": "Champagne",
+    "wrong": [
+      "Burgundia",
+      "Bordeaux",
+      "Elzász"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik ország nemzeti étele a kimcsi?",
+    "answer": "Korea",
+    "wrong": [
+      "Japán",
+      "Kína",
+      "Vietnám"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik francia kéksajt készül juhtejből, barlangokban érlelve?",
+    "answer": "Roquefort",
+    "wrong": [
+      "Camembert",
+      "Brie",
+      "Comté"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik növény virágának bibéjéből nyerik a sáfrányt?",
+    "answer": "Krókusz",
+    "wrong": [
+      "Liliom",
+      "Tulipán",
+      "Pipacs"
+    ]
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Mit jelent a konyhában a „mise en place” kifejezés?",
+    "answer": "Előkészítés: minden a helyén",
+    "wrong": [
+      "Tálalás",
+      "Mosogatás",
+      "Kóstolás"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik folyó szeli ketté Budapestet?",
+    "answer": "Duna",
+    "wrong": [
+      "Tisza",
+      "Dráva",
+      "Rába"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik Közép-Európa legnagyobb tava?",
+    "answer": "Balaton",
+    "wrong": [
+      "Velencei-tó",
+      "Fertő tó",
+      "Tisza-tó"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Ki írta a Himnusz szövegét?",
+    "answer": "Kölcsey Ferenc",
+    "wrong": [
+      "Vörösmarty Mihály",
+      "Petőfi Sándor",
+      "Arany János"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik napon ünnepeljük az államalapítást?",
+    "answer": "Augusztus 20.",
+    "wrong": [
+      "Március 15.",
+      "Október 23.",
+      "Május 1."
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Ki találta fel a bűvös kockát?",
+    "answer": "Rubik Ernő",
+    "wrong": [
+      "Bíró László József",
+      "Kandó Kálmán",
+      "Jedlik Ányos"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Hány ország határos Magyarországgal?",
+    "answer": "7",
+    "wrong": [
+      "6",
+      "8",
+      "5"
+    ],
+    "explanation": "Ausztria, Szlovákia, Ukrajna, Románia, Szerbia, Horvátország és Szlovénia."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik magyar feltaláló nevéhez fűződik a golyóstoll?",
+    "answer": "Bíró László József",
+    "wrong": [
+      "Rubik Ernő",
+      "Puskás Tivadar",
+      "Irinyi János"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Mi Magyarország legmagasabb pontja?",
+    "answer": "Kékes",
+    "wrong": [
+      "Dobogó-kő",
+      "Galya-tető",
+      "Csóványos"
+    ],
+    "explanation": "1014 méter magas, a Mátrában található."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik évben tört ki a forradalom, amelyre március 15-én emlékezünk?",
+    "answer": "1848",
+    "wrong": [
+      "1849",
+      "1956",
+      "1867"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Ki írta A Pál utcai fiúkat?",
+    "answer": "Molnár Ferenc",
+    "wrong": [
+      "Móricz Zsigmond",
+      "Mikszáth Kálmán",
+      "Gárdonyi Géza"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik város volt a Magyar Királyság fővárosa és koronázó városa a török hódoltság idején?",
+    "answer": "Pozsony",
+    "wrong": [
+      "Bécs",
+      "Győr",
+      "Kassa"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik magyar tudós kapott Nobel-díjat a C-vitaminnal kapcsolatos felfedezéseiért?",
+    "answer": "Szent-Györgyi Albert",
+    "wrong": [
+      "Karikó Katalin",
+      "Bay Zoltán",
+      "Oláh György"
+    ],
+    "explanation": "1937-ben kapta meg az orvosi Nobel-díjat."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik évben csatlakozott Magyarország az Európai Unióhoz?",
+    "answer": "2004",
+    "wrong": [
+      "1999",
+      "2007",
+      "1995"
+    ],
+    "explanation": "1999-ben a NATO-hoz csatlakoztunk."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik vesztes csata után halt meg II. Lajos király 1526-ban?",
+    "answer": "Mohácsi csata",
+    "wrong": [
+      "Muhi csata",
+      "Nándorfehérvári csata",
+      "Várnai csata"
+    ]
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Hány vármegye van Magyarországon?",
+    "answer": "19",
+    "wrong": [
+      "20",
+      "18",
+      "23"
+    ],
+    "explanation": "Budapest ezeken felül külön közigazgatási egység."
+  }
+]

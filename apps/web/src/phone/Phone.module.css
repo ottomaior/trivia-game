@@ -90,6 +90,11 @@
   text-align: center;
 }
 
+.lobby .primary {
+  width: 100%;
+  margin-top: 8px;
+}
+
 .name {
   margin: 0;
   font-size: 2rem;
@@ -128,4 +133,265 @@
   background: var(--rust);
   border-radius: 999px;
   font-weight: 800;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100dvh - 48px);
+}
+
+.meBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--burgundy-deep);
+  border-radius: var(--radius);
+}
+
+.meName {
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.meScore {
+  margin-left: auto;
+  font-weight: 800;
+  color: var(--mustard);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  justify-content: center;
+  text-align: center;
+}
+
+.bigNote {
+  margin: auto 0;
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--mustard);
+  text-align: center;
+}
+
+.screenTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2rem;
+  color: var(--mustard);
+}
+
+.phonePrompt {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 76px;
+  padding: 10px 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  box-shadow: 0 5px 0 var(--burgundy-deep);
+  text-align: left;
+  cursor: pointer;
+  transition: opacity 150ms;
+}
+
+.choice:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--burgundy-deep);
+}
+
+.choice:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.choiceMine {
+  outline: 4px dotted var(--mustard);
+  outline-offset: 4px;
+}
+
+.choiceDim {
+  opacity: 0.45;
+}
+
+.choiceLetter {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  background: var(--burgundy-deep);
+  color: var(--cream);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+.choiceText {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.lockedCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.lockedLetter {
+  font-family: var(--font-display);
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.verdict {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 26px 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+}
+
+.verdictGood {
+  background: var(--teal);
+}
+
+.verdictBad {
+  background: var(--rust);
+}
+
+.verdictText {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+}
+
+.verdictPoints {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--mustard);
+}
+
+.answerText {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.rankBig {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.6rem;
+  color: var(--mustard);
+}
+
+.secondary {
+  min-height: 56px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--teal);
+  color: var(--cream);
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.textButton {
+  min-height: 48px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--ice);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.flagSheet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.flagThanks {
+  margin: 0;
+  color: var(--ice);
+}
+
+.blobButton {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.swatches {
+  display: flex;
+  gap: 10px;
+}
+
+.swatch {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swatch:disabled {
+  opacity: 0.25;
+  border-style: dashed;
+  cursor: default;
+}
+
+.swatchOn {
+  outline: 3px solid var(--cream);
+  outline-offset: 3px;
+}
+
+.kickList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kickList li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px;
+  background: var(--burgundy-deep);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.kickList .textButton {
+  margin-left: auto;
 }

@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "tortenelem",
+    "name": "Történelem"
+  },
+  {
+    "slug": "foldrajz",
+    "name": "Földrajz"
+  },
+  {
+    "slug": "tudomany",
+    "name": "Tudomány és természet"
+  },
+  {
+    "slug": "film",
+    "name": "Film és tévé"
+  },
+  {
+    "slug": "zene",
+    "name": "Zene"
+  },
+  {
+    "slug": "sport",
+    "name": "Sport"
+  },
+  {
+    "slug": "gasztro",
+    "name": "Étel és ital"
+  },
+  {
+    "slug": "magyarorszag",
+    "name": "Magyarország"
+  }
+]

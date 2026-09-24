@@ -1,14 +1,11 @@
 // Single source of truth for game limits and timings. Server and clients both
 // import from here so the numbers can never drift apart.
 
-export const LANGS = ['hu', 'en'] as const;
-export type Lang = (typeof LANGS)[number];
-
 export const MIN_PLAYERS = 2;
 export const MAX_PLAYERS = 6;
 export const NAME_MAX_LENGTH = 12;
 
-// Consonants only, so a random code can't spell a real word in HU or EN.
+// Consonants only, so a random code can't spell a real word.
 export const ROOM_CODE_ALPHABET = 'BCDFGHJKLMNPQRSTVWXZ';
 export const ROOM_CODE_LENGTH = 4;
 
@@ -42,3 +39,50 @@ export function isValidRoomCode(code: string): boolean {
   for (const ch of code) if (!ROOM_CODE_ALPHABET.includes(ch)) return false;
   return true;
 }
+
+// ---------------------------------------------------------------------------
+// Game flow
+
+export const TOTAL_ROUNDS = 10;
+export const VOTE_OPTIONS = 3;
+export const CHOICES_PER_QUESTION = 4;
+
+/** Phase lengths in ms. Phases waiting on players end early once all acted. */
+export const TIMINGS = {
+  intro: 4_000,
+  vote: 8_000,
+  questionRead: 2_000,
+  questionOpen: 20_000,
+  reveal: 6_000,
+  scoreboard: 4_000,
+} as const;
+export type TimingKey = keyof typeof TIMINGS;
+
+export type Difficulty = 1 | 2 | 3;
+
+/** Easy rounds 1–3, medium 4–7, hard 8–10. */
+export function difficultyForRound(round: number, totalRounds = TOTAL_ROUNDS): Difficulty {
+  const f = round / totalRounds;
+  if (f <= 0.3) return 1;
+  if (f <= 0.7) return 2;
+  return 3;
+}
+
+export const POINTS_BASE = 500;
+export const POINTS_SPEED_BONUS = 500;
+
+/** 500–1000 for a correct answer, scaled by how much time was left. */
+export function scoreAnswer(correct: boolean, responseMs: number, openMs: number): number {
+  if (!correct) return 0;
+  const used = Math.min(1, Math.max(0, responseMs / openMs));
+  return Math.round(POINTS_BASE + POINTS_SPEED_BONUS * (1 - used));
+}
+
+/** Upper bound on the latency credit a slow phone gets (one-way, ms). */
+export const MAX_LATENCY_CREDIT_MS = 150;
+
+export const FLAG_REASONS = ['wrong_answer', 'ambiguous', 'typo', 'offensive', 'other'] as const;
+export type FlagReason = (typeof FLAG_REASONS)[number];
+
+/** A question is retired once flags come from this many different matches. */
+export const FLAG_RETIRE_MATCHES = 2;

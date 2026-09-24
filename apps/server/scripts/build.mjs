@@ -7,7 +7,7 @@ const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url
 const external = Object.keys(pkg.dependencies).filter((name) => !name.startsWith('@trivia/'));
 
 await build({
-  entryPoints: ['src/index.ts', 'src/migrate.ts'],
+  entryPoints: ['src/index.ts', 'src/release.ts'],
   outdir: 'dist',
   bundle: true,
   platform: 'node',

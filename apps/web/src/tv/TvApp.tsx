@@ -1,15 +1,16 @@
-import { strings, type HostSession, type HostView, type Lang } from '@trivia/shared';
+import { t, type HostSession, type HostView } from '@trivia/shared';
 import { useEffect, useState } from 'react';
-import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
+import { roughSync, syncClock } from '../net/clock.ts';
 import { ACK_TIMEOUT_MS } from '../net/socket.ts';
+import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
 import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
 import { Marquee } from '../ui/Marquee.tsx';
-import { LanguagePicker } from './LanguagePicker.tsx';
-import { Lobby } from './Lobby.tsx';
+import { StartScreen } from './StartScreen.tsx';
+import { TvStage } from './TvStage.tsx';
 import styles from './Tv.module.css';
 
-type Screen = { kind: 'boot' } | { kind: 'pick' } | { kind: 'live'; view: HostView | null };
+type Screen = { kind: 'boot' } | { kind: 'start' } | { kind: 'live'; view: HostView | null };
 
 function householdId(): string {
   const existing = readJson<string>(KEYS.household);
@@ -19,18 +20,25 @@ function householdId(): string {
   return id;
 }
 
+function goFullscreen(): void {
+  document.documentElement.requestFullscreen?.().catch(() => {});
+}
+
 export function TvApp() {
   const socket = useSocket();
   const connected = useConnected(socket);
   const [screen, setScreen] = useState<Screen>({ kind: 'boot' });
   const [creating, setCreating] = useState(false);
+  // Browsers only allow sound after a click; a resumed TV needs one again.
+  const [activated, setActivated] = useState(() => navigator.userActivation?.hasBeenActive ?? false);
 
   useEffect(() => {
     // Runs on first connect and after every reconnect: re-claim the TV seat.
     async function onConnect() {
+      void syncClock(socket);
       const session = readJson<HostSession>(KEYS.hostSession);
       if (!session) {
-        setScreen((s) => (s.kind === 'boot' ? { kind: 'pick' } : s));
+        setScreen((s) => (s.kind === 'boot' ? { kind: 'start' } : s));
         return;
       }
       try {
@@ -43,13 +51,16 @@ export function TvApp() {
         return; // timed out; the next reconnect will retry
       }
       removeKey(KEYS.hostSession);
-      setScreen({ kind: 'pick' });
+      setScreen({ kind: 'start' });
     }
 
-    const onView = (view: HostView) => setScreen({ kind: 'live', view });
+    const onView = (view: HostView) => {
+      roughSync(view.serverNow);
+      setScreen({ kind: 'live', view });
+    };
     const onClosed = () => {
       removeKey(KEYS.hostSession);
-      setScreen({ kind: 'pick' });
+      setScreen({ kind: 'start' });
     };
 
     socket.on('connect', onConnect);
@@ -63,38 +74,48 @@ export function TvApp() {
     };
   }, [socket]);
 
-  async function createRoom(lang: Lang) {
+  async function createRoom() {
     if (creating) return;
     setCreating(true);
+    setActivated(true);
+    goFullscreen();
     try {
-      const res = await socket
-        .timeout(ACK_TIMEOUT_MS)
-        .emitWithAck('host:create', { householdId: householdId(), lang });
+      const res = await socket.timeout(ACK_TIMEOUT_MS).emitWithAck('host:create', { householdId: householdId() });
       if (res.ok) {
-        writeJson(KEYS.hostSession, { roomCode: res.roomCode, hostToken: res.hostToken });
+        writeJson(KEYS.hostSession, { roomCode: res.roomCode, hostToken: res.hostToken } satisfies HostSession);
         setScreen((s) => (s.kind === 'live' ? s : { kind: 'live', view: null }));
       }
     } catch {
-      // Stay on the picker; the button becomes clickable again.
+      // Stay on the start screen; the button becomes clickable again.
     } finally {
       setCreating(false);
     }
   }
 
-  const lang = screen.kind === 'live' && screen.view ? screen.view.lang : 'en';
-
   return (
     <div className={styles.tv}>
       <Marquee>
-        {screen.kind === 'pick' && <LanguagePicker onPick={createRoom} disabled={creating || !connected} />}
-        {screen.kind === 'live' && screen.view && <Lobby view={screen.view} />}
+        {screen.kind === 'start' && <StartScreen onStart={createRoom} disabled={creating || !connected} />}
+        {screen.kind === 'live' && screen.view && <TvStage view={screen.view} />}
         {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
-          <p className={styles.center}>{strings(lang).connecting}</p>
+          <p className={styles.center}>{t.connecting}</p>
         )}
         {!connected && screen.kind !== 'boot' && (
           <div className={styles.banner} role="status">
-            {strings(lang).reconnecting}
+            {t.reconnecting}
           </div>
+        )}
+        {screen.kind === 'live' && !activated && (
+          <button
+            className={styles.activate}
+            autoFocus
+            onClick={() => {
+              setActivated(true);
+              goFullscreen();
+            }}
+          >
+            {t.clickToContinue}
+          </button>
         )}
       </Marquee>
     </div>

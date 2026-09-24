@@ -1,0 +1,86 @@
+.otto {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.face {
+  flex: none;
+  filter: drop-shadow(0.3em 0.3em 0 var(--burgundy-deep));
+}
+
+.bubble {
+  position: relative;
+  max-width: 26em;
+  margin: 0 0 2em;
+  padding: 0.8em 1.1em;
+  background: var(--cream);
+  color: var(--burgundy);
+  border: 0.18em solid var(--burgundy-deep);
+  border-radius: 1em;
+  font-size: 1.7em;
+  font-weight: 800;
+  line-height: 1.25;
+  box-shadow: 0.2em 0.2em 0 var(--burgundy-deep);
+  animation: pop 260ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -0.9em;
+  bottom: 0.8em;
+  border: 0.5em solid transparent;
+  border-right: 0.6em solid var(--burgundy-deep);
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+.mustache {
+  transform-origin: 100px 130px;
+  animation: wiggle 5s ease-in-out infinite;
+}
+
+.eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 4.5s infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  88%,
+  100% {
+    transform: rotate(0);
+  }
+  92% {
+    transform: rotate(-4deg);
+  }
+  96% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mustache,
+  .eye,
+  .bubble {
+    animation: none;
+  }
+}

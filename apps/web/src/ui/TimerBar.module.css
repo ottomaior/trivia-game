@@ -1,0 +1,40 @@
+.timer {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 2.4em;
+}
+
+.track {
+  flex: 1;
+  height: 1.1em;
+  background: var(--burgundy-deep);
+  border: 0.15em solid var(--burgundy-deep);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--mustard);
+  border-radius: 999px;
+  transform-origin: left center;
+  transition: transform 100ms linear;
+}
+
+.seconds {
+  min-width: 1.6em;
+  font-family: var(--font-display);
+  font-size: 2.2em;
+  line-height: 1;
+  text-align: right;
+  color: var(--mustard);
+}
+
+.urgent .fill {
+  background: var(--rust);
+}
+
+.urgent .seconds {
+  color: var(--rust);
+}

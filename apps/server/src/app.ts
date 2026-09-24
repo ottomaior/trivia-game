@@ -9,6 +9,7 @@ import Fastify from 'fastify';
 import { existsSync } from 'node:fs';
 import { Server } from 'socket.io';
 import { systemClock, type Clock } from './clock.ts';
+import type { Rng } from './content/select.ts';
 import type { Store } from './db/store.ts';
 import { attachSocketHandlers, broadcast, closeRoom, type SocketData } from './net/socketServer.ts';
 import { RoomManager } from './rooms/RoomManager.ts';
@@ -16,6 +17,10 @@ import { RoomManager } from './rooms/RoomManager.ts';
 export interface AppOptions {
   store: Store;
   clock?: Clock;
+  rng?: Rng;
+  /** Multiplies every phase length; < 1 speeds games up for tests. */
+  timingScale?: number;
+  totalRounds?: number;
   /** Built web app to serve; skipped when missing (dev uses the Vite server). */
   webDistDir?: string;
   sweepIntervalMs?: number;
@@ -34,10 +39,15 @@ export async function createApp(opts: AppOptions) {
 
   const rooms = new RoomManager({
     clock,
+    store: opts.store,
+    rng: opts.rng,
+    timingScale: opts.timingScale,
+    totalRounds: opts.totalRounds,
     lobbyGraceMs: LOBBY_DISCONNECT_GRACE_MS,
     hostAbsentTtlMs: HOST_ABSENT_ROOM_TTL_MS,
     onChange: (room) => broadcast(io, room, clock()),
     onClose: (room) => closeRoom(io, room),
+    log: app.log,
   });
   attachSocketHandlers({ io, rooms, store: opts.store, clock, log: app.log });
 

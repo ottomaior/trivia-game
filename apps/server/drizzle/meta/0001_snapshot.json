@@ -1,5 +1,5 @@
 {
-  "id": "1d1ac422-08af-4905-b50e-53cb25103958",
+  "id": "6ec9d58b-4da3-486a-8d64-58fb70253dd5",
   "prevId": "0b60b00e-f441-4747-ab4e-bfffa220a5ae",
   "version": "7",
   "dialect": "postgresql",
@@ -20,14 +20,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "name_hu": {
-          "name": "name_hu",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name_en": {
-          "name": "name_en",
+        "name": {
+          "name": "name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -75,12 +69,6 @@
         },
         "prompt_version": {
           "name": "prompt_version",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "lang": {
-          "name": "lang",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -452,12 +440,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "lang": {
-          "name": "lang",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "settings": {
           "name": "settings",
           "type": "jsonb",
@@ -604,12 +586,6 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "lang": {
-          "name": "lang",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "category_id": {
           "name": "category_id",
           "type": "integer",
@@ -712,12 +688,6 @@
           "name": "questions_selection_idx",
           "columns": [
             {
-              "expression": "lang",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
               "expression": "category_id",
               "isExpression": false,
               "asc": true,
@@ -780,21 +750,16 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "questions_lang_norm_hash_unique": {
-          "name": "questions_lang_norm_hash_unique",
+        "questions_norm_hash_unique": {
+          "name": "questions_norm_hash_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "lang",
             "norm_hash"
           ]
         }
       },
       "policies": {},
       "checkConstraints": {
-        "questions_lang_check": {
-          "name": "questions_lang_check",
-          "value": "\"questions\".\"lang\" in ('hu', 'en')"
-        },
         "questions_kind_check": {
           "name": "questions_kind_check",
           "value": "\"questions\".\"kind\" in ('mc', 'link', 'sort')"
@@ -805,7 +770,7 @@
         },
         "questions_source_check": {
           "name": "questions_source_check",
-          "value": "\"questions\".\"source\" in ('claude', 'opentdb', 'manual')"
+          "value": "\"questions\".\"source\" in ('claude', 'manual')"
         },
         "questions_status_check": {
           "name": "questions_status_check",
