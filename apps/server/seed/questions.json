@@ -4578,5 +4578,1625 @@
       "Melampusz"
     ],
     "explanation": "Az öreg kutya felismeri koldusnak álcázott gazdáját, majd nem sokkal később elpusztul."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik kitalált városban élnek Simpsonék?",
+    "answer": "Springfield",
+    "wrong": [
+      "Shelbyville",
+      "Quahog",
+      "South Park"
+    ],
+    "explanation": "A sorozat szándékosan titokban tartja, melyik államban van, hiszen Amerikában tucatnyi Springfield létezik."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Milyen állat Brian, a Griffin család beszélő, okoskodó tagja a Family Guyban?",
+    "answer": "Kutya",
+    "wrong": [
+      "Macska",
+      "Papagáj",
+      "Majom"
+    ],
+    "explanation": "Brian eredeti hangja a sorozat alkotója, Seth MacFarlane, aki Petert és Stewie-t is megszólaltatja."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Milyen rokona Rick Mortynak a Rick és Morty című rajzfilmsorozatban?",
+    "answer": "A nagyapja",
+    "wrong": [
+      "Az apja",
+      "A nagybátyja",
+      "A keresztapja"
+    ],
+    "explanation": "Rick Morty anyjának, Bethnek az apja, és a család garázsában rendezte be a laborját."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Hány évet tölt lefagyasztva Fry, a Futurama főhőse, mielőtt a jövőben felébred?",
+    "answer": "1000",
+    "wrong": [
+      "100",
+      "500",
+      "2000"
+    ],
+    "explanation": "Fry 1999 szilveszterén pizzafutárként esik bele egy hibernálókapszulába."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik volt az első teljes egészében számítógéppel animált egész estés mozifilm?",
+    "answer": "Toy Story – Játékháború",
+    "wrong": [
+      "Z, a hangya",
+      "Egy bogár élete",
+      "Shrek"
+    ],
+    "explanation": "Az 1995-ös filmben Woody eredeti hangja Tom Hanks, Buzz Lightyearé pedig Tim Allen."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Hová indul Carl a léggömbökkel a magasba emelt házával a Fel! című filmben?",
+    "answer": "Egy dél-amerikai vízeséshez",
+    "wrong": [
+      "Egy afrikai szavannára",
+      "Egy ausztrál korallzátonyhoz",
+      "Egy tibeti kolostorhoz"
+    ],
+    "explanation": "Carl még gyerekként ígérte meg Ellie-nek, hogy elviszi oda; a vízesést a venezuelai Angel-vízesés ihlette."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik érzelem kék színű az Agymanók című Pixar-filmben?",
+    "answer": "Bánat",
+    "wrong": [
+      "Majré",
+      "Undor",
+      "Harag"
+    ],
+    "explanation": "Derű sárga, Harag piros, Majré lila, Undor pedig zöld."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik város állatkertjében élnek a Madagaszkár című film állathősei a történet elején?",
+    "answer": "New York",
+    "wrong": [
+      "Los Angeles",
+      "Chicago",
+      "San Diego"
+    ],
+    "explanation": "Az oroszlán Alex, a zebra Marty, a zsiráf Melman és a víziló Gloria a Central Park állatkertjében lakik."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Hogy hívják Hablaty fekete sárkányát az Így neveld a sárkányodat című filmben?",
+    "answer": "Fogatlan",
+    "wrong": [
+      "Éjszárny",
+      "Parázs",
+      "Füstös"
+    ],
+    "explanation": "A nevét onnan kapta, hogy behúzható fogai miatt elsőre fogatlannak tűnt."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Hogy hívják Az oroszlánkirály magyar szinkronjában Simba gonosz nagybátyját?",
+    "answer": "Zordon",
+    "wrong": [
+      "Mufasa",
+      "Rafiki",
+      "Kovu"
+    ],
+    "explanation": "Eredeti angol neve Scar, vagyis sebhely, a szeme feletti heg miatt; a magyar név a „zord” szóból ered."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Mi a Jégvarázs Let It Go című dalának magyar címe?",
+    "answer": "Legyen hó",
+    "wrong": [
+      "Engedd el",
+      "Szabad vagyok",
+      "Jégszív"
+    ],
+    "explanation": "A magyar változatot Füredi Nikolett énekli, az eredeti dal pedig 2014-ben Oscar-díjat nyert."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Ki kölcsönzi eredetiben Maui, a félisten hangját a Vaiana című animációs filmben?",
+    "answer": "Dwayne Johnson",
+    "wrong": [
+      "Jason Momoa",
+      "Vin Diesel",
+      "Kevin Hart"
+    ],
+    "explanation": "Maui testén élő tetoválások mozognak, ezeket hagyományos, kézzel rajzolt animációval készítették."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik Disney-rajzfilm gonosza Szörnyella de Frász?",
+    "answer": "101 kiskutya",
+    "wrong": [
+      "Csipkerózsika",
+      "Hófehérke és a hét törpe",
+      "A kis hableány"
+    ],
+    "explanation": "Eredeti neve Cruella de Vil, amely az angol „cruel” (kegyetlen) és „devil” (ördög) szóra játszik rá."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Melyik Pokémon volt Ash Ketchum elválaszthatatlan társa a rajzfilmsorozatban?",
+    "answer": "Pikachu",
+    "wrong": [
+      "Psyduck",
+      "Jigglypuff",
+      "Eevee"
+    ],
+    "explanation": "Pikachu már az első részben megtagadja, hogy bebújjon a pokélabdájába, ezért mindig Ash mellett jár."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 1,
+    "prompt": "Hány sárkánygömböt kell összegyűjteni a Dragon Ballban ahhoz, hogy megjelenjen a kívánságteljesítő sárkány?",
+    "answer": "7",
+    "wrong": [
+      "3",
+      "5",
+      "9"
+    ],
+    "explanation": "Minden gömbön egytől hétig terjedő számú csillag jelzi, melyik darabról van szó."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Milyen rajtszámmal versenyez Villám McQueen a Verdákban?",
+    "answer": "95",
+    "wrong": [
+      "43",
+      "51",
+      "86"
+    ],
+    "explanation": "A szám a Pixar első egész estés filmje, a Toy Story bemutatásának évére, 1995-re utal."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Melyik városban köt ki Némó egy fogorvosi rendelő akváriumában?",
+    "answer": "Sydney",
+    "wrong": [
+      "Melbourne",
+      "Brisbane",
+      "Perth"
+    ],
+    "explanation": "A címet egy búvármaszkról olvassák le: P. Sherman, Wallaby Way 42., Sydney."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Kiről kapta a címét a Pixar Coco című filmje?",
+    "answer": "Miguel dédnagymamájáról",
+    "wrong": [
+      "Miguel kutyájáról",
+      "Miguel gitárjáról",
+      "Miguel szülőfalujáról"
+    ],
+    "explanation": "Mamá Coco apja, Héctor valójában Miguel ükapja, és ő írta a film híres dalát is."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mit lát Po, amikor végre kinyitja a Sárkánytekercset a Kung Fu Pandában?",
+    "answer": "Csak a saját tükörképét",
+    "wrong": [
+      "Egy titkos térképet",
+      "Egy ősi receptet",
+      "Egy harci mozdulatsort"
+    ],
+    "explanation": "A tanulság ugyanaz, mint Po apjának levesénél: nincs titkos hozzávaló."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mit veszít el Hablaty az Így neveld a sárkányodat első részének végén, a nagy csatában?",
+    "answer": "Az egyik lábát",
+    "wrong": [
+      "Az egyik kezét",
+      "Az egyik szemét",
+      "A hallását"
+    ],
+    "explanation": "Így sorstársa lesz a sárkányának, akinek a farkából szintén hiányzik egy darab."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mi menti meg Annát attól, hogy végleg jéggé dermedjen a Jégvarázs végén?",
+    "answer": "Az Elsáért hozott önfeláldozása",
+    "wrong": [
+      "Kristoff csókja",
+      "Hans csókja",
+      "A trollok varázslata"
+    ],
+    "explanation": "A trollok szerint csak egy igaz szeretetből fakadó tett olvaszthatja fel a fagyott szívet, és ez végül nem egy csók lett."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mire használja Aladdin a harmadik, egyben utolsó kívánságát az 1992-es Disney-rajzfilmben?",
+    "answer": "Szabadon engedi Dzsinit",
+    "wrong": [
+      "Herceggé változik",
+      "Legyőzi Jafart",
+      "Feleségül veszi Jázmint"
+    ],
+    "explanation": "Első kívánságával herceggé vált, a másodikat pedig Dzsini használta fel, hogy kimentse őt a vízből."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Milyen nyelvből származik Az oroszlánkirályból ismert „hakuna matata” kifejezés?",
+    "answer": "Szuahéli",
+    "wrong": [
+      "Zulu",
+      "Joruba",
+      "Amhara"
+    ],
+    "explanation": "Jelentése nagyjából „nincs gond”; szuahéliül Simba neve is azt jelenti: oroszlán."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mivel zárják el Simpsonék városát a külvilágtól a sorozat 2007-es mozifilmjében?",
+    "answer": "Egy óriási üvegkupolával",
+    "wrong": [
+      "Egy magas betonfallal",
+      "Egy mély vizesárokkal",
+      "Egy szögesdrót-kerítéssel"
+    ],
+    "explanation": "Homer egy hulladékkal teli silót borít a tóba, ezért a hatóságok elszigetelik a várost."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mivé változtatja magát Rick a Rick és Morty egyik leghíresebb részében, hogy ne kelljen családterápiára mennie?",
+    "answer": "Savanyú uborkává",
+    "wrong": [
+      "Kerti törpévé",
+      "Aranyhallá",
+      "Kaktusszá"
+    ],
+    "explanation": "A Pickle Rick című rész 2018-ban Emmy-díjat nyert a legjobb animációs műsor kategóriájában."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mi a Naruto című anime címszereplőjének nagy álma?",
+    "answer": "Hokage akar lenni",
+    "wrong": [
+      "Kalózkirály akar lenni",
+      "Pokémon-mester akar lenni",
+      "Szamuráj akar lenni"
+    ],
+    "explanation": "A Hokage a nindzsafalu vezetője, és Naruto végül valóban a hetedik Hokage lesz."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Mivé változnak Chihiro szülei, miután engedély nélkül lakmároznak a szellemeknek szánt ételekből?",
+    "answer": "Disznókká",
+    "wrong": [
+      "Békákká",
+      "Szobrokká",
+      "Madarakká"
+    ],
+    "explanation": "A Chihiro Szellemországban 2003-ban elnyerte a legjobb animációs filmnek járó Oscar-díjat."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Melyik rajzfilmfigura látható a japán Studio Ghibli logójában?",
+    "answer": "Totoro",
+    "wrong": [
+      "Ponyo",
+      "Porco Rosso",
+      "Kiki"
+    ],
+    "explanation": "Totoro az 1988-as Totoro – A varázserdő titka című film erdei szelleme."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Melyik Pokémonná fejlődik tovább Pikachu?",
+    "answer": "Raichu",
+    "wrong": [
+      "Pichu",
+      "Jolteon",
+      "Plusle"
+    ],
+    "explanation": "Ash Pikachuja híres arról, hogy a sorozatban nem volt hajlandó továbbfejlődni."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 2,
+    "prompt": "Ki adta Shrek magyar hangját az első négy Shrek-filmben?",
+    "answer": "Gesztesi Károly",
+    "wrong": [
+      "Rudolf Péter",
+      "Szervét Tibor",
+      "Reviczky Gábor"
+    ],
+    "explanation": "Gesztesi a Verdák Matukájának is a magyar hangja volt; 2020-ban hunyt el."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Ki adta eredetiben Edna Mode, a szuperhősjelmez-tervező hangját A hihetetlen családban?",
+    "answer": "Brad Bird",
+    "wrong": [
+      "John Lasseter",
+      "Pete Docter",
+      "Andrew Stanton"
+    ],
+    "explanation": "Bird a film rendezője és forgatókönyvírója is; Edna szerint szuperhősjelmezre soha nem kerülhet köpeny."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik régi musicalt nézi újra és újra WALL-E, a magányos takarítórobot?",
+    "answer": "Hello, Dolly!",
+    "wrong": [
+      "Ének az esőben",
+      "A muzsika hangja",
+      "My Fair Lady"
+    ],
+    "explanation": "A robot egy videokazettáról leste el, hogyan kell kézen fogni valakit."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik ismert üzletember volt a Pixar fő tulajdonosa 1986 és 2006 között?",
+    "answer": "Steve Jobs",
+    "wrong": [
+      "Bill Gates",
+      "Jeffrey Katzenberg",
+      "Larry Ellison"
+    ],
+    "explanation": "Jobs 1986-ban vásárolta meg a céget George Lucastól, az eladás után pedig a Disney legnagyobb magánrészvényese lett."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik volt az első animációs film, amelyet a legjobb filmnek járó Oscar-díjra jelöltek?",
+    "answer": "A szépség és a szörnyeteg",
+    "wrong": [
+      "Hófehérke és a hét törpe",
+      "Az oroszlánkirály",
+      "Aladdin"
+    ],
+    "explanation": "Az 1991-es Disney-film után a Fel! és a Toy Story 3. is bekerült a legjobb filmek jelöltjei közé."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Milyen állat Tai Lung, az első Kung Fu Panda-film gonosza?",
+    "answer": "Hópárduc",
+    "wrong": [
+      "Tigris",
+      "Gepárd",
+      "Jaguár"
+    ],
+    "explanation": "Tai Lungot egykor Shifu mester nevelte fel fiaként, és ő volt a legjobb tanítványa."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Ki szólaltatta meg magyarul Szamarat az első négy Shrek-filmben, és Peter Griffint a Family Guyban?",
+    "answer": "Kerekes József",
+    "wrong": [
+      "Háda János",
+      "Stohl András",
+      "Epres Attila"
+    ],
+    "explanation": "Kerekes Jim Carrey állandó magyar hangja is, például az Ace Ventura-filmekben."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik amerikai tévéműsorban tűntek fel először Simpsonék, rövid rajzfilmbetétek formájában?",
+    "answer": "The Tracey Ullman Show",
+    "wrong": [
+      "Saturday Night Live",
+      "The Tonight Show",
+      "Late Night with David Letterman"
+    ],
+    "explanation": "Az 1987-es bejátszások után a család 1989 decemberében kapott saját, félórás sorozatot."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "A Rick és Morty egyik része szerint mit jelent Rick szavajárása, a „Wubba lubba dub dub”?",
+    "answer": "Nagy fájdalmat érzek, kérlek, segíts",
+    "wrong": [
+      "Minden a legnagyobb rendben",
+      "Soha ne add fel, Morty",
+      "Semminek sincs értelme"
+    ],
+    "explanation": "Ezt Madárember, Rick régi harcostársa árulja el: az ő népének nyelvén jelenti ezt."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik Pokémonról szólt az az 1997-es japán epizód, amelynek villódzó fényei több száz nézőnél okoztak rosszullétet?",
+    "answer": "Porygon",
+    "wrong": [
+      "Magnemite",
+      "Voltorb",
+      "Electabuzz"
+    ],
+    "explanation": "Az eset után a sorozat négy hónapig nem került adásba Japánban."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik klán tagjainak különleges szemképessége a Sharingan a Narutóban?",
+    "answer": "Uchiha",
+    "wrong": [
+      "Hyuga",
+      "Nara",
+      "Akimichi"
+    ],
+    "explanation": "Kakashi mester is Sharingant visel: a szemét egykori csapattársától, Uchiha Obitótól kapta."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a Dragon Ballban azt a bolygót, ahol Son Goku született?",
+    "answer": "Vegeta",
+    "wrong": [
+      "Namek",
+      "Yardrat",
+      "Föld"
+    ],
+    "explanation": "A bolygót a harcos nép királyáról nevezték el, akinek a fia Goku nagy riválisa, Vegeta herceg."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Milyen gyümölcsért rajong Ryuk, a halálisten a Death Note című animében?",
+    "answer": "Alma",
+    "wrong": [
+      "Szőlő",
+      "Eper",
+      "Banán"
+    ],
+    "explanation": "Ryuk szerint az emberek világának almái sokkal lédúsabbak, mint a halálistenek világáé."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Rofusz Ferenc melyik háromperces rajzfilmje nyerte el 1981-ben az Oscar-díjat?",
+    "answer": "A légy",
+    "wrong": [
+      "A kő",
+      "Holtpont",
+      "Gravitáció"
+    ],
+    "explanation": "Ez volt az első Oscar-díj, amelyet magyar film nyert; a rajzfilm végig egy légy szemszögéből láttatja a világot."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik Jókai-mű alapján készült Dargay Attila Szaffi című rajzfilmje?",
+    "answer": "A cigánybáró",
+    "wrong": [
+      "Az arany ember",
+      "A kőszívű ember fiai",
+      "Egy magyar nábob"
+    ],
+    "explanation": "A film zenéje Johann Strauss azonos című operettjének dallamaira épül."
+  },
+  {
+    "category": "animacio",
+    "difficulty": 3,
+    "prompt": "Melyik énekesnő énekelte hétévesen a Vuk című rajzfilm főcímdalát?",
+    "answer": "Wolf Kati",
+    "wrong": [
+      "Szinetár Dóra",
+      "Zséda",
+      "Keresztes Ildikó"
+    ],
+    "explanation": "A dalt édesapja, Wolf Péter szerezte, aki a film zenéjét is jegyzi."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "A városi legenda szerint mi hiányzik a Lánchíd kőoroszlánjairól?",
+    "answer": "A nyelvük",
+    "wrong": [
+      "A karmuk",
+      "A sörényük",
+      "A farkuk"
+    ],
+    "explanation": "Valójában van nyelvük, csak alulról nem látszik. A szobrokat Marschalkó János faragta."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik budapesti hidat nevezték el egy magyar királynéról?",
+    "answer": "Erzsébet híd",
+    "wrong": [
+      "Margit híd",
+      "Szabadság híd",
+      "Árpád híd"
+    ],
+    "explanation": "A Sisiről elnevezett eredeti láncos híd a háborúban elpusztult, helyére 1964-ben új kábelhíd épült."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik az egyetlen budapesti metróállomás, ahol a kisföldalatti, a 2-es és a 3-as metró is megáll?",
+    "answer": "Deák Ferenc tér",
+    "wrong": [
+      "Kálvin tér",
+      "Astoria",
+      "Keleti pályaudvar"
+    ],
+    "explanation": "A tér nevét Deák Ferencről, „a haza bölcséről” kapta."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Mi a különlegessége a 4-es metró szerelvényeinek?",
+    "answer": "Vezető nélkül közlekednek",
+    "wrong": [
+      "Gumikerekeken futnak",
+      "Emeletes kocsikból állnak",
+      "Akkumulátorról üzemelnek"
+    ],
+    "explanation": "A 2014-ben megnyílt vonal szerelvényeit a francia Alstom gyártotta."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik két villamos jár a pesti Nagykörúton?",
+    "answer": "4-es és 6-os",
+    "wrong": [
+      "2-es és 47-es",
+      "47-es és 49-es",
+      "1-es és 3-as"
+    ],
+    "explanation": "A 6-os villamos 2011 óta éjszaka is közlekedik."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik budapesti szigeten rendezik a Sziget Fesztivált?",
+    "answer": "Hajógyári-sziget",
+    "wrong": [
+      "Margitsziget",
+      "Csepel-sziget",
+      "Népsziget"
+    ],
+    "explanation": "Az első, 1993-as fesztivál még Diáksziget néven futott."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Kik látják el a vasutas feladatokat a budapesti Gyermekvasúton, a mozdonyvezetést kivéve?",
+    "answer": "10–14 éves gyerekek",
+    "wrong": [
+      "Nyugdíjas vasutasok",
+      "Egyetemista önkéntesek",
+      "Vasúti szakiskolások"
+    ],
+    "explanation": "Az 1948-ban megnyílt vasút neve 1990-ig Úttörővasút volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik budapesti fürdő kültéri medencéiben szoktak a vendégek a vízben állva sakkozni?",
+    "answer": "Széchenyi fürdő",
+    "wrong": [
+      "Gellért fürdő",
+      "Rudas fürdő",
+      "Lukács fürdő"
+    ],
+    "explanation": "A városligeti neobarokk fürdőt 1913-ban adták át."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Hány kerülete van Budapestnek?",
+    "answer": "23",
+    "wrong": [
+      "21",
+      "22",
+      "25"
+    ],
+    "explanation": "A legfiatalabb, a XXIII. kerület 1994-ben jött létre, amikor Soroksár kivált a XX. kerületből."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik évben egyesült Pest, Buda és Óbuda Budapestté?",
+    "answer": "1873",
+    "wrong": [
+      "1848",
+      "1867",
+      "1896"
+    ],
+    "explanation": "Az egyesített főváros első polgármestere Kamermayer Károly lett."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Kinek a Városliget szélén álló szobrát döntötték le 1956. október 23-án úgy, hogy csak a csizmája maradt a talapzaton?",
+    "answer": "Sztálin",
+    "wrong": [
+      "Lenin",
+      "Marx",
+      "Engels"
+    ],
+    "explanation": "A csizmás tribün másolata 2006 óta a XXII. kerületi Memento Parkban látható."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik jármű viszi fel az utasokat a Lánchíd budai hídfőjétől a Várba?",
+    "answer": "Budavári Sikló",
+    "wrong": [
+      "Fogaskerekű",
+      "Libegő",
+      "Gyermekvasút"
+    ],
+    "explanation": "Az 1870-ben megnyílt sikló a háborús pusztítás után csak 1986-ban indult újra."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik strandfürdő működik a Margitszigeten?",
+    "answer": "Palatinus strand",
+    "wrong": [
+      "Dagály strand",
+      "Római strand",
+      "Csillaghegyi strand"
+    ],
+    "explanation": "A palatinus latinul nádort jelent: a sziget egykor József nádor birtoka volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Mi volt a budai Széll Kálmán tér neve 1951 és 2011 között?",
+    "answer": "Moszkva tér",
+    "wrong": [
+      "Lenin tér",
+      "Marx tér",
+      "Gagarin tér"
+    ],
+    "explanation": "A régi nevet őrzi Török Ferenc 2001-es filmje, a Moszkva tér."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 1,
+    "prompt": "Melyik ereklyét őrzik a budapesti Szent István-bazilikában?",
+    "answer": "A Szent Jobbot",
+    "wrong": [
+      "A Szent Koronát",
+      "Szent László hermáját",
+      "A koronázási palástot"
+    ],
+    "explanation": "Szent István király jobb kezét augusztus 20-án körmenetben hordozzák körbe."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "A későbbi Megyeri híd nevére kiírt 2006-os internetes szavazáson eleinte melyik akciósztár vezetett?",
+    "answer": "Chuck Norris",
+    "wrong": [
+      "Steven Seagal",
+      "Bruce Willis",
+      "Dolph Lundgren"
+    ],
+    "explanation": "Végül Stephen Colbert amerikai humorista nyerte a szavazást, a híd mégis a Megyeri nevet kapta."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik budapesti híd viselte eredetileg Ferenc József nevét?",
+    "answer": "Szabadság híd",
+    "wrong": [
+      "Margit híd",
+      "Erzsébet híd",
+      "Petőfi híd"
+    ],
+    "explanation": "Az 1896-os átadáson maga az uralkodó helyezte el az utolsó, ezüstből készült szegecset."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik budapesti pályaudvar csarnokát építette a párizsi Eiffel-cég?",
+    "answer": "Nyugati pályaudvar",
+    "wrong": [
+      "Keleti pályaudvar",
+      "Déli pályaudvar",
+      "Józsefvárosi pályaudvar"
+    ],
+    "explanation": "Az 1877-ben átadott csarnok 12 évvel idősebb az Eiffel-toronynál."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik két budapesti metróvonal halad át a Duna alatt?",
+    "answer": "M2 és M4",
+    "wrong": [
+      "M1 és M2",
+      "M2 és M3",
+      "M3 és M4"
+    ],
+    "explanation": "A kisföldalatti és a 3-as metró teljes hosszában a pesti oldalon fut."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik évben adták át a kisföldalattit?",
+    "answer": "1896",
+    "wrong": [
+      "1873",
+      "1886",
+      "1906"
+    ],
+    "explanation": "A kontinentális Európa első elektromos földalatti vasútja a honfoglalás ezeréves évfordulójára készült el."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik villamos halad a pesti Duna-parton, kilátással a budai Várra és a Gellért-hegyre?",
+    "answer": "2-es",
+    "wrong": [
+      "4-es",
+      "19-es",
+      "47-es"
+    ],
+    "explanation": "Útja során a Parlament és a Lánchíd is feltűnik az ablakban."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Milyen jelzést kaptak 2005-ben a budapesti éjszakai buszok az addigi É betű helyett?",
+    "answer": "900-as számokat",
+    "wrong": [
+      "100-as számokat",
+      "500-as számokat",
+      "700-as számokat"
+    ],
+    "explanation": "Az éjszakai hálózat 2005. szeptember 1-jén alakult át."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik budapesti téren áll a nulla kilométerkő, ahonnan a főutak távolságát mérik?",
+    "answer": "Clark Ádám tér",
+    "wrong": [
+      "Deák Ferenc tér",
+      "Kossuth Lajos tér",
+      "Szent György tér"
+    ],
+    "explanation": "A nulla alakú szobor Borsos Miklós alkotása, 1975-ben avatták fel."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik arkangyal áll a Hősök terén, a Millenniumi emlékmű oszlopának tetején?",
+    "answer": "Gábriel arkangyal",
+    "wrong": [
+      "Mihály arkangyal",
+      "Rafael arkangyal",
+      "Uriel arkangyal"
+    ],
+    "explanation": "Egyik kezében a Szent Koronát, a másikban az apostoli kettős keresztet tartja."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Hány méter magas az Országház és a Szent István-bazilika is?",
+    "answer": "96 méter",
+    "wrong": [
+      "86 méter",
+      "106 méter",
+      "116 méter"
+    ],
+    "explanation": "A szám a honfoglalás hagyományos évére, 896-ra utal."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Hány tornya van a Halászbástyának?",
+    "answer": "7",
+    "wrong": [
+      "5",
+      "9",
+      "12"
+    ],
+    "explanation": "A tornyok a honfoglaló hét magyar törzset jelképezik."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik budapesti templomban koronázták királlyá Ferenc Józsefet 1867-ben?",
+    "answer": "Mátyás-templom",
+    "wrong": [
+      "Szent István-bazilika",
+      "Szent Anna-templom",
+      "Egyetemi templom"
+    ],
+    "explanation": "A koronázásra Liszt Ferenc komponálta a Koronázási misét."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Mi volt a neve a mai Óbuda területén állt római kori városnak?",
+    "answer": "Aquincum",
+    "wrong": [
+      "Savaria",
+      "Sopianae",
+      "Scarbantia"
+    ],
+    "explanation": "Aquincum Alsó-Pannónia provincia székhelye volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik mai budapesti városrészben indította el Törley József a pezsgőgyárát 1882-ben?",
+    "answer": "Budafok",
+    "wrong": [
+      "Óbuda",
+      "Kőbánya",
+      "Csepel"
+    ],
+    "explanation": "A település akkor még Promontor néven önálló volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 2,
+    "prompt": "Melyik tévés nyomozó szobrát avatták fel 2014-ben a budapesti Falk Miksa utcában?",
+    "answer": "Columbo",
+    "wrong": [
+      "Kojak",
+      "Derrick",
+      "Magnum"
+    ],
+    "explanation": "A legenda szerint Peter Falk rokona volt az utca névadójának, de ezt soha nem bizonyították."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Kiről nevezték el eredetileg az 1937-ben átadott Petőfi hidat?",
+    "answer": "Horthy Miklós",
+    "wrong": [
+      "Bethlen István",
+      "Tisza István",
+      "Klebelsberg Kuno"
+    ],
+    "explanation": "A háborúban felrobbantott hidat 1952-ben már Petőfi Sándor nevével adták át újra."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Melyik ország szülötte volt Clark Ádám, aki a Lánchíd építését irányította?",
+    "answer": "Skócia",
+    "wrong": [
+      "Anglia",
+      "Írország",
+      "Wales"
+    ],
+    "explanation": "Clark Magyarországon maradt, és ő tervezte a Várhegy alatti Alagutat is."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Milyen villamosjárat-számot kapott 2008-ban a budai fogaskerekű vasút?",
+    "answer": "60",
+    "wrong": [
+      "33",
+      "66",
+      "99"
+    ],
+    "explanation": "A fogaskerekű 1874-ben indult el a Városmajor és a Svábhegy között."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Melyik két feltaláló szobra áll a Keleti pályaudvar főhomlokzatán?",
+    "answer": "James Watt és George Stephenson",
+    "wrong": [
+      "Thomas Edison és Nikola Tesla",
+      "Werner von Siemens és Rudolf Diesel",
+      "Robert Fulton és Samuel Morse"
+    ],
+    "explanation": "Watt a gőzgép tökéletesítője, Stephenson a gőzmozdony úttörője volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Kiről kapta a nevét Budapest IX. kerülete, Ferencváros?",
+    "answer": "I. Ferenc királyról",
+    "wrong": [
+      "Ferenc József királyról",
+      "II. Rákóczi Ferencről",
+      "Assisi Szent Ferencről"
+    ],
+    "explanation": "A pesti külváros 1792-ben, I. Ferenc trónra lépésének évében kapta a nevét."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Mi történt 1868-ban a Szent István-bazilika építése közben?",
+    "answer": "Beomlott a kupolája",
+    "wrong": [
+      "Árvíz öntötte el",
+      "Villám csapott bele",
+      "Földrengés rongálta meg"
+    ],
+    "explanation": "Az építkezést ezután Ybl Miklós vitte tovább, a templomot 1905-ben szentelték fel."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Mi volt a Margitsziget középkori neve?",
+    "answer": "Nyulak szigete",
+    "wrong": [
+      "Rókák szigete",
+      "Szarvasok szigete",
+      "Madarak szigete"
+    ],
+    "explanation": "Mai nevét IV. Béla lányáról, Szent Margitról kapta, aki a sziget kolostorában élt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Melyik pesti tér viselte 1936 és 1945 között Mussolini nevét?",
+    "answer": "Oktogon",
+    "wrong": [
+      "Körönd",
+      "Deák tér",
+      "Kálvin tér"
+    ],
+    "explanation": "A szocializmus idején November 7. tér volt, 1990-ben kapta vissza régi nevét."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Mit tervezett Reitter Ferenc mérnök az 1860-as években a mai pesti Nagykörút helyére?",
+    "answer": "Hajózható csatornát",
+    "wrong": [
+      "Körvasutat",
+      "Lóvasútvonalat",
+      "Lóversenypályát"
+    ],
+    "explanation": "A csatorna egy egykori Duna-ág nyomvonalát követte volna, de túl drágának bizonyult."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Melyik évben csatolták Budapesthez Újpestet, Kispestet, Csepelt és más környező településeket?",
+    "answer": "1950",
+    "wrong": [
+      "1938",
+      "1945",
+      "1956"
+    ],
+    "explanation": "Ekkor jött létre Nagy-Budapest: a fővároshoz 7 várost és 16 községet csatoltak."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Ki született a Dohány utcai zsinagóga melletti telken, ahol ma a Zsidó Múzeum áll?",
+    "answer": "Herzl Tivadar",
+    "wrong": [
+      "Robert Capa",
+      "Pulitzer József",
+      "Kertész Imre"
+    ],
+    "explanation": "Herzl a politikai cionizmus megalapítója, a zsidó állam gondolatának atyja volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Melyik ország szülötte volt Gerbeaud Emil, a Vörösmarty téri cukrászda névadója?",
+    "answer": "Svájc",
+    "wrong": [
+      "Franciaország",
+      "Belgium",
+      "Ausztria"
+    ],
+    "explanation": "Gerbeaud 1884-ben vette át Kugler Henrik cukrászdáját; a konyakos meggy és a macskanyelv tette híressé."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "A legenda szerint melyik budapesti kávéház kulcsát dobták a Dunába a megnyitáskor, hogy soha ne zárhasson be?",
+    "answer": "New York kávéház",
+    "wrong": [
+      "Centrál kávéház",
+      "Hadik kávéház",
+      "Pilvax kávéház"
+    ],
+    "explanation": "A tettet Molnár Ferencnek tulajdonítják, aki az 1894-es megnyitáskor még csak 16 éves volt."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Mit szállított eredetileg az ukrán A38 hajó, mielőtt Budapesten koncerthajóvá alakították?",
+    "answer": "Követ",
+    "wrong": [
+      "Gabonát",
+      "Szenet",
+      "Olajat"
+    ],
+    "explanation": "Az 1968-ban épült uszály a nevét az Artemovszk hajóosztály 38. egységeként kapta."
+  },
+  {
+    "category": "budapest",
+    "difficulty": 3,
+    "prompt": "Kiről mintázta Marton László a Duna-korzó korlátján ülő Kiskirálylány-szobrot?",
+    "answer": "A saját kislányáról",
+    "wrong": [
+      "Egy gyerekszínésznőről",
+      "Egy balettnövendékről",
+      "Az unokahúgáról"
+    ],
+    "explanation": "Az első, kisebb változat 1972-ben készült, a korzóra 1990-ben került a nagyobb szobor."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Mi a foglalkozása Mariónak, a Nintendo bajszos kabalafigurájának?",
+    "answer": "Vízvezeték-szerelő",
+    "wrong": [
+      "Villanyszerelő",
+      "Kőműves",
+      "Kéményseprő"
+    ],
+    "explanation": "Az 1983-as Mario Bros. játékban öccsével, Luigival New York csatornáiban irtotta a kártevőket."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Kik lopják el a madarak tojásait az Angry Birds-játékokban?",
+    "answer": "Zöld malacok",
+    "wrong": [
+      "Szürke patkányok",
+      "Fekete macskák",
+      "Zöld békák"
+    ],
+    "explanation": "A bosszúálló madarakat csúzlival lőjük ki, hogy ledöntsük a malacok ingatag építményeit."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a Minecraft zöld szörnyét, amely sziszegve felrobban, ha a játékos közelébe ér?",
+    "answer": "Creeper",
+    "wrong": [
+      "Slime",
+      "Enderman",
+      "Ghast"
+    ],
+    "explanation": "A creeper egy elrontott malacmodellből született: Notch, a játék alkotója véletlenül felcserélte a hosszát és a magasságát."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik országban készült el 1984-ben a Tetris?",
+    "answer": "Szovjetunió",
+    "wrong": [
+      "Japán",
+      "Egyesült Államok",
+      "Csehszlovákia"
+    ],
+    "explanation": "Alekszej Pazsitnov a játék nevét a görög tetra (négy) és kedvenc sportja, a tenisz összevonásából alkotta."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Miből ugranak ki a játékosok a Fortnite Battle Royale-meccsek elején?",
+    "answer": "Egy repülő buszból",
+    "wrong": [
+      "Egy helikopterből",
+      "Egy léghajóból",
+      "Egy szállítórepülőből"
+    ],
+    "explanation": "A csatabuszt egy hőlégballon tartja a levegőben, a sofőrnek pedig a játékban meg is lehet köszönni a fuvart."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik valódi városról mintázták a GTA V kitalált városát, Los Santost?",
+    "answer": "Los Angeles",
+    "wrong": [
+      "San Francisco",
+      "Las Vegas",
+      "Miami"
+    ],
+    "explanation": "A sorozat neve, a Grand Theft Auto az amerikai jogban a gépjárműlopást jelenti."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik évben jelent meg a Pokémon GO, amely miatt telefont szorongató Pokémon-vadászokkal teltek meg az utcák?",
+    "answer": "2016",
+    "wrong": [
+      "2012",
+      "2014",
+      "2018"
+    ],
+    "explanation": "A játék a telefon GPS-ét és kameráját használva rejti el a Pokémonokat a valódi környezetünkben."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik Nintendo-konzol mozgásérzékelős kontrollerével lehetett 2006-tól a nappaliban bowlingozni és teniszezni?",
+    "answer": "Wii",
+    "wrong": [
+      "GameCube",
+      "Nintendo 64",
+      "Nintendo DS"
+    ],
+    "explanation": "A legtöbb országban a konzol mellé csomagolták a Wii Sports sportjáték-gyűjteményt."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Milyen néven folytatódott 2023-tól az EA focijáték-sorozata, miután véget ért az együttműködése a FIFA-val?",
+    "answer": "EA Sports FC",
+    "wrong": [
+      "EA Sports Football",
+      "EA Sports Soccer",
+      "eFootball"
+    ],
+    "explanation": "Az első így elnevezett rész, az EA Sports FC 24 borítóján Erling Haaland szerepelt."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik lövöldözős játéksorozat részei a Modern Warfare, a Black Ops és a Warzone?",
+    "answer": "Call of Duty",
+    "wrong": [
+      "Battlefield",
+      "Medal of Honor",
+      "Counter-Strike"
+    ],
+    "explanation": "A sorozat 2003-as legelső része még a második világháborúban játszódott."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik országban játszódik a 2025-ös Assassin's Creed Shadows?",
+    "answer": "Japán",
+    "wrong": [
+      "Kína",
+      "Korea",
+      "Mongólia"
+    ],
+    "explanation": "A játék két főhőse egy nindzsa és egy valós történelmi alakról mintázott afrikai szamuráj."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik játéksorozat híres pénzszerző csalókódja a „motherlode”?",
+    "answer": "The Sims",
+    "wrong": [
+      "Grand Theft Auto",
+      "Age of Empires",
+      "Heroes of Might and Magic"
+    ],
+    "explanation": "A kód egyetlen beírással 50 000 simoleont tesz a család kasszájába."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Melyik magyar online kvízjátékban kell kérdések megválaszolásával megyéket szerezni Magyarország térképén?",
+    "answer": "Honfoglaló",
+    "wrong": [
+      "Országhódító",
+      "Megyeharc",
+      "Kvízcsata"
+    ],
+    "explanation": "A játék Triviador néven külföldön is megjelent."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Mit gyűjt a pályákon Sonic, a Sega kék sündisznója?",
+    "answer": "Aranygyűrűket",
+    "wrong": [
+      "Aranyérméket",
+      "Banánokat",
+      "Csillagokat"
+    ],
+    "explanation": "Ha Sonicot sérülés éri, elszóródnak a gyűrűi, gyűrű nélkül viszont már egy találat is az életébe kerül."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 1,
+    "prompt": "Mivel fociznak a játékosok a Rocket League-ben?",
+    "answer": "Autókkal",
+    "wrong": [
+      "Robotokkal",
+      "Drónokkal",
+      "Motorokkal"
+    ],
+    "explanation": "Az autók ugrani, sőt turbóval repülni is tudnak, így a labdát a levegőben is elérhetik."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Milyen felirat jelenik meg a GTA-játékokban, amikor a főhős meghal?",
+    "answer": "Wasted",
+    "wrong": [
+      "Busted",
+      "You Died",
+      "Game Over"
+    ],
+    "explanation": "A Busted felirat akkor jelenik meg, ha a rendőrség tartóztatja le a főhőst."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik játékban ad teljes életerőt, páncélt és pénzt a legendás HESOYAM csalókód?",
+    "answer": "GTA: San Andreas",
+    "wrong": [
+      "GTA III",
+      "GTA: Vice City",
+      "GTA IV"
+    ],
+    "explanation": "A kód 250 000 dollárt ad a játék főhősének, Carl „CJ” Johnsonnak."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Milyen blokkokból kell megépíteni a Nether-portál keretét a Minecraftban?",
+    "answer": "Obszidiánból",
+    "wrong": [
+      "Kőtéglából",
+      "Vasblokkokból",
+      "Gyémántblokkokból"
+    ],
+    "explanation": "Obszidián akkor keletkezik, amikor víz folyik álló lávára."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a The Sims szereplőinek halandzsanyelvét?",
+    "answer": "Simlish",
+    "wrong": [
+      "Simspeak",
+      "Simese",
+      "Simtalk"
+    ],
+    "explanation": "Katy Perry a Hot n Cold című slágerét simlish nyelven is felvette a The Sims 2 egyik kiegészítőjéhez."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik tárgy veszi célba mindig az éppen első helyen haladó versenyzőt a Mario Kartban?",
+    "answer": "A kék páncél",
+    "wrong": [
+      "A piros páncél",
+      "A zöld páncél",
+      "A banánhéj"
+    ],
+    "explanation": "A tüskés kék páncél 1996-ban, a Mario Kart 64-ben tűnt fel először."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a The Legend of Zelda-játékok zöld sapkás főhősét?",
+    "answer": "Link",
+    "wrong": [
+      "Ganon",
+      "Sheik",
+      "Impa"
+    ],
+    "explanation": "Sokan Zeldának hiszik, pedig Zelda a hercegnő, akit rendszerint neki kell megmentenie."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Alkotója, Ivatani Tóru szerint mi ihlette Pac-Man jellegzetes alakját?",
+    "answer": "Egy megkezdett pizza",
+    "wrong": [
+      "Egy megkezdett sajtkorong",
+      "Egy nyitott szájú hal",
+      "Egy félig nyitott kagyló"
+    ],
+    "explanation": "A játék eredeti japán címe Puck-Man volt."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik ország cégei készítették az Angry Birds és a Clash of Clans című mobiljátékokat?",
+    "answer": "Finnország",
+    "wrong": [
+      "Svédország",
+      "Dánia",
+      "Norvégia"
+    ],
+    "explanation": "Az Angry Birds a Rovio, a Clash of Clans a Supercell játéka."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik ország stúdiója, a CD Projekt Red készítette a The Witcher-játékokat?",
+    "answer": "Lengyelország",
+    "wrong": [
+      "Csehország",
+      "Ukrajna",
+      "Szlovákia"
+    ],
+    "explanation": "A játékok Andrzej Sapkowski lengyel író fantasyregényein alapulnak."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik videojáték világában játszódik a Netflix Arcane című animációs sorozata?",
+    "answer": "League of Legends",
+    "wrong": [
+      "Dota 2",
+      "World of Warcraft",
+      "Overwatch"
+    ],
+    "explanation": "A sorozat két főszereplője, a testvérpár Vi és Jinx a játékban is választható hős."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik rapper adott 2020 áprilisában óriási virtuális koncertet a Fortnite-ban?",
+    "answer": "Travis Scott",
+    "wrong": [
+      "Drake",
+      "Kanye West",
+      "Lil Nas X"
+    ],
+    "explanation": "Az Astronomical nevű eseményen Travis Scott gigantikus alakként lépdelt a játék szigetén."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Hogy hívták az Xbox 360-hoz 2010-ben megjelent kamerát, amellyel kontroller nélkül, a testünk mozgásával lehetett játszani?",
+    "answer": "Kinect",
+    "wrong": [
+      "EyeToy",
+      "PlayStation Eye",
+      "Wii MotionPlus"
+    ],
+    "explanation": "A Kinect az Xbox One-hoz is megjelent, a gyártását azonban 2017-ben leállították."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik Nintendo-kézikonzolra jelentek meg 1996-ban az első Pokémon-játékok?",
+    "answer": "Game Boy",
+    "wrong": [
+      "Game Boy Advance",
+      "Nintendo DS",
+      "Nintendo 3DS"
+    ],
+    "explanation": "Két Game Boy összekötőkábelével a játékosok Pokémonokat is cserélhettek egymással."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "A Portalban GLaDOS jutalmat ígér a játékosnak, a falfirkák szerint azonban ez a jutalom hazugság. Mi az?",
+    "answer": "Tortát",
+    "wrong": [
+      "Pizzát",
+      "Fagylaltot",
+      "Palacsintát"
+    ],
+    "explanation": "A falakra firkált „The cake is a lie” mondat a játékosok klasszikus mémje lett."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 2,
+    "prompt": "Melyik magyar uralkodó vezeti a magyarokat a Civilization VI stratégiai játékban?",
+    "answer": "Hunyadi Mátyás",
+    "wrong": [
+      "Szent István",
+      "IV. Béla",
+      "Nagy Lajos"
+    ],
+    "explanation": "A magyarok egyik különleges egysége a Fekete sereg, amely Mátyás híres zsoldoshadseregéről kapta a nevét."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Legalább milyen csákány kell a Minecraftban ahhoz, hogy gyémántot bányásszunk?",
+    "answer": "Vascsákány",
+    "wrong": [
+      "Kőcsákány",
+      "Aranycsákány",
+      "Facsákány"
+    ],
+    "explanation": "Az aranycsákány ugyan a leggyorsabb, de csak a facsákány szintjén bányászik."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik városban figyelt fel 1986-ban a Tetrisre Robert Stein szoftverkereskedő, akin keresztül a játék eljutott Nyugatra?",
+    "answer": "Budapest",
+    "wrong": [
+      "Prága",
+      "Varsó",
+      "Kelet-Berlin"
+    ],
+    "explanation": "Stein a budapesti SZKI intézetben látta először a játékot, és innen jutott el a nyugati kiadókhoz."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Mi a neve Pac-Man piros színű szellemének?",
+    "answer": "Blinky",
+    "wrong": [
+      "Pinky",
+      "Inky",
+      "Clyde"
+    ],
+    "explanation": "Blinky egyenesen Pac-Man nyomába ered, a rózsaszín Pinky pedig inkább elé próbál vágni."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Kiről kapta a nevét Mario, a Super Mario-játékok hőse?",
+    "answer": "A Nintendo amerikai raktárának bérbeadójáról",
+    "wrong": [
+      "Egy híres olasz autóversenyzőről",
+      "Egy New York-i pizzéria tulajdonosáról",
+      "Mijamoto Sigeru olasz szomszédjáról"
+    ],
+    "explanation": "A Seattle melletti raktár tulajdonosa Mario Segale volt; addig a figurát Jumpmannek hívták."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik Call of Duty-rész temetési jelenetéből ered a „Press F to pay respects” mém?",
+    "answer": "Advanced Warfare",
+    "wrong": [
+      "Modern Warfare 3",
+      "Black Ops II",
+      "Infinite Warfare"
+    ],
+    "explanation": "A jelenetben egy gombnyomással kellett leróni a kegyeletet egy elesett bajtárs koporsójánál."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Mi a neve annak a kártyajátéknak, amelyet Geralt a The Witcher 3-ban kocsmárosokkal és kereskedőkkel is játszhat?",
+    "answer": "Gwent",
+    "wrong": [
+      "Triple Triad",
+      "Pazaak",
+      "Caravan"
+    ],
+    "explanation": "A kártyajáték olyan népszerű lett, hogy 2018-ban önálló játékként is megjelent."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik Zelda-rész jelent meg 2017-ben ugyanazon a napon, mint a Nintendo Switch?",
+    "answer": "Breath of the Wild",
+    "wrong": [
+      "Tears of the Kingdom",
+      "Twilight Princess",
+      "Skyward Sword"
+    ],
+    "explanation": "A Twilight Princess ugyanígy a Wii egyik nyitócíme volt 2006-ban."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik cég konzoljához fejlesztett eredetileg CD-s kiegészítőt a Sony, mielőtt önálló konzolként kiadta a PlayStationt?",
+    "answer": "Nintendo",
+    "wrong": [
+      "Sega",
+      "Atari",
+      "Commodore"
+    ],
+    "explanation": "A Nintendo 1991-ben váratlanul kihátrált az együttműködésből, a Sony pedig saját konzolt épített."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik League of Legends-hős telepít láthatatlan, mérgező gombákat a pályára?",
+    "answer": "Teemo",
+    "wrong": [
+      "Ziggs",
+      "Heimerdinger",
+      "Veigar"
+    ],
+    "explanation": "Teemo a yordle nevű apró nép tagja, akárcsak Ziggs, Heimerdinger és Veigar."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "A Kingdom Come: Deliverance elején melyik magyar király kun zsoldosai dúlják fel a főhős szülőfaluját?",
+    "answer": "Luxemburgi Zsigmond",
+    "wrong": [
+      "Nagy Lajos",
+      "Károly Róbert",
+      "Habsburg Albert"
+    ],
+    "explanation": "A cseh fejlesztésű játék 1403-ban, valós történelmi események idején játszódik a Cseh Királyságban."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik filmből ered a Worms-játékok „Holy Hand Grenade”, azaz szent kézigránát nevű fegyvere?",
+    "answer": "Gyalog galopp",
+    "wrong": [
+      "Brian élete",
+      "Az értelem értelme",
+      "Űrgolyhók"
+    ],
+    "explanation": "A Wormsben a gránát robbanása előtt angyali „Halleluja!” kórus csendül fel."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik városban született Ezio Auditore, az Assassin's Creed II főhőse?",
+    "answer": "Firenze",
+    "wrong": [
+      "Velence",
+      "Róma",
+      "Milánó"
+    ],
+    "explanation": "Ezio emlékeit leszármazottja, Desmond Miles éli újra az Animus nevű gép segítségével."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik játék rajongói módosításaként indult 1999-ben a Counter-Strike?",
+    "answer": "Half-Life",
+    "wrong": [
+      "Quake",
+      "Doom",
+      "Unreal Tournament"
+    ],
+    "explanation": "A modot két rajongó, Minh Le és Jess Cliffe készítette, a Valve később megvásárolta."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Melyik évben indul a Red Dead Redemption 2 cselekménye?",
+    "answer": "1899",
+    "wrong": [
+      "1879",
+      "1889",
+      "1909"
+    ],
+    "explanation": "A főhős, Arthur Morgan a Van der Linde-banda tagja, a történet pedig az első rész előzménye."
+  },
+  {
+    "category": "jatekok",
+    "difficulty": 3,
+    "prompt": "Mit kántálnak az első Age of Empires papjai, amikor ellenséges egységeket térítenek a saját oldalukra?",
+    "answer": "Wololo",
+    "wrong": [
+      "Hozsanna",
+      "Halleluja",
+      "Ámen"
+    ],
+    "explanation": "A kántálást a játék hangtervezője, Chris Rippy egy családi videó hangjának torzításával készítette."
   }
 ]
