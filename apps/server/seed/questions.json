@@ -13038,5 +13038,905 @@
       "Magyar merinó"
     ],
     "explanation": "Fehér és fekete változata is van, a hortobágyi pásztorok jellegzetes, ősi fajtája."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Mit tesznek ki a gyerekek az ablakba december 5-én este, hogy a Mikulás megtöltse?",
+    "answer": "A csizmájukat",
+    "wrong": [
+      "A harisnyájukat",
+      "A papucsukat",
+      "A sapkájukat"
+    ],
+    "explanation": "A Mikulás alakját Szent Miklós, a kis-ázsiai Myra püspöke ihlette."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Mi látható a magyar címer pajzsa fölött?",
+    "answer": "A Szent Korona",
+    "wrong": [
+      "Egy turulmadár",
+      "Egy vörös csillag",
+      "Egy babérkoszorú"
+    ],
+    "explanation": "A korona nélküli változat a Kossuth-címer; az Országgyűlés 1990-ben a koronás címer mellett döntött."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Egy közismert legenda szerint mivel nem illik koccintani az aradi vértanúk 1849-es kivégzése óta?",
+    "answer": "Sörrel",
+    "wrong": [
+      "Borral",
+      "Pálinkával",
+      "Pezsgővel"
+    ],
+    "explanation": "A legenda szerint az osztrák tisztek sörrel koccintottak a kivégzések után, a fogadalom pedig 150 évre szólt."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik városban tartják farsang végén a busójárást?",
+    "answer": "Mohács",
+    "wrong": [
+      "Baja",
+      "Pécs",
+      "Szekszárd"
+    ],
+    "explanation": "A busójárás 2009 óta az UNESCO szellemi kulturális örökségének része."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Hogyan folytatódik a húsvéti locsolóvers: „Zöld erdőben jártam, …”?",
+    "answer": "kék ibolyát láttam",
+    "wrong": [
+      "fehér liliomot láttam",
+      "sárga tulipánt láttam",
+      "piros pipacsot láttam"
+    ],
+    "explanation": "A vers így folytatódik: „el akart hervadni, szabad-e locsolni?”"
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "A hagyományos értelmezés szerint mit jelképez a magyar zászló zöld színe?",
+    "answer": "A reményt",
+    "wrong": [
+      "A hűséget",
+      "Az erőt",
+      "A békét"
+    ],
+    "explanation": "Ugyanezen értelmezés szerint a piros az erőt, a fehér a hűséget jelképezi."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "A monda szerint melyik két testvér követte a csodaszarvast, amíg új hazára nem talált?",
+    "answer": "Hunor és Magor",
+    "wrong": [
+      "Álmos és Előd",
+      "Árpád és Kurszán",
+      "Csaba és Keve"
+    ],
+    "explanation": "A monda szerint Hunor a hunok, Magor pedig a magyarok ősatyja lett."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik király arcképe látható a 2025-ben forgalomban lévő 1000 forintos bankjegyen?",
+    "answer": "Mátyás király",
+    "wrong": [
+      "Szent István",
+      "Károly Róbert",
+      "IV. Béla"
+    ],
+    "explanation": "A 2000 forintoson Bethlen Gábor, az 5000-esen Széchenyi István portréja látható."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "A monda szerint melyik madár jelent meg Emese álmában, megjövendölve, hogy fiából, Álmosból nagy uralkodók születnek?",
+    "answer": "Turul",
+    "wrong": [
+      "Holló",
+      "Griff",
+      "Főnix"
+    ],
+    "explanation": "A monda szerint Álmos a nevét is erről az álomról kapta."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 1,
+    "prompt": "Melyik magyar várost nevezik a napfény városának?",
+    "answer": "Szeged",
+    "wrong": [
+      "Debrecen",
+      "Kecskemét",
+      "Pécs"
+    ],
+    "explanation": "Az 1879-es nagy árvíz után Ferenc József megígérte: „Szeged szebb lesz, mint volt.”"
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Milyen tréfás néven emlegették a 20. században Amerikába emigrált zseniális magyar tudósokat, köztük Neumann Jánost és Teller Edét?",
+    "answer": "Marslakók",
+    "wrong": [
+      "Nyugatosok",
+      "Holdlakók",
+      "Csodagyerekek"
+    ],
+    "explanation": "Egy anekdota szerint Szilárd Leó azt mondta, a marslakók már köztünk vannak, csak magyarnak hívják magukat."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik napon kiáltották ki 1989-ben a Magyar Köztársaságot?",
+    "answer": "Október 23.",
+    "wrong": [
+      "Március 15.",
+      "Augusztus 20.",
+      "Június 16."
+    ],
+    "explanation": "Szűrös Mátyás ideiglenes államfő az 1956-os forradalom évfordulóján, az Országház erkélyéről jelentette be."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik nógrádi palóc falu ófaluja került fel 1987-ben a világörökségi listára?",
+    "answer": "Hollókő",
+    "wrong": [
+      "Buják",
+      "Rimóc",
+      "Drégelypalánk"
+    ],
+    "explanation": "Budapest Duna-partjával együtt ez volt az első két magyar világörökségi helyszín."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "A hagyomány szerint melyik három hegyet jelképezi a magyar címer hármas halma?",
+    "answer": "Tátra, Mátra, Fátra",
+    "wrong": [
+      "Bükk, Bakony, Mecsek",
+      "Pilis, Börzsöny, Cserhát",
+      "Zemplén, Vértes, Gerecse"
+    ],
+    "explanation": "A középső halmon aranykorona ül, és abból emelkedik ki a kettős kereszt."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "A néphit szerint mit kellett Luca napjától karácsonyig elkészíteni, hogy aki az éjféli misén ráállt, meglássa a boszorkányokat?",
+    "answer": "Egy széket",
+    "wrong": [
+      "Egy létrát",
+      "Egy seprűt",
+      "Egy bölcsőt"
+    ],
+    "explanation": "Innen ered a mondás: lassan készül, mint a Luca széke."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "A legenda szerint mi árulta el Szent Mártont, amikor elbújt, hogy ne válasszák püspökké?",
+    "answer": "A libák gágogása",
+    "wrong": [
+      "A kutyák ugatása",
+      "A kakas kukorékolása",
+      "A harangok kongása"
+    ],
+    "explanation": "Szent Márton a római Savariában, a mai Szombathelyen született."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik napon ünnepeljük a magyar kultúra napját?",
+    "answer": "Január 22.",
+    "wrong": [
+      "Április 11.",
+      "November 13.",
+      "Február 21."
+    ],
+    "explanation": "Kölcsey Ferenc 1823-ban ezen a napon fejezte be a Himnusz kéziratát."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik szerzetesrend apátsága áll több mint ezer éve Pannonhalmán?",
+    "answer": "Bencés",
+    "wrong": [
+      "Ciszterci",
+      "Ferences",
+      "Pálos"
+    ],
+    "explanation": "Az apátságot 996-ban alapították, és 1996 óta a világörökség része."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik város kapta a Civitas Fidelissima, vagyis „a leghűségesebb város” címet?",
+    "answer": "Sopron",
+    "wrong": [
+      "Kőszeg",
+      "Szombathely",
+      "Mosonmagyaróvár"
+    ],
+    "explanation": "Lakói az 1921-es népszavazáson úgy döntöttek, hogy Magyarországhoz tartoznak, nem Ausztriához."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 2,
+    "prompt": "Melyik dráma szereplői láthatók a magyar kártya alsóin és felsőin?",
+    "answer": "Tell Vilmos",
+    "wrong": [
+      "Bánk bán",
+      "Hamlet",
+      "Csongor és Tünde"
+    ],
+    "explanation": "A lapokat egy pesti kártyafestő tervezte az 1830-as években, az ászokon pedig a négy évszak látható."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Mi a Himnusz alcíme?",
+    "answer": "A magyar nép zivataros századaiból",
+    "wrong": [
+      "A magyar nemzet viharos éveiből",
+      "A magyar történelem gyászos napjaiból",
+      "Egy bujdosó magyar naplójából"
+    ],
+    "explanation": "A nyolcversszakos költeményből ünnepségeken általában csak az első versszakot éneklik."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Mi volt a mai Pécs neve a római korban?",
+    "answer": "Sopianae",
+    "wrong": [
+      "Savaria",
+      "Scarbantia",
+      "Arrabona"
+    ],
+    "explanation": "A város ókeresztény sírkamrái 2000 óta a világörökség részei."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik várost nevezik a királynék városának, mert püspökének joga volt megkoronázni a magyar királynékat?",
+    "answer": "Veszprém",
+    "wrong": [
+      "Székesfehérvár",
+      "Esztergom",
+      "Kalocsa"
+    ],
+    "explanation": "A város 2023-ban a Balaton-régióval együtt Európa kulturális fővárosa volt."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik magyar városban született Joseph Pulitzer, akiről a híres amerikai újságírói díjat elnevezték?",
+    "answer": "Makó",
+    "wrong": [
+      "Szeged",
+      "Hódmezővásárhely",
+      "Szentes"
+    ],
+    "explanation": "A Pulitzer-díjat a végrendelete alapján 1917 óta adják át."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Milyen néven lett világhírű háborús fotós a budapesti születésű Friedmann Endre?",
+    "answer": "Robert Capa",
+    "wrong": [
+      "André Kertész",
+      "Brassaï",
+      "Martin Munkácsi"
+    ],
+    "explanation": "Ő készítette a normandiai partraszállás leghíresebb fotóit 1944. június 6-án."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik magyar születésű tudósról nevezték el a világűr határának tekintett 100 kilométeres magasságot?",
+    "answer": "Kármán Tódor",
+    "wrong": [
+      "Neumann János",
+      "Teller Ede",
+      "Szilárd Leó"
+    ],
+    "explanation": "Kármán a Jet Propulsion Laboratory, a NASA mai kutatóközpontjának egyik alapítója volt."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Melyik várból lopta el 1440-ben Kottanner Jánosné a Szent Koronát Erzsébet királyné megbízásából?",
+    "answer": "Visegrád",
+    "wrong": [
+      "Székesfehérvár",
+      "Esztergom",
+      "Buda"
+    ],
+    "explanation": "A koronát egy párnába rejtve csempészte ki, így a csecsemő V. Lászlót meg tudták koronázni."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Mi történt István királlyal 1083. augusztus 20-án, amiért ez a nap lett az ünnepe?",
+    "answer": "Szentté avatták",
+    "wrong": [
+      "Megkoronázták",
+      "Megkeresztelték",
+      "Eltemették"
+    ],
+    "explanation": "István valójában 1038. augusztus 15-én, Nagyboldogasszony napján halt meg."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "A néphagyomány szerint melyik éjszakán ugrálták át a fiatalok a tüzet a nyári napforduló idején?",
+    "answer": "Szent Iván éjjelén",
+    "wrong": [
+      "Szent György éjjelén",
+      "Szent András éjjelén",
+      "Szent Mihály éjjelén"
+    ],
+    "explanation": "Szent Iván, vagyis Keresztelő Szent János napja június 24-re esik."
+  },
+  {
+    "category": "magyarorszag",
+    "difficulty": 3,
+    "prompt": "Lafayette márki után ki lett 1852-ben a második külföldi, aki beszédet mondhatott az amerikai Kongresszusban?",
+    "answer": "Kossuth Lajos",
+    "wrong": [
+      "Széchenyi István",
+      "Deák Ferenc",
+      "Klapka György"
+    ],
+    "explanation": "Mellszobra 1990 óta a washingtoni Capitoliumban áll."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik zenekar frontembere Lovasi András?",
+    "answer": "Kispál és a Borz",
+    "wrong": [
+      "Quimby",
+      "Tankcsapda",
+      "Heaven Street Seven"
+    ],
+    "explanation": "Lovasi a zenekar basszusgitárosa és dalszövegeinek szerzője is."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik városban rendezték meg 1993-ban az első VOLT Fesztivált?",
+    "answer": "Sopron",
+    "wrong": [
+      "Győr",
+      "Szombathely",
+      "Veszprém"
+    ],
+    "explanation": "Az első években húsvét táján, a soproni Sportcentrumban tartották."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik Balaton-parti településen rendezték meg 2007-ben az első Balaton Soundot?",
+    "answer": "Zamárdi",
+    "wrong": [
+      "Siófok",
+      "Balatonfüred",
+      "Balatonlelle"
+    ],
+    "explanation": "Zamárdi a Balaton déli partján, Siófok és Szántód között fekszik."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik Tankcsapda-dalban hangzik el, hogy aki a pokolra kíván jutni, annak „balra a második ajtó”?",
+    "answer": "Mennyország Tourist",
+    "wrong": [
+      "Ez az a ház",
+      "Örökké tart",
+      "Alföldi gyerek"
+    ],
+    "explanation": "A dal szövegét Lukács László, a zenekar frontembere írta."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Hány egymást követő estén adott telt házas koncertet Azahriah a Puskás Arénában 2024 májusában?",
+    "answer": "3",
+    "wrong": [
+      "2",
+      "4",
+      "5"
+    ],
+    "explanation": "A három koncertet május 24. és 26. között tartották a budapesti stadionban."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik zenekar slágere a Rakpart és az Apuveddmeg is?",
+    "answer": "Wellhello",
+    "wrong": [
+      "Halott Pénz",
+      "Carson Coma",
+      "Punnany Massif"
+    ],
+    "explanation": "A Rakpart volt a 2014-ben alakult zenekar legelső kislemeze."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik rapper 2011-es slágere a Mizu című dal?",
+    "answer": "Fluor Tomi",
+    "wrong": [
+      "Majka",
+      "Dopeman",
+      "Curtis"
+    ],
+    "explanation": "Ugyanebben az évben jelent meg a Lájk című dala is."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Ki nyerte a Megasztár harmadik évadát 2006-ban, majd egy évvel később Magyarországot képviselte az Eurovízión?",
+    "answer": "Rúzsa Magdi",
+    "wrong": [
+      "Tóth Vera",
+      "Radics Gigi",
+      "Tolvai Reni"
+    ],
+    "explanation": "Rúzsa Magdi a vajdasági Verbászon született."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Ki énekelte Magyarország 2013-as eurovíziós dalát, a Kedvesemet?",
+    "answer": "ByeAlex",
+    "wrong": [
+      "Kállay-Saunders András",
+      "Pápai Joci",
+      "Freddie"
+    ],
+    "explanation": "A dal a malmői döntőben a 10. helyen végzett."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik 1983-ban bemutatott rockopera szerzőpárosa Szörényi Levente és Bródy János?",
+    "answer": "István, a király",
+    "wrong": [
+      "Jézus Krisztus Szupersztár",
+      "A Pál utcai fiúk",
+      "Rómeó és Júlia"
+    ],
+    "explanation": "Az ősbemutatót a Városligetben, az erre az alkalomra Királydombnak elnevezett szánkódombon tartották."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik tévécsatornán indult 2003-ban a Megasztár?",
+    "answer": "TV2",
+    "wrong": [
+      "RTL Klub",
+      "M1",
+      "Viasat3"
+    ],
+    "explanation": "Az első évadok zsűrijében Presser Gábor is helyet kapott."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Milyen becenéven ismerte az ország a Republic 2013-ban elhunyt frontemberét, Bódi Lászlót?",
+    "answer": "Cipő",
+    "wrong": [
+      "Csizma",
+      "Papucs",
+      "Bakancs"
+    ],
+    "explanation": "A zenekar legismertebb dalai közé tartozik a Szállj el kismadár és A 67-es út."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik valóságshow első évadában vált ismertté Majka 2002-ben?",
+    "answer": "Való Világ",
+    "wrong": [
+      "Big Brother",
+      "A Bár",
+      "Survivor – A sziget"
+    ],
+    "explanation": "Az ózdi rapper a döntőben a második helyen végzett."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Ki az Edda Művek legendás énekese?",
+    "answer": "Pataky Attila",
+    "wrong": [
+      "Nagy Feró",
+      "Kóbor János",
+      "D. Nagy Lajos"
+    ],
+    "explanation": "A zenekar Miskolcról indult, elődje 1973-ban még Griff néven alakult."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 1,
+    "prompt": "Melyik zenekar 1969-es slágere a Gyöngyhajú lány?",
+    "answer": "Omega",
+    "wrong": [
+      "Illés",
+      "Metro",
+      "Syrius"
+    ],
+    "explanation": "A dal zenéjét Presser Gábor, szövegét Adamis Anna írta."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik dalban hangzik el: „Villámlik, mennydörög, ez tényleg szerelem”?",
+    "answer": "Most múlik pontosan",
+    "wrong": [
+      "Csillag vagy fecske",
+      "Szállj el kismadár",
+      "Vidéki sanzon"
+    ],
+    "explanation": "A Quimby dalát a Csík zenekar népzenei feldolgozása tette még ismertebbé."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Majka és Curtis melyik slágerében hangzik el: „Kicsikét szűk a világ nekem”?",
+    "answer": "Belehalok",
+    "wrong": [
+      "Nekem ez jár",
+      "Csak te létezel",
+      "Füttyös"
+    ],
+    "explanation": "A 2012-es dal BLR közreműködésével készült."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai rapper 2013-as dalában hallható hosszan a Gyöngyhajú lány egy részlete?",
+    "answer": "Kanye West",
+    "wrong": [
+      "Jay-Z",
+      "Eminem",
+      "Drake"
+    ],
+    "explanation": "A New Slaves miatt a dal szerzője, Presser Gábor beperelte, az ügy 2017-ben egyezséggel zárult."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik metálzenekar lépett fel Magyarország színeiben a 2018-as Eurovízión?",
+    "answer": "AWS",
+    "wrong": [
+      "Leander Kills",
+      "Ektomorf",
+      "Road"
+    ],
+    "explanation": "A Viszlát nyár című dalukat magyarul adták elő Lisszabonban."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik zenekar slágere A legnagyobb hős?",
+    "answer": "Honeybeast",
+    "wrong": [
+      "Margaret Island",
+      "Blahalouisiana",
+      "Punnany Massif"
+    ],
+    "explanation": "A dallal a zenekar 2014-ben az A Dal döntőjébe is bejutott."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik városból indult a Kispál és a Borz, valamint a Punnany Massif is?",
+    "answer": "Pécs",
+    "wrong": [
+      "Szeged",
+      "Győr",
+      "Miskolc"
+    ],
+    "explanation": "A Kispál és a Borz 1987-ben, a Punnany Massif 2003-ban alakult itt."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik rockzenészt nevezik „a nemzet csótányának”?",
+    "answer": "Nagy Feró",
+    "wrong": [
+      "Pataky Attila",
+      "Lukács László",
+      "Vikidál Gyula"
+    ],
+    "explanation": "A becenevet saját magának adta, Blaha Lujza, „a nemzet csalogánya” mintájára."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik zenekar játszotta eredetileg a Neked írom a dalt és a Ringasd el magad című slágereket?",
+    "answer": "Locomotiv GT",
+    "wrong": [
+      "Omega",
+      "Illés",
+      "Bikini"
+    ],
+    "explanation": "Az 1971-ben alakult zenekar egyik alapítója Presser Gábor volt."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik együttes slágere a Kétszázhúsz felett?",
+    "answer": "Neoton Família",
+    "wrong": [
+      "Dolly Roll",
+      "Bikini",
+      "Karthago"
+    ],
+    "explanation": "Külföldön Newton Family néven adták ki a lemezeiket, Japánban is nagy sikerük volt."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik zenekar alapítója és frontembere volt Fenyő Miklós?",
+    "answer": "Hungária",
+    "wrong": [
+      "Omega",
+      "Piramis",
+      "Beatrice"
+    ],
+    "explanation": "Az 1980-as Rock and Roll Party című albumuk hatalmas siker lett."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik rapperrel készítette Azahriah a MIND1 és a RÉT című dalokat?",
+    "answer": "Desh",
+    "wrong": [
+      "Beton.Hofi",
+      "Krúbi",
+      "Majka"
+    ],
+    "explanation": "Közös albumuk, A ló túloldalán 2022-ben jelent meg."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik dallal lett ötödik Kállay-Saunders András a 2014-es Eurovíziós Dalfesztiválon?",
+    "answer": "Running",
+    "wrong": [
+      "Pioneer",
+      "Wars for Nothing",
+      "What About My Dreams?"
+    ],
+    "explanation": "A dalt angolul adta elő a koppenhágai döntőben."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Mi Caramel polgári neve?",
+    "answer": "Molnár Ferenc",
+    "wrong": [
+      "Majoros Péter",
+      "Márta Alex",
+      "Szabó Ferenc"
+    ],
+    "explanation": "A szolnoki énekes 2005-ben megnyerte a Megasztár második évadát."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik városban alakult 1989-ben a Tankcsapda?",
+    "answer": "Debrecen",
+    "wrong": [
+      "Miskolc",
+      "Nyíregyháza",
+      "Szeged"
+    ],
+    "explanation": "Első albumuk 1990-ben jelent meg Punk & Roll címmel."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 2,
+    "prompt": "Melyik zenekar 2006-os albumán jelent meg a Vidéki sanzon?",
+    "answer": "Magna Cum Laude",
+    "wrong": [
+      "Heaven Street Seven",
+      "Kowalsky meg a Vega",
+      "Republic"
+    ],
+    "explanation": "A zenekar 1999-ben alakult Gyulán, frontembere Mező Misi."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik Punnany Massif-dal kezdődik így: „Zöld volt a mező, színes a rét”?",
+    "answer": "Telik",
+    "wrong": [
+      "Engedd el",
+      "Hétköznapi hősök",
+      "Részletek"
+    ],
+    "explanation": "A 2009-es dal a zenekar egyik legismertebb slágere lett."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik magyar énekesnő 1972-es slágeréből vett át részletet Christina Aguilera a 2010-es Woohoo című dalában?",
+    "answer": "Kovács Kati",
+    "wrong": [
+      "Koncz Zsuzsa",
+      "Zalatnay Sarolta",
+      "Szűcs Judit"
+    ],
+    "explanation": "Az Add már, uram, az esőt! 1972-ben megnyerte a Táncdalfesztivált."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "A Kispál és a Borz eredetileg csak Borz lett volna, de egyik tagjuk tiltakozott. Kiről kapta végül a zenekar a Kispál nevet?",
+    "answer": "A gitárosáról",
+    "wrong": [
+      "A dobosáról",
+      "A billentyűséről",
+      "A menedzseréről"
+    ],
+    "explanation": "Kispál András rossz tapasztalatai miatt nem akart újra állatnevű zenekarban játszani, ezért a neve a Borz elé került."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Miről kapta a nevét a 30Y zenekar?",
+    "answer": "Egy szombathelyi buszjáratról",
+    "wrong": [
+      "Egy pécsi kollégiumi szobáról",
+      "Egy régi rádiófrekvenciáról",
+      "Egy magnókazetta típusjeléről"
+    ],
+    "explanation": "A név azért is tetszett nekik, mert számmal kezdődik, így a listák elején szerepel."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik város tanítóképző főiskoláján alakult 1995-ben a Heaven Street Seven?",
+    "answer": "Esztergom",
+    "wrong": [
+      "Eger",
+      "Szekszárd",
+      "Nyíregyháza"
+    ],
+    "explanation": "Az alapítók, köztük Szűcs Krisztián, a Vitéz János Tanítóképző Főiskolára jártak."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik székelyföldi városból indult 2013-ban a Bagossy Brothers Company?",
+    "answer": "Gyergyószentmiklós",
+    "wrong": [
+      "Csíkszereda",
+      "Székelyudvarhely",
+      "Sepsiszentgyörgy"
+    ],
+    "explanation": "A zenekart Bagossy Norbert és Bagossy László testvérpár alapította."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik zenekar 2002-es slágere a Szerelemről szó sem volt?",
+    "answer": "Zanzibar",
+    "wrong": [
+      "Groovehouse",
+      "Crystal",
+      "Unique"
+    ],
+    "explanation": "A ceglédi zenekar 1999-ben alakult, énekesnője Terecskei Rita."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Ki nyerte meg 2010-ben a legelső magyar X-Faktort?",
+    "answer": "Vastag Csaba",
+    "wrong": [
+      "Kocsis Tibor",
+      "Oláh Gergő",
+      "Király Viktor"
+    ],
+    "explanation": "A döntőben Takács Nikolast előzte meg."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Mi történik Boggie 2014-ben világszerte ismertté vált Nouveau Parfum című klipjében?",
+    "answer": "Éneklés közben digitálisan retusálják az arcát",
+    "wrong": [
+      "Egyetlen vágás nélkül végigsétál Budapesten",
+      "Az egész dalt visszafelé énekli el",
+      "Minden versszakot más nyelven énekel"
+    ],
+    "explanation": "A dal a Parfüm című magyar szám francia változata; Boggie 2015-ben az Eurovízión is fellépett."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Mi a címe Rúzsa Magdi 2007-es eurovíziós dala, az Unsubstantial Blues magyar változatának?",
+    "answer": "Aprócska blues",
+    "wrong": [
+      "Súlytalan blues",
+      "Lényegtelen blues",
+      "Könnyű blues"
+    ],
+    "explanation": "A dal Helsinkiben 9. lett, és elnyerte a zeneszerzőknek járó Marcel Bezençon-díjat is."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik évtizedben rendezték meg az első EFOTT-ot?",
+    "answer": "Az 1970-es években",
+    "wrong": [
+      "Az 1980-as években",
+      "Az 1990-es években",
+      "A 2000-es években"
+    ],
+    "explanation": "Az egyetemisták első ilyen találkozóját 1976-ban Abaligeten tartották."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik énekesnő nagy visszatérését hozta el 1996-ban a Hamu és gyémánt című dal?",
+    "answer": "Cserháti Zsuzsa",
+    "wrong": [
+      "Katona Klári",
+      "Szűcs Judit",
+      "Zalatnay Sarolta"
+    ],
+    "explanation": "Legnagyobb slágere az 1977-es Édes kisfiam."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Mi volt a címe Bayer Friderika dalának, amellyel 1994-ben negyedik lett az Eurovízión?",
+    "answer": "Kinek mondjam el vétkeimet?",
+    "wrong": [
+      "Új név a régi ház falán",
+      "Miért kell, hogy elmenj?",
+      "A holnap már nem lesz szomorú"
+    ],
+    "explanation": "Magyar induló ekkor jutott be először az Eurovízió döntőjébe."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Melyik zenekar Together című dala volt a Sziget Fesztivál 2014-es himnusza?",
+    "answer": "Ivan & The Parazol",
+    "wrong": [
+      "Irie Maffia",
+      "Punnany Massif",
+      "Carson Coma"
+    ],
+    "explanation": "Egy évvel később az Irie Maffia Easy As One Two Three című dala kapta ezt a szerepet."
+  },
+  {
+    "category": "magyarzene",
+    "difficulty": 3,
+    "prompt": "Ki a Blahalouisiana zenekar énekesnője?",
+    "answer": "Schoblocher Barbara",
+    "wrong": [
+      "Tarján Zsófi",
+      "Terecskei Rita",
+      "Radics Gigi"
+    ],
+    "explanation": "Első, a zenekar nevét viselő albumuk 2016-ban jelent meg."
   }
 ]
