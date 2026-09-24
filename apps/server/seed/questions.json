@@ -1338,5 +1338,2165 @@
       "23"
     ],
     "explanation": "Budapest ezeken felül külön közigazgatási egység."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "A Jóbarátok melyik szereplőjének csajozós kérdése az eredeti változatban: „How you doin'?”",
+    "answer": "Joey",
+    "wrong": [
+      "Chandler",
+      "Ross",
+      "Gunther"
+    ],
+    "explanation": "Matt LeBlanc később Joey címmel saját sorozatot kapott ebben a szerepben."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Az Így jártam anyátokkal melyik szereplője jár szinte mindig öltönyben?",
+    "answer": "Barney Stinson",
+    "wrong": [
+      "Ted Mosby",
+      "Marshall Eriksen",
+      "Robin Scherbatsky"
+    ],
+    "explanation": "Barney alakítója, Neil Patrick Harris kamaszként egy tinédzser orvos, Doogie Howser szerepében lett híres."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Milyen tantárgyat tanít Walter White a középiskolában a Breaking Bad elején?",
+    "answer": "Kémiát",
+    "wrong": [
+      "Fizikát",
+      "Biológiát",
+      "Matematikát"
+    ],
+    "explanation": "A fizetése kiegészítéséért Walter délutánonként egy autómosóban is dolgozik."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Melyik nemesi ház jelmondata a Trónok harcában: „Közeleg a tél”?",
+    "answer": "Stark",
+    "wrong": [
+      "Lannister",
+      "Targaryen",
+      "Baratheon"
+    ],
+    "explanation": "A sorozat legelső epizódja is ezt a címet viseli."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Melyik évtizedben játszódik a Stranger Things?",
+    "answer": "Az 1980-as években",
+    "wrong": [
+      "Az 1960-as években",
+      "Az 1970-es években",
+      "Az 1990-es években"
+    ],
+    "explanation": "Az első évad 1983 novemberében kezdődik."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Melyik ország sorozata a Nyerd meg az életed (Squid Game)?",
+    "answer": "Dél-Korea",
+    "wrong": [
+      "Japán",
+      "Kína",
+      "Tajvan"
+    ],
+    "explanation": "A koreai cím egy gyerekjátékra, a tintahaljátékra utal, ez az első évad utolsó próbája."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Melyik festő arcát formázzák A nagy pénzrablás rablóinak maszkjai?",
+    "answer": "Salvador Dalí",
+    "wrong": [
+      "Pablo Picasso",
+      "Francisco Goya",
+      "Joan Miró"
+    ],
+    "explanation": "A sorozat eredeti spanyol címe La casa de papel, azaz „A papírház”."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Az Agymenők melyik szereplője kiáltja, hogy „Bazinga!”, ha sikerült megtréfálnia valakit?",
+    "answer": "Sheldon Cooper",
+    "wrong": [
+      "Leonard Hofstadter",
+      "Howard Wolowitz",
+      "Raj Koothrappali"
+    ],
+    "explanation": "Sheldon gyerekkoráról Az ifjú Sheldon címmel külön előzménysorozat is készült."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Melyik tévés orvos szállóigéje: „Mindenki hazudik”?",
+    "answer": "Gregory House",
+    "wrong": [
+      "Derek Shepherd",
+      "Meredith Grey",
+      "Shaun Murphy"
+    ],
+    "explanation": "Hugh Laurie egy namíbiai szálloda fürdőszobájában vette fel a meghallgatási videóját."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Mi a magyar címe a Grey's Anatomy című amerikai kórházsorozatnak?",
+    "answer": "A Grace klinika",
+    "wrong": [
+      "Vészhelyzet",
+      "Dokik",
+      "Doktor House"
+    ],
+    "explanation": "Az eredeti cím egy híres anatómiatankönyvre és a főhősnő, Meredith Grey nevére utal, a magyar a Seattle Grace kórházra."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Ki alakítja Sherlock Holmest a BBC Sherlock című sorozatában?",
+    "answer": "Benedict Cumberbatch",
+    "wrong": [
+      "Tom Hiddleston",
+      "Eddie Redmayne",
+      "Matt Smith"
+    ],
+    "explanation": "Cumberbatch A hobbit-filmekben Smaug hangját adta, a Watsont alakító Martin Freeman pedig Bilbót játszotta."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Miben lakik SpongyaBob Kockanadrág a tenger fenekén?",
+    "answer": "Egy ananászban",
+    "wrong": [
+      "Egy kókuszdióban",
+      "Egy kagylóhéjban",
+      "Egy horgonyban"
+    ],
+    "explanation": "Legjobb barátja, Patrik néhány házzal arrébb, egy kő alatt lakik."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Hogyan viszi be magával a börtön tervrajzát Michael Scofield A szökés című sorozatban?",
+    "answer": "Tetoválásként a testén",
+    "wrong": [
+      "Egy Biblia lapjai között",
+      "A cipője talpába varrva",
+      "Egy levélbe rejtve"
+    ],
+    "explanation": "Michael szándékosan kerül rács mögé, hogy kiszöktesse ártatlanul elítélt bátyját."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Ki alakította Alex Russót a Varázslók a Waverly helyből című Disney Channel-sorozatban?",
+    "answer": "Selena Gomez",
+    "wrong": [
+      "Demi Lovato",
+      "Miley Cyrus",
+      "Vanessa Hudgens"
+    ],
+    "explanation": "A sorozat főcímdalát is Selena Gomez énekelte."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 1,
+    "prompt": "Milyen állat Perry, Phineas és Ferb titkosügynökként dolgozó háziállata?",
+    "answer": "Kacsacsőrű emlős",
+    "wrong": [
+      "Tasmán ördög",
+      "Óriáshangyász",
+      "Csupasz vakondpatkány"
+    ],
+    "explanation": "Perry ősellensége a gonosz tudós, Dr. Heinz Doofenshmirtz."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik papírkereskedő cégnél dolgozik Michael Scott és csapata A hivatal (The Office) című sorozatban?",
+    "answer": "Dunder Mifflin",
+    "wrong": [
+      "Sterling Cooper",
+      "Pearson Hardman",
+      "Vandelay Industries"
+    ],
+    "explanation": "A sorozat a cég pennsylvaniai, scrantoni fiókjában játszódik."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik országból származik Robin Scherbatsky az Így jártam anyátokkal című sorozatban?",
+    "answer": "Kanada",
+    "wrong": [
+      "Ausztrália",
+      "Írország",
+      "Új-Zéland"
+    ],
+    "explanation": "Tinédzserként Robin Sparkles néven popsztár volt a hazájában."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Milyen álnevet vesz fel Walter White a Breaking Badben?",
+    "answer": "Heisenberg",
+    "wrong": [
+      "Oppenheimer",
+      "Schrödinger",
+      "Rutherford"
+    ],
+    "explanation": "Az álnév a Nobel-díjas német fizikus, Werner Heisenberg nevéből ered."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik horvát városban forgatták Királyvár jeleneteinek nagy részét a Trónok harcában?",
+    "answer": "Dubrovnik",
+    "wrong": [
+      "Zadar",
+      "Pula",
+      "Rijeka"
+    ],
+    "explanation": "Az első évadban Királyvárat még Máltán, Mdina városában vették fel."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Hányas sorszámot visel a Nyerd meg az életed főhőse a játékokban?",
+    "answer": "456",
+    "wrong": [
+      "001",
+      "067",
+      "218"
+    ],
+    "explanation": "A viadalon összesen 456-an indulnak, így ő kapta a legutolsó sorszámot."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik városnevet viseli A nagy pénzrablás narrátora?",
+    "answer": "Tokió",
+    "wrong": [
+      "Nairobi",
+      "Berlin",
+      "Rio"
+    ],
+    "explanation": "A rablók azért használnak városneveket, hogy ne derüljön ki egymás valódi kiléte."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Ki alakítja Thomas Shelbyt, a Peaky Blinders bandavezérét?",
+    "answer": "Cillian Murphy",
+    "wrong": [
+      "Jamie Dornan",
+      "Colin Farrell",
+      "Michael Fassbender"
+    ],
+    "explanation": "Cillian Murphy 2024-ben Oscar-díjat nyert az Oppenheimer címszerepéért."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Mi az igazi neve a The Mandalorianben szereplő zöld kis lénynek, akit a rajongók Baby Yodának becéznek?",
+    "answer": "Grogu",
+    "wrong": [
+      "Yaddle",
+      "Wicket",
+      "Babu Frik"
+    ],
+    "explanation": "Grogu ugyanahhoz a sosem megnevezett fajhoz tartozik, mint Yoda mester."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Hogy hívják Stefan Salvatore bátyját a Vámpírnaplókban?",
+    "answer": "Damon",
+    "wrong": [
+      "Klaus",
+      "Elijah",
+      "Enzo"
+    ],
+    "explanation": "A Damont alakító Ian Somerhalder korábban a Lost – Eltűntek egyik túlélőjét játszotta."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Az Agymenők melyik szereplője jut el a Nemzetközi Űrállomásra?",
+    "answer": "Howard Wolowitz",
+    "wrong": [
+      "Raj Koothrappali",
+      "Leonard Hofstadter",
+      "Sheldon Cooper"
+    ],
+    "explanation": "Az űrhajós társai a „Froot Loops” gúnynevet ragasztották rá."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Ki alakítja Hannah Montana édesapját a Disney Channel sorozatában?",
+    "answer": "Billy Ray Cyrus",
+    "wrong": [
+      "Garth Brooks",
+      "Tim McGraw",
+      "Keith Urban"
+    ],
+    "explanation": "Billy Ray Cyrus a valóságban is a főszereplő Miley Cyrus édesapja."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik városban játszódik a Dexter című sorozat?",
+    "answer": "Miami",
+    "wrong": [
+      "Los Angeles",
+      "Las Vegas",
+      "New Orleans"
+    ],
+    "explanation": "A folytatás, a Dexter: New Blood már egy havas New York állambeli kisvárosban játszódik."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai sorozat fut Magyarországon Szívek szállodája címmel?",
+    "answer": "Gilmore Girls",
+    "wrong": [
+      "One Tree Hill",
+      "Dawson's Creek",
+      "Hart of Dixie"
+    ],
+    "explanation": "A sorozat egy fiatal anya és lánya, Lorelai és Rory életét követi a kitalált Stars Hollow-ban."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Mi Carrie Bradshaw foglalkozása a Szex és New York című sorozatban?",
+    "answer": "Újságíró",
+    "wrong": [
+      "Ügyvéd",
+      "Galériavezető",
+      "PR-szakember"
+    ],
+    "explanation": "Carrie rovata a kitalált New York Star című lapban jelenik meg."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 2,
+    "prompt": "Mi a címe a Black Mirror interaktív filmjének, amelyben a néző dönt a főhős helyett?",
+    "answer": "Bandersnatch",
+    "wrong": [
+      "San Junipero",
+      "White Christmas",
+      "Hang the DJ"
+    ],
+    "explanation": "A 2018-ban bemutatott film a nézők döntéseitől függően többféle befejezéssel érhet véget."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik együttes adja elő a Jóbarátok főcímdalát, az I'll Be There for You-t?",
+    "answer": "The Rembrandts",
+    "wrong": [
+      "The Cranberries",
+      "Hootie & the Blowfish",
+      "Counting Crows"
+    ],
+    "explanation": "A dal annyira népszerű lett, hogy az együttes teljes hosszúságú változatot is kiadott belőle."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Mibe rejti Jim Dwight tűzőgépét A hivatal (The Office) legelső részében?",
+    "answer": "Zselébe",
+    "wrong": [
+      "Pudingba",
+      "Tortába",
+      "Jégbe"
+    ],
+    "explanation": "A csínyt a brit eredetiből vették át, ahol Tim rejti zselébe Gareth tűzőgépét."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Mi a keresztneve a címbeli anyának, Ted gyerekei édesanyjának az Így jártam anyátokkal című sorozatban?",
+    "answer": "Tracy",
+    "wrong": [
+      "Stella",
+      "Victoria",
+      "Zoey"
+    ],
+    "explanation": "Tracyt Cristin Milioti alakította, aki csak a nyolcadik évad legvégén tűnt fel először."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik szituációs komédiában játszotta Bryan Cranston a családapát, mielőtt Walter White lett a Breaking Badben?",
+    "answer": "Már megint Malcolm",
+    "wrong": [
+      "Két pasi – meg egy kicsi",
+      "Szeretünk, Raymond",
+      "Egy rém rendes család"
+    ],
+    "explanation": "Walter White szerepéért Cranston négyszer nyerte el a legjobb drámai főszereplőnek járó Emmy-díjat."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik Metallica-dalt játssza el gitáron Eddie Munson a Stranger Things 4. évadának fináléjában?",
+    "answer": "Master of Puppets",
+    "wrong": [
+      "Enter Sandman",
+      "Nothing Else Matters",
+      "The Unforgiven"
+    ],
+    "explanation": "A dal a Metallica 1986-os, azonos című albumán jelent meg."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Ki kölcsönzi a hangját Lady Whistledownnak, A Bridgerton család titokzatos pletykaírójának az eredeti változatban?",
+    "answer": "Julie Andrews",
+    "wrong": [
+      "Judi Dench",
+      "Maggie Smith",
+      "Helen Mirren"
+    ],
+    "explanation": "Julie Andrews a Mary Poppins címszerepéért kapott Oscar-díjat."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik számsor bukkan fel újra meg újra a Lost – Eltűntek rejtélyeiben?",
+    "answer": "4, 8, 15, 16, 23, 42",
+    "wrong": [
+      "3, 7, 11, 19, 27, 41",
+      "2, 9, 14, 18, 25, 36",
+      "5, 10, 13, 21, 34, 44"
+    ],
+    "explanation": "Hurley ezekkel a számokkal nyert a lottón, mielőtt felszállt a lezuhanó gépre."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik országban született Nina Dobrev, a Vámpírnaplók Elenája?",
+    "answer": "Bulgária",
+    "wrong": [
+      "Románia",
+      "Szerbia",
+      "Ukrajna"
+    ],
+    "explanation": "Kétéves korában költözött a családjával Kanadába, Torontóba."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Mi a neve a börtönnek, ahonnan A szökés első évadában megszöknek a főhősök?",
+    "answer": "Fox River",
+    "wrong": [
+      "Shawshank",
+      "Litchfield",
+      "Sing Sing"
+    ],
+    "explanation": "A börtönjeleneteket a valódi, 2002-ben bezárt jolieti fegyházban forgatták Illinois államban."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik híres irodalmi nyomozó ihlette Doktor House alakját?",
+    "answer": "Sherlock Holmes",
+    "wrong": [
+      "Hercule Poirot",
+      "Philip Marlowe",
+      "Miss Marple"
+    ],
+    "explanation": "House lakásának száma is 221B, barátja, Wilson pedig Watson megfelelője."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik romantikus vígjátékban szerepelt a híres kartonlapos jelenetben Andrew Lincoln, a The Walking Dead főszereplője?",
+    "answer": "Igazából szerelem",
+    "wrong": [
+      "Notting Hill",
+      "Bridget Jones naplója",
+      "Négy esküvő és egy temetés"
+    ],
+    "explanation": "A brit színész a The Walking Deadben végig amerikai akcentussal beszél."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Ki alakította II. Erzsébet királynőt A korona (The Crown) első két évadában?",
+    "answer": "Claire Foy",
+    "wrong": [
+      "Emily Blunt",
+      "Keira Knightley",
+      "Carey Mulligan"
+    ],
+    "explanation": "A későbbi évadokban Olivia Colman, majd Imelda Staunton vette át a szerepet."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Melyik évben kezdődik a Peaky Blinders története?",
+    "answer": "1919",
+    "wrong": [
+      "1916",
+      "1923",
+      "1927"
+    ],
+    "explanation": "A Shelby fivérek nem sokkal korábban tértek haza az első világháborúból."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Milyen autóval járják az országot a Winchester fivérek az Odaát című sorozatban?",
+    "answer": "Chevrolet Impala",
+    "wrong": [
+      "Ford Mustang",
+      "Dodge Charger",
+      "Pontiac GTO"
+    ],
+    "explanation": "Az 1967-es fekete Impalát Dean az apjától, John Winchestertől örökölte."
+  },
+  {
+    "category": "sorozatok",
+    "difficulty": 3,
+    "prompt": "Milyen gomba okozza a járványt a The Last of Us című sorozatban?",
+    "answer": "Cordyceps",
+    "wrong": [
+      "Aspergillus",
+      "Candida",
+      "Penicillium"
+    ],
+    "explanation": "A sorozat egy 2013-as, azonos című videojátékon alapul."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Kinek a 2007-es világslágere az Umbrella, amelyben Jay-Z is rappel?",
+    "answer": "Rihanna",
+    "wrong": [
+      "Beyoncé",
+      "Ciara",
+      "Alicia Keys"
+    ],
+    "explanation": "A dalt eredetileg Britney Spearsnek szánták, de a lemezkiadója visszadobta."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik ország rendezte azt a foci-vb-t, amelynek hivatalos dala Shakira Waka Waka című slágere volt?",
+    "answer": "Dél-Afrika",
+    "wrong": [
+      "Brazília",
+      "Németország",
+      "Oroszország"
+    ],
+    "explanation": "A dal a kameruni Golden Sounds együttes 1986-os Zangaléwa című slágerére épül."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Mi takarta rendszerint a francia Daft Punk duó tagjainak arcát a fellépéseken?",
+    "answer": "Robotsisak",
+    "wrong": [
+      "Gázálarc",
+      "Állatfejes maszk",
+      "Velencei álarc"
+    ],
+    "explanation": "A legenda szerint 1999-ben egy felrobbanó sampler változtatta őket robotokká."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Milyen mozdulatot utánoz PSY 2012-es Gangnam Style című slágerének híres tánca?",
+    "answer": "Lovaglást",
+    "wrong": [
+      "Evezést",
+      "Úszást",
+      "Síelést"
+    ],
+    "explanation": "A klip lett az első YouTube-videó, amely elérte az egymilliárdos nézettséget."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik együttes slágere az In the End és a Numb?",
+    "answer": "Linkin Park",
+    "wrong": [
+      "Limp Bizkit",
+      "Papa Roach",
+      "Evanescence"
+    ],
+    "explanation": "A zenekarban Chester Bennington énekelt, Mike Shinoda pedig rappelt."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik országban született mind a négy sztár: Justin Bieber, Drake, The Weeknd és Avril Lavigne?",
+    "answer": "Kanada",
+    "wrong": [
+      "Egyesült Államok",
+      "Ausztrália",
+      "Új-Zéland"
+    ],
+    "explanation": "Drake és The Weeknd is Torontóban nőtt fel."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik filmben hangzik el Lady Gaga és Bradley Cooper Shallow című duettje?",
+    "answer": "Csillag születik",
+    "wrong": [
+      "Kaliforniai álom",
+      "A legnagyobb showman",
+      "Bohém rapszódia"
+    ],
+    "explanation": "A dal 2019-ben elnyerte a legjobb eredeti dalnak járó Oscar-díjat."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik zenekar rajzolt tagjai 2-D, Murdoc, Noodle és Russel?",
+    "answer": "Gorillaz",
+    "wrong": [
+      "The Prodigy",
+      "Kasabian",
+      "Muse"
+    ],
+    "explanation": "A virtuális együttest Damon Albarn, a Blur énekese és Jamie Hewlett képregényrajzoló találta ki."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Kinek a köszönőbeszédébe vágott bele Kanye West a 2009-es MTV VMA-gálán?",
+    "answer": "Taylor Swift",
+    "wrong": [
+      "Lady Gaga",
+      "Katy Perry",
+      "Miley Cyrus"
+    ],
+    "explanation": "West szerint Beyoncé Single Ladies című klipje érdemelte volna a díjat."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik dél-koreai fiúbanda első teljesen angol nyelvű slágere a 2020-as Dynamite?",
+    "answer": "BTS",
+    "wrong": [
+      "EXO",
+      "Big Bang",
+      "Stray Kids"
+    ],
+    "explanation": "A név egy koreai kifejezés rövidítése, jelentése nagyjából „golyóálló cserkészfiúk”."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik lányegyüttesből indult Beyoncé szólókarrierje?",
+    "answer": "Destiny's Child",
+    "wrong": [
+      "The Pussycat Dolls",
+      "Sugababes",
+      "TLC"
+    ],
+    "explanation": "A csapat legismertebb felállásában Kelly Rowland és Michelle Williams énekelt mellette."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik rocklegenda nevét viseli a Maroon 5 és Christina Aguilera 2011-es közös slágerének címe?",
+    "answer": "Mick Jagger",
+    "wrong": [
+      "Freddie Mercury",
+      "Elvis Presley",
+      "David Bowie"
+    ],
+    "explanation": "Adam Levine és Aguilera akkoriban együtt ültek a The Voice amerikai zsűrijében."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik rapper játszotta a főszerepet a részben saját életén alapuló 8 mérföld című filmben?",
+    "answer": "Eminem",
+    "wrong": [
+      "50 Cent",
+      "Snoop Dogg",
+      "Dr. Dre"
+    ],
+    "explanation": "A film Lose Yourself című dala lett az első Oscar-díjas rapdal."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik animációs film betétdalaként született Pharrell Williams Happy című slágere?",
+    "answer": "Gru 2.",
+    "wrong": [
+      "Madagaszkár 3.",
+      "Kung Fu Panda 2.",
+      "Verdák 2."
+    ],
+    "explanation": "A dalhoz készült el a világ első 24 órás videoklipje."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 1,
+    "prompt": "Melyik brit énekes slágere a Budapest című dal?",
+    "answer": "George Ezra",
+    "wrong": [
+      "Ed Sheeran",
+      "James Bay",
+      "Tom Odell"
+    ],
+    "explanation": "Ezra úgy írta meg a dalt, hogy addig még sosem járt Budapesten."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik karibi szigetországban született Rihanna?",
+    "answer": "Barbados",
+    "wrong": [
+      "Jamaica",
+      "Trinidad és Tobago",
+      "Bahama-szigetek"
+    ],
+    "explanation": "2021-ben Barbados nemzeti hősévé nyilvánították."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik együttes dala ihlette Lady Gaga művésznevét?",
+    "answer": "Queen",
+    "wrong": [
+      "ABBA",
+      "Duran Duran",
+      "The Beatles"
+    ],
+    "explanation": "A név a Queen 1984-es Radio Ga Ga című dalára utal."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Mi a címe Adele albumának, amelyen a Rolling in the Deep és a Someone like You is szerepel?",
+    "answer": "21",
+    "wrong": [
+      "19",
+      "25",
+      "30"
+    ],
+    "explanation": "Adele albumainak címe arra utal, hány éves volt, amikor készültek."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik sorozat 2017-es évadában bukkant fel Ed Sheeran egy éneklő katona szerepében?",
+    "answer": "Trónok harca",
+    "wrong": [
+      "Vikingek",
+      "Stranger Things",
+      "The Walking Dead"
+    ],
+    "explanation": "A cameoszerepet meglepetésnek szánták Arya Stark megformálójának, Maisie Williamsnek, aki nagy rajongója."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Taylor Swift a születési évéről nevezte el 2014-es albumát. Mi a címe?",
+    "answer": "1989",
+    "wrong": [
+      "1987",
+      "1990",
+      "1991"
+    ],
+    "explanation": "Ezen az albumon jelent meg a Shake It Off és a Blank Space is."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik együttessel készítette a The Chainsmokers a Something Just Like This című slágert?",
+    "answer": "Coldplay",
+    "wrong": [
+      "Imagine Dragons",
+      "OneRepublic",
+      "Maroon 5"
+    ],
+    "explanation": "A 2017-es dalt a Coldplay frontembere, Chris Martin énekli."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik énekesnő hangja szól David Guetta 2011-es Titanium című slágerében?",
+    "answer": "Sia",
+    "wrong": [
+      "Rihanna",
+      "Nicki Minaj",
+      "Kelly Rowland"
+    ],
+    "explanation": "Sia másoknak is írt slágereket, például társszerzője Rihanna Diamonds című dalának."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Kit alakít Britney Spears a Toxic című klipjének nyitójelenetében?",
+    "answer": "Légiutas-kísérőt",
+    "wrong": [
+      "Ápolónőt",
+      "Rendőrnőt",
+      "Pincérnőt"
+    ],
+    "explanation": "A Toxic hozta meg Britney első Grammy-díját."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik producer 2014-es slágere az Uptown Funk, amelyben Bruno Mars énekel?",
+    "answer": "Mark Ronson",
+    "wrong": [
+      "Calvin Harris",
+      "Pharrell Williams",
+      "Diplo"
+    ],
+    "explanation": "Ronson korábban Amy Winehouse Back to Black című albumának is egyik producere volt."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Ki énekelte a Nincs idő meghalni című James Bond-film főcímdalát?",
+    "answer": "Billie Eilish",
+    "wrong": [
+      "Dua Lipa",
+      "Lorde",
+      "Sam Smith"
+    ],
+    "explanation": "A dalt bátyjával, Finneasszal írta, és Oscar-díjat is nyert vele."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Mit jelent magyarul a 2017-es világsláger, a Despacito címe?",
+    "answer": "Lassacskán",
+    "wrong": [
+      "Szerelmem",
+      "Kicsikém",
+      "Titokban"
+    ],
+    "explanation": "A dalt a Puerto Ricó-i Luis Fonsi és Daddy Yankee énekli."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik svéd énekesnő nyerte meg a 2012-es Eurovíziós Dalfesztivált az Euphoria című dallal?",
+    "answer": "Loreen",
+    "wrong": [
+      "Robyn",
+      "Zara Larsson",
+      "Tove Lo"
+    ],
+    "explanation": "Loreen 2023-ban a Tattoo című dallal másodszor is megnyerte a versenyt."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik országot képviselte a szakállas Conchita Wurst, aki 2014-ben megnyerte az Eurovíziót?",
+    "answer": "Ausztria",
+    "wrong": [
+      "Németország",
+      "Svájc",
+      "Hollandia"
+    ],
+    "explanation": "Ausztria ezzel 1966 után másodszor nyerte meg a versenyt."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik dallal képviselte Pápai Joci Magyarországot a 2017-es Eurovíziós Dalfesztiválon?",
+    "answer": "Origo",
+    "wrong": [
+      "Kedvesem",
+      "Running",
+      "Viszlát nyár"
+    ],
+    "explanation": "A dal a kijevi döntőben 200 ponttal a 8. helyen végzett."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 2,
+    "prompt": "Melyik városban forgatták Katy Perry Firework című dalának klipjét?",
+    "answer": "Budapesten",
+    "wrong": [
+      "Prágában",
+      "Bécsben",
+      "Varsóban"
+    ],
+    "explanation": "A többek között a budai Várban forgatott klip 2011-ben az év videója lett az MTV VMA-gálán."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik festő egyik képéről kapta a címét a Coldplay Viva la Vida című albuma?",
+    "answer": "Frida Kahlo",
+    "wrong": [
+      "Diego Rivera",
+      "Salvador Dalí",
+      "Pablo Picasso"
+    ],
+    "explanation": "A felirat Kahlo egyik utolsó festményén, egy görögdinnyés csendéleten olvasható."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Mi a címe a Linkin Park 2000-ben megjelent első stúdióalbumának?",
+    "answer": "Hybrid Theory",
+    "wrong": [
+      "Meteora",
+      "Minutes to Midnight",
+      "A Thousand Suns"
+    ],
+    "explanation": "A zenekar egy ideig maga is Hybrid Theory néven lépett fel."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik hollywoodi sci-fi film zenéjét szerezte a Daft Punk?",
+    "answer": "Tron: Örökség",
+    "wrong": [
+      "Eredet",
+      "Feledés",
+      "Szárnyas fejvadász 2049"
+    ],
+    "explanation": "A duó a filmben is feltűnik: egy klubjelenetben ők a DJ-k."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik énekesnő dalából származik Eminem 2000-es Stan című slágerének refrénje?",
+    "answer": "Dido",
+    "wrong": [
+      "Sade",
+      "Enya",
+      "Sinéad O'Connor"
+    ],
+    "explanation": "A dal nyomán a „stan” szó az angol szlengben a megszállott rajongót jelenti."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik városban alakult a The Killers együttes?",
+    "answer": "Las Vegas",
+    "wrong": [
+      "Los Angeles",
+      "Seattle",
+      "New York"
+    ],
+    "explanation": "Nevüket a New Order egyik klipjében szereplő kitalált zenekarról kapták."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik angol városból indult az Arctic Monkeys?",
+    "answer": "Sheffield",
+    "wrong": [
+      "Manchester",
+      "Liverpool",
+      "Birmingham"
+    ],
+    "explanation": "Korai demóikat a rajongók terjesztették az interneten, így már az első lemezük előtt ismertek lettek."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik hegedűművész kísérte Dima Bilant, amikor 2008-ban Oroszország színeiben megnyerte az Eurovíziót?",
+    "answer": "Edvin Marton",
+    "wrong": [
+      "David Garrett",
+      "Vanessa-Mae",
+      "Lindsey Stirling"
+    ],
+    "explanation": "A kárpátaljai születésű magyar hegedűs mellett Jevgenyij Pljuscsenko olimpiai bajnok műkorcsolyázó is fellépett."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik színész énekel Kanye West Gold Digger című slágerében?",
+    "answer": "Jamie Foxx",
+    "wrong": [
+      "Will Smith",
+      "Eddie Murphy",
+      "Denzel Washington"
+    ],
+    "explanation": "Foxx a dalban Ray Charles stílusát idézi, akit a Ray című filmben Oscar-díjas alakítással formált meg."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik rapklasszikus szövegét torzítja halandzsává a Las Ketchup 2002-es Aserejé című slágerének refrénje?",
+    "answer": "Rapper's Delight",
+    "wrong": [
+      "Ice Ice Baby",
+      "The Message",
+      "Walk This Way"
+    ],
+    "explanation": "A dal szerint egy Diego nevű fiú énekli így a Sugarhill Gang 1979-es slágerét, angolul nem tudva."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Min táncol az OK Go négy tagja a 2006-ban virálissá vált Here It Goes Again című klipben?",
+    "answer": "Futópadokon",
+    "wrong": [
+      "Trambulinokon",
+      "Mozgólépcsőkön",
+      "Görkorcsolyákon"
+    ],
+    "explanation": "A klip egyetlen vágás nélküli felvétel, és Grammy-díjat is nyert."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Mi volt James Blunt foglalkozása, mielőtt a You're Beautiful világsztárrá tette?",
+    "answer": "Katonatiszt",
+    "wrong": [
+      "Ügyvéd",
+      "Tanár",
+      "Orvos"
+    ],
+    "explanation": "A brit hadseregben kapitányi rangig jutott, és Koszovóban is szolgált."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik film főcíméből ismert gitártémára épül a Black Eyed Peas Pump It című dala?",
+    "answer": "Ponyvaregény",
+    "wrong": [
+      "Kill Bill",
+      "Mission: Impossible",
+      "Halálos iramban"
+    ],
+    "explanation": "A téma a Misirlou című régi dal Dick Dale-féle szörfrockos feldolgozása."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik rapper vendégszerepel Justin Bieber 2010-es Baby című dalában?",
+    "answer": "Ludacris",
+    "wrong": [
+      "Lil Wayne",
+      "Nelly",
+      "Flo Rida"
+    ],
+    "explanation": "Ludacris a Halálos iramban-filmekben Tej Parkert alakítja."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik évben nyerte meg az Eurovíziót a szörnyjelmezes finn Lordi együttes?",
+    "answer": "2006",
+    "wrong": [
+      "2004",
+      "2008",
+      "2010"
+    ],
+    "explanation": "Győztes daluk a Hard Rock Hallelujah volt, és ez volt Finnország első eurovíziós győzelme."
+  },
+  {
+    "category": "slagerek",
+    "difficulty": 3,
+    "prompt": "Melyik film zenei témáját dolgozta fel a Crazy Frog 2005-ös első slágere?",
+    "answer": "Beverly Hills-i zsaru",
+    "wrong": [
+      "Szellemirtók",
+      "Top Gun",
+      "Vissza a jövőbe"
+    ],
+    "explanation": "Az eredeti Axel F-et Harold Faltermeyer szerezte 1984-ben."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik roxforti házba osztja be Harry Pottert a Teszlek Süveg?",
+    "answer": "Griffendél",
+    "wrong": [
+      "Mardekár",
+      "Hollóhát",
+      "Hugrabug"
+    ],
+    "explanation": "A Süveg a Mardekárt is fontolgatta, de Harry magában azt kérte, hogy oda ne kerüljön."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik filmben tünteti el Thanos egyetlen csettintéssel az univerzum élőlényeinek felét?",
+    "answer": "Bosszúállók: Végtelen háború",
+    "wrong": [
+      "Bosszúállók: Végjáték",
+      "Bosszúállók: Ultron kora",
+      "Amerika Kapitány: Polgárháború"
+    ],
+    "explanation": "A csettintést a következő évben bemutatott Végjátékban fordítják vissza a Bosszúállók."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Ki alakította Vasembert, azaz Tony Starkot a Marvel-filmekben?",
+    "answer": "Robert Downey Jr.",
+    "wrong": [
+      "Benedict Cumberbatch",
+      "Mark Ruffalo",
+      "Jeremy Renner"
+    ],
+    "explanation": "A 2008-as első Vasember-film volt a Marvel-moziuniverzum legelső darabja."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Ki Luke Skywalker apja a Csillagok háborújában?",
+    "answer": "Darth Vader",
+    "wrong": [
+      "Obi-Wan Kenobi",
+      "Palpatine császár",
+      "Qui-Gon Jinn"
+    ],
+    "explanation": "A leleplezés A Birodalom visszavág (1980) csúcspontján hangzik el, a forgatáson is csak néhányan tudtak róla."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik hegy tüzébe kell vetni az Egy Gyűrűt, hogy megsemmisüljön?",
+    "answer": "Végzet Hegye",
+    "wrong": [
+      "Magányos Hegy",
+      "Széltető",
+      "Caradhras"
+    ],
+    "explanation": "Szauron ugyanitt, a hegy tüzében kovácsolta meg a Gyűrűt."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Kinek a jellegzetes szavajárása A Gyűrűk Urában a „drágaszágom”?",
+    "answer": "Gollam",
+    "wrong": [
+      "Szauron",
+      "Szarumán",
+      "Boromir"
+    ],
+    "explanation": "Gollam valaha hobbitszerű lény volt, a Gyűrű hatására torzult el."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Hogyan kéri James Bond a martinijét?",
+    "answer": "Rázva, nem keverve",
+    "wrong": [
+      "Keverve, nem rázva",
+      "Jéggel, olajbogyóval",
+      "Duplán, jég nélkül"
+    ],
+    "explanation": "A Casino Royale-ban Bond saját koktélt is kitalál, és a szerelméről, Vesperről nevezi el."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik James Bond-film főcímdalát énekelte Adele?",
+    "answer": "Skyfall",
+    "wrong": [
+      "Casino Royale",
+      "Nincs idő meghalni",
+      "A Quantum csendje"
+    ],
+    "explanation": "A dal lett az első Bond-főcímdal, amely Oscar-díjat nyert."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik kitalált városban harcol Batman a bűnözők ellen?",
+    "answer": "Gotham City",
+    "wrong": [
+      "Metropolis",
+      "Central City",
+      "Star City"
+    ],
+    "explanation": "A Gotham eredetileg New York egyik régi gúnyneve volt."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Ki alakította a Jokert A sötét lovag című, 2008-as filmben?",
+    "answer": "Heath Ledger",
+    "wrong": [
+      "Joaquin Phoenix",
+      "Jared Leto",
+      "Jack Nicholson"
+    ],
+    "explanation": "Ledger a szerepért posztumusz Oscar-díjat kapott."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Ki alakította Edward Cullent az Alkonyat-filmekben?",
+    "answer": "Robert Pattinson",
+    "wrong": [
+      "Taylor Lautner",
+      "Kellan Lutz",
+      "Jackson Rathbone"
+    ],
+    "explanation": "Pattinson korábban a Harry Potter és a Tűz Serlegében Cedric Diggoryt játszotta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Melyik körzetből származik Katniss Everdeen Az éhezők viadalában?",
+    "answer": "12. körzet",
+    "wrong": [
+      "11. körzet",
+      "13. körzet",
+      "4. körzet"
+    ],
+    "explanation": "A körzet fő iparága a szénbányászat, Katniss apja is bányász volt."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Milyen borostyánba zárt vérszívóból nyerik ki a dinoszauruszok DNS-ét a Jurassic Parkban?",
+    "answer": "Szúnyog",
+    "wrong": [
+      "Bolha",
+      "Kullancs",
+      "Bögöly"
+    ],
+    "explanation": "A hiányzó génszakaszokat béka-DNS-sel pótolták, ezért tudtak a dinoszauruszok mégis szaporodni."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Ki alakítja Dominic Torettót a Halálos iramban-filmekben?",
+    "answer": "Vin Diesel",
+    "wrong": [
+      "Dwayne Johnson",
+      "Jason Statham",
+      "Paul Walker"
+    ],
+    "explanation": "Vin Diesel A galaxis őrzői-filmekben Groot hangját is adta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 1,
+    "prompt": "Mi az alcíme A Karib-tenger kalózai első részének?",
+    "answer": "A Fekete Gyöngy átka",
+    "wrong": [
+      "Holtak kincse",
+      "A világ végén",
+      "Ismeretlen vizeken"
+    ],
+    "explanation": "A filmsorozat a Disneyland egyik vidámparki játékáról kapta a nevét."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik poszton játszik Harry Potter a háza kviddicscsapatában?",
+    "answer": "Fogó",
+    "wrong": [
+      "Őrző",
+      "Hajtó",
+      "Terelő"
+    ],
+    "explanation": "Harry egy évszázad óta a legfiatalabb játékos lett, aki bekerült egy roxforti házcsapatba."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik Harry Potter-szereplő születési neve a magyar fordításban Tom Rowle Denem?",
+    "answer": "Voldemort nagyúr",
+    "wrong": [
+      "Perselus Piton",
+      "Gellert Grindelwald",
+      "Lucius Malfoy"
+    ],
+    "explanation": "Angolul Tom Marvolo Riddle a neve, amelynek betűiből kirakható: „I am Lord Voldemort”."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Ki alakította Steve Rogerst, azaz Amerika Kapitányt a Bosszúállók-filmekben?",
+    "answer": "Chris Evans",
+    "wrong": [
+      "Chris Hemsworth",
+      "Chris Pratt",
+      "Chris Pine"
+    ],
+    "explanation": "Evans korábban a Fantasztikus Négyes-filmekben is szuperhőst játszott."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik városban zajlott az a közös bevetés, amelyre Fekete Özvegy és Sólyomszem egészen másképp emlékeznek a Bosszúállókban?",
+    "answer": "Budapest",
+    "wrong": [
+      "Prága",
+      "Bécs",
+      "Isztambul"
+    ],
+    "explanation": "A 2021-es Fekete Özvegy egyik autós üldözését Budapest belvárosában forgatták."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik bolygón nőtt fel Luke Skywalker a nagybátyja farmján?",
+    "answer": "Tatuin",
+    "wrong": [
+      "Alderaan",
+      "Naboo",
+      "Jakku"
+    ],
+    "explanation": "A bolygó a tunéziai Tataouine városról kapta a nevét, jeleneteit Tunéziában forgatták."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Milyen színű Mace Windu fénykardjának pengéje?",
+    "answer": "Lila",
+    "wrong": [
+      "Kék",
+      "Zöld",
+      "Sárga"
+    ],
+    "explanation": "Samuel L. Jackson maga kérte a lila színt, hogy a csatajelenetekben is kitűnjön."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik évben mutatták be az amerikai mozikban az első Csillagok háborúja-filmet?",
+    "answer": "1977",
+    "wrong": [
+      "1975",
+      "1979",
+      "1981"
+    ],
+    "explanation": "Az „Egy új remény” alcímet csak az 1981-es újrabemutatáskor kapta meg."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Melyik későbbi köztársasági elnök fordította magyarra A Gyűrűk Urának nagy részét?",
+    "answer": "Göncz Árpád",
+    "wrong": [
+      "Sólyom László",
+      "Mádl Ferenc",
+      "Áder János"
+    ],
+    "explanation": "Az első tizenegy fejezetet még Réz Ádám fordította, a többi vers Tandori Dezső munkája."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Ki alakította a fiatal Zsákos Bilbót A hobbit-filmekben?",
+    "answer": "Martin Freeman",
+    "wrong": [
+      "Elijah Wood",
+      "James McAvoy",
+      "Richard Armitage"
+    ],
+    "explanation": "Freeman a Sherlockban Watsont játszotta, a Smaugot megszólaltató Benedict Cumberbatch oldalán."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Mi a címe az Alkonyat-saga második filmjének?",
+    "answer": "Újhold",
+    "wrong": [
+      "Napfogyatkozás",
+      "Hajnalhasadás",
+      "Éjféli nap"
+    ],
+    "explanation": "Az Újhold 2009-ben, alig egy évvel az első rész után került a mozikba."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Ki Katniss és Peeta mentora Az éhezők viadalában?",
+    "answer": "Haymitch Abernathy",
+    "wrong": [
+      "Effie Trinket",
+      "Seneca Crane",
+      "Caesar Flickerman"
+    ],
+    "explanation": "Haymitch maga is viadalgyőztes volt: ő nyerte meg az 50. viadalt."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Ki írta a Jurassic Park alapjául szolgáló regényt?",
+    "answer": "Michael Crichton",
+    "wrong": [
+      "Stephen King",
+      "Dan Brown",
+      "Tom Clancy"
+    ],
+    "explanation": "Crichton alkotta meg a Vészhelyzet című kórházsorozatot is."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Milyen típusú Dominic Toretto legendás fekete izomautója a Halálos iramban-filmekben?",
+    "answer": "Dodge Charger",
+    "wrong": [
+      "Ford Mustang",
+      "Chevrolet Camaro",
+      "Pontiac Firebird"
+    ],
+    "explanation": "A történet szerint Dom az 1970-es Chargert még az apjával együtt építette."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Kinek a dobogó szívét őrzi egy elásott láda A Karib-tenger kalózai-filmekben?",
+    "answer": "Davy Jones",
+    "wrong": [
+      "Hector Barbossa",
+      "Feketeszakáll",
+      "Armando Salazar"
+    ],
+    "explanation": "Davy Jones polipszerű arcát teljes egészében számítógéppel készítették, Bill Nighy mozgásrögzítő ruhában játszott."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 2,
+    "prompt": "Mi Neo polgári neve a Mátrix-filmekben?",
+    "answer": "Thomas Anderson",
+    "wrong": [
+      "John Wick",
+      "Jack Traven",
+      "John Constantine"
+    ],
+    "explanation": "Nappal egy szoftvercég programozója, éjjel Neo álnéven számítógépes kalóz."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Mi a lefegyverző bűbáj varázsigéje a Harry Potter-könyvek magyar fordításában?",
+    "answer": "Capitulatus",
+    "wrong": [
+      "Invito",
+      "Stupor",
+      "Exmemoriam"
+    ],
+    "explanation": "Angolul Expelliarmus, és ez lett Harry jellegzetes varázslata."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Ki rendezte a legtöbb Harry Potter-filmet?",
+    "answer": "David Yates",
+    "wrong": [
+      "Chris Columbus",
+      "Alfonso Cuarón",
+      "Mike Newell"
+    ],
+    "explanation": "Yates rendezte az utolsó négy részt, és mindhárom Legendás állatok-filmet is."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Ki vette át Johnny Depptől Gellert Grindelwald szerepét a Legendás állatok: Dumbledore titkai című filmben?",
+    "answer": "Mads Mikkelsen",
+    "wrong": [
+      "Christoph Waltz",
+      "Ralph Fiennes",
+      "Jude Law"
+    ],
+    "explanation": "A dán színész a Casino Royale-ban Le Chiffre-t, a Bond-gonoszt is eljátszotta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Ki a főgonosz az első, 2008-as Vasember-filmben?",
+    "answer": "Obadiah Stane",
+    "wrong": [
+      "Ivan Vanko",
+      "Aldrich Killian",
+      "Justin Hammer"
+    ],
+    "explanation": "Stane-t Jeff Bridges alakította, aki a szerepért kopaszra borotválta a fejét."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Melyik szereplő hangját adja eredetiben Bradley Cooper A galaxis őrzői-filmekben?",
+    "answer": "Mordály",
+    "wrong": [
+      "Groot",
+      "Drax",
+      "Yondu"
+    ],
+    "explanation": "A forgatáson Mordály mozdulatait a rendező öccse, Sean Gunn játszotta el."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Ki kölcsönözte eredetiben Darth Vader mély hangját?",
+    "answer": "James Earl Jones",
+    "wrong": [
+      "Morgan Freeman",
+      "Christopher Lee",
+      "Laurence Fishburne"
+    ],
+    "explanation": "A jelmezben David Prowse testépítő játszott, Jones hangját utólag vették fel."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Mi a neve a tündepengének, amelyet Zsákos Bilbó Frodónak ajándékoz?",
+    "answer": "Fullánk",
+    "wrong": [
+      "Andúril",
+      "Glamdring",
+      "Narsil"
+    ],
+    "explanation": "A penge kéken világít, ha orkok vannak a közelben."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Mi a neve a 006-os ügynöknek, aki Pierce Brosnan első Bond-filmjében Bond ellen fordul?",
+    "answer": "Alec Trevelyan",
+    "wrong": [
+      "Raoul Silva",
+      "Max Zorin",
+      "Dominic Greene"
+    ],
+    "explanation": "Trevelyant Sean Bean alakította, aki A Gyűrűk Urában Boromirt játszotta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Melyik évben volt a Dr. No, a legelső hivatalos James Bond-film premierje?",
+    "answer": "1962",
+    "wrong": [
+      "1959",
+      "1965",
+      "1968"
+    ],
+    "explanation": "Bondot ebben még Sean Connery alakította, a film nagyrészt Jamaicában játszódik."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Milyen néven született Superman a szülőbolygóján?",
+    "answer": "Kal-El",
+    "wrong": [
+      "Jor-El",
+      "Zor-El",
+      "Kara Zor-El"
+    ],
+    "explanation": "A Clark Kent nevet a nevelőszüleitől, a kansasi Kent házaspártól kapta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Melyik kisvárosba költözik Bella Swan az apjához az Alkonyat elején?",
+    "answer": "Forks",
+    "wrong": [
+      "Port Angeles",
+      "Mystic Falls",
+      "Beacon Hills"
+    ],
+    "explanation": "A valódi Forks Washington államban van, de az első filmet nagyrészt Oregonban forgatták."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Ki alakította Snow elnököt Az éhezők viadala 2012 és 2015 között bemutatott filmjeiben?",
+    "answer": "Donald Sutherland",
+    "wrong": [
+      "Woody Harrelson",
+      "Stanley Tucci",
+      "Philip Seymour Hoffman"
+    ],
+    "explanation": "Az előzményfilmben a fiatal Coriolanus Snow-t Tom Blyth játszotta."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Melyik városban játszódik a Halálos iramban: Ötödik sebesség című film?",
+    "answer": "Rio de Janeiro",
+    "wrong": [
+      "São Paulo",
+      "Buenos Aires",
+      "Havanna"
+    ],
+    "explanation": "A fináléban a csapat egy teljes bankpáncélszekrényt vonszol végig autókkal a város utcáin."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják Barbossa kapitány élőhalott majmát?",
+    "answer": "Jack",
+    "wrong": [
+      "Will",
+      "Hector",
+      "Pintel"
+    ],
+    "explanation": "Barbossa gúnyból nevezte el így, egykori kapitánya, Jack Sparrow után."
+  },
+  {
+    "category": "univerzumok",
+    "difficulty": 3,
+    "prompt": "Melyik évben került a mozikba az első Mátrix-film?",
+    "answer": "1999",
+    "wrong": [
+      "1997",
+      "2001",
+      "2003"
+    ],
+    "explanation": "Morpheus szerint a Mátrixban is 1999 van, a valóságban viszont nagyjából 2199."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Hogy hívjuk magyarul az e-mail-címekben a felhasználónév után álló jelet?",
+    "answer": "Kukac",
+    "wrong": [
+      "Csillag",
+      "Majom",
+      "Egér"
+    ],
+    "explanation": "Az olaszok csigának, a lengyelek majomnak hívják ugyanezt a jelet."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Melyik dal klipjébe botlik bele az, akit az interneten „rickrolloltak”?",
+    "answer": "Never Gonna Give You Up",
+    "wrong": [
+      "Take On Me",
+      "Don't You Want Me",
+      "Tainted Love"
+    ],
+    "explanation": "Rick Astley slágere 1987-ben jelent meg, a tréfa 2007-ben kapott lábra."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Milyen állat ugrálja át a kaktuszokat a Chrome böngésző offline játékában?",
+    "answer": "Dinoszaurusz",
+    "wrong": [
+      "Prérifarkas",
+      "Kenguru",
+      "Teve"
+    ],
+    "explanation": "A 2014-es játék a címsorba írt chrome://dino paranccsal bármikor elindítható."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Milyen figura látható a Snapchat sárga logóján?",
+    "answer": "Szellem",
+    "wrong": [
+      "Földönkívüli",
+      "Bagoly",
+      "Pingvin"
+    ],
+    "explanation": "A szellem a Ghostface Chillah nevet kapta, a Wu-Tang Clan rapperéről, Ghostface Killahról."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Kinek az ujját harapja meg Charlie a híres „Charlie bit my finger” videóban?",
+    "answer": "A bátyjáét",
+    "wrong": [
+      "Az apjáét",
+      "Az anyjáét",
+      "A nővéréét"
+    ],
+    "explanation": "A két brit testvér 2007-es videóját 2021-ben NFT-ként árverezték el."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Mit húz maga után az űrben repülő Nyan Cat?",
+    "answer": "Szivárványt",
+    "wrong": [
+      "Tűzcsóvát",
+      "Buborékokat",
+      "Konfettit"
+    ],
+    "explanation": "A 2011-es animációt Chris Torres rajzolta, a macska teste egy Pop-Tart nevű amerikai sütemény."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Milyen állat iszogatja nyugodtan a kávéját a lángoló szobában a „This is fine” mémben?",
+    "answer": "Kutya",
+    "wrong": [
+      "Macska",
+      "Béka",
+      "Medve"
+    ],
+    "explanation": "A jelenet KC Green 2013-as Gunshow című webképregényéből származik."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Melyik internetes mém arcaként lett világhírű a kőszegi születésű Arató András?",
+    "answer": "Hide the Pain Harold",
+    "wrong": [
+      "Bad Luck Brian",
+      "Good Guy Greg",
+      "Sudden Clarity Clarence"
+    ],
+    "explanation": "A nyugdíjas villamosmérnököt egy fotós az iWiW-re feltöltött nyaralós képei alapján kérte fel modellnek."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Milyen színű volt valójában a ruha, amelynek fotója 2015-ben kettéosztotta az internetet?",
+    "answer": "Kék és fekete",
+    "wrong": [
+      "Fehér és arany",
+      "Kék és arany",
+      "Fehér és fekete"
+    ],
+    "explanation": "A gyártó is megerősítette a színeket, a vitát a fotó szokatlan megvilágítása okozta."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Melyik napról szól Rebecca Black 2011-ben hírhedtté vált dala?",
+    "answer": "A péntekről",
+    "wrong": [
+      "A szombatról",
+      "A hétfőről",
+      "A vasárnapról"
+    ],
+    "explanation": "Rebecca Black 13 éves volt, amikor a dal és a klip megjelent."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Mit kellett csinálniuk a résztvevőknek a 2016-os Mannequin Challenge-videókban?",
+    "answer": "Mozdulatlanná dermedni",
+    "wrong": [
+      "Hátrafelé sétálni",
+      "Csukott szemmel táncolni",
+      "Talpra dobni egy flakont"
+    ],
+    "explanation": "A videók alatt sokszor Rae Sremmurd Black Beatles című száma szólt, amely így listavezető lett Amerikában."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Melyik cég vásárolta meg a YouTube-ot 2006-ban?",
+    "answer": "Google",
+    "wrong": [
+      "Microsoft",
+      "Yahoo",
+      "Facebook"
+    ],
+    "explanation": "Az 1,65 milliárd dolláros üzlet alig két évvel a videómegosztó indulása után jött létre."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Melyik egyetem diákjaként indította el Mark Zuckerberg a Facebookot 2004-ben?",
+    "answer": "Harvard",
+    "wrong": [
+      "Stanford",
+      "Yale",
+      "Princeton"
+    ],
+    "explanation": "Az oldal eleinte thefacebook.com címen futott, és csak harvardi diákok regisztrálhattak rá."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Mit jelent az üzenetekben gyakran használt LOL rövidítés?",
+    "answer": "Laughing out loud",
+    "wrong": [
+      "Live out loud",
+      "Look online later",
+      "Log out later"
+    ],
+    "explanation": "Az Oxford English Dictionary 2011-ben vette fel a szótárba."
+  },
+  {
+    "category": "internet",
+    "difficulty": 1,
+    "prompt": "Mit jelent a játékosok között elterjedt AFK rövidítés?",
+    "answer": "Away from keyboard",
+    "wrong": [
+      "Aim for kills",
+      "All friends killed",
+      "Ask for kick"
+    ],
+    "explanation": "Közeli rokona a BRB (be right back), vagyis „mindjárt jövök”."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik volt az első YouTube-videó, amely elérte az egymilliárdos nézettséget?",
+    "answer": "Gangnam Style (PSY)",
+    "wrong": [
+      "Baby (Justin Bieber)",
+      "Despacito (Luis Fonsi)",
+      "Bad Romance (Lady Gaga)"
+    ],
+    "explanation": "2014-ben a nézettsége túllépte a YouTube számlálójának felső határát, ezért a rendszert át kellett írni."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik betegségre hívta fel a figyelmet a 2014-es Ice Bucket Challenge, amelyben a résztvevők jeges vizet zúdítottak magukra?",
+    "answer": "ALS",
+    "wrong": [
+      "Parkinson-kór",
+      "Alzheimer-kór",
+      "Szklerózis multiplex"
+    ],
+    "explanation": "Az amerikai ALS Association egyetlen nyár alatt több mint 100 millió dollár adományt kapott."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Milyen fajtájú kutya látható a „Doge” mémben?",
+    "answer": "Shiba inu",
+    "wrong": [
+      "Akita inu",
+      "Welsh corgi",
+      "Szibériai husky"
+    ],
+    "explanation": "A kutyát Kabosunak hívták, és róla mintázták a Dogecoin kriptovaluta logóját is."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik közösségi oldalon javasolta egy felhasználó 2007-ben, hogy a témákat kettőskereszttel jelöljék?",
+    "answer": "Twitter",
+    "wrong": [
+      "Facebook",
+      "Myspace",
+      "Flickr"
+    ],
+    "explanation": "Chris Messina ötletét a Twitter csak 2009-ben karolta fel, ekkor lettek kattinthatók a hashtagek."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Legfeljebb hány karakteres lehetett eredetileg egy bejegyzés a Twitteren, a mai X-en?",
+    "answer": "140",
+    "wrong": [
+      "160",
+      "120",
+      "200"
+    ],
+    "explanation": "A korlát az SMS 160 karakteres keretéből jött, 2017-ben pedig 280-ra duplázták."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Milyen formájú fotókat lehetett eleinte feltölteni az Instagramra?",
+    "answer": "Csak négyzet alakúakat",
+    "wrong": [
+      "Csak álló téglalapokat",
+      "Csak fekvő téglalapokat",
+      "Csak kör alakúakat"
+    ],
+    "explanation": "A négyzetes formát a Polaroid és a Kodak Instamatic gépek ihlették, a korlátot 2015-ben oldották fel."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik videós alkalmazás olvadt be 2018-ban a TikTokba?",
+    "answer": "Musical.ly",
+    "wrong": [
+      "Vine",
+      "Dubsmash",
+      "Triller"
+    ],
+    "explanation": "A TikTokot fejlesztő kínai ByteDance 2017-ben vásárolta meg a Musical.ly-t."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Mit jelent a Redditen népszerű AMA, amelyben egy híresség a felhasználók kérdéseire válaszol?",
+    "answer": "Ask Me Anything",
+    "wrong": [
+      "Answer My Audience",
+      "All Members Ask",
+      "Ask My Agent"
+    ],
+    "explanation": "Barack Obama 2012-es AMA-ja akkora forgalmat hozott, hogy a Reddit szerverei is megroggyantak."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik szolgáltatás váltotta fel 2013-ban a Windows Live Messengert, a közismert MSN-t?",
+    "answer": "Skype",
+    "wrong": [
+      "Viber",
+      "WhatsApp",
+      "Microsoft Teams"
+    ],
+    "explanation": "A Microsoft 2011-ben 8,5 milliárd dollárért vásárolta meg a Skype-ot."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Mi kellett eleinte ahhoz, hogy valaki regisztrálhasson az iWiW-re?",
+    "answer": "Egy meglévő tag meghívója",
+    "wrong": [
+      "Egy egyetemi e-mail-cím",
+      "Egy magyar mobilszám",
+      "A személyi igazolvány száma"
+    ],
+    "explanation": "A 2002-ben WiW néven indult oldal neve a „Who is who” kifejezésből ered."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Milyen állatok előtt áll Jawed Karim a YouTube legelső videójában, a „Me at the zoo”-ban?",
+    "answer": "Elefántok",
+    "wrong": [
+      "Zsiráfok",
+      "Oroszlánok",
+      "Pingvinek"
+    ],
+    "explanation": "A 19 másodperces felvétel a San Diegó-i állatkertben készült, és 2005 áprilisában került fel."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Mit jelent a közösségi média kapcsán sokat emlegetett FOMO?",
+    "answer": "A lemaradástól való félelmet",
+    "wrong": [
+      "A kudarctól való félelmet",
+      "A magánytól való félelmet",
+      "A változástól való félelmet"
+    ],
+    "explanation": "A fear of missing out kifejezést Patrick McGinnis tette ismertté egy 2004-es egyetemi lapcikkben."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik országból indultak világhódító útjukra az emojik?",
+    "answer": "Japán",
+    "wrong": [
+      "Dél-Korea",
+      "Egyesült Államok",
+      "Finnország"
+    ],
+    "explanation": "A szó a japán e (kép) és moji (írásjel) szavakból áll, nem az angol emotionből."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik Drake-dal klipjéből származik a híres kétképes mém, amelyen a rapper előbb elutasít, majd helyesel valamit?",
+    "answer": "Hotline Bling",
+    "wrong": [
+      "God's Plan",
+      "One Dance",
+      "In My Feelings"
+    ],
+    "explanation": "A 2015-ös klip színváltós díszletét James Turrell fényinstallációi ihlették."
+  },
+  {
+    "category": "internet",
+    "difficulty": 2,
+    "prompt": "Melyik ország koporsóvivő táncosai lettek a 2020-as „Coffin Dance” mém sztárjai?",
+    "answer": "Ghána",
+    "wrong": [
+      "Nigéria",
+      "Kenya",
+      "Kamerun"
+    ],
+    "explanation": "A mémvideók alatt Tony Igy Astronomia című száma szól."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Mi volt a neve a Twitter logóján látható kék madárnak?",
+    "answer": "Larry",
+    "wrong": [
+      "Tweety",
+      "Birdie",
+      "Robin"
+    ],
+    "explanation": "A nevét a Boston Celtics kosárlabdalegendájáról, Larry Birdről kapta."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Mi volt a neve annak a helymegosztó alkalmazásnak, amelyből az Instagram kinőtt?",
+    "answer": "Burbn",
+    "wrong": [
+      "Foursquare",
+      "Gowalla",
+      "Hipstamatic"
+    ],
+    "explanation": "A nevet Kevin Systrom a bourbon whiskey iránti rajongása miatt választotta."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik ország programozói írták a Skype eredeti szoftverét?",
+    "answer": "Észtország",
+    "wrong": [
+      "Finnország",
+      "Lettország",
+      "Litvánia"
+    ],
+    "explanation": "A céget egy svéd és egy dán üzletember alapította, a szolgáltatást a Microsoft 2025-ben szüntette meg."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik évben zárt be végleg az iWiW közösségi oldal?",
+    "answer": "2014",
+    "wrong": [
+      "2010",
+      "2012",
+      "2016"
+    ],
+    "explanation": "Az oldal június 30-án zárt be, csúcsán 4,7 millió regisztrált felhasználója volt."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Ki volt minden új Myspace-felhasználó első ismerőse?",
+    "answer": "Tom Anderson",
+    "wrong": [
+      "Chris DeWolfe",
+      "Sean Parker",
+      "Jack Dorsey"
+    ],
+    "explanation": "Tom a Myspace társalapítója volt, ezért automatikusan minden új fiók ismerőse lett."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik nyelvben jelent a „wiki” szó gyorsat?",
+    "answer": "A hawaiiban",
+    "wrong": [
+      "A maoriban",
+      "A szamoaiban",
+      "A tahitiban"
+    ],
+    "explanation": "Ward Cunningham 1995-ben a honolului reptér Wiki Wiki nevű transzferbuszáról nevezte el az első wikit."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik producer „Harlem Shake” című számára készültek 2013-ban a tömeges, őrült táncvideók?",
+    "answer": "Baauer",
+    "wrong": [
+      "Skrillex",
+      "Avicii",
+      "Deadmau5"
+    ],
+    "explanation": "A szám lett az első listavezető a Billboard Hot 100-on, amelynél már a YouTube-nézettséget is beszámították."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik napon tartják az emojik világnapját?",
+    "answer": "Július 17-én",
+    "wrong": [
+      "Március 14-én",
+      "Május 4-én",
+      "Október 10-én"
+    ],
+    "explanation": "A dátumot az Apple naptár-emojija ihlette, amely ezt a napot mutatja."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik évben küldte el Ray Tomlinson az első olyan e-mailt, amely hálózaton át jutott el egyik számítógépről a másikra?",
+    "answer": "1971",
+    "wrong": [
+      "1965",
+      "1978",
+      "1983"
+    ],
+    "explanation": "Tomlinson választotta a címekbe a @ jelet, mert az nem fordult elő személynevekben."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik karibi terület internetes végződése a mesterséges intelligenciával foglalkozó cégek körében népszerű .ai?",
+    "answer": "Anguilla",
+    "wrong": [
+      "Aruba",
+      "Barbados",
+      "Jamaica"
+    ],
+    "explanation": "A kis brit tengerentúli terület a mesterségesintelligencia-láz óta milliókat keres a .ai címeken."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Ki volt a címzettje annak az 1917-es levélnek, amelyben az OMG rövidítés első ismert írásos előfordulása szerepel?",
+    "answer": "Winston Churchill",
+    "wrong": [
+      "David Lloyd George",
+      "V. György király",
+      "Arthur Conan Doyle"
+    ],
+    "explanation": "A levelet John Fisher admirális írta, és a rövidítést is kifejtette: Oh! My! God!"
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik magyar író 1929-es novellájából ered a „hat lépés távolság” elmélete, amely szerint bárki elérhető néhány ismerősön keresztül?",
+    "answer": "Karinthy Frigyes",
+    "wrong": [
+      "Kosztolányi Dezső",
+      "Móricz Zsigmond",
+      "Heltai Jenő"
+    ],
+    "explanation": "A novella címe Láncszemek, hőse arra fogad, hogy legfeljebb öt emberen keresztül bárkit elér a Földön."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik brit biológus alkotta meg a mém (angolul meme) szót 1976-os könyvében?",
+    "answer": "Richard Dawkins",
+    "wrong": [
+      "David Attenborough",
+      "Francis Crick",
+      "Julian Huxley"
+    ],
+    "explanation": "Az önző gén című könyvben a kultúrában terjedő gondolatokat nevezte így, a gén mintájára."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Melyik programban rajzolták meg 2008-ban a híres Trollface-t?",
+    "answer": "Microsoft Paint",
+    "wrong": [
+      "Adobe Photoshop",
+      "GIMP",
+      "CorelDRAW"
+    ],
+    "explanation": "Carlos Ramirez 18 éves egyetemistaként rajzolta egy képregényhez, amely a céltalan trollkodást figurázta ki."
+  },
+  {
+    "category": "internet",
+    "difficulty": 3,
+    "prompt": "Mi volt Grumpy Cat, a morcos képű internetes sztármacska valódi neve?",
+    "answer": "Tardar Sauce",
+    "wrong": [
+      "Mittens",
+      "Pickles",
+      "Whiskers"
+    ],
+    "explanation": "Morcos arcát törpenövés és előreugró alsó állkapocs okozta."
   }
 ]
