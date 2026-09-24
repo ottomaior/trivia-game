@@ -6,19 +6,19 @@ import {
   MAX_PLAYERS,
   MIN_PLAYERS,
   normalizeName,
+  pointsMultiplier,
   scoreAnswer,
   TOTAL_ROUNDS,
   type Avatar,
   type ErrorCode,
   type OttoLine,
-  type OttoLineKey,
   type Phase,
   type Pick,
   type Standing,
 } from '@trivia/shared';
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
-import { finalLine, line, revealLine, scoreboardLine, voteLine, welcomeLine } from '../game/otto.ts';
+import { categoryLine, finalLine, LinePicker, revealLine, scoreboardLine, voteLine, welcomeLine } from '../game/otto.ts';
 import { randomId, randomToken } from './ids.ts';
 
 export interface Player {
@@ -77,6 +77,8 @@ export class Room {
   picks: Pick[] = [];
   standings: Standing[] = [];
   otto: OttoLine | null = null;
+  /** Deals Otto's line variants so none repeats before all were said. */
+  private readonly lines: LinePicker;
   /** Consecutive correct answers per player, for Otto's commentary. */
   readonly streaks = new Map<string, number>();
   /** Rounds in a row that nobody answered correctly. */
@@ -96,6 +98,7 @@ export class Room {
     totalRounds = TOTAL_ROUNDS,
   ) {
     this.totalRounds = totalRounds;
+    this.lines = new LinePicker(rng);
   }
 
   // -------------------------------------------------------------------------
@@ -222,7 +225,7 @@ export class Room {
     this.streaks.clear();
     this.noneCorrectRun = 0;
     this.phase = 'intro';
-    this.otto = welcomeLine(this.players.size, this.rng);
+    this.otto = welcomeLine(this.players.size, this.lines);
   }
 
   enterVote(options: VoteOption[]): void {
@@ -232,7 +235,7 @@ export class Room {
     this.question = null;
     this.answers.clear();
     this.phase = 'vote';
-    this.otto = voteLine(this.round, this.totalRounds, this.rng);
+    this.otto = voteLine(this.round, this.totalRounds, this.lines);
   }
 
   castVote(playerId: string, option: number): Result {
@@ -256,6 +259,7 @@ export class Room {
   enterVoteResult(chosen: number): void {
     this.chosenOption = chosen;
     this.phase = 'vote_result';
+    this.otto = categoryLine(this.voteOptions[chosen]!.category.slug, this.lines);
   }
 
   enterQuestionRead(question: Question): void {
@@ -265,7 +269,8 @@ export class Room {
     this.answers.clear();
     this.answersOpenedAt = null;
     this.phase = 'question_read';
-    this.say('question');
+    // The TV reads the question out; Otto's bubble makes way for it.
+    this.otto = null;
   }
 
   openAnswers(now: number): void {
@@ -300,7 +305,7 @@ export class Room {
     this.picks = [...this.players.values()].map((p) => {
       const a = this.answers.get(p.id);
       const correct = a?.choice === q.correct;
-      const points = a ? scoreAnswer(correct, a.responseMs, openMs) : 0;
+      const points = a ? scoreAnswer(correct, a.responseMs, openMs) * pointsMultiplier(this.round, this.totalRounds) : 0;
       p.score += points;
       return { playerId: p.id, choice: a?.choice ?? null, correct, points, responseMs: a?.responseMs ?? null };
     });
@@ -315,18 +320,18 @@ export class Room {
       responseMs: p.responseMs,
       streak: this.streaks.get(p.playerId) ?? 0,
     }));
-    this.otto = revealLine(facts, this.noneCorrectRun, this.rng);
+    this.otto = revealLine(facts, this.noneCorrectRun, this.lines);
   }
 
   enterScoreboard(): void {
     this.phase = 'scoreboard';
-    this.otto = scoreboardLine(this.standingFacts(), this.round, this.rng);
+    this.otto = scoreboardLine(this.standingFacts(), this.round, this.lines);
   }
 
   enterFinal(): void {
     this.phase = 'final';
     this.standings = this.rankedStandings(new Map(this.standings.map((s) => [s.playerId, s.rank])));
-    this.otto = finalLine(this.standingFacts(), this.rng);
+    this.otto = finalLine(this.standingFacts(), this.lines);
   }
 
   enterLobby(): void {
@@ -385,10 +390,6 @@ export class Room {
         prevRank: prevRanks.get(p.id) ?? rank,
       };
     });
-  }
-
-  private say(key: OttoLineKey): void {
-    this.otto = line(key, this.rng);
   }
 
   private standingFacts() {

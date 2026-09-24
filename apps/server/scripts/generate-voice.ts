@@ -3,17 +3,19 @@
  * apps/web/public/voice/README.md). Set the keys in your own shell; never
  * commit them or paste them anywhere.
  *
- *   ElevenLabs: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (optional ELEVENLABS_MODEL)
+ *   ElevenLabs: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (optional ELEVENLABS_MODEL, default eleven_v3)
  *   Azure:      AZURE_SPEECH_KEY, AZURE_SPEECH_REGION (optional AZURE_VOICE)
  *
  *   pnpm voice:generate --dry-run            what would be recorded, and the cost
  *   pnpm voice:generate                      records new or changed lines only
  *   pnpm voice:generate --redo welcome-0     records those lines again (retakes)
+ *   pnpm voice:generate --questions          reads every question in seed/questions.json aloud
+ *                                            (into public/voice/q/; also --dry-run, --redo <id>)
  *
  * --provider elevenlabs|azure picks the service; by default ElevenLabs when
  * ELEVENLABS_API_KEY is set, otherwise Azure. Then commit apps/web/public/voice/.
  */
-import { allOttoLines } from '@trivia/shared';
+import { allOttoLines, stripCues } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import {
@@ -21,25 +23,42 @@ import {
   azureProvider,
   ELEVEN_DEFAULT_MODEL,
   elevenLabsProvider,
+  elevenSupportsCues,
   estimateCredits,
   generateVoices,
   pendingLines,
   type VoiceProvider,
 } from '../src/tools/generateVoice.ts';
+import { questionVoiceId } from '../src/content/normalize.ts';
+import { loadSeedFile } from '../src/content/seed.ts';
 
 const { values } = parseArgs({
   options: {
     'dry-run': { type: 'boolean', default: false },
     provider: { type: 'string' },
     redo: { type: 'string' },
+    questions: { type: 'boolean', default: false },
   },
 });
 const env = process.env;
-const outDir = fileURLToPath(new URL('../../web/public/voice', import.meta.url));
-const lines = allOttoLines();
+const outDir = fileURLToPath(new URL(values.questions ? '../../web/public/voice/q' : '../../web/public/voice', import.meta.url));
 const redo = values.redo ? values.redo.split(',').map((s) => s.trim()).filter(Boolean) : [];
 const which = values.provider ?? (env.ELEVENLABS_API_KEY ? 'elevenlabs' : 'azure');
 const model = env.ELEVENLABS_MODEL ?? ELEVEN_DEFAULT_MODEL;
+// Otto's lines carry performance cues ("[excited]") that only v3 acts out; other voices get the plain words.
+const keepCues = which === 'elevenlabs' && elevenSupportsCues(model);
+const lines = values.questions ? questionLines() : allOttoLines().map((l) => (keepCues ? l : { ...l, text: stripCues(l.text) }));
+
+/** Every question prompt in the seed file, named by its prompt so a reworded question is recorded again. */
+function questionLines() {
+  const seen = new Set<string>();
+  return loadSeedFile().questions.flatMap((q) => {
+    const id = questionVoiceId(q.prompt);
+    if (seen.has(id)) return [];
+    seen.add(id);
+    return [{ id, text: q.prompt.trim() }];
+  });
+}
 
 function fail(msg: string): never {
   console.error(msg);

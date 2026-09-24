@@ -4,6 +4,7 @@ import {
   isValidRoomCode,
   NAME_MAX_LENGTH,
   normalizeName,
+  pointsMultiplier,
   scoreAnswer,
 } from './rules.ts';
 import { ottoText, ottoVoiceId } from './strings.ts';
@@ -52,13 +53,21 @@ describe('difficultyForRound', () => {
   });
 });
 
+describe('pointsMultiplier', () => {
+  it('doubles only the last round', () => {
+    expect(pointsMultiplier(1, 10)).toBe(1);
+    expect(pointsMultiplier(9, 10)).toBe(1);
+    expect(pointsMultiplier(10, 10)).toBe(2);
+  });
+});
+
 describe('ottoText', () => {
   it('picks the variant and wraps around', () => {
     expect(ottoText({ key: 'winner', variant: 1 })).toBe('Íme, a műsor győztese! Meghajlás!');
-    expect(ottoText({ key: 'paused', variant: 5 })).toBe('Rövid reklámszünet következik…');
+    expect(ottoText({ key: 'paused', variant: 3 })).toBe('Rövid reklámszünet következik…');
   });
 
   it('names voice clips after the key and wrapped variant', () => {
-    expect(ottoVoiceId({ key: 'paused', variant: 5 })).toBe('paused-0');
+    expect(ottoVoiceId({ key: 'paused', variant: 3 })).toBe('paused-0');
   });
 });

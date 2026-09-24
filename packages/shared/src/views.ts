@@ -36,6 +36,8 @@ export interface PublicQuestion {
   difficulty: Difficulty;
   prompt: string;
   choices: string[];
+  /** Name of the recorded read-aloud of the prompt (public/voice/q/), if one was made. */
+  voice: string;
 }
 
 export interface Pick {
@@ -86,15 +88,32 @@ export interface OttoLine {
   focus: string[];
 }
 
+/** Otto's reaction to a chosen category, by the category's slug. */
+export const CATEGORY_LINES = {
+  tortenelem: 'catTortenelem',
+  foldrajz: 'catFoldrajz',
+  tudomany: 'catTudomany',
+  film: 'catFilm',
+  zene: 'catZene',
+  sport: 'catSport',
+  gasztro: 'catGasztro',
+  magyarorszag: 'catMagyarorszag',
+} as const;
+export type CategoryLineKey = (typeof CATEGORY_LINES)[keyof typeof CATEGORY_LINES];
+
 export type OttoLineKey =
   | 'welcome'
   | 'welcomeSolo'
+  | 'firstRound'
   | 'pickCategory'
+  | 'halfway'
   | 'lastRound'
-  | 'question'
+  | 'categoryPicked'
+  | CategoryLineKey
   | 'allCorrect'
   | 'noneCorrect'
   | 'noneCorrectAgain'
+  | 'onlyOne'
   | 'streak'
   | 'lightning'
   | 'fastest'

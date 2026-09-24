@@ -30,7 +30,7 @@ function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
   };
 }
 
-const question = { id: 'q', category: 'Zene', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'] };
+const question = { id: 'q', category: 'Zene', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], voice: 'v' };
 const pick = (playerId: string, correct: boolean) => ({ playerId, choice: 0, correct, points: correct ? 900 : 0, responseMs: 1000 });
 const standing = (playerId: string, rank: number, prevRank: number) => ({ playerId, score: 1000, delta: 0, rank, prevRank });
 

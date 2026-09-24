@@ -12,33 +12,40 @@ commit them or paste them anywhere.
 
 ## ElevenLabs (recommended)
 
-The most expressive host voice. Otto's 51 lines are about 1,700 characters:
-about 1,700 credits on Multilingual v2, so the free plan (10,000 credits a
-month) covers a full recording several times over, retakes included. The free
-plan is for non-commercial use and asks for attribution; the TV shows
-"Otto hangja: ElevenLabs" on the start screen and in the lobby automatically.
+The most expressive host voice. Otto currently uses the Hungarian Voice
+Library voice `M336tBVZHWWiWb4R54ui` on `eleven_v3`, on the Starter plan.
 
+What we learned choosing it:
+- **Use a native Hungarian voice.** Voices designed or recorded in English
+  read Hungarian with an English accent, whatever the model or settings.
+  In the Voice Library, filter by Language: Hungarian.
+- **Library voices need a paid plan** through the API (the free plan returns
+  "paid_plan_required"). Starter is enough.
+- **`eleven_v3` pronounces Hungarian best**, and acts out the bracketed cues
+  at the start of each line in `packages/shared/src/strings.ts`
+  (`[excited]`, `[sighs]`, `[short pause]`…). It runs on the "Creative"
+  setting (`ELEVEN_V3_SETTINGS`); "Natural" sounded robotic.
+  Multilingual v2 mispronounced Hungarian with this voice.
+
+Steps:
 1. On elevenlabs.io, open **Developers → API keys** and create a key with the
-   **Text to Speech** permission.
-2. Pick Otto's voice: a warm, lively male voice from the **Voice Library**
-   (add it to My Voices), or make one with **Voice Design** (e.g. "cheerful
-   middle-aged Hungarian game-show host, warm, theatrical, 1970s TV"). Copy
-   its **Voice ID**.
+   **Text to Speech** permission (the value starts with `sk_`).
+2. Add Otto's voice to My Voices and copy its **Voice ID**.
 3. Set both in your terminal:
    - PowerShell: `$env:ELEVENLABS_API_KEY="…"` and `$env:ELEVENLABS_VOICE_ID="…"`
    - bash/zsh: `export ELEVENLABS_API_KEY=…` and `export ELEVENLABS_VOICE_ID=…`
 4. `pnpm voice:generate --dry-run` lists what would be recorded and the
-   estimated credits. Then `pnpm voice:generate` records it.
+   estimated credits. Then `pnpm voice:generate` records Otto's lines and
+   `pnpm voice:generate --questions` reads the questions aloud (into `q/`).
 5. `pnpm dev`, open http://localhost:5173/tv and play a round to listen.
    Re-record lines you don't like: `pnpm voice:generate --redo welcome-0,winner-1`
-   (ids are in the dry run). Each retake costs only that line's credits.
+   (ids are in the dry run). `--redo` only adds retakes on top of lines that
+   are already recorded; on an empty folder it records everything.
 6. Commit `apps/web/public/voice/` and push to `main`.
 
-Options: `ELEVENLABS_MODEL` (default `eleven_multilingual_v2`; `eleven_v3`
-is more expressive, `eleven_flash_v2_5` costs half but sounds flatter).
-Delivery (stability, style) is `ELEVEN_SETTINGS` in
-`apps/server/src/tools/generateVoice.ts`. Changing the voice, model or
-settings records everything again on the next run.
+Options: `ELEVENLABS_MODEL` (default `eleven_v3`; `eleven_flash_v2_5`
+costs half but sounds flatter; both get `language_code: hu`). Changing the
+voice, model or settings records everything again on the next run.
 
 ## Azure
 

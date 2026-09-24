@@ -1,4 +1,5 @@
 import type { HostView, PlayerSummary, PlayerView, PublicQuestion, Stage } from '@trivia/shared';
+import { questionVoiceId } from '../content/normalize.ts';
 import type { Question } from '../content/types.ts';
 import type { Player, Room } from '../rooms/Room.ts';
 
@@ -18,7 +19,14 @@ function summarize(room: Room, p: Player): PlayerSummary {
 }
 
 function publicQuestion(q: Question): PublicQuestion {
-  return { id: q.id, category: q.category, difficulty: q.difficulty, prompt: q.prompt, choices: q.choices };
+  return {
+    id: q.id,
+    category: q.category,
+    difficulty: q.difficulty,
+    prompt: q.prompt,
+    choices: q.choices,
+    voice: questionVoiceId(q.prompt),
+  };
 }
 
 function stage(room: Room): Stage {

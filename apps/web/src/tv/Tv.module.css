@@ -288,6 +288,38 @@
   color: var(--ice);
 }
 
+/* The last round scores double. */
+.doubleBadge {
+  display: inline-block;
+  margin-left: 0.7em;
+  padding: 0.15em 0.6em;
+  border-radius: 0.4em;
+  background: var(--rust);
+  color: var(--cream);
+  font-size: 0.8em;
+  letter-spacing: 0.06em;
+  animation: doublePulse 0.9s ease-in-out infinite alternate;
+}
+
+.roundCard .doubleBadge {
+  margin: 0;
+  font-size: 2.4em;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+@keyframes doublePulse {
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doubleBadge {
+    animation: none;
+  }
+}
+
 .gameTitle {
   margin: 0;
   font-family: var(--font-display);

@@ -54,6 +54,8 @@ const FILE_LEVELS: Partial<Record<Cue, number>> = {
 const FADE_S = 0.6;
 /** When the reveal's "ding" lands after the drumroll starts (matches the TV animation). */
 const REVEAL_HIT_S = 0.75;
+/** A question read-aloud waits at most this long for Otto to finish his line, then talks over its end. */
+const MAX_QUEUE_WAIT_S = 3;
 
 interface Settings {
   muted: boolean;
@@ -73,8 +75,12 @@ class AudioEngine {
   private wanted: Track | null = null;
   private files = new Map<string, AudioBuffer[]>();
   private voiceManifest: VoiceManifest = {};
+  /** Read-alouds of the questions, by PublicQuestion.voice. */
+  private questionManifest: VoiceManifest = {};
   private voices = new Map<string, Promise<AudioBuffer | null>>();
   private voicePlaying: AudioBufferSourceNode | null = null;
+  /** Context time the current voice clip ends, so a question can wait for Otto to finish. */
+  private voiceEndsAt = 0;
   private listeners = new Set<Listener>();
   muted = readJson<Settings>(KEYS.audio)?.muted ?? false;
 
@@ -103,7 +109,7 @@ class AudioEngine {
       this.levelBuf = new Float32Array(this.analyser.fftSize);
       this.voiceBus.connect(this.analyser);
       void this.loadFiles();
-      void this.loadVoiceManifest();
+      void this.loadVoiceManifests();
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
     if (this.wanted && !this.current) this.music(this.wanted);
@@ -184,23 +190,17 @@ class AudioEngine {
     return line !== null && ottoVoiceId(line) in this.voiceManifest;
   }
 
-  /** Plays Otto's recorded line (if there is one), ducking the music under it. */
+  /** Plays Otto's recorded line (if there is one), cutting off whatever he was saying. */
   voice(line: Pick<OttoLine, 'key' | 'variant'>, delay = 0): void {
-    const { ctx, voiceBus } = this;
-    if (!ctx || !voiceBus || this.muted || !this.hasVoice(line)) return;
+    if (!this.hasVoice(line)) return;
     const id = ottoVoiceId(line);
-    const startAt = ctx.currentTime + delay;
-    void this.loadVoice(id).then((buffer) => {
-      if (!buffer || !this.ctx) return;
-      this.voicePlaying?.stop();
-      const src = this.ctx.createBufferSource();
-      src.buffer = buffer;
-      src.connect(voiceBus);
-      const at = Math.max(this.ctx.currentTime, startAt);
-      src.start(at);
-      this.voicePlaying = src;
-      this.duck(LEVELS.duckVoice, at - this.ctx.currentTime + buffer.duration + 0.2);
-    });
+    this.speak(id, `/voice/${this.voiceManifest[id]!.file}`, delay, false);
+  }
+
+  /** Otto reads the question out (if it was recorded), right after his current line ends. */
+  question(voice: string, delay = 0): void {
+    const entry = this.questionManifest[voice];
+    if (entry) this.speak(`q/${voice}`, `/voice/q/${entry.file}`, delay, true);
   }
 
   /** Loudness of Otto's voice right now, 0–1, for lip sync. */
@@ -232,6 +232,28 @@ class AudioEngine {
   }
 
   // ---------------------------------------------------------------------------
+
+  /** Plays a voice clip, ducking the music under it; `queue` waits for the clip already playing. */
+  private speak(key: string, url: string, delay: number, queue: boolean): void {
+    const { ctx, voiceBus } = this;
+    if (!ctx || !voiceBus || this.muted) return;
+    const startAt = ctx.currentTime + delay;
+    void this.loadVoice(key, url).then((buffer) => {
+      if (!buffer || !this.ctx) return;
+      const now = this.ctx.currentTime;
+      let at = Math.max(now, startAt);
+      if (queue && this.voiceEndsAt > at) at = Math.max(at, Math.min(this.voiceEndsAt + 0.15, now + MAX_QUEUE_WAIT_S));
+      else this.voicePlaying?.stop();
+      const src = this.ctx.createBufferSource();
+      src.buffer = buffer;
+      src.connect(voiceBus);
+      src.start(at);
+      if (queue) this.voicePlaying?.stop(at);
+      this.voicePlaying = src;
+      this.voiceEndsAt = at + buffer.duration;
+      this.duck(LEVELS.duckVoice, at - now + buffer.duration + 0.2);
+    });
+  }
 
   private bus(level: number): GainNode {
     const g = this.ctx!.createGain();
@@ -296,26 +318,26 @@ class AudioEngine {
     }
   }
 
-  private async loadVoiceManifest(): Promise<void> {
-    try {
-      const res = await fetch('/voice/manifest.json');
-      if (res.ok) this.voiceManifest = (await res.json()) as VoiceManifest;
-    } catch {
-      // No voice: Otto stays text-only.
-    }
+  private async loadVoiceManifests(): Promise<void> {
+    const load = async (url: string): Promise<VoiceManifest> => {
+      try {
+        const res = await fetch(url);
+        return res.ok ? ((await res.json()) as VoiceManifest) : {};
+      } catch {
+        return {}; // No voice: Otto stays text-only.
+      }
+    };
+    [this.voiceManifest, this.questionManifest] = await Promise.all([load('/voice/manifest.json'), load('/voice/q/manifest.json')]);
   }
 
-  private loadVoice(id: string): Promise<AudioBuffer | null> {
-    let p = this.voices.get(id);
+  private loadVoice(key: string, url: string): Promise<AudioBuffer | null> {
+    let p = this.voices.get(key);
     if (!p) {
-      const entry = this.voiceManifest[id];
-      p = entry
-        ? fetch(`/voice/${entry.file}`)
-            .then((r) => r.arrayBuffer())
-            .then((data) => this.ctx!.decodeAudioData(data))
-            .catch(() => null)
-        : Promise.resolve(null);
-      this.voices.set(id, p);
+      p = fetch(url)
+        .then((r) => r.arrayBuffer())
+        .then((data) => this.ctx!.decodeAudioData(data))
+        .catch(() => null);
+      this.voices.set(key, p);
     }
     return p;
   }

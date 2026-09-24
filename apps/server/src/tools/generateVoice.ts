@@ -92,24 +92,44 @@ export function azureProvider(opts: { key: string; region: string; voice?: strin
 
 // --- ElevenLabs --------------------------------------------------------------
 
-export const ELEVEN_DEFAULT_MODEL = 'eleven_multilingual_v2';
+/** v3 pronounces Hungarian properly with a native voice and acts out delivery cues. */
+export const ELEVEN_DEFAULT_MODEL = 'eleven_v3';
 /**
- * Delivery for a lively game-show host: a little less stable than default
- * (more expression), close to the chosen voice, with some added style.
+ * Delivery for a lively game-show host on the older models: a little less
+ * stable than default (more expression), close to the chosen voice, with some
+ * added style.
  */
 export const ELEVEN_SETTINGS = { stability: 0.4, similarity_boost: 0.8, style: 0.35, use_speaker_boost: true };
+/** v3 only takes stability: 0 "Creative", 0.5 "Natural", 1 "Robust". Natural sounded robotic for Otto. */
+export const ELEVEN_V3_SETTINGS = { stability: 0 };
+
+export type ElevenSettings = Record<string, number | boolean>;
+
+/** v3 acts out bracketed cues ("[excited]"); older models would read them aloud. */
+export function elevenSupportsCues(model: string): boolean {
+  return /eleven_v3/.test(model);
+}
+
+/**
+ * Models that accept `language_code`. Forcing Hungarian on them keeps an
+ * English-sounding voice from reading Hungarian with an English accent;
+ * multilingual_v2 rejects the field, so it guesses the language instead.
+ */
+export function elevenSupportsLanguageCode(model: string): boolean {
+  return /flash_v2_5|turbo_v2_5|eleven_v3/.test(model);
+}
 
 export function elevenLabsProvider(opts: {
   key: string;
   voiceId: string;
   model?: string;
-  settings?: typeof ELEVEN_SETTINGS;
+  settings?: ElevenSettings;
   fetchFn?: FetchFn;
   /** Base back-off when rate limited (tests shorten it). */
   retryMs?: number;
 }): VoiceProvider {
   const model = opts.model ?? ELEVEN_DEFAULT_MODEL;
-  const settings = opts.settings ?? ELEVEN_SETTINGS;
+  const settings = opts.settings ?? (elevenSupportsCues(model) ? ELEVEN_V3_SETTINGS : ELEVEN_SETTINGS);
   const fetchFn = opts.fetchFn ?? fetch;
   return {
     credit: 'ElevenLabs',
@@ -120,7 +140,12 @@ export function elevenLabsProvider(opts: {
         `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(opts.voiceId)}?output_format=mp3_44100_128`,
         {
           headers: { 'xi-api-key': opts.key, 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
-          body: JSON.stringify({ text, model_id: model, voice_settings: settings }),
+          body: JSON.stringify({
+            text,
+            model_id: model,
+            voice_settings: settings,
+            ...(elevenSupportsLanguageCode(model) ? { language_code: 'hu' } : {}),
+          }),
         },
         (status, body) => {
           const hint =
@@ -192,13 +217,14 @@ export async function generateVoices(opts: GenerateOptions): Promise<GenerateRes
       await writeFile(join(opts.outDir, file), audio);
       manifest[line.id] = { file, hash: lineHash(line.text, opts.provider.fingerprint) };
       generated.push(line.id);
+      // Save progress after every clip, so a run that gets killed never pays for the same line twice.
+      await writeManifest(opts.outDir, withOld(manifest, old, opts.lines), opts.provider);
       log(`  ✓ ${line.id}: ${line.text}`);
       if (opts.pauseMs) await new Promise((r) => setTimeout(r, opts.pauseMs));
     }
   } catch (err) {
     // Keep what was already recorded (and paid for) before failing.
-    for (const line of opts.lines) if (!(line.id in manifest) && old[line.id]) manifest[line.id] = old[line.id]!;
-    await writeManifest(opts.outDir, manifest, opts.provider);
+    await writeManifest(opts.outDir, withOld(manifest, old, opts.lines), opts.provider);
     throw err;
   }
 
@@ -207,6 +233,13 @@ export async function generateVoices(opts: GenerateOptions): Promise<GenerateRes
   for (const id of removed) await rm(join(opts.outDir, old[id]!.file), { force: true });
   await writeManifest(opts.outDir, manifest, opts.provider);
   return { generated, skipped, removed };
+}
+
+/** This run's clips plus the previous entries for lines it hasn't reached yet. */
+function withOld(manifest: VoiceManifest, old: VoiceManifest, lines: VoiceLine[]): VoiceManifest {
+  const out = { ...manifest };
+  for (const line of lines) if (!(line.id in out) && old[line.id]) out[line.id] = old[line.id]!;
+  return out;
 }
 
 function isCurrent(old: VoiceManifest, outDir: string, line: VoiceLine, provider: VoiceProvider): boolean {

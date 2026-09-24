@@ -18,6 +18,14 @@ export function questionHash(prompt: string, answer: string): string {
     .slice(0, 32);
 }
 
+/**
+ * File name of a question's recorded read-aloud. Follows the exact prompt, so
+ * fixing a typo makes the recording stale and it gets recorded again.
+ */
+export function questionVoiceId(prompt: string): string {
+  return createHash('sha256').update(prompt.trim()).digest('hex').slice(0, 16);
+}
+
 /** Trigram set of a normalized string, padded like Postgres pg_trgm. */
 function trigrams(s: string): Set<string> {
   const out = new Set<string>();

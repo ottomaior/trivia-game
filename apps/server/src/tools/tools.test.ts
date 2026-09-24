@@ -1,4 +1,4 @@
-import { allOttoLines } from '@trivia/shared';
+import { allOttoLines, ottoText, stripCues } from '@trivia/shared';
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
@@ -67,8 +67,8 @@ describe('voice generation', () => {
     expect(url).toBe('https://api.elevenlabs.io/v1/text-to-speech/otto123?output_format=mp3_44100_128');
     expect((init!.headers as Record<string, string>)['xi-api-key']).toBe('secret');
     const body = JSON.parse(init!.body as string);
-    expect(body).toMatchObject({ text: 'Jó estét!', model_id: 'eleven_multilingual_v2' });
-    expect(body.voice_settings.stability).toBeGreaterThan(0);
+    // Default: v3 on "Creative", forced to Hungarian.
+    expect(body).toMatchObject({ text: 'Jó estét!', model_id: 'eleven_v3', language_code: 'hu', voice_settings: { stability: 0 } });
     expect(JSON.parse(await readFile(join(outDir, 'credit.json'), 'utf8'))).toEqual({ voice: 'ElevenLabs' });
 
     // Switching back to Azure records again and drops the credit.
@@ -76,6 +76,35 @@ describe('voice generation', () => {
     const r = await generateVoices({ lines, outDir, provider: azure(azureFetch as unknown as typeof fetch) });
     expect(r.generated).toEqual(['welcome-0']);
     expect(existsSync(join(outDir, 'credit.json'))).toBe(false);
+  });
+
+  it('forces Hungarian on ElevenLabs models that accept a language code', async () => {
+    const outDir = await mkdtemp(join(tmpdir(), 'voice-'));
+    const fetchFn = ok();
+    const provider = elevenLabsProvider({
+      key: 'secret',
+      voiceId: 'otto123',
+      model: 'eleven_flash_v2_5',
+      fetchFn: fetchFn as unknown as typeof fetch,
+    });
+    await generateVoices({ lines: [{ id: 'welcome-0', text: 'Jó estét!' }], outDir, provider });
+    const body = JSON.parse(fetchFn.mock.calls[0]![1]!.body as string);
+    expect(body).toMatchObject({ model_id: 'eleven_flash_v2_5', language_code: 'hu' });
+    expect(body.voice_settings.similarity_boost).toBeGreaterThan(0);
+
+    // multilingual_v2 rejects language_code, so it isn't sent.
+    const v2Fetch = ok();
+    const v2 = elevenLabsProvider({ key: 'secret', voiceId: 'otto123', model: 'eleven_multilingual_v2', fetchFn: v2Fetch as unknown as typeof fetch });
+    await generateVoices({ lines: [{ id: 'welcome-0', text: 'Jó estét!' }], outDir: await mkdtemp(join(tmpdir(), 'voice-')), provider: v2 });
+    expect(JSON.parse(v2Fetch.mock.calls[0]![1]!.body as string)).not.toHaveProperty('language_code');
+  });
+
+  it('gives every Otto line a performance cue that screens never show', () => {
+    for (const { id, text } of allOttoLines()) {
+      expect(text, id).toMatch(/^\[[a-z ]+\] /);
+      expect(stripCues(text), id).not.toMatch(/[[\]]/);
+    }
+    expect(ottoText({ key: 'winner', variant: 1 })).toBe('Íme, a műsor győztese! Meghajlás!');
   });
 
   it('re-records a changed voice, and retakes only the lines asked for', async () => {

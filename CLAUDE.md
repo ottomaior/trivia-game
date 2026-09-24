@@ -9,7 +9,8 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 - `pnpm questions:check` validates the question file.
 - `pnpm audio:render` renders the studio sound set into `audio-src/`, and `pnpm audio:prepare` (needs ffmpeg) turns `audio-src/` into `apps/web/public/audio/`; `pnpm voice:generate` records Otto's lines with ElevenLabs (`ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`) or Azure (`--provider azure`, `AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`), keys set in the owner's shell; never ask for a key. `--dry-run` shows the credit cost, `--redo <ids>` retakes lines. Both READMEs are in those folders.
 - The TV has three effects modes, forced with `/tv?fx=full|lite|flat`. E2E defaults to `lite` because headless Chromium has no GPU.
-- Otto's lines (`packages/shared/src/strings.ts`) must stay free of names and numbers, because they are pre-recorded; after editing them, the voice needs regenerating.
+- Otto's lines (`packages/shared/src/strings.ts`) must stay free of names and numbers, because they are pre-recorded; after editing them, the voice needs regenerating. Each line starts with a bracketed performance cue (`[excited]`, `[sighs]`, `[short pause]`…) that ElevenLabs v3 acts out and screens strip (`ottoText`); keep one on every line. The TV never repeats a variant until all were said (`LinePicker`), so frequent situations need many variants.
+- Otto reads every question aloud: `pnpm voice:generate --questions` records each prompt in `seed/questions.json` into `apps/web/public/voice/q/`, named by a hash of the prompt (`questionVoiceId`), so a reworded question is recorded again. Otto's voice is ElevenLabs voice `M336tBVZHWWiWb4R54ui` on `eleven_v3` (Starter plan; the key is only on the owner's PC).
 - Schema change: edit `apps/server/src/db/schema.ts`, run `pnpm db:generate`, and commit the new migration. Railway applies it on deploy.
 
 ## Production
@@ -61,5 +62,6 @@ Append objects to the array:
 2. Run `pnpm questions:check` and fix every error and warning.
 3. **Blind check:** start a sub-agent (Agent tool) that sees only the prompts and the four choices in shuffled order, labelled A–D, never the answer key. Ask it to answer each one, with a confidence from 0 to 1 and a note on anything ambiguous, outdated, or misspelled. Remove or fix every question where its choice differs from the key, its confidence is below 0.85, or it raised a concern. Report what was dropped and why.
 4. Run `pnpm test` (the seed file has its own test), then commit the questions on their own with a message like `Add 40 questions (zene, sport)` and push.
+5. Record the read-alouds for the new questions: `pnpm voice:generate --questions` (only new or reworded prompts are recorded), then commit `apps/web/public/voice/q/` and push. This needs the ElevenLabs key, which only the owner's PC has; from a cloud session, tell the owner to run it. Questions without a recording still play, just silently.
 
 The game prefers questions a TV (household) hasn't seen, so a steady supply of new questions per category keeps repeat games fresh. Players can flag bad questions; `pnpm flagged` (needs `DATABASE_URL`) lists them, and `pnpm flagged --retire <id>` removes one. Fix or delete a flagged question in the JSON as well, or it will stay retired in the database but come back on a fresh database.

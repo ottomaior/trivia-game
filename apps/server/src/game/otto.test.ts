@@ -1,9 +1,19 @@
-import { allOttoLines, ottoText } from '@trivia/shared';
+import { allOttoLines, ottoText, ottoVariants } from '@trivia/shared';
 import { describe, expect, it } from 'vitest';
 import { seededRng } from '../testing.ts';
-import { finalLine, revealLine, scoreboardLine, voteLine, welcomeLine, type RevealFact, type StandingFact } from './otto.ts';
+import {
+  categoryLine,
+  finalLine,
+  LinePicker,
+  revealLine,
+  scoreboardLine,
+  voteLine,
+  welcomeLine,
+  type RevealFact,
+  type StandingFact,
+} from './otto.ts';
 
-const rng = seededRng(11);
+const rng = new LinePicker(seededRng(11));
 const fact = (id: string, correct: boolean, responseMs: number | null = 5_000, streak = correct ? 1 : 0): RevealFact => ({
   id,
   correct,
@@ -33,6 +43,11 @@ describe('revealLine', () => {
     else expect(l).toMatchObject({ key: 'someCorrect', focus: ['A', 'B'] });
   });
 
+  it('singles out the only one who knew it, given a crowd', () => {
+    expect(revealLine([fact('A', true), fact('B', false), fact('C', false)], 0, rng)).toMatchObject({ key: 'onlyOne', focus: ['A'] });
+    expect(revealLine([fact('A', true), fact('B', false)], 0, rng).key).not.toBe('onlyOne');
+  });
+
   it('uses solo wording for one player', () => {
     expect(revealLine([fact('A', true, 500, 5)], 0, rng).key).toBe('soloCorrect');
     expect(revealLine([fact('A', false)], 3, rng).key).toBe('soloWrong');
@@ -60,9 +75,11 @@ describe('scoreboardLine', () => {
 });
 
 describe('other lines', () => {
-  it('flags the last round and greets solo players differently', () => {
-    expect(voteLine(10, 10, rng).key).toBe('lastRound');
+  it('marks the first, halfway and last rounds, and greets solo players differently', () => {
+    expect(voteLine(1, 10, rng).key).toBe('firstRound');
     expect(voteLine(3, 10, rng).key).toBe('pickCategory');
+    expect(voteLine(6, 10, rng).key).toBe('halfway');
+    expect(voteLine(10, 10, rng).key).toBe('lastRound');
     expect(welcomeLine(1, rng).key).toBe('welcomeSolo');
     expect(welcomeLine(4, rng).key).toBe('welcome');
   });
@@ -72,6 +89,24 @@ describe('other lines', () => {
     expect(finalLine([st('A', 5000, 1), st('B', 5000, 1)], rng)).toMatchObject({ key: 'tie', focus: ['A', 'B'] });
     expect(finalLine([st('A', 9000, 1)], rng)?.key).toBe('soloFinalHigh');
     expect(finalLine([st('A', 2000, 1)], rng)?.key).toBe('soloFinalLow');
+  });
+});
+
+describe('categoryLine', () => {
+  it('reacts to each known category and falls back for new ones', () => {
+    expect(categoryLine('zene', rng).key).toBe('catZene');
+    expect(categoryLine('magyarorszag', rng).key).toBe('catMagyarorszag');
+    expect(categoryLine('csillagaszat', rng).key).toBe('categoryPicked');
+  });
+});
+
+describe('LinePicker', () => {
+  it('says every variant once before repeating, never twice in a row', () => {
+    const pick = new LinePicker(seededRng(3));
+    const n = ottoVariants('standings');
+    const said = Array.from({ length: n * 6 }, () => pick.next('standings'));
+    for (let i = 0; i < said.length; i += n) expect(new Set(said.slice(i, i + n)).size).toBe(n);
+    for (let i = 1; i < said.length; i++) expect(said[i]).not.toBe(said[i - 1]);
   });
 });
 

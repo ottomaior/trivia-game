@@ -1,4 +1,4 @@
-import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
+import { pointsMultiplier, t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useRef, type CSSProperties } from 'react';
@@ -77,6 +77,7 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
           <span className={styles.roundCardMeta}>
             {question.category} · {t.difficulty[question.difficulty]}
           </span>
+          {pointsMultiplier(view.round, view.totalRounds) > 1 && <span className={styles.doubleBadge}>{t.doublePoints}</span>}
         </div>
       )}
       {!inStudio && (

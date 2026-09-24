@@ -52,8 +52,8 @@ export const CHOICES_PER_QUESTION = 4;
 export const TIMINGS = {
   intro: 4_000,
   vote: 8_000,
-  /** The TV spins to the winning category. */
-  voteResult: 1_600,
+  /** The TV spins to the winning category, and Otto reacts to it. */
+  voteResult: 2_600,
   questionRead: 2_000,
   questionOpen: 20_000,
   reveal: 7_000,
@@ -69,6 +69,11 @@ export function difficultyForRound(round: number, totalRounds = TOTAL_ROUNDS): D
   if (f <= 0.3) return 1;
   if (f <= 0.7) return 2;
   return 3;
+}
+
+/** The last round is worth double, so nobody is out of it until the end. */
+export function pointsMultiplier(round: number, totalRounds = TOTAL_ROUNDS): number {
+  return round === totalRounds ? 2 : 1;
 }
 
 export const POINTS_BASE = 500;
