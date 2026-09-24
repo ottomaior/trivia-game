@@ -37,13 +37,15 @@ describe.skipIf(!url)('PgStore', () => {
 
   it('never repeats a question excluded for this game', async () => {
     const [cat] = await store.pickCategories(household, 1, []);
+    // Other tests may retire questions in this shared database, so don't
+    // assume a count: draw until the category runs dry.
     const asked: string[] = [];
-    for (let i = 0; i < 15; i++) {
-      const q = await store.pickQuestion(household, cat!.id, 1, asked);
-      expect(asked).not.toContain(q!.id);
-      asked.push(q!.id);
+    for (let q = await store.pickQuestion(household, cat!.id, 1, asked); q; q = await store.pickQuestion(household, cat!.id, 1, asked)) {
+      expect(asked).not.toContain(q.id);
+      asked.push(q.id);
+      if (asked.length > 500) throw new Error('never ran dry');
     }
-    expect(await store.pickQuestion(household, cat!.id, 1, asked)).toBeNull();
+    expect(asked.length).toBeGreaterThanOrEqual(10);
   });
 
   it('records a match and retires a question flagged in two matches', async () => {

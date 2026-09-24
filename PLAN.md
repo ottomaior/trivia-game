@@ -2,7 +2,9 @@
 
 ## 0. Context
 
-This is a couch party trivia game for 2–6 friends in the same room, inspired by *Knowledge is Power* and Jackbox. One TV runs a browser tab (the **host screen**). Players join from their phone browsers with a QR code or a 4-letter room code. The look is a retro 70s–80s TV quiz show hosted by **Otto**, a mustached host character, with blob avatars for the players. The game is **Hungarian only**: all UI text, Otto's lines, and questions are in Hungarian.
+This is a couch party trivia game for 2–6 friends in the same room, inspired by *Knowledge is Power* and Jackbox. One TV runs a browser tab (the **host screen**). Players join from their phone browsers with a QR code or a 4-letter room code. The look is a retro 70s–80s TV quiz show hosted by **Otto**, a mustached host character, with blob avatars for the players. A single player can also start a game (handy for testing and practice).
+
+The game is **Hungarian only**: all UI text, Otto's lines, and questions are in Hungarian.
 
 **Status:** Phase 0 and Phase 1 are built and tested locally (see §6). What's left for Phase 1 is deploying to Railway and a real game night.
 

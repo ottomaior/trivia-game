@@ -42,11 +42,29 @@ async function runToFinal(room: Room): Promise<void> {
 }
 
 describe('RoomRunner', () => {
-  it('only lets the VIP start, and needs two connected players', () => {
-    const { runner, players, room } = setup({ players: 2 });
+  it('only lets the VIP start', () => {
+    const { runner, players } = setup({ players: 2 });
     expect(runner.start(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
-    room.playerDisconnected(players[1]!.id, Date.now());
-    expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'TOO_FEW_PLAYERS' });
+    expect(runner.start(players[0]!.id)).toEqual({ ok: true });
+  });
+
+  it('plays solo: one player can start, and each question ends as soon as they answer', async () => {
+    const { runner, room, players } = setup({ players: 1 });
+    const [solo] = players;
+    expect(runner.start(solo!.id)).toEqual({ ok: true });
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    for (let round = 1; round <= TOTAL_ROUNDS; round++) {
+      expect(room.phase).toBe('vote');
+      runner.vote(solo!.id, 0);
+      await vi.advanceTimersByTimeAsync(TIMINGS.questionRead + 1_000);
+      runner.answer(solo!.id, room.question!.id, room.question!.correct);
+      expect(room.phase).toBe('reveal');
+      await vi.advanceTimersByTimeAsync(TIMINGS.reveal + (round < TOTAL_ROUNDS ? TIMINGS.scoreboard : 0));
+    }
+    expect(room.phase).toBe('final');
+    expect(room.standings).toEqual([expect.objectContaining({ playerId: solo!.id, rank: 1 })]);
+    expect(solo!.score).toBe(TOTAL_ROUNDS * 975); // answered 1s into the 20s window every round
+    expect(room.otto?.key).toBe('winner');
   });
 
   it('plays a full game on timers alone and records it', async () => {

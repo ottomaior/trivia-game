@@ -1,7 +1,8 @@
 // Single source of truth for game limits and timings. Server and clients both
 // import from here so the numbers can never drift apart.
 
-export const MIN_PLAYERS = 2;
+/** One is enough: solo games are handy for testing and practice. */
+export const MIN_PLAYERS = 1;
 export const MAX_PLAYERS = 6;
 export const NAME_MAX_LENGTH = 12;
 

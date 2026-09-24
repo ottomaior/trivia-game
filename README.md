@@ -1,6 +1,6 @@
 # Otto's Quiz Show
 
-A Hungarian couch party trivia game in the style of a retro TV quiz show. The TV runs a browser tab, and 2–6 players join on their phones with a QR code or a 4-letter room code. [PLAN.md](PLAN.md) has the full design and roadmap.
+A Hungarian couch party trivia game in the style of a retro TV quiz show. The TV runs a browser tab, and 1–6 players join on their phones with a QR code or a 4-letter room code. Playing alone works too, which is handy for testing. [PLAN.md](PLAN.md) has the full design and roadmap.
 
 **Status:** Phase 1, the playable game, is built and tested locally. It has a lobby with a VIP, a category vote, timed questions with speed scoring, a reveal, a scoreboard, and final results. Reconnecting works for both phones and the TV, and players can flag questions. Next step: deploy to Railway.
 

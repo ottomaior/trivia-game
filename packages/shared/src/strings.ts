@@ -75,7 +75,7 @@ export const t = {
     NAME_TAKEN: 'Ez a név már foglalt.',
     IN_PROGRESS: 'Ez a játék már elindult.',
     NOT_ALLOWED: 'Ezt csak a VIP teheti meg.',
-    TOO_FEW_PLAYERS: 'Legalább 2 játékos kell.',
+    TOO_FEW_PLAYERS: 'Nincs elég csatlakozott játékos.',
     NO_QUESTIONS: 'Most nincs elérhető kérdés.',
     COLOR_TAKEN: 'Ezt a színt már más választotta.',
   },
