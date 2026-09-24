@@ -2,7 +2,7 @@ import { TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryStore } from '../db/store.ts';
 import { toHostView, toPlayerView } from '../game/views.ts';
-import { fixtureContent, HOUSEHOLD, seededRng } from '../testing.ts';
+import { fixtureContent, HOUSEHOLD, seededRng, TEST_PACKS } from '../testing.ts';
 import { Room } from './Room.ts';
 import { RoomRunner } from './RoomRunner.ts';
 
@@ -20,6 +20,8 @@ function setup(opts: { players?: number; store?: MemoryStore } = {}) {
     store,
     clock: () => Date.now(),
     rng: seededRng(5),
+    packs: TEST_PACKS,
+    minPackQuestions: 1,
     timingScale: 1,
     onChange: (r) => changes.push(r.phase),
     log: { warn: () => {} },
@@ -36,14 +38,26 @@ function setup(opts: { players?: number; store?: MemoryStore } = {}) {
 /** Lets pending promises (store calls) settle without moving time. */
 const flush = () => vi.advanceTimersByTimeAsync(0);
 
+/** Waits for the pack offers, locks the pack as the VIP, and starts the show. */
+async function begin(runner: RoomRunner, vipId: string) {
+  await flush();
+  expect(runner.lockPack(vipId)).toEqual({ ok: true });
+  return runner.start(vipId);
+}
+
 /** Advances fake time until the game reaches the final screen (max ~17 min). */
 async function runToFinal(room: Room): Promise<void> {
   for (let i = 0; i < 1000 && room.phase !== 'final'; i++) await vi.advanceTimersByTimeAsync(1_000);
 }
 
 describe('RoomRunner', () => {
-  it('only lets the VIP start', () => {
-    const { runner, players } = setup({ players: 2 });
+  it('only lets the VIP lock the pack and start, and only once a pack is locked', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    await flush();
+    expect(room.packOffers?.map((o) => o.slug)).toEqual(['minden']);
+    expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    expect(runner.lockPack(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(runner.lockPack(players[0]!.id)).toEqual({ ok: true });
     expect(runner.start(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
     expect(runner.start(players[0]!.id)).toEqual({ ok: true });
   });
@@ -51,7 +65,7 @@ describe('RoomRunner', () => {
   it('plays solo: one player can start, and each question ends as soon as they answer', async () => {
     const { runner, room, players } = setup({ players: 1 });
     const [solo] = players;
-    expect(runner.start(solo!.id)).toEqual({ ok: true });
+    expect(await begin(runner, solo!.id)).toEqual({ ok: true });
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (let round = 1; round <= TOTAL_ROUNDS; round++) {
       expect(room.phase).toBe('vote');
@@ -71,7 +85,7 @@ describe('RoomRunner', () => {
 
   it('plays a full game on timers alone and records it', async () => {
     const { runner, room, players, store } = setup();
-    expect(runner.start(players[0]!.id)).toEqual({ ok: true });
+    expect(await begin(runner, players[0]!.id)).toEqual({ ok: true });
     expect(room.phase).toBe('intro');
     await flush();
 
@@ -94,7 +108,7 @@ describe('RoomRunner', () => {
 
   it('ends vote and question phases early once everyone has acted', async () => {
     const { runner, room, players } = setup({ players: 2 });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     expect(room.phase).toBe('vote');
 
@@ -119,7 +133,7 @@ describe('RoomRunner', () => {
 
   it('never reveals the answer key before the reveal', async () => {
     const { runner, room, players } = setup({ players: 2 });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
     await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
@@ -139,7 +153,7 @@ describe('RoomRunner', () => {
 
   it('shuffles answer positions across rounds', async () => {
     const { runner, room, players } = setup({ players: 2 });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     const positions = new Set<number>();
     for (let i = 0; i < 6; i++) {
@@ -155,7 +169,7 @@ describe('RoomRunner', () => {
 
   it('freezes the clock while the TV is away and resumes where it left off', async () => {
     const { runner, room, players } = setup({ players: 2 });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
     await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
@@ -179,7 +193,7 @@ describe('RoomRunner', () => {
   it('finishes early with what it has when questions run out', async () => {
     const store = new MemoryStore(fixtureContent(3, 1), seededRng(2));
     const { runner, room, players } = setup({ players: 2, store });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     for (let i = 0; i < 50 && room.phase !== 'final'; i++) await vi.advanceTimersByTimeAsync(5_000);
     expect(room.phase).toBe('final');
     expect(room.round).toBe(3);
@@ -188,12 +202,12 @@ describe('RoomRunner', () => {
   it('prefers unseen questions in the next game from the same TV', async () => {
     const store = new MemoryStore(fixtureContent(4, 12), seededRng(9));
     const first = setup({ players: 2, store });
-    first.runner.start(first.players[0]!.id);
+    await begin(first.runner, first.players[0]!.id);
     await runToFinal(first.room);
     const firstGame = new Set(first.room.askedQuestionIds);
 
     const second = setup({ players: 2, store });
-    second.runner.start(second.players[0]!.id);
+    await begin(second.runner, second.players[0]!.id);
     await runToFinal(second.room);
     const overlap = [...second.room.askedQuestionIds].filter((id) => firstGame.has(id));
     expect(overlap).toEqual([]);
@@ -202,7 +216,7 @@ describe('RoomRunner', () => {
   it('records flags once per player and retires after flags from two matches', async () => {
     const store = new MemoryStore(fixtureContent(), seededRng(4));
     const { runner, room, players } = setup({ players: 2, store });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
     await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
@@ -222,7 +236,7 @@ describe('RoomRunner', () => {
 
   it('play again resets scores; new lobby returns everyone to the lobby', async () => {
     const { runner, room, players } = setup({ players: 2 });
-    runner.start(players[0]!.id);
+    await begin(runner, players[0]!.id);
     await runToFinal(room);
     players[0]!.score = 1234;
     expect(runner.newLobby(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
@@ -232,5 +246,58 @@ describe('RoomRunner', () => {
     await runToFinal(room);
     expect(runner.newLobby(players[0]!.id)).toEqual({ ok: true });
     expect(room.phase).toBe('lobby');
+    expect(room.lobbyStep).toBe('packs');
+    expect(room.pack).toBeNull();
+    expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+  });
+
+  it('asks only the categories left switched on, and records the pack with the match', async () => {
+    const { runner, room, players, store } = setup({ players: 2 });
+    await flush();
+    const vip = players[0]!.id;
+    expect(runner.votePack(players[1]!.id, 'minden')).toEqual({ ok: true });
+    expect(runner.lockPack(vip)).toEqual({ ok: true });
+    expect(runner.setCategory(vip, 4, false)).toEqual({ ok: true });
+    // 48 fixture questions: switching off a second category would leave 24.
+    expect(runner.setCategory(vip, 3, false)).toEqual({ ok: false, error: 'TOO_FEW_QUESTIONS' });
+    expect(runner.start(vip)).toEqual({ ok: true });
+
+    const offered = new Set<number>();
+    for (let i = 0; i < 1000 && room.phase !== 'final'; i++) {
+      for (const o of room.voteOptions) offered.add(o.category.id);
+      await vi.advanceTimersByTimeAsync(1_000);
+    }
+    expect(room.phase).toBe('final');
+    expect([...offered].sort()).toEqual([1, 2, 3]);
+
+    await flush();
+    const [match] = [...store.matches.values()];
+    expect(match?.start.settings).toEqual({ mode: 'classic', pack: 'minden', categories: ['c1', 'c2', 'c3'] });
+  });
+
+  it('skips the vote when only one category is switched on', async () => {
+    const store = new MemoryStore(fixtureContent(2, 40), seededRng(6));
+    const { runner, room, players } = setup({ players: 2, store });
+    await flush();
+    const vip = players[0]!.id;
+    runner.lockPack(vip);
+    expect(runner.setCategory(vip, 2, false)).toEqual({ ok: true });
+    runner.start(vip);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    expect(room.phase).toBe('vote_result');
+    expect(room.voteOptions.map((o) => o.category.id)).toEqual([1]);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
+    expect(room.question?.categoryId).toBe(1);
+  });
+
+  it('reopens the pack vote with fresh offers after a new lobby', async () => {
+    const store = new MemoryStore(fixtureContent(), seededRng(8));
+    const { runner, room, players } = setup({ players: 1, store });
+    await begin(runner, players[0]!.id);
+    await runToFinal(room);
+    store.retired.add('q-1-0');
+    expect(runner.newLobby(players[0]!.id)).toEqual({ ok: true });
+    await flush();
+    expect(room.packOffers?.[0]?.questions).toBe(47);
   });
 });

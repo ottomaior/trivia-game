@@ -1,5 +1,7 @@
+import { eq } from 'drizzle-orm';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { loadSeedFile } from '../content/seed.ts';
+import * as schema from './schema.ts';
 import { PgStore } from './store.ts';
 
 // Runs only against a migrated test database, e.g.
@@ -35,6 +37,17 @@ describe.skipIf(!url)('PgStore', () => {
     expect(next!.difficulty).toBe(2);
   });
 
+  it('counts questions per category and difficulty, and limits categories to the allowed ones', async () => {
+    const counts = await store.countQuestions();
+    const seed = loadSeedFile();
+    const film = counts.find((c) => c.slug === 'film')!;
+    // Other tests may retire questions, so at most what the seed holds.
+    expect(film.counts[0]).toBeGreaterThan(0);
+    expect(film.counts[0]).toBeLessThanOrEqual(seed.questions.filter((q) => q.category === 'film' && q.difficulty === 1).length);
+    const cats = await store.pickCategories(household, 3, [], [film.id]);
+    expect(cats.map((c) => c.id)).toEqual([film.id]);
+  });
+
   it('never repeats a question excluded for this game', async () => {
     const [cat] = await store.pickCategories(household, 1, []);
     // Other tests may retire questions in this shared database, so don't
@@ -55,7 +68,10 @@ describe.skipIf(!url)('PgStore', () => {
       { seat: 0, name: 'Anna', avatar: { color: 'teal' as const, face: 'grin' as const } },
       { seat: 1, name: 'Béla', avatar: { color: 'rust' as const, face: 'wink' as const } },
     ];
-    const m1 = await store.startMatch({ householdId: household, roomCode: 'BCDF', players });
+    const settings = { mode: 'classic' as const, pack: 'alap', categories: ['film'] };
+    const m1 = await store.startMatch({ householdId: household, roomCode: 'BCDF', players, settings });
+    const [row] = await store.db.select().from(schema.matches).where(eq(schema.matches.id, m1));
+    expect(row?.settings).toEqual(settings);
     await store.recordRound({
       matchId: m1,
       round: 1,

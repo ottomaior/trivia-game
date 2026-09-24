@@ -33,6 +33,7 @@ export function Lobby({ view }: { view: HostView }) {
       {inStudio ? (
         <section className={styles.seatsPanel}>
           <h2 className={styles.seatsTitle}>{t.playersCount(view.players.length, MAX_PLAYERS)}</h2>
+          <PackPanel view={view} />
           <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.vipStartsOnPhone}</p>
         </section>
       ) : (
@@ -53,8 +54,56 @@ export function Lobby({ view }: { view: HostView }) {
             ),
           )}
         </ul>
+        <PackPanel view={view} />
         <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.vipStartsOnPhone}</p>
       </section>
+      )}
+    </div>
+  );
+}
+
+/** The pack vote as it stands (packs with votes, leader first), then the locked pack's categories. */
+function PackPanel({ view }: { view: HostView }) {
+  const { stage } = view;
+  if (stage.phase !== 'lobby') return null;
+
+  if (stage.step === 'setup') {
+    return (
+      <div className={styles.packPanel} data-testid="pack-setup">
+        <p className={styles.packLabel}>{t.vipPicksCategories}</p>
+        <h3 className={styles.packTitle}>{stage.pack.name}</h3>
+        <ul className={styles.packCats}>
+          {stage.categories.map((c) => (
+            <li key={c.id} className={c.enabled ? '' : styles.packCatOff}>
+              {c.name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  const tally = (stage.packs ?? [])
+    .map((pack) => ({ pack, voters: view.players.filter((p) => stage.votes[p.id] === pack.slug) }))
+    .filter((row) => row.voters.length > 0)
+    .sort((a, b) => b.voters.length - a.voters.length);
+  const lead = tally[0]?.voters.length ?? 0;
+  return (
+    <div className={styles.packPanel}>
+      <p className={styles.packLabel}>{t.packVoteOnPhone}</p>
+      {tally.length > 0 && (
+        <ul className={styles.packTally} data-testid="pack-tally">
+          {tally.map(({ pack, voters }) => (
+            <li key={pack.slug} className={`${styles.packRow} ${voters.length === lead ? styles.packRowLead : ''}`}>
+              <span className={styles.packRowName}>{pack.name}</span>
+              <span className={styles.voters}>
+                {voters.map((p) => (
+                  <Blob key={p.id} avatar={p.avatar} size="2.2em" />
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );

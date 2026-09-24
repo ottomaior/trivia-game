@@ -25,7 +25,7 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
         <p className={styles.message}>{t.tvDisconnected}</p>
       ) : (
         <>
-          {stage.phase === 'lobby' && <LobbyScreen view={view} socket={socket} />}
+          {stage.phase === 'lobby' && <LobbyScreen view={view} stage={stage} socket={socket} />}
           {stage.phase === 'intro' && <p className={styles.bigNote}>{t.lookAtTv}</p>}
           {stage.phase === 'vote' && <VoteScreen view={view} stage={stage} socket={socket} />}
           {stage.phase === 'vote_result' && (

@@ -1,5 +1,13 @@
-import type { HostView, PlayerSummary, PlayerView, PublicQuestion, Stage } from '@trivia/shared';
+import {
+  MIN_GAME_QUESTIONS,
+  type HostView,
+  type PlayerSummary,
+  type PlayerView,
+  type PublicQuestion,
+  type Stage,
+} from '@trivia/shared';
 import { questionVoiceId } from '../content/normalize.ts';
+import { packOption } from '../content/packs.ts';
 import type { Question } from '../content/types.ts';
 import type { Player, Room } from '../rooms/Room.ts';
 
@@ -33,8 +41,9 @@ function stage(room: Room): Stage {
   const q = room.question;
   switch (room.phase) {
     case 'lobby':
+      return lobbyStage(room);
     case 'intro':
-      return { phase: room.phase };
+      return { phase: 'intro' };
     case 'vote':
       return {
         phase: 'vote',
@@ -66,6 +75,30 @@ function stage(room: Room): Stage {
   }
 }
 
+function lobbyStage(room: Room): Stage {
+  const { pack } = room;
+  if (room.lobbyStep === 'setup' && pack) {
+    return {
+      phase: 'lobby',
+      step: 'setup',
+      pack: packOption(pack),
+      categories: pack.categories.map((c) => ({
+        id: c.id,
+        name: c.name,
+        questions: c.questions,
+        enabled: room.enabledCategories.has(c.id),
+      })),
+      minQuestions: MIN_GAME_QUESTIONS,
+    };
+  }
+  return {
+    phase: 'lobby',
+    step: 'packs',
+    packs: room.packOffers?.map(packOption) ?? null,
+    votes: Object.fromEntries(room.currentPackVotes()),
+  };
+}
+
 function base(room: Room, now: number) {
   return {
     roomCode: room.code,
@@ -76,6 +109,7 @@ function base(room: Room, now: number) {
     phaseEndsAt: room.phaseEndsAt,
     paused: room.paused,
     players: [...room.players.values()].map((p) => summarize(room, p)),
+    pack: room.pack?.name ?? null,
   };
 }
 

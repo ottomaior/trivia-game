@@ -40,14 +40,19 @@ Append objects to the array:
 }
 ```
 
-- `category` is one of the slugs in `apps/server/seed/categories.json`: `tortenelem`, `foldrajz`, `tudomany`, `film`, `zene`, `sport`, `gasztro`, `magyarorszag`.
+- `category` is one of the slugs in `apps/server/seed/categories.json`. Aim for 15 questions per difficulty in each category.
 - `difficulty`: 1 = most adults know it; 2 = an informed, curious adult knows it; 3 = only people interested in the topic know it.
 - `answer` is the correct answer. `wrong` has exactly 3 wrong answers. The game shuffles the order.
 - `explanation` is optional: one short sentence shown on the TV at the reveal.
 
+### Packs
+
+Players vote for a question pack in the lobby, the VIP can switch some of its categories off, and each round's category vote then offers only that pack's categories. Packs are defined in `apps/server/seed/packs.json` as lists of category slugs (`"*"` means all), and a category can be in several packs. A pack is offered only once its categories hold at least `PACK_MIN_QUESTIONS` (60) questions, so a new pack or category can be added before its questions are written. `pnpm questions:check` prints the counts per category and per pack, and flags packs that are still hidden.
+
 ### Content rules
 
-- Natural Hungarian that doesn't read like a translation, with correct spelling (ő, ű).
+- The players are a Hungarian friend group aged 18–35: pick themes and a light, witty style they enjoy (the 2000s–2020s pop culture they grew up with, series, games, internet, sport), within the rules below.
+- Natural Hungarian that doesn't read like a translation, with correct spelling (ő, ű). Use the Hungarian release titles of films, series and books.
 - Exactly one correct answer, which must be an undisputed, easily checkable fact.
 - No facts that change over time: records, current office holders, populations, "the latest" anything. If unavoidable, pin a date ("2024 végéig").
 - No estimates, opinions, or "melyik NEM…" questions.
@@ -55,6 +60,7 @@ Append objects to the array:
 - The question is at most 200 characters and each answer at most 60. The answer never appears in the question.
 - Mix Hungarian and international topics, and eras and question styles. Family-friendly.
 - Don't repeat a fact already in the file (search it first).
+- Write every question yourself. Other quiz sites and question banks (Honfoglaló, Milliomos question files) are copyrighted: never copy them. Open Trivia DB may give ideas, but take only the fact and write fresh wording and wrong answers.
 
 ### Workflow
 

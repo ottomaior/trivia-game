@@ -23,3 +23,8 @@ export interface CategoryStats extends Category {
   total: number;
   unseen: number;
 }
+
+/** Active multiple-choice questions per category, by difficulty 1–3. */
+export interface CategoryCount extends Category {
+  counts: [number, number, number];
+}

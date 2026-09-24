@@ -25,11 +25,13 @@ function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
     phaseEndsAt: null,
     paused: false,
     players: [player('a'), player('b')],
+    pack: null,
     otto: null,
     ...extra,
   };
 }
 
+const lobby: Stage = { phase: 'lobby', step: 'packs', packs: null, votes: {} };
 const question = { id: 'q', category: 'Zene', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], voice: 'v' };
 const pick = (playerId: string, correct: boolean) => ({ playerId, choice: 0, correct, points: correct ? 900 : 0, responseMs: 1000 });
 const standing = (playerId: string, rank: number, prevRank: number) => ({ playerId, score: 1000, delta: 0, rank, prevRank });
@@ -37,16 +39,16 @@ const standing = (playerId: string, rank: number, prevRank: number) => ({ player
 describe('cuesFor', () => {
   it('stays quiet on the first view (load or reconnect) and on a room switch', () => {
     expect(cuesFor(null, view({ phase: 'intro' }))).toEqual([]);
-    expect(cuesFor(view({ phase: 'lobby' }), view({ phase: 'intro' }, { roomCode: 'GHJK' }))).toEqual([]);
+    expect(cuesFor(view(lobby), view({ phase: 'intro' }, { roomCode: 'GHJK' }))).toEqual([]);
   });
 
   it('chimes when someone joins the lobby', () => {
-    const before = view({ phase: 'lobby' }, { players: [player('a')] });
-    expect(cuesFor(before, view({ phase: 'lobby' }))).toEqual(['join']);
+    const before = view(lobby, { players: [player('a')] });
+    expect(cuesFor(before, view(lobby))).toEqual(['join']);
   });
 
   it('plays the opening fanfare and the question sting', () => {
-    expect(cuesFor(view({ phase: 'lobby' }), view({ phase: 'intro' }))).toEqual(['start', 'applause']);
+    expect(cuesFor(view(lobby), view({ phase: 'intro' }))).toEqual(['start', 'applause']);
     const vote = view({ phase: 'vote', options: [], votes: {} });
     expect(cuesFor(vote, view({ phase: 'question_read', question }))).toEqual(['question']);
   });

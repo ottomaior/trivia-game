@@ -154,3 +154,99 @@ describe('answering and scoring', () => {
     expect(room.allActed()).toBe(true);
   });
 });
+
+describe('question packs', () => {
+  const cat = (id: number, questions: number) => ({ id, slug: `c${id}`, name: `Kategória ${id}`, questions });
+  const offer = (slug: string, categories: ReturnType<typeof cat>[]) => ({
+    slug,
+    name: slug.toUpperCase(),
+    description: '',
+    mode: 'classic' as const,
+    categories,
+    questions: categories.reduce((n, c) => n + c.questions, 0),
+  });
+
+  function lobbyWithOffers() {
+    const room = newRoom();
+    const a = joinOk(room, 'Anna');
+    const b = joinOk(room, 'Béla');
+    const c = joinOk(room, 'Cili');
+    room.setPackOffers([offer('alap', [cat(1, 20), cat(2, 20)]), offer('pop', [cat(3, 20), cat(4, 20), cat(5, 20)])]);
+    return { room, a, b, c };
+  }
+
+  it('lets anyone vote and change their vote, but only for an offered pack', () => {
+    const { room, a, b } = lobbyWithOffers();
+    expect(room.votePack(a.id, 'pop')).toEqual({ ok: true });
+    expect(room.votePack(b.id, 'alap')).toEqual({ ok: true });
+    expect(room.votePack(b.id, 'pop')).toEqual({ ok: true });
+    expect(room.votePack(b.id, 'nincs')).toEqual({ ok: false, error: 'BAD_REQUEST' });
+    expect(Object.fromEntries(room.currentPackVotes())).toEqual({ [a.id]: 'pop', [b.id]: 'pop' });
+  });
+
+  it('locks the most voted pack with every category on, and only the VIP may', () => {
+    const { room, a, b, c } = lobbyWithOffers();
+    room.votePack(a.id, 'alap');
+    room.votePack(b.id, 'pop');
+    room.votePack(c.id, 'pop');
+    expect(room.lockPack(b.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.lockPack(a.id)).toEqual({ ok: true });
+    expect(room.pack?.slug).toBe('pop');
+    expect([...room.enabledCategories]).toEqual([3, 4, 5]);
+    expect(room.votePack(a.id, 'alap')).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+  });
+
+  it('plays the first pack when nobody voted, and ignores votes of kicked players', () => {
+    const { room, a, b } = lobbyWithOffers();
+    room.votePack(b.id, 'pop');
+    room.kick(a.id, b.id);
+    expect(room.lockPack(a.id)).toEqual({ ok: true });
+    expect(room.pack?.slug).toBe('alap');
+  });
+
+  it('cannot lock before the offers arrive', () => {
+    const room = newRoom();
+    const a = joinOk(room, 'Anna');
+    expect(room.lockPack(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    room.setPackOffers([]);
+    expect(room.lockPack(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+  });
+
+  it('lets the VIP switch categories off while enough questions stay on', () => {
+    const { room, a, b } = lobbyWithOffers();
+    room.votePack(a.id, 'pop');
+    room.lockPack(a.id);
+    expect(room.setCategory(b.id, 3, false)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.setCategory(a.id, 1, false)).toEqual({ ok: false, error: 'BAD_REQUEST' }); // not in this pack
+    expect(room.setCategory(a.id, 3, false)).toEqual({ ok: true });
+    expect(room.setCategory(a.id, 4, false)).toEqual({ ok: false, error: 'TOO_FEW_QUESTIONS' }); // 20 left
+    expect(room.setCategory(a.id, 3, true)).toEqual({ ok: true });
+    expect(room.settings()).toEqual({ mode: 'classic', pack: 'pop', categories: ['c3', 'c4', 'c5'] });
+  });
+
+  it('starts only from the setup step, and going back reopens the vote with the votes kept', () => {
+    const { room, a } = lobbyWithOffers();
+    room.votePack(a.id, 'pop');
+    expect(room.canStart(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    room.lockPack(a.id);
+    expect(room.canStart(a.id)).toEqual({ ok: true });
+    expect(room.backToPacks(a.id)).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('packs');
+    expect(room.pack).toBeNull();
+    expect(room.currentPackVotes().get(a.id)).toBe('pop');
+    expect(room.canStart(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+  });
+
+  it('keeps the pack for play again, and a new lobby starts the vote over', () => {
+    const { room, a } = lobbyWithOffers();
+    room.votePack(a.id, 'pop');
+    room.lockPack(a.id);
+    room.enterIntro();
+    room.enterFinal();
+    expect(room.canStart(a.id)).toEqual({ ok: true });
+    room.enterLobby();
+    expect(room.lobbyStep).toBe('packs');
+    expect(room.pack).toBeNull();
+    expect(room.currentPackVotes().size).toBe(0);
+  });
+});

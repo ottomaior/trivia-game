@@ -13,15 +13,17 @@ export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
 
 /**
  * Picks vote options: categories with unseen questions first, never the
- * excluded ones (e.g. last round's) unless there is nothing else.
+ * excluded ones (e.g. last round's) unless there is nothing else. With
+ * `allowed`, only those categories (the game's pack) are considered.
  */
 export function chooseCategories(
   stats: CategoryStats[],
   count: number,
   exclude: number[],
   rng: Rng,
+  allowed?: number[],
 ): Category[] {
-  const playable = stats.filter((c) => c.total > 0);
+  const playable = stats.filter((c) => c.total > 0 && (!allowed || allowed.includes(c.id)));
   const preferred = playable.filter((c) => !exclude.includes(c.id));
   const pool = preferred.length >= count ? preferred : playable;
   const fresh = shuffle(

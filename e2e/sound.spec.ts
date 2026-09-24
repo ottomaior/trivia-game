@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { joinByLink, openTv, trackErrors } from './helpers.ts';
+import { joinByLink, openTv, startShow, trackErrors } from './helpers.ts';
 
 test('every synthesized sound makes noise and none of them clips', async ({ browser }) => {
   const { tv } = await openTv(browser, '/tv?audiotest');
@@ -70,7 +70,7 @@ test("Otto's voice: the TV credits the voice service and plays recorded lines wi
   const code = (await tv.getByTestId('room-code').textContent())!;
   await expect(tv.getByTestId('voice-credit')).toBeVisible();
   const anna = await joinByLink(browser, code, 'Anna');
-  await anna.getByRole('button', { name: 'Indulhat a műsor' }).click();
+  await startShow(anna);
   await expect(tv.getByTestId('otto-line')).toBeVisible();
   // Otto's mouth follows the recording instead of flapping.
   await expect(tv.getByTestId('otto-rig')).toHaveAttribute('data-voiced', 'true');

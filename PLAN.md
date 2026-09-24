@@ -244,6 +244,12 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 - ✅ Phones: faint sunburst backdrop, answer buttons that pop in and squash, a confetti pop for right answers and a shake for wrong ones, the player's blob (with a crown when leading) on the standings and final screens.
 - Next: record the sounds and Otto's voice (owner), then tune levels and timings after a real game night.
 
+### Phase 2.6 — Question packs and a bigger bank (in progress)
+- ✅ Packs (`seed/packs.json`): the phones vote for a pack in the lobby, the VIP locks the vote and can switch categories off, and each round's category vote offers only the pack's categories (skipped when one is left). A pack is offered from 60 questions; the choice is saved in `matches.settings`.
+- Content: 28 categories aimed at an 18–35 friend group (series, franchises, games, internet, 2000s hits, Hungarian music and film, Budapest, school classics, football, Formula 1…), 45 questions each (15 per difficulty), written in the session and blind-checked. No other quiz's questions are copied (see CLAUDE.md).
+- Milliomos-létra: a separate game mode picked like a pack. 15 rungs that get harder, safe rungs at 5 and 10, everyone answers at once, a wrong answer drops you to your last safe rung, walk away before any rung, and one each of 50:50, ask the audience (the players already out) and phone a friend.
+- Voice last: the new Otto lines and the read-alouds for the new questions are recorded once everything is in.
+
 ### Phase 3 — Power Plays
 - One power play per player, granted every N rounds. The player picks it **during the category vote**, on the same screen, so no extra phase is added.
 - **Freeze:** the target's answer screen is covered in ice and needs N taps to break. The server sends the obstacle in the target's `PlayerView`. The timer keeps running, which is the whole penalty.

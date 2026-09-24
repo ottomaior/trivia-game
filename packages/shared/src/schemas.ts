@@ -48,6 +48,10 @@ export const kickSchema = z.object({ playerId: z.string().min(1).max(64) });
 
 export const voteSchema = z.object({ option: z.int().min(0).max(9) });
 
+export const packVoteSchema = z.object({ pack: z.string().min(1).max(40) });
+
+export const setCategorySchema = z.object({ categoryId: z.int().min(1), enabled: z.boolean() });
+
 export const answerSchema = z.object({
   questionId: z.string().min(1).max(64),
   choice: z.int().min(0).max(CHOICES_PER_QUESTION - 1),
@@ -71,6 +75,8 @@ export type PlayerResumePayload = z.infer<typeof playerResumeSchema>;
 export type SetAvatarPayload = z.infer<typeof setAvatarSchema>;
 export type KickPayload = z.infer<typeof kickSchema>;
 export type VotePayload = z.infer<typeof voteSchema>;
+export type PackVotePayload = z.infer<typeof packVoteSchema>;
+export type SetCategoryPayload = z.infer<typeof setCategorySchema>;
 export type AnswerPayload = z.infer<typeof answerSchema>;
 export type FlagPayload = z.infer<typeof flagSchema>;
 export type TimePingPayload = z.infer<typeof timePingSchema>;

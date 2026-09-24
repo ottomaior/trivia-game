@@ -4,6 +4,7 @@ import {
   AVATAR_FACES,
   MAX_LATENCY_CREDIT_MS,
   MAX_PLAYERS,
+  MIN_GAME_QUESTIONS,
   MIN_PLAYERS,
   normalizeName,
   pointsMultiplier,
@@ -11,11 +12,13 @@ import {
   TOTAL_ROUNDS,
   type Avatar,
   type ErrorCode,
+  type GameMode,
   type OttoLine,
   type Phase,
   type Pick,
   type Standing,
 } from '@trivia/shared';
+import type { PackOffer } from '../content/packs.ts';
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
 import { categoryLine, finalLine, LinePicker, revealLine, scoreboardLine, voteLine, welcomeLine } from '../game/otto.ts';
@@ -62,6 +65,16 @@ export class Room {
   vipId: string | null = null;
   hostConnected = false;
   hostDisconnectedAt: number | null = null;
+
+  /** Lobby: players vote for a pack, then the VIP trims its categories. */
+  lobbyStep: 'packs' | 'setup' = 'packs';
+  /** Packs with enough questions to play; null while they load. */
+  packOffers: PackOffer[] | null = null;
+  /** Player id to pack slug. */
+  readonly packVotes = new Map<string, string>();
+  /** The locked pack; kept for "play again". */
+  pack: PackOffer | null = null;
+  readonly enabledCategories = new Set<number>();
 
   round = 0;
   readonly totalRounds: number;
@@ -145,6 +158,7 @@ export class Room {
     if (byId !== this.vipId || byId === targetId) return { ok: false, error: 'NOT_ALLOWED' };
     if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
     if (!this.players.delete(targetId)) return { ok: false, error: 'NOT_FOUND' };
+    this.packVotes.delete(targetId);
     return { ok: true };
   }
 
@@ -204,11 +218,93 @@ export class Room {
   }
 
   // -------------------------------------------------------------------------
+  // Question packs
+
+  setPackOffers(offers: PackOffer[] | null): void {
+    this.packOffers = offers;
+    const slugs = new Set(offers?.map((o) => o.slug));
+    for (const [id, slug] of this.packVotes) if (!slugs.has(slug)) this.packVotes.delete(id);
+  }
+
+  /** Any player may vote, and change their vote, while the lobby is on the pack step. */
+  votePack(playerId: string, slug: string): Result {
+    if (!this.players.has(playerId)) return { ok: false, error: 'NOT_FOUND' };
+    if (this.phase !== 'lobby' || this.lobbyStep !== 'packs') return { ok: false, error: 'NOT_ALLOWED' };
+    if (!this.packOffers?.some((o) => o.slug === slug)) return { ok: false, error: 'BAD_REQUEST' };
+    this.packVotes.set(playerId, slug);
+    return { ok: true };
+  }
+
+  /** Votes of players still in the room, by pack slug. */
+  currentPackVotes(): Map<string, string> {
+    return new Map([...this.packVotes].filter(([id]) => this.players.has(id)));
+  }
+
+  /** The VIP closes the pack vote. Most votes wins, ties are random, and with no votes the first pack plays. */
+  lockPack(byId: string): Result {
+    if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
+    if (this.lobbyStep !== 'packs') return { ok: false, error: 'BAD_REQUEST' };
+    if (this.connectedPlayers().length < MIN_PLAYERS) return { ok: false, error: 'TOO_FEW_PLAYERS' };
+    const offers = this.packOffers;
+    if (!offers?.length) return { ok: false, error: 'NO_QUESTIONS' };
+    const votes = [...this.currentPackVotes().values()];
+    const tally = offers.map((o) => votes.filter((slug) => slug === o.slug).length);
+    const index = votes.length > 0 ? mostVoted(tally, this.rng) : 0;
+    this.pack = offers[index]!;
+    this.enabledCategories.clear();
+    for (const c of this.pack.categories) this.enabledCategories.add(c.id);
+    this.lobbyStep = 'setup';
+    return { ok: true };
+  }
+
+  /** The VIP switches a category of the locked pack on or off. */
+  setCategory(byId: string, categoryId: number, enabled: boolean): Result {
+    if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
+    if (this.lobbyStep !== 'setup' || !this.pack) return { ok: false, error: 'BAD_REQUEST' };
+    if (!this.pack.categories.some((c) => c.id === categoryId)) return { ok: false, error: 'BAD_REQUEST' };
+    if (enabled) {
+      this.enabledCategories.add(categoryId);
+      return { ok: true };
+    }
+    const remaining = this.pack.categories
+      .filter((c) => c.id !== categoryId && this.enabledCategories.has(c.id))
+      .reduce((n, c) => n + c.questions, 0);
+    if (remaining < MIN_GAME_QUESTIONS) return { ok: false, error: 'TOO_FEW_QUESTIONS' };
+    this.enabledCategories.delete(categoryId);
+    return { ok: true };
+  }
+
+  /** Reopens the pack vote; the votes are kept. */
+  backToPacks(byId: string): Result {
+    if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
+    if (this.lobbyStep !== 'setup') return { ok: false, error: 'BAD_REQUEST' };
+    this.lobbyStep = 'packs';
+    this.pack = null;
+    this.enabledCategories.clear();
+    return { ok: true };
+  }
+
+  get mode(): GameMode {
+    return this.pack?.mode ?? 'classic';
+  }
+
+  /** What this game plays, as recorded with the match. */
+  settings(): { mode: GameMode; pack: string; categories: string[] } | undefined {
+    if (!this.pack) return undefined;
+    const categories = this.pack.categories.filter((c) => this.enabledCategories.has(c.id)).map((c) => c.slug);
+    return { mode: this.mode, pack: this.pack.slug, categories };
+  }
+
+  // -------------------------------------------------------------------------
   // Game flow. Each enter*() switches phase; the runner owns the timing.
 
   canStart(byId: string): Result {
     if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
     if (this.phase !== 'lobby' && this.phase !== 'final') return { ok: false, error: 'IN_PROGRESS' };
+    if (!this.pack || (this.phase === 'lobby' && this.lobbyStep !== 'setup')) return { ok: false, error: 'NO_QUESTIONS' };
     if (this.connectedPlayers().length < MIN_PLAYERS) return { ok: false, error: 'TOO_FEW_PLAYERS' };
     return { ok: true };
   }
@@ -250,9 +346,7 @@ export class Room {
   resolveVote(): number {
     const tally = this.voteOptions.map(() => 0);
     for (const v of this.votes.values()) tally[v]! += 1;
-    const best = Math.max(...tally);
-    const leaders = tally.flatMap((n, i) => (n === best ? [i] : []));
-    return leaders[Math.floor(this.rng() * leaders.length)]!;
+    return mostVoted(tally, this.rng);
   }
 
   /** Shows the decided category for a moment (the TV spins to it). */
@@ -334,9 +428,14 @@ export class Room {
     this.otto = finalLine(this.standingFacts(), this.lines);
   }
 
+  /** Back to the lobby for a new game: the pack vote starts over. */
   enterLobby(): void {
     for (const p of this.players.values()) p.score = 0;
     this.phase = 'lobby';
+    this.lobbyStep = 'packs';
+    this.packVotes.clear();
+    this.pack = null;
+    this.enabledCategories.clear();
     this.round = 0;
     this.standings = [];
     this.picks = [];
@@ -417,6 +516,13 @@ export class Room {
     const face = AVATAR_FACES[this.players.size % AVATAR_FACES.length]!;
     return { color, face };
   }
+}
+
+/** Index of the highest count; ties are settled randomly. */
+function mostVoted(tally: number[], rng: Rng): number {
+  const best = Math.max(...tally);
+  const leaders = tally.flatMap((n, i) => (n === best ? [i] : []));
+  return leaders[Math.floor(rng() * leaders.length)]!;
 }
 
 function safeEqual(a: string, b: string): boolean {

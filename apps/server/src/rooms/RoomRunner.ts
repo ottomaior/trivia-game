@@ -1,5 +1,6 @@
 import { difficultyForRound, TIMINGS, VOTE_OPTIONS, type ErrorCode, type FlagReason, type TimingKey } from '@trivia/shared';
 import type { Clock } from '../clock.ts';
+import { buildOffers, type PackDef } from '../content/packs.ts';
 import { shuffleChoices, type Rng } from '../content/select.ts';
 import type { Store } from '../db/store.ts';
 import type { Room, VoteOption } from './Room.ts';
@@ -10,6 +11,10 @@ export interface RunnerDeps {
   store: Store;
   clock: Clock;
   rng: Rng;
+  /** Question packs the lobby can offer. */
+  packs: PackDef[];
+  /** A pack is offered only with at least this many questions. */
+  minPackQuestions: number;
   /** Multiplies every phase length (tests and E2E run faster). */
   timingScale: number;
   onChange: (room: Room) => void;
@@ -28,14 +33,44 @@ export class RoomRunner {
   private pausedAt: number | null = null;
   private pausedRemaining: number | null = null;
   private matchId: Promise<string | null> = Promise.resolve(null);
+  /** Bumped on every pack-offer load so only the latest result lands. */
+  private offersLoad = 0;
 
   constructor(
     readonly room: Room,
     private readonly deps: RunnerDeps,
-  ) {}
+  ) {
+    this.loadOffers();
+  }
 
   // -------------------------------------------------------------------------
   // Commands (from sockets)
+
+  votePack(playerId: string, slug: string): Result {
+    if (this.room.packOffers === null) this.loadOffers();
+    const res = this.room.votePack(playerId, slug);
+    if (res.ok) this.changed();
+    return res;
+  }
+
+  lockPack(byId: string): Result {
+    if (this.room.packOffers === null) this.loadOffers();
+    const res = this.room.lockPack(byId);
+    if (res.ok) this.changed();
+    return res;
+  }
+
+  setCategory(byId: string, categoryId: number, enabled: boolean): Result {
+    const res = this.room.setCategory(byId, categoryId, enabled);
+    if (res.ok) this.changed();
+    return res;
+  }
+
+  backToPacks(byId: string): Result {
+    const res = this.room.backToPacks(byId);
+    if (res.ok) this.changed();
+    return res;
+  }
 
   start(byId: string): Result {
     const check = this.room.canStart(byId);
@@ -50,6 +85,7 @@ export class RoomRunner {
     this.stopTimer();
     this.epoch++;
     this.room.enterLobby();
+    this.loadOffers();
     this.changed();
     return { ok: true };
   }
@@ -128,7 +164,7 @@ export class RoomRunner {
     this.room.enterIntro();
     const players = [...this.room.players.values()].map((p) => ({ seat: p.seat, name: p.name, avatar: p.avatar }));
     this.matchId = this.deps.store
-      .startMatch({ householdId: this.room.householdId, roomCode: this.room.code, players })
+      .startMatch({ householdId: this.room.householdId, roomCode: this.room.code, players, settings: this.room.settings() })
       .catch((err: unknown) => {
         this.deps.log.warn({ err }, 'startMatch failed');
         return null;
@@ -190,6 +226,11 @@ export class RoomRunner {
       return;
     }
     this.room.enterVote(options);
+    // One category left in the pack: nothing to vote on, go straight to it.
+    if (options.length === 1) {
+      this.finishVote();
+      return;
+    }
     this.schedule('vote');
     this.changed();
   }
@@ -199,7 +240,7 @@ export class RoomRunner {
     const { room } = this;
     const difficulty = difficultyForRound(room.round + 1, room.totalRounds);
     const exclude = room.lastCategoryId === null ? [] : [room.lastCategoryId];
-    const categories = await store.pickCategories(room.householdId, VOTE_OPTIONS, exclude);
+    const categories = await store.pickCategories(room.householdId, VOTE_OPTIONS, exclude, [...room.enabledCategories]);
     const asked = [...room.askedQuestionIds];
     const options = await Promise.all(
       categories.map(async (category) => {
@@ -265,6 +306,19 @@ export class RoomRunner {
   }
 
   // -------------------------------------------------------------------------
+
+  /** Sizes the packs from the current question counts; a stale or late result is dropped. */
+  private loadOffers(): void {
+    const load = ++this.offersLoad;
+    this.deps.store
+      .countQuestions()
+      .then((counts) => {
+        if (load !== this.offersLoad || this.room.phase !== 'lobby') return;
+        this.room.setPackOffers(buildOffers(this.deps.packs, counts, this.deps.minPackQuestions));
+        this.changed();
+      })
+      .catch((err: unknown) => this.deps.log.warn({ err }, 'countQuestions failed'));
+  }
 
   private afterAction(): void {
     if (!this.room.paused && this.room.allActed()) this.advanceNow();

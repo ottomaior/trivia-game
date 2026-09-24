@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { autoplay, joinByLink, openTv } from './helpers.ts';
+import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('three phones play a full 10-round game on one TV', async ({ browser }) => {
   const { tv, code, errors } = await openTv(browser);
@@ -8,7 +8,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   const cili = await joinByLink(browser, code, 'Cili');
   await expect(tv.getByTestId('seat')).toHaveCount(3);
 
-  await anna.getByRole('button', { name: 'Indulhat a műsor' }).click();
+  await startShow(anna);
   await expect(tv.getByTestId('otto-line')).toBeVisible();
 
   // First question: check the TV and phones agree, and survive a phone reload.
@@ -32,6 +32,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   // Back to a fresh lobby with the same players.
   await anna.getByRole('button', { name: 'Új váró' }).click();
   await expect(tv.getByTestId('seat')).toHaveCount(3);
+  await expect(bela.getByRole('heading', { name: 'Melyik csomag legyen?' })).toBeVisible();
 
   // Sound, music and animations ran the whole game without a single error.
   expect(errors).toEqual([]);

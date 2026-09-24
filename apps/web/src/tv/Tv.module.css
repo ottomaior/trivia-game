@@ -166,6 +166,101 @@
   color: var(--ice);
 }
 
+/* Lobby: the pack vote, then the locked pack's categories */
+.packPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.packLabel {
+  margin: 0;
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--ice);
+}
+
+.packTally {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.packRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6em;
+  min-width: 0;
+  padding: 0.4em 0.9em;
+  background: var(--burgundy-deep);
+  border: 0.2em solid var(--teal);
+  border-radius: var(--radius);
+  animation: hopIn 350ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.packRowLead {
+  border-color: var(--mustard);
+}
+
+.packRowName {
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 1.6em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.packRow .voters {
+  flex: 0 1 auto;
+  justify-content: flex-end;
+  max-width: 55%;
+  min-height: 0;
+}
+
+.packTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 3.4em;
+  line-height: 1;
+  color: var(--mustard);
+}
+
+.packCats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.packCats li {
+  padding: 0.25em 0.8em;
+  background: var(--teal);
+  border: 0.12em solid transparent;
+  border-radius: 999px;
+  font-size: 1.4em;
+  font-weight: 800;
+}
+
+.packCats li.packCatOff {
+  background: transparent;
+  border: 0.12em dashed color-mix(in srgb, var(--cream) 35%, transparent);
+  color: color-mix(in srgb, var(--cream) 45%, transparent);
+  text-decoration: line-through;
+}
+
+/* The pack's name leads the round counter in game. */
+.packTag {
+  margin-right: 0.7em;
+  color: var(--mustard);
+}
+
 /* Shared */
 .activate {
   position: absolute;
@@ -984,6 +1079,10 @@
 
 .lobbyStudio .status {
   font-size: 2.6em;
+}
+
+.lobbyStudio .packPanel {
+  font-size: 1.4em;
 }
 
 /* ---- Studio versions (the screen is on the studio's board) ---------------- */

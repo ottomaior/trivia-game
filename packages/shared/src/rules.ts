@@ -45,6 +45,13 @@ export function isValidRoomCode(code: string): boolean {
 // Game flow
 
 export const TOTAL_ROUNDS = 10;
+/** A question pack is offered only with at least this many active questions. */
+export const PACK_MIN_QUESTIONS = 60;
+/** Switching categories off must leave at least this many questions on. */
+export const MIN_GAME_QUESTIONS = 30;
+
+export const GAME_MODES = ['classic', 'ladder'] as const;
+export type GameMode = (typeof GAME_MODES)[number];
 export const VOTE_OPTIONS = 3;
 export const CHOICES_PER_QUESTION = 4;
 

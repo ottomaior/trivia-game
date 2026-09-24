@@ -11,6 +11,7 @@ import { Server } from 'socket.io';
 import { systemClock, type Clock } from './clock.ts';
 import type { Rng } from './content/select.ts';
 import type { Store } from './db/store.ts';
+import type { PackDef } from './content/packs.ts';
 import { attachSocketHandlers, broadcast, closeRoom, type SocketData } from './net/socketServer.ts';
 import { RoomManager } from './rooms/RoomManager.ts';
 
@@ -21,6 +22,9 @@ export interface AppOptions {
   /** Multiplies every phase length; < 1 speeds games up for tests. */
   timingScale?: number;
   totalRounds?: number;
+  /** Question packs; default to the bundled seed/packs.json. */
+  packs?: PackDef[];
+  minPackQuestions?: number;
   /** Built web app to serve; skipped when missing (dev uses the Vite server). */
   webDistDir?: string;
   sweepIntervalMs?: number;
@@ -43,6 +47,8 @@ export async function createApp(opts: AppOptions) {
     rng: opts.rng,
     timingScale: opts.timingScale,
     totalRounds: opts.totalRounds,
+    packs: opts.packs,
+    minPackQuestions: opts.minPackQuestions,
     lobbyGraceMs: LOBBY_DISCONNECT_GRACE_MS,
     hostAbsentTtlMs: HOST_ABSENT_ROOM_TTL_MS,
     onChange: (room) => broadcast(io, room, clock()),

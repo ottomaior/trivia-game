@@ -17,6 +17,12 @@ describe('chooseCategories', () => {
     const picked = chooseCategories([stat(1, 5, 5), stat(2, 5, 5)], 3, [1], seededRng());
     expect(picked).toHaveLength(2);
   });
+
+  it('only offers the allowed categories (the game’s pack)', () => {
+    const stats = [stat(1, 5, 5), stat(2, 5, 5), stat(3, 5, 5), stat(4, 5, 5)];
+    const picked = chooseCategories(stats, 3, [2], seededRng(), [2, 4]);
+    expect(picked.map((c) => c.id).sort()).toEqual([2, 4]);
+  });
 });
 
 describe('shuffleChoices', () => {
@@ -43,9 +49,12 @@ describe('normalization', () => {
 });
 
 describe('seed file', () => {
-  it('is valid and has every category at every difficulty', () => {
+  it('is valid and has every stocked category at every difficulty', () => {
     const seed = loadSeedFile();
-    for (const c of seed.categories) {
+    // A category without questions yet is simply never offered.
+    const stocked = seed.categories.filter((c) => seed.questions.some((q) => q.category === c.slug));
+    expect(stocked.length).toBeGreaterThanOrEqual(8);
+    for (const c of stocked) {
       for (const d of [1, 2, 3]) {
         expect(seed.questions.filter((q) => q.category === c.slug && q.difficulty === d).length).toBeGreaterThanOrEqual(4);
       }

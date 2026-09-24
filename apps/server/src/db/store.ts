@@ -1,16 +1,25 @@
-import { FLAG_RETIRE_MATCHES, mcPayloadSchema, type Avatar, type Difficulty, type FlagReason } from '@trivia/shared';
+import {
+  FLAG_RETIRE_MATCHES,
+  mcPayloadSchema,
+  type Avatar,
+  type Difficulty,
+  type FlagReason,
+  type GameMode,
+} from '@trivia/shared';
 import { and, eq, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { chooseCategories, type Rng } from '../content/select.ts';
 import type { SeedData } from '../content/seed.ts';
-import type { Category, CategoryStats, Question } from '../content/types.ts';
+import type { Category, CategoryCount, CategoryStats, Question } from '../content/types.ts';
 import * as schema from './schema.ts';
 
 export interface MatchStart {
   householdId: string;
   roomCode: string;
   players: { seat: number; name: string; avatar: Avatar }[];
+  /** What was played: the pack and its enabled category slugs. */
+  settings?: { mode: GameMode; pack: string; categories: string[] };
 }
 
 export interface RoundRecord {
@@ -34,8 +43,10 @@ export interface FlagRecord {
  */
 export interface Store {
   touchHousehold(householdId: string): Promise<void>;
-  /** Up to `count` categories that have questions, freshest first. */
-  pickCategories(householdId: string, count: number, exclude: number[]): Promise<Category[]>;
+  /** Active questions per active category, for sizing the question packs. */
+  countQuestions(): Promise<CategoryCount[]>;
+  /** Up to `count` categories that have questions, freshest first; only `allowed` ones when given. */
+  pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]>;
   /**
    * Best question for the slot: unseen by this household first, then closest
    * difficulty, then least recently seen. Null when the category is empty.
@@ -81,13 +92,22 @@ export class MemoryStore implements Store {
     this.households.add(householdId);
   }
 
-  async pickCategories(householdId: string, count: number, exclude: number[]): Promise<Category[]> {
+  async countQuestions(): Promise<CategoryCount[]> {
+    const active = this.active();
+    return this.categories.map((c) => {
+      const counts: [number, number, number] = [0, 0, 0];
+      for (const q of active) if (q.categoryId === c.id) counts[q.difficulty - 1]! += 1;
+      return { ...c, counts };
+    });
+  }
+
+  async pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]> {
     const seen = this.seen.get(householdId) ?? new Map();
     const stats: CategoryStats[] = this.categories.map((c) => {
       const qs = this.active().filter((q) => q.categoryId === c.id);
       return { ...c, total: qs.length, unseen: qs.filter((q) => !seen.has(q.id)).length };
     });
-    return chooseCategories(stats, count, exclude, this.rng);
+    return chooseCategories(stats, count, exclude, this.rng, allowed);
   }
 
   async pickQuestion(
@@ -174,7 +194,21 @@ export class PgStore implements Store {
       .onConflictDoUpdate({ target: schema.households.id, set: { lastSeenAt: sql`now()` } });
   }
 
-  async pickCategories(householdId: string, count: number, exclude: number[]): Promise<Category[]> {
+  async countQuestions(): Promise<CategoryCount[]> {
+    const rows = await this.client<{ id: number; slug: string; name: string; d1: number; d2: number; d3: number }[]>`
+      select c.id, c.slug, c.name,
+             (count(q.id) filter (where q.difficulty = 1))::int as d1,
+             (count(q.id) filter (where q.difficulty = 2))::int as d2,
+             (count(q.id) filter (where q.difficulty = 3))::int as d3
+      from categories c
+      left join questions q on q.category_id = c.id and q.status = 'active' and q.kind = 'mc'
+      where c.active
+      group by c.id
+      order by c.id`;
+    return rows.map(({ id, slug, name, d1, d2, d3 }) => ({ id, slug, name, counts: [d1, d2, d3] }));
+  }
+
+  async pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]> {
     const rows = await this.client<{ id: number; slug: string; name: string; total: number; unseen: number }[]>`
       select c.id, c.slug, c.name,
              count(q.id)::int as total,
@@ -184,7 +218,7 @@ export class PgStore implements Store {
       left join household_seen hs on hs.question_id = q.id and hs.household_id = ${householdId}
       where c.active
       group by c.id`;
-    return chooseCategories(rows, count, exclude, this.rng);
+    return chooseCategories(rows, count, exclude, this.rng, allowed);
   }
 
   async pickQuestion(
@@ -233,7 +267,7 @@ export class PgStore implements Store {
     return this.db.transaction(async (tx) => {
       const [row] = await tx
         .insert(schema.matches)
-        .values({ householdId: match.householdId, roomCode: match.roomCode })
+        .values({ householdId: match.householdId, roomCode: match.roomCode, settings: match.settings ?? {} })
         .returning({ id: schema.matches.id });
       const id = row!.id;
       if (match.players.length) {

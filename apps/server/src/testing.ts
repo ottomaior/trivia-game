@@ -1,3 +1,4 @@
+import type { PackDef } from './content/packs.ts';
 import type { SeedData } from './content/seed.ts';
 import type { Question } from './content/types.ts';
 
@@ -34,3 +35,8 @@ export function fixtureContent(categories = 4, perCategory = 12): SeedData {
   );
   return { categories: cats, questions };
 }
+
+/** One pack holding every fixture category. */
+export const TEST_PACKS: PackDef[] = [
+  { slug: 'minden', name: 'Minden', description: 'Minden kategória.', mode: 'classic', categories: '*' },
+];

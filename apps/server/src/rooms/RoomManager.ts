@@ -1,4 +1,6 @@
+import { PACK_MIN_QUESTIONS } from '@trivia/shared';
 import type { Clock } from '../clock.ts';
+import { loadPacks, type PackDef } from '../content/packs.ts';
 import type { Rng } from '../content/select.ts';
 import type { Store } from '../db/store.ts';
 import { randomRoomCode } from './ids.ts';
@@ -11,6 +13,9 @@ export interface RoomManagerOptions {
   rng?: Rng;
   timingScale?: number;
   totalRounds?: number;
+  /** Defaults to the bundled seed/packs.json. */
+  packs?: PackDef[];
+  minPackQuestions?: number;
   lobbyGraceMs: number;
   hostAbsentTtlMs: number;
   onChange: (room: Room) => void;
@@ -22,8 +27,11 @@ export interface RoomManagerOptions {
 /** Owns all live rooms in memory. There is exactly one per server process. */
 export class RoomManager {
   private readonly runners = new Map<string, RoomRunner>();
+  private readonly packs: PackDef[];
 
-  constructor(private readonly opts: RoomManagerOptions) {}
+  constructor(private readonly opts: RoomManagerOptions) {
+    this.packs = opts.packs ?? loadPacks();
+  }
 
   create(householdId: string): RoomRunner {
     const generate = this.opts.generateCode ?? randomRoomCode;
@@ -38,6 +46,8 @@ export class RoomManager {
       store: this.opts.store,
       clock: this.opts.clock,
       rng,
+      packs: this.packs,
+      minPackQuestions: this.opts.minPackQuestions ?? PACK_MIN_QUESTIONS,
       timingScale: this.opts.timingScale ?? 1,
       onChange: this.opts.onChange,
       log: this.opts.log,

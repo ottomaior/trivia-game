@@ -59,3 +59,13 @@ export async function autoplay(phone: Page, choice = 0): Promise<void> {
     await phone.waitForTimeout(50);
   }
 }
+
+/**
+ * The VIP's way into the show: votes for `pack` if given, closes the pack
+ * vote ("Tovább"), and starts from the category screen.
+ */
+export async function startShow(vip: Page, pack?: string): Promise<void> {
+  if (pack) await vip.getByRole('button', { name: new RegExp(`^${pack}`) }).click();
+  await vip.getByRole('button', { name: 'Tovább' }).click();
+  await vip.getByRole('button', { name: 'Indulhat a műsor' }).click();
+}

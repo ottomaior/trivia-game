@@ -5,9 +5,11 @@ import type {
   HostCreatePayload,
   HostResumePayload,
   KickPayload,
+  PackVotePayload,
   PlayerJoinPayload,
   PlayerResumePayload,
   SetAvatarPayload,
+  SetCategoryPayload,
   TimePingPayload,
   VotePayload,
 } from './schemas.ts';
@@ -25,6 +27,7 @@ export type ErrorCode =
   | 'NOT_ALLOWED'
   | 'TOO_FEW_PLAYERS'
   | 'NO_QUESTIONS'
+  | 'TOO_FEW_QUESTIONS'
   | 'COLOR_TAKEN';
 
 export type Result<T extends object = object> =
@@ -50,6 +53,10 @@ export interface ClientToServerEvents {
   'player:join': (payload: PlayerJoinPayload, ack: Ack<PlayerSession & { avatar: Avatar }>) => void;
   'player:resume': (payload: PlayerResumePayload, ack: Ack) => void;
   'player:setAvatar': (payload: SetAvatarPayload, ack: Ack) => void;
+  'pack:vote': (payload: PackVotePayload, ack: Ack) => void;
+  'vip:lockPack': (payload: object, ack: Ack) => void;
+  'vip:setCategory': (payload: SetCategoryPayload, ack: Ack) => void;
+  'vip:backToPacks': (payload: object, ack: Ack) => void;
   'vip:start': (payload: object, ack: Ack) => void;
   'vip:kick': (payload: KickPayload, ack: Ack) => void;
   'vip:playAgain': (payload: object, ack: Ack) => void;

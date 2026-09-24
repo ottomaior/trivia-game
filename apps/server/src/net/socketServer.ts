@@ -4,9 +4,11 @@ import {
   hostCreateSchema,
   hostResumeSchema,
   kickSchema,
+  packVoteSchema,
   playerJoinSchema,
   playerResumeSchema,
   setAvatarSchema,
+  setCategorySchema,
   timePingSchema,
   voteSchema,
   type ClientToServerEvents,
@@ -213,6 +215,15 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       }),
     );
 
+    socket.on('pack:vote', playerCommand(packVoteSchema, (runner, playerId, { pack }) => runner.votePack(playerId, pack)));
+    socket.on('vip:lockPack', playerCommand(emptyPayload, (runner, playerId) => runner.lockPack(playerId)));
+    socket.on(
+      'vip:setCategory',
+      playerCommand(setCategorySchema, (runner, playerId, { categoryId, enabled }) =>
+        runner.setCategory(playerId, categoryId, enabled),
+      ),
+    );
+    socket.on('vip:backToPacks', playerCommand(emptyPayload, (runner, playerId) => runner.backToPacks(playerId)));
     socket.on('vip:start', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:playAgain', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:newLobby', playerCommand(emptyPayload, (runner, playerId) => runner.newLobby(playerId)));

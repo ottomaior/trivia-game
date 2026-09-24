@@ -22,6 +22,7 @@ describe('views', () => {
     expect(view.me.name).toBe('Béla');
     expect(view.me.isVip).toBe(false);
     expect(view.players.find((p) => p.isVip)?.name).toBe('Anna');
-    expect(view.stage).toEqual({ phase: 'lobby' });
+    expect(view.stage).toEqual({ phase: 'lobby', step: 'packs', packs: null, votes: {} });
+    expect(view.pack).toBeNull();
   });
 });

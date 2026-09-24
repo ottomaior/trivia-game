@@ -24,6 +24,23 @@ export interface PlayerSummary {
   score: number;
 }
 
+/** A question pack as the lobby offers it. */
+export interface PackOption {
+  slug: string;
+  name: string;
+  description: string;
+  categories: number;
+  questions: number;
+}
+
+/** One category of the locked pack, which the VIP can switch off. */
+export interface PackCategory {
+  id: number;
+  name: string;
+  questions: number;
+  enabled: boolean;
+}
+
 export interface CategoryOption {
   id: number;
   name: string;
@@ -59,7 +76,10 @@ export interface Standing {
 }
 
 export type Stage =
-  | { phase: 'lobby' }
+  /** Players vote for a pack; `packs` is null while the offers load. `votes` maps player id to pack slug. */
+  | { phase: 'lobby'; step: 'packs'; packs: PackOption[] | null; votes: Record<string, string> }
+  /** The pack is locked; the VIP may switch categories off before starting. */
+  | { phase: 'lobby'; step: 'setup'; pack: PackOption; categories: PackCategory[]; minQuestions: number }
   | { phase: 'intro' }
   | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number> }
   /** The vote is decided; the TV spins to `chosen` before the question. */
@@ -144,6 +164,8 @@ interface BaseView {
   /** True while the TV is disconnected mid-game: timers are frozen. */
   paused: boolean;
   players: PlayerSummary[];
+  /** Name of the locked question pack, once there is one. */
+  pack: string | null;
 }
 
 export interface HostView extends BaseView {

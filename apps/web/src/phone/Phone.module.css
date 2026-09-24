@@ -396,6 +396,169 @@
   margin-left: auto;
 }
 
+/* Lobby: the pack vote */
+.packs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.packsTitle {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--mustard);
+}
+
+.packCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  row-gap: 2px;
+  padding: 12px 14px;
+  border: 3px solid var(--teal);
+  border-radius: var(--radius);
+  background: var(--burgundy-deep);
+  color: var(--cream);
+  text-align: left;
+  cursor: pointer;
+}
+
+.packCard:disabled {
+  cursor: default;
+}
+
+.packMine {
+  border-color: var(--mustard);
+  outline: 4px dotted var(--mustard);
+  outline-offset: 3px;
+}
+
+.packName {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.1;
+}
+
+.packDesc,
+.packMeta {
+  grid-column: 1;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.packDesc {
+  color: var(--cream);
+  opacity: 0.85;
+}
+
+.packMeta {
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ice);
+}
+
+.packVoters {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: flex-end;
+  gap: 2px;
+  max-width: 5.4rem;
+}
+
+/* Lobby: the VIP trims the locked pack */
+/* Two columns: a big pack has more than twenty categories. */
+.toggles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toggle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+  width: 100%;
+  height: 100%;
+  min-height: var(--touch-min);
+  padding: 8px 10px;
+  border: 3px dashed color-mix(in srgb, var(--cream) 35%, transparent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: color-mix(in srgb, var(--cream) 60%, transparent);
+  text-align: left;
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: '';
+  grid-row: 1 / span 2;
+  width: 20px;
+  height: 20px;
+  border: 3px solid currentColor;
+  border-radius: 6px;
+}
+
+.toggleOn {
+  border: 3px solid var(--burgundy-deep);
+  background: var(--teal);
+  color: var(--cream);
+}
+
+.toggleOn::before {
+  background: var(--mustard);
+  border-color: var(--burgundy-deep);
+  box-shadow: inset 0 0 0 3px var(--teal);
+}
+
+.toggle:disabled {
+  cursor: default;
+}
+
+.toggleName {
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.15;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.toggleCount {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.catChips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catChips li {
+  padding: 4px 12px;
+  background: var(--teal);
+  border-radius: 999px;
+  font-weight: 800;
+}
+
 @keyframes flipIn {
   from {
     transform: perspective(600px) rotateX(90deg);
