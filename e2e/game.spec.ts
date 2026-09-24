@@ -24,9 +24,10 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   await expect(anna.getByRole('button', { name: 'Új játék' })).toBeVisible();
   await expect(bela.getByText('A VIP dönti el, mi jön.')).toBeVisible();
 
-  // Everybody's final score is on the TV, and scores add up to something.
-  const scores = await tv.getByTestId('podium').allTextContents();
-  expect(scores.join(' ')).toMatch(/Anna|Béla|Cili/);
+  // Everybody's name and final score is on the TV.
+  const desks = (await tv.getByTestId('seat').allTextContents()).join(' ');
+  for (const name of ['Anna', 'Béla', 'Cili']) expect(desks).toContain(name);
+  expect(desks).toMatch(/\d+ pont/);
 
   // Back to a fresh lobby with the same players.
   await anna.getByRole('button', { name: 'Új váró' }).click();

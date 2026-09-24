@@ -1,5 +1,5 @@
 import { t, type PlayerView, type Stage } from '@trivia/shared';
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { LETTERS, TILE } from '../../ui/answers.ts';
@@ -44,7 +44,7 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
         <button
           key={i}
           className={styles.choice}
-          style={{ background: TILE[i]!.bg, color: TILE[i]!.fg }}
+          style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
           disabled={!open}
           onClick={() => answer(i)}
           data-testid={`choice-${i}`}

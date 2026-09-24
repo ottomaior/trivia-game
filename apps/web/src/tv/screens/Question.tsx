@@ -15,8 +15,10 @@ gsap.registerPlugin(SplitText);
 
 type QuestionStage = Extract<Stage, { phase: 'question_read' | 'question_open' }>;
 
-/** When the round card flips away and the question's words start landing (seconds into the read). */
-const CARD_OUT = 0.85;
+/** Seconds into the read when the round card flips away (matches .roundCard in Tv.module.css)… */
+const CARD_OUT = 0.7;
+/** …and when the question's words start landing, once the card is gone. */
+const WORDS_IN = CARD_OUT + 0.28;
 
 export function Question({ view, stage }: { view: HostView; stage: QuestionStage }) {
   const { question } = stage;
@@ -35,8 +37,8 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
       rotationX: -70,
       opacity: 0,
       duration: 0.45,
-      stagger: 0.05,
-      delay: CARD_OUT,
+      stagger: 0.04,
+      delay: WORDS_IN,
       ease: 'back.out(2)',
     });
     return () => {

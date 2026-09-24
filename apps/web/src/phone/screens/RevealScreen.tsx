@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { LETTERS } from '../../ui/answers.ts';
+import { Burst } from '../Burst.tsx';
 import styles from '../Phone.module.css';
 
 type RevealStage = Extract<Stage, { phase: 'reveal' }>;
@@ -18,6 +19,7 @@ export function RevealScreen({ view, stage, socket }: { view: PlayerView; stage:
   return (
     <div className={styles.column}>
       <div className={`${styles.verdict} ${pick?.correct ? styles.verdictGood : styles.verdictBad}`} data-testid="verdict">
+        {pick?.correct && <Burst count={22} />}
         <span className={styles.verdictText}>{verdict}</span>
         {pick && pick.points > 0 && <span className={styles.verdictPoints}>{t.plusPoints(pick.points)}</span>}
       </div>

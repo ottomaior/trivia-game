@@ -16,6 +16,8 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
   const byId = new Map(view.players.map((p) => [p.id, p]));
   const podium = PODIUM_ORDER.map((i) => standings[i]).filter((s): s is Standing => Boolean(s));
   const rest = standings.slice(3);
+  // In the studio the winners stand on the stage's podium; the board lists everyone.
+  if (inStudio) return <FinalBoard view={view} standings={standings} />;
   return (
     <div className={styles.final}>
       {!lowFx && !inStudio && <Confetti />}
@@ -53,6 +55,34 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
         </ol>
       )}
       <p className={styles.status}>{t.playAgainOnPhone}</p>
+    </div>
+  );
+}
+
+function FinalBoard({ view, standings }: { view: HostView; standings: Standing[] }) {
+  const byId = new Map(view.players.map((p) => [p.id, p]));
+  return (
+    <div className={styles.final}>
+      <h2 className={styles.gameTitle}>{t.finalResults}</h2>
+      <p className={styles.status}>{t.playAgainOnPhone}</p>
+      <ol className={`${styles.finalBoard} ${standings.length > 3 ? styles.finalBoardWide : ''}`}>
+        {standings.map((s, i) => {
+          const p = byId.get(s.playerId)!;
+          return (
+            <li
+              key={s.playerId}
+              className={styles.finalRow}
+              data-rank={s.rank}
+              style={{ '--d': `${0.3 + (standings.length - 1 - i) * 0.25}s` } as CSSProperties}
+            >
+              <span className={styles.finalRank}>{s.rank}.</span>
+              <Blob avatar={p.avatar} size="3.4em" />
+              <span className={styles.finalName}>{p.name}</span>
+              <span className={styles.finalScore}>{t.points(s.score)}</span>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }

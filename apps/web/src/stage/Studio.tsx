@@ -52,7 +52,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
               line={view.otto}
               players={view.players}
               bubbleDelayMs={phase === 'reveal' ? REVEAL_BEATS.otto * 1000 : 0}
-              bubbleHideMs={phase === 'question_read' || phase === 'question_open' ? 1_800 : undefined}
+              bubbleHideMs={phase === 'question_read' || phase === 'question_open' ? 1_800 : phase === 'scoreboard' ? 2_600 : undefined}
             />
           </div>
           <div className={styles.deskArea}>
@@ -127,7 +127,8 @@ function useStageEffects(
       });
     }
     if (stage.phase === 'scoreboard' || stage.phase === 'final') {
-      at(0.9, () => {
+      // In the final, wait for the winner's podium block to finish rising.
+      at(stage.phase === 'final' ? 3.2 : 0.9, () => {
         const leader = stage.standings[0];
         fx.spotlight(leader ? rectOf(root, `[data-desk="${leader.playerId}"]`) : null);
       });

@@ -998,7 +998,7 @@
   transform-origin: 50% 50%;
   animation:
     cardIn 320ms cubic-bezier(0.3, 1.4, 0.5, 1) both,
-    cardOut 260ms 850ms ease-in forwards;
+    cardOut 260ms 700ms ease-in forwards;
   z-index: 3;
 }
 
@@ -1076,5 +1076,137 @@
 @keyframes landBounce {
   from {
     transform: scale(1.25);
+  }
+}
+
+/* Final results on the studio board (the winners stand on the stage podium). */
+.finalBoard {
+  display: grid;
+  grid-template-columns: minmax(0, 44em);
+  gap: 0.9em;
+  margin: 0.6em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.finalBoardWide {
+  grid-template-columns: repeat(2, minmax(0, 38em));
+  grid-auto-flow: column;
+  grid-template-rows: repeat(3, auto);
+  column-gap: 2em;
+}
+
+.finalRow {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.7em 1.4em;
+  background: var(--burgundy-deep);
+  border: 0.2em solid #ffffff1a;
+  border-radius: 0.9em;
+  font-size: 1.5em;
+  font-weight: 800;
+  animation: rowIn 450ms var(--d) cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+.finalRow[data-rank='1'] {
+  border-color: var(--mustard);
+  background: linear-gradient(90deg, #5a2a12, var(--burgundy-deep));
+  box-shadow: 0 0 1.2em #e8b23a55;
+}
+
+.finalRank {
+  width: 1.6em;
+  font-family: var(--font-display);
+  color: var(--mustard);
+}
+
+.finalName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cream);
+}
+
+.finalScore {
+  font-family: var(--font-display);
+  color: var(--mustard);
+}
+
+@keyframes rowIn {
+  from {
+    transform: translateX(-3em);
+    opacity: 0;
+  }
+}
+
+/* Intro on the studio board: the title card. */
+.titleCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5em;
+  height: 100%;
+  overflow: hidden;
+}
+
+.titleBurst {
+  position: absolute;
+  inset: -40%;
+  background: repeating-conic-gradient(from 0deg at 50% 50%, #5a1c2e 0deg 9deg, var(--burgundy-deep) 9deg 18deg);
+  animation: spin 24s linear infinite, fadeIn 800ms both;
+}
+
+.titleLogo {
+  position: relative;
+  font-size: 2.4em;
+}
+
+/* A glint that sweeps across the logo once the letters have landed. */
+.titleLogo::after {
+  content: '';
+  position: absolute;
+  inset: -10% -20%;
+  background: linear-gradient(105deg, transparent 40%, #fff6 50%, transparent 60%);
+  mix-blend-mode: overlay;
+  transform: translateX(-120%);
+  animation: glint 900ms 1.7s ease-in-out both;
+  pointer-events: none;
+}
+
+.titleRibbon {
+  position: relative;
+  margin: 0;
+  padding: 0.35em 1.6em;
+  background: var(--rust);
+  color: var(--cream);
+  border: 0.15em solid var(--burgundy-deep);
+  border-radius: 0.3em;
+  font-family: var(--font-display);
+  font-size: 2.6em;
+  box-shadow: 0.15em 0.15em 0 var(--burgundy-deep);
+  animation: ribbonIn 500ms 1.9s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+@keyframes glint {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes ribbonIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

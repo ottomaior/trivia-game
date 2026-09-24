@@ -235,12 +235,14 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 - Smart-TV pass: `@vitejs/plugin-legacy` for the `/tv` route, a reduced-motion or low-end mode, and a test on your TV's browser.
 - ✅ **Milestone:** a game with full audio and animation, and a question bank of at least 1,500. The flagged-question workflow gets used once for real.
 
-### Phase 2.5 — Studio upgrade (vertical slice built, in review)
+### Phase 2.5 — Studio upgrade (built, in review)
 - ✅ 2.5D studio: CSS 3D set, GSAP camera director, PixiJS light and particle layer, FPS guard with `full | lite | flat` modes (`?fx=`).
 - ✅ Staging: slot-machine category pick (new 1.6s `vote_result` phase), round title card, word-by-word prompt, split-flap clock, reveal with dropping tiles, sparks, points flying to the desks, desks re-sorting with a crown.
 - ✅ Otto as a posed cutout rig with lip sync; name- and number-free lines so they can be voiced (`pnpm voice:generate`, Azure `hu-HU-TamasNeural`).
 - ✅ Audio engine with buses, random variants of recorded sounds, studio audience reactions; `pnpm audio:prepare` and a sound shopping list.
-- Next: record the sounds and voice, owner review, then roll the studio out to the lobby, intro and final (3D podium) and polish the phones.
+- ✅ Rollout: intro title card with bouncing logo letters, empty desks waiting in the lobby, desks that shrink to fit six players, the final on a rising three-step podium with a drifting camera and the full results on the board.
+- ✅ Phones: faint sunburst backdrop, answer buttons that pop in and squash, a confetti pop for right answers and a shake for wrong ones, the player's blob (with a crown when leading) on the standings and final screens.
+- Next: record the sounds and Otto's voice (owner), then tune levels and timings after a real game night.
 
 ### Phase 3 — Power Plays
 - One power play per player, granted every N rounds. The player picks it **during the category vote**, on the same screen, so no extra phase is added.
