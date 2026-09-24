@@ -27,32 +27,11 @@ export function moodFor(line: OttoLine | null): OttoMood {
   return (line && MOODS[line.key]) ?? 'neutral';
 }
 
-/** Otto, the host: slicked hair, big mustache, bow tie. Drawn in SVG. */
-export function OttoFace({
-  size = '12em',
-  mood = 'neutral',
-  talking = false,
-}: {
-  size?: string;
-  mood?: OttoMood;
-  talking?: boolean;
-}) {
+/** Otto's head (ears to mustache) in a 200×220 box; shared by the bust and the full rig. */
+export function OttoHead({ mood = 'neutral' }: { mood?: OttoMood }) {
   const ink = 'var(--burgundy)';
   return (
-    <svg
-      viewBox="0 0 200 220"
-      width={size}
-      height={size}
-      aria-hidden="true"
-      className={`${styles.face} ${talking ? styles.talking : ''}`}
-      data-mood={mood}
-    >
-      {/* suit and bow tie */}
-      <path d="M30 220 C34 176 66 160 100 160 C134 160 166 176 170 220 Z" fill="var(--teal)" stroke={ink} strokeWidth="5" />
-      <path d="M84 160 L100 200 L116 160 Z" fill="var(--cream)" stroke={ink} strokeWidth="4" />
-      <path d="M78 168 L100 178 L78 190 Z M122 168 L100 178 L122 190 Z" fill="var(--rust)" stroke={ink} strokeWidth="4" strokeLinejoin="round" />
-      <circle cx="100" cy="178" r="6" fill="var(--rust)" stroke={ink} strokeWidth="4" />
-      {/* head */}
+    <>
       <ellipse cx="100" cy="96" rx="62" ry="70" fill="#E9B98F" stroke={ink} strokeWidth="5" />
       <ellipse cx="38" cy="102" rx="10" ry="16" fill="#E9B98F" stroke={ink} strokeWidth="5" />
       <ellipse cx="162" cy="102" rx="10" ry="16" fill="#E9B98F" stroke={ink} strokeWidth="5" />
@@ -87,6 +66,36 @@ export function OttoFace({
         strokeWidth="4"
         strokeLinejoin="round"
       />
+    </>
+  );
+}
+
+/** Otto, the host, as a bust: slicked hair, big mustache, bow tie. */
+export function OttoFace({
+  size = '12em',
+  mood = 'neutral',
+  talking = false,
+}: {
+  size?: string;
+  mood?: OttoMood;
+  talking?: boolean;
+}) {
+  const ink = 'var(--burgundy)';
+  return (
+    <svg
+      viewBox="0 0 200 220"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      className={`${styles.face} ${talking ? styles.talking : ''}`}
+      data-mood={mood}
+    >
+      {/* suit and bow tie */}
+      <path d="M30 220 C34 176 66 160 100 160 C134 160 166 176 170 220 Z" fill="var(--teal)" stroke={ink} strokeWidth="5" />
+      <path d="M84 160 L100 200 L116 160 Z" fill="var(--cream)" stroke={ink} strokeWidth="4" />
+      <path d="M78 168 L100 178 L78 190 Z M122 168 L100 178 L122 190 Z" fill="var(--rust)" stroke={ink} strokeWidth="4" strokeLinejoin="round" />
+      <circle cx="100" cy="178" r="6" fill="var(--rust)" stroke={ink} strokeWidth="4" />
+      <OttoHead mood={mood} />
     </svg>
   );
 }

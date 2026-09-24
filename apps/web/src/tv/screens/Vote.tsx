@@ -1,15 +1,29 @@
 import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import { TILE } from '../../ui/answers.ts';
+import { audio } from '../../audio/engine.ts';
+import { useLowFx } from '../../ui/lowfx.ts';
+import { useSlotSpin } from '../../ui/slotSpin.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
 type VoteStage = Extract<Stage, { phase: 'vote' | 'vote_result' }>;
 
 export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
+  const inStudio = useInStudio();
+  const lowFx = useLowFx();
+  const result = stage.phase === 'vote_result';
+  const chosen = result ? stage.chosen : 0;
+  // The decided category is revealed like a slot machine (instantly in low-motion mode).
+  const spin = useSlotSpin(result, chosen, stage.options.length, {
+    instant: lowFx,
+    onStep: () => audio.play('spinTick'),
+    onLand: () => audio.play('spinLand'),
+  });
   return (
     <div className={styles.game}>
       <header className={styles.gameHeader}>
@@ -24,9 +38,17 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
             <li
               key={o.id}
               className={`${styles.voteCard} ${
-                stage.phase === 'vote_result' ? (i === stage.chosen ? styles.voteChosen : styles.voteLost) : ''
+                result
+                  ? spin.landed
+                    ? i === chosen
+                      ? styles.voteChosen
+                      : styles.voteLost
+                    : spin.lit === i
+                      ? styles.voteLit
+                      : styles.voteDim
+                  : ''
               }`}
-              data-testid={stage.phase === 'vote_result' && i === stage.chosen ? 'chosen-category' : undefined}
+              data-testid={result && spin.landed && i === chosen ? 'chosen-category' : undefined}
               style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
             >
               <span className={styles.voteName}>{o.name}</span>
@@ -40,7 +62,7 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
         })}
       </ul>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} players={view.players} size="9em" />
+        {!inStudio && <Otto line={view.otto} players={view.players} size="9em" />}
         <div className={styles.footerTimer}>
           {stage.phase === 'vote' && <TimerBar endsAt={view.phaseEndsAt} totalMs={TIMINGS.vote} />}
         </div>

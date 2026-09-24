@@ -1,23 +1,13 @@
-// Every sound effect is synthesized: oscillators, filtered noise and
-// envelopes, in a 70s–80s game-show style. Each cue schedules itself on the
-// given context starting at `t` and returns its length in seconds, so it can
-// also be rendered offline (see selftest.ts).
+// Synthesized versions of the sound effects: oscillators, filtered noise and
+// envelopes, in a 70s–80s game-show style. They play whenever no recorded
+// file is provided for a cue (see engine.ts); some audience sounds (ooh, aww,
+// laugh, gasp) only exist as recordings. Each cue schedules itself on the
+// given context from `t` and returns its length in seconds, so it can also be
+// rendered offline (see selftest.ts).
 
-export const CUES = [
-  'join',
-  'start',
-  'vote',
-  'question',
-  'lockIn',
-  'tick',
-  'timeUp',
-  'reveal',
-  'wrong',
-  'scoreboard',
-  'leadChange',
-  'winner',
-] as const;
-export type Cue = (typeof CUES)[number];
+import type { SoundCue } from '@trivia/shared';
+
+export type Cue = SoundCue;
 
 type Ctx = BaseAudioContext;
 
@@ -125,7 +115,35 @@ function brass(ctx: Ctx, out: AudioNode, freqs: number[], start: number, dur: nu
   }
 }
 
-export const SFX: Record<Cue, (ctx: Ctx, out: AudioNode, t: number) => number> = {
+/** A crowd clapping: many short filtered noise bursts at random moments, swelling then fading. */
+function clapping(ctx: Ctx, out: AudioNode, t: number, seconds: number, density: number): void {
+  const claps = Math.round(seconds * density);
+  for (let i = 0; i < claps; i++) {
+    const at = Math.random() * seconds;
+    const swell = Math.min(1, at / 0.4) * Math.max(0, 1 - Math.max(0, at - seconds * 0.55) / (seconds * 0.45));
+    noise(ctx, out, {
+      start: t + at,
+      dur: 0.025 + Math.random() * 0.03,
+      gain: 0.05 + swell * 0.1 * Math.random(),
+      type: 'bandpass',
+      freq: 900 + Math.random() * 1800,
+      q: 1.2,
+    });
+  }
+}
+
+export const SFX: Partial<Record<Cue, (ctx: Ctx, out: AudioNode, t: number) => number>> = {
+  applause(ctx, out, t) {
+    clapping(ctx, out, t, 2.6, 150);
+    return 2.7;
+  },
+  cheer(ctx, out, t) {
+    clapping(ctx, out, t, 3, 190);
+    // A couple of whistles over the clapping.
+    tone(ctx, out, { freq: 1800, glideTo: 2700, start: t + 0.2, dur: 0.35, type: 'sine', gain: 0.05 });
+    tone(ctx, out, { freq: 2600, glideTo: 1900, start: t + 0.6, dur: 0.4, type: 'sine', gain: 0.04 });
+    return 3.1;
+  },
   join(ctx, out, t) {
     tone(ctx, out, { freq: E5, start: t, dur: 0.14, gain: 0.25 });
     tone(ctx, out, { freq: A5, start: t + 0.1, dur: 0.3, gain: 0.25 });
@@ -182,6 +200,15 @@ export const SFX: Record<Cue, (ctx: Ctx, out: AudioNode, t: number) => number> =
     brass(ctx, out, [N(-2), N(2), N(5)], t, 0.12, 0.1);
     brass(ctx, out, [N(0), N(4), N(7)], t + 0.15, 0.5, 0.1);
     return 0.7;
+  },
+  spinTick(ctx, out, t) {
+    tone(ctx, out, { freq: 2200, glideTo: 1400, start: t, dur: 0.03, type: 'square', gain: 0.08, filter: 5000 });
+    return 0.05;
+  },
+  spinLand(ctx, out, t) {
+    brass(ctx, out, [N(3), N(7), N(10)], t, 0.35, 0.1);
+    bell(ctx, out, N(15), t, 0.2);
+    return 1;
   },
   winner(ctx, out, t) {
     const steps = [C5, E5, G5, C6, G5, C6];

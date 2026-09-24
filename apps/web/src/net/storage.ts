@@ -41,5 +41,5 @@ export const KEYS = {
   hostSession: 'otto.hostSession',
   playerSession: 'otto.playerSession',
   audio: 'otto.audio',
-  lowFx: 'otto.lowfx',
+  fxMode: 'otto.fxmode',
 } as const;

@@ -1,0 +1,43 @@
+.clock {
+  display: flex;
+  gap: 0.15em;
+  perspective: 20em;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.1em;
+  height: 1.45em;
+  background: var(--burgundy-deep);
+  color: var(--mustard);
+  border: 0.06em solid color-mix(in srgb, var(--mustard) 30%, var(--burgundy-deep));
+  border-radius: 0.12em;
+  font-family: var(--font-display);
+  font-size: 4em;
+  line-height: 1;
+  box-shadow: 0 0.08em 0 #000a;
+  animation: flip 260ms ease-out both;
+  transform-origin: 50% 50%;
+}
+
+/* The hinge line of a split-flap card. */
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 0.04em;
+  background: #0009;
+}
+
+.urgent .card {
+  color: var(--rust);
+  border-color: var(--rust);
+}
+
+@keyframes flip {
+  from {
+    transform: rotateX(-90deg);
+  }
+}

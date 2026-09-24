@@ -1,5 +1,5 @@
 import { scheduleTrack, type Track } from './music.ts';
-import { CUES, SFX, type Cue } from './sfx.ts';
+import { SFX, type Cue } from './sfx.ts';
 
 // Renders every sound offline and reports its loudness, so automated tests can
 // check each one makes sound and doesn't clip. Loaded only with ?audiotest on /tv.
@@ -55,11 +55,11 @@ function toWav(samples: Float32Array): string {
 
 export async function renderAll(): Promise<SoundReport[]> {
   const reports: SoundReport[] = [];
-  for (const cue of CUES) {
+  for (const [cue, synth] of Object.entries(SFX) as [Cue, NonNullable<(typeof SFX)[Cue]>][]) {
     // Measure the cue's length with a throwaway context, then render it.
     const probe = new OfflineAudioContext(1, RATE, RATE);
-    const seconds = SFX[cue](probe, probe.destination, 0) + 0.2;
-    reports.push({ name: cue, seconds, ...(await render(seconds, (ctx) => SFX[cue](ctx, ctx.destination, 0.01))) });
+    const seconds = synth(probe, probe.destination, 0) + 0.2;
+    reports.push({ name: cue, seconds, ...(await render(seconds, (ctx) => synth(ctx, ctx.destination, 0.01))) });
   }
   for (const track of ['lobby', 'thinking'] as const) {
     reports.push({ name: track, seconds: 8, ...(await render(8, (ctx) => scheduleTrack(ctx, ctx.destination, track, 8))) });

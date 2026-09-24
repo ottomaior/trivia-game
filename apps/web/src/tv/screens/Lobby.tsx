@@ -1,4 +1,5 @@
 import { MAX_PLAYERS, MIN_PLAYERS, t, type HostView } from '@trivia/shared';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Blob } from '../../ui/Blob.tsx';
 import { Logo } from '../../ui/Logo.tsx';
 import { QrCode } from '../../ui/QrCode.tsx';
@@ -8,9 +9,10 @@ export function Lobby({ view }: { view: HostView }) {
   const joinUrl = `${window.location.origin}/${view.roomCode}`;
   const missing = Math.max(0, MIN_PLAYERS - view.players.filter((p) => p.connected).length);
   const seats = Array.from({ length: MAX_PLAYERS }, (_, i) => view.players[i] ?? null);
+  const inStudio = useInStudio();
 
   return (
-    <div className={styles.lobby}>
+    <div className={`${styles.lobby} ${inStudio ? styles.lobbyStudio : ''}`}>
       <section className={styles.joinPanel}>
         <Logo />
         <p className={styles.joinAt}>
@@ -26,6 +28,12 @@ export function Lobby({ view }: { view: HostView }) {
         <QrCode value={joinUrl} className={styles.qr} />
       </section>
 
+      {inStudio ? (
+        <section className={styles.seatsPanel}>
+          <h2 className={styles.seatsTitle}>{t.playersCount(view.players.length, MAX_PLAYERS)}</h2>
+          <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.vipStartsOnPhone}</p>
+        </section>
+      ) : (
       <section className={styles.seatsPanel}>
         <h2 className={styles.seatsTitle}>{t.playersCount(view.players.length, MAX_PLAYERS)}</h2>
         <ul className={styles.seats}>
@@ -45,6 +53,7 @@ export function Lobby({ view }: { view: HostView }) {
         </ul>
         <p className={styles.status}>{missing > 0 ? t.needMorePlayers(missing) : t.vipStartsOnPhone}</p>
       </section>
+      )}
     </div>
   );
 }

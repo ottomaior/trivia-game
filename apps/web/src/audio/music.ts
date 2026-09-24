@@ -3,7 +3,9 @@ import { noise } from './sfx.ts';
 // Two procedural loops, scheduled a little ahead on the audio clock so timing
 // stays tight even if the main thread stutters.
 
-export type Track = 'lobby' | 'thinking';
+import type { MusicTrack } from '@trivia/shared';
+
+export type Track = MusicTrack;
 
 const A4 = 440;
 const f = (semitonesFromA4: number) => A4 * 2 ** (semitonesFromA4 / 12);
@@ -55,7 +57,8 @@ const LOUNGE_BASS = [
   [-24, -17, -21, -20], // A E C C#
 ];
 
-const PATTERNS: Record<Track, Pattern> = {
+/** Synthesized loops; 'final' only plays from a recording. */
+const PATTERNS: Partial<Record<Track, Pattern>> = {
   lobby: {
     bpm: 100,
     stepsPerBeat: 2,
@@ -104,8 +107,14 @@ export class MusicPlayer {
     readonly track: Track,
   ) {}
 
+  /** Whether this track has a synthesized version. */
+  static canSynthesize(track: Track): boolean {
+    return PATTERNS[track] !== undefined;
+  }
+
   start(): void {
     const pattern = PATTERNS[this.track];
+    if (!pattern) return;
     const stepDur = 60 / pattern.bpm / pattern.stepsPerBeat;
     this.nextTime = this.ctx.currentTime + 0.05;
     const schedule = () => {
@@ -128,6 +137,7 @@ export class MusicPlayer {
 /** Schedules `seconds` of a track in one go (for offline rendering in the self-test). */
 export function scheduleTrack(ctx: BaseAudioContext, out: AudioNode, track: Track, seconds: number): void {
   const pattern = PATTERNS[track];
+  if (!pattern) return;
   const stepDur = 60 / pattern.bpm / pattern.stepsPerBeat;
   for (let step = 0, t = 0.01; t < seconds; step++, t += stepDur) {
     pattern.play(ctx, out, step % pattern.steps, t, stepDur);

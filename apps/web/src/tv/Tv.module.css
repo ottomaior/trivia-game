@@ -938,3 +938,143 @@
     opacity 300ms,
     transform 300ms;
 }
+
+/* In the studio the desks are the seats; the board keeps the join info big. */
+.lobbyStudio {
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+}
+
+.lobbyStudio .seatsTitle {
+  font-size: 3.4em;
+}
+
+.lobbyStudio .status {
+  font-size: 2.6em;
+}
+
+/* ---- Studio versions (the screen is on the studio's board) ---------------- */
+
+.gameStudio {
+  position: relative;
+  padding-top: 3em;
+}
+
+.gameStudio .prompt {
+  font-size: 3.4em;
+  perspective: 30em;
+}
+
+/* Answers wait off stage during the read, then flip in when they open. */
+.tilesHidden .tile {
+  opacity: 0;
+}
+
+.gameStudio .tilesOpen .tile {
+  animation: tileFlip 420ms calc(var(--i, 0) * 90ms) cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  transform-origin: 50% 0;
+}
+
+@keyframes tileFlip {
+  from {
+    transform: perspective(40em) rotateX(-95deg);
+    opacity: 0;
+  }
+}
+
+/* The split-flap round card before each question. */
+.roundCard {
+  position: absolute;
+  inset: 12em 16em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  background: var(--burgundy-deep);
+  border: 0.3em solid var(--mustard);
+  border-radius: 1em;
+  box-shadow: 0 1.5em 3em #000c;
+  transform-origin: 50% 50%;
+  animation:
+    cardIn 320ms cubic-bezier(0.3, 1.4, 0.5, 1) both,
+    cardOut 260ms 850ms ease-in forwards;
+  z-index: 3;
+}
+
+.roundCard::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 0.25em;
+  background: #000a;
+}
+
+.roundCardNumber {
+  font-family: var(--font-display);
+  font-size: 7em;
+  line-height: 1;
+  color: var(--mustard);
+  text-shadow: 0.05em 0.05em 0 var(--rust);
+}
+
+.roundCardMeta {
+  font-size: 2.4em;
+  font-weight: 800;
+  color: var(--cream);
+}
+
+@keyframes cardIn {
+  from {
+    transform: perspective(60em) rotateX(95deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cardOut {
+  to {
+    transform: perspective(60em) rotateX(-95deg);
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Reveal in the studio: wrong answers fall off the board one by one. */
+:global([data-phase='reveal']) .tileWrong {
+  animation: dropAway 650ms calc(0.1s + var(--i, 0) * 0.15s) cubic-bezier(0.55, 0, 0.8, 0.45) both;
+}
+
+:global([data-phase='reveal']) .tileWrong::after {
+  display: none;
+}
+
+@keyframes dropAway {
+  to {
+    transform: translateY(2.5em) rotate(calc(var(--i, 0) * 1.5deg - 2deg));
+    opacity: 0.22;
+  }
+}
+
+/* Slot-machine spin over the categories. */
+.voteLit {
+  transform: translateY(-0.3em) scale(1.03);
+  outline: 0.35em solid #ffd66b;
+  outline-offset: 0.2em;
+  box-shadow:
+    0 0.35em 0 var(--burgundy-deep),
+    0 0 2em #ffd66b88;
+}
+
+.voteDim {
+  opacity: 0.55;
+}
+
+.voteChosen {
+  animation: landBounce 500ms cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+@keyframes landBounce {
+  from {
+    transform: scale(1.25);
+  }
+}

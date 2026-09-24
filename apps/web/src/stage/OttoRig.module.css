@@ -1,0 +1,192 @@
+.otto {
+  position: relative;
+  width: 19em;
+  height: 30em;
+}
+
+.rig {
+  position: absolute;
+  left: 1.5em;
+  bottom: 7em;
+  width: 16em;
+  height: 26.6em;
+  overflow: visible;
+  filter: drop-shadow(0.4em 0.5em 0 #0006);
+}
+
+/* All rig parts rotate in view-box coordinates around their joints. */
+.rig g {
+  transform-box: view-box;
+  transition: transform 380ms cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.body {
+  transform-origin: 120px 400px;
+  animation: sway 3.2s ease-in-out infinite alternate;
+}
+
+.armL {
+  transform-origin: 52px 222px;
+  transform: rotate(8deg);
+}
+
+.armR {
+  transform-origin: 188px 222px;
+  transform: rotate(-8deg);
+}
+
+.head {
+  transform-origin: 120px 190px;
+}
+
+.rig[data-pose='point'] .armR {
+  transform: rotate(-118deg);
+}
+
+.rig[data-pose='point'] .head {
+  transform: rotate(4deg);
+}
+
+.rig[data-pose='armsUp'] .armL {
+  transform: rotate(150deg);
+}
+
+.rig[data-pose='armsUp'] .armR {
+  transform: rotate(-150deg);
+}
+
+.rig[data-pose='armsUp'] .head {
+  transform: translateY(-6px);
+}
+
+.rig[data-pose='facepalm'] .armL {
+  transform: rotate(-162deg);
+}
+
+.rig[data-pose='facepalm'] .head {
+  transform: rotate(-8deg) translateY(6px);
+}
+
+.rig[data-pose='lean'] .body {
+  animation: none;
+  transform: rotate(4deg);
+}
+
+.rig[data-pose='lean'] .armR {
+  transform: rotate(35deg);
+}
+
+/* Mouth (Otto.module's .mouth class): follows the voice level (--mouth, 0–1),
+   or flaps for a moment when there is no voice clip. */
+.rig g[class*='mouth'] {
+  transform-box: fill-box;
+  transform-origin: center top;
+  transform: scaleY(calc(1 + var(--mouth, 0) * 1.6));
+  transition: none;
+}
+
+.talking[data-voiced='false'] g[class*='mouth'] {
+  animation: flap 170ms ease-in-out infinite alternate;
+}
+
+.talking .head {
+  animation: bob 340ms ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  to {
+    transform: scaleY(1.8);
+  }
+}
+
+@keyframes bob {
+  to {
+    translate: 0 3px;
+  }
+}
+
+@keyframes sway {
+  from {
+    rotate: -1.2deg;
+  }
+  to {
+    rotate: 1.2deg;
+  }
+}
+
+.podium {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 19em;
+  height: 10.5em;
+  display: grid;
+  place-items: center;
+  background: var(--rust);
+  border: 0.3em solid var(--burgundy-deep);
+  border-top: 1.2em solid var(--mustard);
+  border-radius: 0.6em 0.6em 0.2em 0.2em;
+  box-shadow:
+    inset 0 -1.2em 0 #0003,
+    0 0.6em 0 #0007;
+}
+
+.podiumSign {
+  font-family: var(--font-display);
+  font-size: 3.4em;
+  color: var(--cream);
+  text-shadow: 0.06em 0.06em 0 var(--burgundy-deep);
+}
+
+.bubble {
+  position: absolute;
+  left: 15.5em;
+  top: 3em;
+  width: 24em;
+  margin: 0;
+  padding: 0.8em 1.1em;
+  background: var(--cream);
+  color: var(--burgundy);
+  border: 0.18em solid var(--burgundy-deep);
+  border-radius: 1em;
+  font-size: 1.5em;
+  font-weight: 800;
+  line-height: 1.25;
+  box-shadow: 0.2em 0.2em 0 var(--burgundy-deep);
+  animation: pop 280ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  z-index: 3;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: 1.2em;
+  bottom: -0.95em;
+  border: 0.5em solid transparent;
+  border-top: 0.6em solid var(--burgundy-deep);
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+.focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-top: 0.4em;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.6em 0.1em 0.2em;
+  background: var(--burgundy);
+  color: var(--cream);
+  border-radius: 999px;
+  font-size: 0.9em;
+}

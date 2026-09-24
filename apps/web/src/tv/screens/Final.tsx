@@ -2,6 +2,7 @@ import { t, type HostView, type Standing } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { useLowFx } from '../../ui/lowfx.ts';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import styles from '../Tv.module.css';
 
@@ -10,16 +11,17 @@ const PODIUM_ORDER = [1, 0, 2]; // second, first, third from left to right
 const RISE_DELAY: Record<number, number> = { 3: 0.4, 2: 1.2, 1: 2.2 };
 
 export function Final({ view, standings }: { view: HostView; standings: Standing[] }) {
+  const inStudio = useInStudio();
   const lowFx = useLowFx();
   const byId = new Map(view.players.map((p) => [p.id, p]));
   const podium = PODIUM_ORDER.map((i) => standings[i]).filter((s): s is Standing => Boolean(s));
   const rest = standings.slice(3);
   return (
     <div className={styles.final}>
-      {!lowFx && <Confetti />}
+      {!lowFx && !inStudio && <Confetti />}
       <h2 className={styles.gameTitle}>{t.finalResults}</h2>
       <div className={styles.finalBody}>
-        <Otto line={view.otto} players={view.players} size="13em" />
+        {!inStudio && <Otto line={view.otto} players={view.players} size="13em" />}
         <ol className={styles.podium}>
           {podium.map((s) => {
             const p = byId.get(s.playerId)!;

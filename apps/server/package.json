@@ -12,7 +12,9 @@
     "db:seed": "tsx src/release.ts",
     "gen": "tsx scripts/gen-questions.ts",
     "flagged": "tsx scripts/flagged.ts",
-    "questions:check": "tsx scripts/check-questions.ts"
+    "questions:check": "tsx scripts/check-questions.ts",
+    "audio:prepare": "tsx scripts/prepare-audio.ts",
+    "voice:generate": "tsx scripts/generate-voice.ts"
   },
   "dependencies": {
     "@fastify/static": "^10.1.4",

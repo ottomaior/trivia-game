@@ -1,6 +1,7 @@
 import { t, type HostView, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import { LETTERS, TILE } from '../../ui/answers.ts';
 import styles from '../Tv.module.css';
@@ -9,6 +10,7 @@ import { RoundLabel } from './common.tsx';
 type RevealStage = Extract<Stage, { phase: 'reveal' }>;
 
 export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) {
+  const inStudio = useInStudio();
   const { question, correct, picks } = stage;
   const byId = new Map(view.players.map((p) => [p.id, p]));
   const noAnswer = picks.filter((p) => p.choice === null);
@@ -51,7 +53,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
         })}
       </ol>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} players={view.players} size="9em" bubbleDelay="1.6s" />
+        {!inStudio && <Otto line={view.otto} players={view.players} size="9em" bubbleDelay="3.2s" />}
         <div className={styles.revealNotes}>
           {stage.explanation && <p className={styles.explanation}>{stage.explanation}</p>}
           {noAnswer.length > 0 && (

@@ -9,10 +9,13 @@ test('every synthesized sound makes noise and none of them clips', async ({ brow
       .__audioSelfTest;
     return (await run()).map(({ name, peak, rms }) => ({ name, peak, rms }));
   });
-  expect(reports.map((r) => r.name)).toEqual([
-    'join', 'start', 'vote', 'question', 'lockIn', 'tick', 'timeUp', 'reveal', 'wrong', 'scoreboard', 'leadChange', 'winner',
-    'lobby', 'thinking',
-  ]);
+  // Crowd reactions without a synth version (ooh, aww, laugh, gasp, drumroll) only play from recordings.
+  expect(reports.map((r) => r.name).sort()).toEqual(
+    [
+      'applause', 'cheer', 'join', 'start', 'vote', 'spinTick', 'spinLand', 'question', 'lockIn', 'tick', 'timeUp',
+      'reveal', 'wrong', 'scoreboard', 'leadChange', 'winner', 'lobby', 'thinking',
+    ].sort(),
+  );
   for (const r of reports) {
     expect(r.peak, `${r.name} is audible`).toBeGreaterThan(0.05);
     expect(r.peak, `${r.name} does not clip`).toBeLessThan(1);

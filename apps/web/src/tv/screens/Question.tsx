@@ -1,31 +1,67 @@
 import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
-import type { CSSProperties } from 'react';
+import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import { useLayoutEffect, useRef, type CSSProperties } from 'react';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Blob } from '../../ui/Blob.tsx';
+import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import { LETTERS, TILE } from '../../ui/answers.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
+gsap.registerPlugin(SplitText);
+
 type QuestionStage = Extract<Stage, { phase: 'question_read' | 'question_open' }>;
+
+/** When the round card flips away and the question's words start landing (seconds into the read). */
+const CARD_OUT = 0.85;
 
 export function Question({ view, stage }: { view: HostView; stage: QuestionStage }) {
   const { question } = stage;
   const open = stage.phase === 'question_open';
   const answered = new Set(open ? stage.answered : []);
+  const inStudio = useInStudio();
+  const promptRef = useRef<HTMLHeadingElement>(null);
+
+  // In the studio the question lands word by word after the round card.
+  useLayoutEffect(() => {
+    const el = promptRef.current;
+    if (!inStudio || !el || stage.phase !== 'question_read') return;
+    const split = SplitText.create(el, { type: 'words' });
+    const tween = gsap.from(split.words, {
+      y: '0.7em',
+      rotationX: -70,
+      opacity: 0,
+      duration: 0.45,
+      stagger: 0.05,
+      delay: CARD_OUT,
+      ease: 'back.out(2)',
+    });
+    return () => {
+      tween.kill();
+      split.revert();
+    };
+  }, [inStudio, question.id]); // once per question: the prompt stays when answers open
+
   return (
-    <div className={styles.game}>
+    <div className={`${styles.game} ${inStudio ? styles.gameStudio : ''}`}>
       <header className={styles.gameHeader}>
         <RoundLabel view={view} />
         <span className={styles.categoryChip}>
           {question.category} · {t.difficulty[question.difficulty]}
         </span>
-        <span className={styles.hint}>{open ? t.answerOnPhone : t.getReady}</span>
+        {inStudio && open ? (
+          <FlipClock endsAt={view.phaseEndsAt} />
+        ) : (
+          <span className={styles.hint}>{open ? t.answerOnPhone : t.getReady}</span>
+        )}
       </header>
-      <h2 className={styles.prompt} data-testid="prompt">
+      <h2 className={styles.prompt} data-testid="prompt" ref={promptRef}>
         {question.prompt}
       </h2>
-      <ol className={`${styles.tiles} ${open ? styles.tilesOpen : styles.tilesWaiting}`}>
+      <ol className={`${styles.tiles} ${open ? styles.tilesOpen : inStudio ? styles.tilesHidden : styles.tilesWaiting}`}>
         {question.choices.map((c, i) => (
           <li key={i} className={styles.tile} style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}>
             <span className={styles.tileLetter}>{LETTERS[i]}</span>
@@ -33,20 +69,30 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
           </li>
         ))}
       </ol>
-      <footer className={styles.gameFooter}>
-        <OttoFace size="7em" />
-        <ul className={styles.answerRow}>
-          {view.players.map((p) => (
-            <li key={p.id} className={`${styles.answerRowItem} ${answered.has(p.id) ? styles.lockedIn : ''}`}>
-              <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
-              <span>{p.name}</span>
-            </li>
-          ))}
-        </ul>
-        <div className={styles.footerTimer}>
-          <TimerBar endsAt={view.phaseEndsAt} totalMs={open ? TIMINGS.questionOpen : TIMINGS.questionRead} />
+      {inStudio && stage.phase === 'question_read' && (
+        <div className={styles.roundCard} aria-hidden="true">
+          <span className={styles.roundCardNumber}>{t.roundCard(view.round)}</span>
+          <span className={styles.roundCardMeta}>
+            {question.category} · {t.difficulty[question.difficulty]}
+          </span>
         </div>
-      </footer>
+      )}
+      {!inStudio && (
+        <footer className={styles.gameFooter}>
+          <OttoFace size="7em" />
+          <ul className={styles.answerRow}>
+            {view.players.map((p) => (
+              <li key={p.id} className={`${styles.answerRowItem} ${answered.has(p.id) ? styles.lockedIn : ''}`}>
+                <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
+                <span>{p.name}</span>
+              </li>
+            ))}
+          </ul>
+          <div className={styles.footerTimer}>
+            <TimerBar endsAt={view.phaseEndsAt} totalMs={open ? TIMINGS.questionOpen : TIMINGS.questionRead} />
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

@@ -2,12 +2,14 @@ import { t, type HostView, type PlayerSummary, type Standing } from '@trivia/sha
 import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { useCountUp } from '../../ui/countUp.ts';
+import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
 /** Rows start in last round's order and slide into the new one (FLIP). */
 export function Scoreboard({ view, standings }: { view: HostView; standings: Standing[] }) {
+  const inStudio = useInStudio();
   const byId = new Map(view.players.map((p) => [p.id, p]));
   const top = Math.max(1, ...standings.map((s) => s.score));
   const before = [...standings].sort((a, b) => a.prevRank - b.prevRank || b.score - b.delta - (a.score - a.delta));
@@ -26,7 +28,7 @@ export function Scoreboard({ view, standings }: { view: HostView; standings: Sta
         })}
       </ol>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} players={view.players} size="9em" />
+        {!inStudio && <Otto line={view.otto} players={view.players} size="9em" />}
       </footer>
     </div>
   );

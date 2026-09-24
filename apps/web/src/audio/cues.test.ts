@@ -1,6 +1,9 @@
 import type { HostView, Stage } from '@trivia/shared';
 import { describe, expect, it } from 'vitest';
-import { cuesFor, musicFor } from './cues.ts';
+import { cuesFor as timedCues, musicFor } from './cues.ts';
+
+/** Just the cue names, in order. */
+const cuesFor = (...args: Parameters<typeof timedCues>) => timedCues(...args).map((c) => c.cue);
 
 const player = (id: string) => ({
   id,
@@ -43,7 +46,7 @@ describe('cuesFor', () => {
   });
 
   it('plays the opening fanfare and the question sting', () => {
-    expect(cuesFor(view({ phase: 'lobby' }), view({ phase: 'intro' }))).toEqual(['start']);
+    expect(cuesFor(view({ phase: 'lobby' }), view({ phase: 'intro' }))).toEqual(['start', 'applause']);
     const vote = view({ phase: 'vote', options: [], votes: {} });
     expect(cuesFor(vote, view({ phase: 'question_read', question }))).toEqual(['question']);
   });
@@ -55,19 +58,33 @@ describe('cuesFor', () => {
     expect(cuesFor(open(['a']), open(['a']))).toEqual([]);
   });
 
-  it('rings for a right answer, groans when nobody got it', () => {
+  it('rings and applauds a right answer, groans and "aww"s when nobody got it', () => {
     const open = view({ phase: 'question_open', question, answered: ['a', 'b'] });
     const reveal = (picks: ReturnType<typeof pick>[]) => view({ phase: 'reveal', question, correct: 0, explanation: null, picks });
-    expect(cuesFor(open, reveal([pick('a', true), pick('b', false)]))).toEqual(['reveal']);
-    expect(cuesFor(open, reveal([pick('a', false), pick('b', false)]))).toEqual(['wrong']);
+    expect(cuesFor(open, reveal([pick('a', true), pick('b', false)]))).toEqual(['reveal', 'applause']);
+    expect(cuesFor(open, reveal([pick('a', true), pick('b', true)]))).toEqual(['reveal', 'applause', 'cheer']);
+    expect(cuesFor(open, reveal([pick('a', false), pick('b', false)]))).toEqual(['wrong', 'aww']);
+    // The applause lands after the drumroll's "ding".
+    const timed = timedCues(open, reveal([pick('a', true), pick('b', false)]));
+    expect(timed.find((c) => c.cue === 'applause')!.at).toBeGreaterThan(0.75);
+  });
+
+  it('lets the audience laugh at Otto\'s jokes when he says them', () => {
+    const open = view({ phase: 'question_open', question, answered: ['a', 'b'] });
+    const reveal = view(
+      { phase: 'reveal', question, correct: 0, explanation: null, picks: [pick('a', false), pick('b', false)] },
+      { otto: { key: 'noneCorrect', variant: 0, focus: [] } },
+    );
+    const laugh = timedCues(open, reveal).find((c) => c.cue === 'laugh');
+    expect(laugh?.at).toBeGreaterThan(3.2); // Otto speaks 3.2s into the reveal
   });
 
   it('adds a sting when the lead changes, and a fanfare at the end', () => {
     const reveal = view({ phase: 'reveal', question, correct: 0, explanation: null, picks: [] });
     const board = (rank1Prev: number) => view({ phase: 'scoreboard', standings: [standing('b', 1, rank1Prev), standing('a', 2, 1)] });
-    expect(cuesFor(reveal, board(2))).toEqual(['scoreboard', 'leadChange']);
+    expect(cuesFor(reveal, board(2))).toEqual(['scoreboard', 'leadChange', 'cheer']);
     expect(cuesFor(reveal, board(1))).toEqual(['scoreboard']);
-    expect(cuesFor(reveal, view({ phase: 'final', standings: [] }))).toEqual(['winner']);
+    expect(cuesFor(reveal, view({ phase: 'final', standings: [] }))).toEqual(['winner', 'cheer', 'applause']);
   });
 });
 
@@ -77,6 +94,7 @@ describe('musicFor', () => {
     expect(musicFor('scoreboard', false)).toBe('lobby');
     expect(musicFor('question_open', false)).toBe('thinking');
     expect(musicFor('reveal', false)).toBeNull();
+    expect(musicFor('final', false)).toBe('final');
     expect(musicFor('question_open', true)).toBeNull();
   });
 });

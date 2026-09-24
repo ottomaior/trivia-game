@@ -1,17 +1,24 @@
 import type { HostView } from '@trivia/shared';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { serverNow } from '../net/clock.ts';
-import { cuesFor, musicFor } from './cues.ts';
+import { cuesFor, musicFor, ottoDelay } from './cues.ts';
 import { audio } from './engine.ts';
 
-/** Plays sounds and music for each new TV view, plus the countdown ticks. */
+/** Plays sounds, music and Otto's voice for each new TV view, plus the countdown ticks. */
 export function useAudioCues(view: HostView | null): void {
   const prev = useRef<HostView | null>(null);
 
   useEffect(() => {
     if (!view) return;
-    for (const cue of cuesFor(prev.current, view)) audio.play(cue);
+    const before = prev.current;
+    for (const { cue, at } of cuesFor(before, view)) audio.play(cue, at);
     audio.music(musicFor(view.stage.phase, view.paused));
+    // Otto speaks each new line (only once it's actually new, not on every update).
+    const line = view.otto;
+    const phaseChanged = before?.stage.phase !== view.stage.phase;
+    if (line && (phaseChanged || line.key !== before?.otto?.key || line.variant !== before?.otto?.variant)) {
+      audio.voice(line, ottoDelay(view.stage.phase));
+    }
     prev.current = view;
   }, [view]);
 

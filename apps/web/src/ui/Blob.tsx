@@ -11,8 +11,28 @@ const FILL: Record<AvatarColor, string> = {
 
 const INK = 'var(--burgundy)';
 
-function Face({ face }: { face: AvatarFace }) {
+export type Expression = 'happy' | 'sad';
+
+function Face({ face }: { face: AvatarFace | Expression }) {
   switch (face) {
+    case 'happy':
+      return (
+        <>
+          <path d="M30 46 Q38 38 46 46" stroke={INK} strokeWidth="5" fill="none" strokeLinecap="round" />
+          <path d="M54 46 Q62 38 70 46" stroke={INK} strokeWidth="5" fill="none" strokeLinecap="round" />
+          <path d="M32 58 Q50 82 68 58 Z" fill={INK} stroke={INK} strokeWidth="4" strokeLinejoin="round" />
+        </>
+      );
+    case 'sad':
+      return (
+        <>
+          <path d="M30 40 L44 45" stroke={INK} strokeWidth="4" strokeLinecap="round" />
+          <path d="M70 40 L56 45" stroke={INK} strokeWidth="4" strokeLinecap="round" />
+          <circle cx="38" cy="50" r="4" fill={INK} />
+          <circle cx="62" cy="50" r="4" fill={INK} />
+          <path d="M36 70 Q50 58 64 70" stroke={INK} strokeWidth="5" fill="none" strokeLinecap="round" />
+        </>
+      );
     case 'grin':
       return (
         <>
@@ -67,8 +87,18 @@ function Face({ face }: { face: AvatarFace }) {
   }
 }
 
-/** A player's blob avatar. Size is in CSS units (defaults to 1em-based). */
-export function Blob({ avatar, size = '4em', dimmed = false }: { avatar: Avatar; size?: string; dimmed?: boolean }) {
+/** A player's blob avatar. Size is in CSS units; `expression` overrides the chosen face for a moment. */
+export function Blob({
+  avatar,
+  size = '4em',
+  dimmed = false,
+  expression,
+}: {
+  avatar: Avatar;
+  size?: string;
+  dimmed?: boolean;
+  expression?: Expression;
+}) {
   return (
     <svg
       viewBox="0 0 100 100"
@@ -83,7 +113,7 @@ export function Blob({ avatar, size = '4em', dimmed = false }: { avatar: Avatar;
         stroke={INK}
         strokeWidth="4"
       />
-      <Face face={avatar.face} />
+      <Face face={expression ?? avatar.face} />
     </svg>
   );
 }

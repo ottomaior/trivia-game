@@ -10,7 +10,12 @@ export function trackErrors(page: Page): string[] {
   return errors;
 }
 
-export async function openTv(browser: Browser, path = '/tv'): Promise<{ tv: Page; code: string; errors: string[] }> {
+/**
+ * Opens the TV and starts the show. Headless Chromium renders without a GPU,
+ * so tests default to the light studio (`?fx=lite`); `?fx=full` and `?fx=flat`
+ * pick the other modes, and any `?fx=` also skips the automatic FPS check.
+ */
+export async function openTv(browser: Browser, path = '/tv?fx=lite'): Promise<{ tv: Page; code: string; errors: string[] }> {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
   const tv = await context.newPage();
   const errors = trackErrors(tv);

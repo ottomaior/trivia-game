@@ -1,5 +1,5 @@
 import { t, type HostSession, type HostView } from '@trivia/shared';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { audio } from '../audio/engine.ts';
 import { useAudioCues } from '../audio/useAudioCues.ts';
 import { roughSync, syncClock } from '../net/clock.ts';
@@ -7,8 +7,9 @@ import { ACK_TIMEOUT_MS } from '../net/socket.ts';
 import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
 import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
-import { initialLowFx, LowFxContext } from '../ui/lowfx.ts';
+import { initialFxMode, LowFxContext, rememberFxMode, stepDown, type FxMode } from '../ui/lowfx.ts';
 import { Marquee, type MarqueeMode } from '../ui/Marquee.tsx';
+import { Studio } from '../stage/Studio.tsx';
 import { MuteButton } from './MuteButton.tsx';
 import { StartScreen } from './StartScreen.tsx';
 import { TvStage } from './TvStage.tsx';
@@ -35,7 +36,16 @@ export function TvApp() {
   const [creating, setCreating] = useState(false);
   // Browsers only allow sound after a click; a resumed TV needs one again.
   const [activated, setActivated] = useState(() => navigator.userActivation?.hasBeenActive ?? false);
-  const [lowFx] = useState(initialLowFx);
+  const [fxMode, setFxMode] = useState<FxMode>(initialFxMode);
+  const lowFx = fxMode === 'flat';
+  // A TV that can't keep up steps down: full studio → lite studio → flat (remembered).
+  const onTooSlow = useCallback(() => {
+    setFxMode((m) => {
+      const next = stepDown(m);
+      rememberFxMode(next);
+      return next;
+    });
+  }, []);
   const liveView = screen.kind === 'live' ? screen.view : null;
   useAudioCues(liveView);
 
@@ -124,10 +134,16 @@ export function TvApp() {
 
   return (
     <LowFxContext.Provider value={lowFx}>
-      <div className={styles.tv} data-lowfx={lowFx}>
-        <Marquee mode={marqueeMode(liveView, lowFx)}>
+      <div className={styles.tv} data-lowfx={lowFx} data-fx={fxMode}>
+        <Marquee mode={marqueeMode(liveView, fxMode !== 'full')}>
           {screen.kind === 'start' && <StartScreen onStart={createRoom} disabled={creating || !connected} />}
-          {screen.kind === 'live' && screen.view && <TvStage view={screen.view} />}
+          {screen.kind === 'live' &&
+            screen.view &&
+            (lowFx ? (
+              <TvStage view={screen.view} />
+            ) : (
+              <Studio view={screen.view} lite={fxMode === 'lite'} onTooSlow={onTooSlow} />
+            ))}
           {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
             <p className={styles.center}>{t.connecting}</p>
           )}
@@ -157,8 +173,8 @@ export function TvApp() {
 }
 
 /** Bulbs chase faster while the clock runs and flash at the reveal. */
-function marqueeMode(view: HostView | null, lowFx: boolean): MarqueeMode {
-  if (lowFx) return 'still';
+function marqueeMode(view: HostView | null, still: boolean): MarqueeMode {
+  if (still) return 'still';
   switch (view?.stage.phase) {
     case 'question_open':
       return 'fast';
