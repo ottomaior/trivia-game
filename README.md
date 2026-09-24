@@ -38,15 +38,15 @@ pnpm build && pnpm e2e                      # Playwright; CHROMIUM_PATH=/path/to
 
 After changing `apps/server/src/db/schema.ts`, run `pnpm db:generate` and commit the new file in `apps/server/drizzle/`. Railway applies it on the next deploy.
 
-## Sound and motion
+## Studio, sound and voice
 
-The TV plays music and sound effects; phones stay silent (they vibrate instead). Everything is synthesized in the browser with the Web Audio API, in `apps/web/src/audio/`, so there are no audio files to manage.
+The TV is a 2.5D TV studio: a CSS 3D set (`apps/web/src/stage/`) with a GSAP camera that cuts between shots per phase (`director.ts`), a PixiJS canvas for spotlights and particles (`fx.ts`), contestant desks and Otto as a posed cutout rig. Phones stay simple and silent (they vibrate instead).
 
+- **Effects modes:** `full` (everything), `lite` (the studio and camera, no particle canvas or ambient animation) and `flat` (the plain screens, no motion). The TV measures its frame rate for 3 seconds and steps down (full → lite → flat) if it drops under 40 fps; the result is remembered. Force a mode with `/tv?fx=full|lite|flat` (also remembered); the old `?lowfx=1` means flat. The OS "reduce motion" setting also starts flat.
 - **Mute:** press **M** on the TV, or click the speaker button in the top-right corner. The choice is remembered.
-- **Levels:** music, effects and ducking levels are in the `LEVELS` table in `apps/web/src/audio/engine.ts`.
-- **Replacing a sound with a recording:** put the file in `apps/web/public/audio/` and list it in `manifest.json` there (see the README in that folder). Missing entries keep the synthesized sound.
-- **Low-motion mode** for slow smart-TV browsers: open `/tv?lowfx=1` once (remembered; `?lowfx=0` turns it off). It stops all animation and confetti; the OS "reduce motion" setting does the same.
-- **Hearing the sounds without a game:** `pnpm build && pnpm e2e` includes `e2e/sound.spec.ts`, which renders every sound offline through `/tv?audiotest` and checks it is audible and doesn't clip.
+- **Recorded sounds:** every cue has a synthesized fallback, and recordings replace them. The shopping list, naming rules and the `pnpm audio:prepare` workflow are in `apps/web/public/audio/README.md`. Levels and ducking are in the `LEVELS` table in `apps/web/src/audio/engine.ts`.
+- **Otto's voice:** recorded once with Azure's Hungarian neural voice by `pnpm voice:generate` into `apps/web/public/voice/` (steps in the README there). Without the files Otto is text-only. Voiced lines contain no names or numbers; the TV shows whom a line is about with name chips and a spotlight.
+- **Hearing the sounds without a game:** `pnpm build && pnpm e2e` includes `e2e/sound.spec.ts`, which renders every synthesized sound offline through `/tv?audiotest` and checks it is audible and doesn't clip.
 
 ## Questions
 

@@ -91,7 +91,7 @@ LOBBY ────────────────────────�
   │                              │    QUESTION_OPEN (20s | all answered)
   │                              │          │  (later: Freeze/Slime obstacles resolved on phone)
   │                              │          ▼
-  │                              │    REVEAL (~6s staged: correct → who picked what → points)
+  │                              │    REVEAL (7s staged: drumroll → correct → who picked what → points)
   │                              │          ▼
   │                              └── SCOREBOARD (4s)  [round < 10]
   │                                         │ round == 10
@@ -234,6 +234,13 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 - Content: `pg_trgm` dedupe, Message Batches bulk generation, `flagged.ts` re-verification, difficulty recalibration from `times_correct/times_shown`, and a `flagged.ts` option to re-verify flagged questions with Claude.
 - Smart-TV pass: `@vitejs/plugin-legacy` for the `/tv` route, a reduced-motion or low-end mode, and a test on your TV's browser.
 - ✅ **Milestone:** a game with full audio and animation, and a question bank of at least 1,500. The flagged-question workflow gets used once for real.
+
+### Phase 2.5 — Studio upgrade (vertical slice built, in review)
+- ✅ 2.5D studio: CSS 3D set, GSAP camera director, PixiJS light and particle layer, FPS guard with `full | lite | flat` modes (`?fx=`).
+- ✅ Staging: slot-machine category pick (new 1.6s `vote_result` phase), round title card, word-by-word prompt, split-flap clock, reveal with dropping tiles, sparks, points flying to the desks, desks re-sorting with a crown.
+- ✅ Otto as a posed cutout rig with lip sync; name- and number-free lines so they can be voiced (`pnpm voice:generate`, Azure `hu-HU-TamasNeural`).
+- ✅ Audio engine with buses, random variants of recorded sounds, studio audience reactions; `pnpm audio:prepare` and a sound shopping list.
+- Next: record the sounds and voice, owner review, then roll the studio out to the lobby, intro and final (3D podium) and polish the phones.
 
 ### Phase 3 — Power Plays
 - One power play per player, granted every N rounds. The player picks it **during the category vote**, on the same screen, so no extra phase is added.

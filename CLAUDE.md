@@ -7,6 +7,9 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 - `pnpm dev` runs the server on :3000 and Vite on :5173 (TV at http://localhost:5173/tv).
 - `pnpm typecheck`, `pnpm test`, `pnpm build && pnpm e2e`
 - `pnpm questions:check` validates the question file.
+- `pnpm audio:prepare` (needs ffmpeg) turns sounds in `audio-src/` into `apps/web/public/audio/`; `pnpm voice:generate` records Otto's lines (needs `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION` in the owner's shell; never ask for the key). Both READMEs are in those folders.
+- The TV has three effects modes, forced with `/tv?fx=full|lite|flat`. E2E defaults to `lite` because headless Chromium has no GPU.
+- Otto's lines (`packages/shared/src/strings.ts`) must stay free of names and numbers, because they are pre-recorded; after editing them, the voice needs regenerating.
 - Schema change: edit `apps/server/src/db/schema.ts`, run `pnpm db:generate`, and commit the new migration. Railway applies it on deploy.
 
 ## Production
