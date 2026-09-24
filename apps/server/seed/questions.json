@@ -3498,5 +3498,1085 @@
       "Whiskers"
     ],
     "explanation": "Morcos arcát törpenövés és előreugró alsó állkapocs okozta."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan fejeződik be a közmondás: „Addig üsd a vasat, amíg…”?",
+    "answer": "meleg",
+    "wrong": [
+      "puha",
+      "fényes",
+      "piros"
+    ],
+    "explanation": "Vagyis ragadd meg a kínálkozó alkalmat, amíg nem késő – a kovács is a forró vasat formálja."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan folytatódik a közmondás: „Nem zörög a haraszt, ha…”?",
+    "answer": "nem fújja a szél",
+    "wrong": [
+      "nem lépnek rá",
+      "nem jár arra senki",
+      "nem esik rá eső"
+    ],
+    "explanation": "A haraszt a lehullott száraz lomb; a mondás szerint a szóbeszédnek mindig van valami alapja."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan folytatódik a mondás: „Kutya ugat, …”?",
+    "answer": "a karaván halad",
+    "wrong": [
+      "a gazda alszik",
+      "a macska dorombol",
+      "a szamár hallgat"
+    ],
+    "explanation": "Vagyis aki a dolgát végzi, ne törődjön a rosszindulatú fecsegéssel."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan fejeződik be a közmondás: „Jobb ma egy veréb, mint holnap egy…”?",
+    "answer": "túzok",
+    "wrong": [
+      "fácán",
+      "páva",
+      "galamb"
+    ],
+    "explanation": "Az angolok úgy mondják: jobb egy madár a kézben, mint kettő a bokorban."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan folytatódik a nyelvtörő: „Mit sütsz, kis…”?",
+    "answer": "szűcs",
+    "wrong": [
+      "szakács",
+      "csősz",
+      "szomszéd"
+    ],
+    "explanation": "A szűcs szőrméből bundát és kucsmát készítő mesterember, a nyelvtörőben mégis sós húst süt."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Mit jelent a latin „carpe diem” mondás?",
+    "answer": "Élj a mának!",
+    "wrong": [
+      "Emlékezz a halálra!",
+      "Ismerd meg önmagad!",
+      "Mindent mértékkel!"
+    ],
+    "explanation": "Horatius egyik ódájából származik, szó szerint azt jelenti: „szakítsd le a napot”."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Melyik szlengszóval mondjuk, hogy valami nagyon jó?",
+    "answer": "király",
+    "wrong": [
+      "gáz",
+      "ciki",
+      "uncsi"
+    ],
+    "explanation": "A „gáz” épp az ellentéte: azt jelenti, hogy valami kínos vagy rossz."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Mit jelent a szlengben a „csá”?",
+    "answer": "Szia",
+    "wrong": [
+      "Köszi",
+      "Bocsi",
+      "Oké"
+    ],
+    "explanation": "Érkezéskor és búcsúzáskor egyaránt mondhatjuk, akárcsak a sziát."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hogyan írjuk helyesen: „… még nem tudok többet mondani”?",
+    "answer": "Egyelőre",
+    "wrong": [
+      "Egyenlőre",
+      "Eggyelőre",
+      "Egyellőre"
+    ],
+    "explanation": "Az „egyenlőre” is létező szó, de azt jelenti: egyenlő méretűre, például egyenlőre vágta a deszkákat."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Melyik ország hivatalos nyelve rokona a magyarnak?",
+    "answer": "Észtország",
+    "wrong": [
+      "Lettország",
+      "Litvánia",
+      "Lengyelország"
+    ],
+    "explanation": "Az észt a finn közeli rokona, a lett és a litván viszont indoeurópai, balti nyelv."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Melyik magyar szó felel meg egyszerre az angol „he” és „she” névmásnak?",
+    "answer": "ő",
+    "wrong": [
+      "ön",
+      "maga",
+      "te"
+    ],
+    "explanation": "A magyarban nincs nyelvtani nem, így az „ő” férfira és nőre egyaránt vonatkozik."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Melyik madárról kapta a nevét az a hozzáállás, amikor valaki „homokba dugja a fejét” a gondok elől?",
+    "answer": "Strucc",
+    "wrong": [
+      "Pingvin",
+      "Flamingó",
+      "Emu"
+    ],
+    "explanation": "A struccpolitika névadója a valóságban nem dugja homokba a fejét, ez csak tévhit."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Hányadik mennyországban érzi magát a szólás szerint, aki nagyon boldog?",
+    "answer": "A hetedikben",
+    "wrong": [
+      "A harmadikban",
+      "A kilencedikben",
+      "A tizedikben"
+    ],
+    "explanation": "Az angol ezt felhővel mondja: a boldog ember „on cloud nine”, vagyis a kilences felhőn van."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Melyik állatból üt kettőt egy csapásra, aki egyszerre két dolgot is elintéz?",
+    "answer": "Légyből",
+    "wrong": [
+      "Szúnyogból",
+      "Darázsból",
+      "Bolhából"
+    ],
+    "explanation": "Az angol ugyanezt két madárral és egy kővel mondja: „kill two birds with one stone”."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 1,
+    "prompt": "Mit jelent az angol „It’s raining cats and dogs” kifejezés?",
+    "answer": "Zuhog az eső",
+    "wrong": [
+      "Nagyon hideg van",
+      "Nagy a felfordulás",
+      "Mindenki veszekszik"
+    ],
+    "explanation": "Magyarul azt mondanánk rá: úgy esik, mintha dézsából öntenék."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik magyar falu nevéből ered az angol „coach” szó?",
+    "answer": "Kocs",
+    "wrong": [
+      "Kakucs",
+      "Kóka",
+      "Mány"
+    ],
+    "explanation": "Az itt készült könnyű szekér, a kocsi neve terjedt el Európában; az angol „coach” később az edzőt is jelentette."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Mit jelent a latin „servus” szó, amelyből a „szervusz” köszönés ered?",
+    "answer": "Szolga",
+    "wrong": [
+      "Barát",
+      "Úr",
+      "Vendég"
+    ],
+    "explanation": "A köszönés eredetileg udvarias önajánlás volt, nagyjából annyi: „alázatos szolgája”."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik nyelvből került a magyarba a „kávé” szó?",
+    "answer": "Törökből",
+    "wrong": [
+      "Olaszból",
+      "Németből",
+      "Franciából"
+    ],
+    "explanation": "A török kahve szót a hódoltság idején vettük át, a törökök pedig az arabból kölcsönözték."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik nyelvből kerültek a magyarba a szerda, a csütörtök és a péntek napnevek?",
+    "answer": "Szlávból",
+    "wrong": [
+      "Latinból",
+      "Németből",
+      "Ótörökből"
+    ],
+    "explanation": "A szerda eredetileg „közepet” jelent, a csütörtök „negyediket”, a péntek „ötödiket”."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Mit jelentett eredetileg a „gulyás” szó, mielőtt ételnév lett belőle?",
+    "answer": "Marhapásztort",
+    "wrong": [
+      "Juhpásztort",
+      "Disznópásztort",
+      "Lópásztort"
+    ],
+    "explanation": "A gulya szarvasmarha-csordát jelent; a pásztorok bográcsban főtt húsételét nevezték el róluk."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik magyar közmondás felel meg az angol „Don’t count your chickens before they hatch” mondásnak?",
+    "answer": "Ne igyál előre a medve bőrére",
+    "wrong": [
+      "Ki korán kel, aranyat lel",
+      "Ki mint vet, úgy arat",
+      "Lassan járj, tovább érsz"
+    ],
+    "explanation": "Az angol változat szó szerint: ne számold a csibéidet, mielőtt kikelnek."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Hol élt Marci, akihez a szólás a gondtalanul, jómódban élő embert hasonlítja?",
+    "answer": "Hevesen",
+    "wrong": [
+      "Egerben",
+      "Gyöngyösön",
+      "Tokajban"
+    ],
+    "explanation": "Hogy ki volt Marci, nem tudni biztosan; a legismertebb magyarázat szerint Zöld Marci betyár."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik évszámból nem enged a szólás szerint az, aki semmiben sem hajlandó engedni?",
+    "answer": "A negyvennyolcból",
+    "wrong": [
+      "A hatvanhétből",
+      "Az ötvenhatból",
+      "A negyvenkilencből"
+    ],
+    "explanation": "A szólás az 1848-as forradalom és szabadságharc eszméire utal."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Mit jelent a „kutyaharapást szőrével” mondás?",
+    "answer": "A bajt azzal kell orvosolni, ami okozta",
+    "wrong": [
+      "A rosszat rosszal kell viszonozni",
+      "A kis bajjal nem kell törődni",
+      "A sérelmet gyorsan el kell felejteni"
+    ],
+    "explanation": "Tréfásan a másnaposság „gyógymódjára”, vagyis egy újabb pohár italra is mondják."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Hogy nevezzük az olyan szót vagy mondatot, amely visszafelé olvasva is ugyanaz, mint a „Géza, kék az ég”?",
+    "answer": "Palindrom",
+    "wrong": [
+      "Anagramma",
+      "Akrosztichon",
+      "Homonima"
+    ],
+    "explanation": "Egy másik híres magyar palindrom: „Indul a görög aludni.”"
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Milyen irányban írták hagyományosan a székely rovásírást?",
+    "answer": "Jobbról balra",
+    "wrong": [
+      "Balról jobbra",
+      "Fentről lefelé",
+      "Lentről felfelé"
+    ],
+    "explanation": "A jeleket eredetileg fába rótták, innen kapta a nevét a rovásírás."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Mit jelent szó szerint a japán „karaoke” szó?",
+    "answer": "Üres zenekar",
+    "wrong": [
+      "Éneklő barátok",
+      "Boldog hang",
+      "Esti dal"
+    ],
+    "explanation": "A kara üreset jelent, az oke pedig az orchestra, vagyis zenekar szó japános rövidítése."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Melyik nyelvet alkotta meg J. R. R. Tolkien a tündék számára?",
+    "answer": "Quenya",
+    "wrong": [
+      "Dothraki",
+      "Klingon",
+      "Na’vi"
+    ],
+    "explanation": "Tolkien nyelvész professzor volt, és a quenyához a finn nyelv adta az egyik fő ihletet."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Hogyan kukorékol a kakas angolul?",
+    "answer": "Cock-a-doodle-doo",
+    "wrong": [
+      "Kikeriki",
+      "Cocorico",
+      "Kukurikú"
+    ],
+    "explanation": "Németül kikeriki, franciául cocorico: minden nyelv kicsit másképp hallja a kakast."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 2,
+    "prompt": "Ki volt a 18–19. század fordulóján zajló magyar nyelvújítás vezéralakja?",
+    "answer": "Kazinczy Ferenc",
+    "wrong": [
+      "Kölcsey Ferenc",
+      "Vörösmarty Mihály",
+      "Széchenyi István"
+    ],
+    "explanation": "Kazinczy Széphalmon élt, ma ott működik a Magyar Nyelv Múzeuma."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik uralkodó nevéből ered végső soron a „király” szavunk?",
+    "answer": "Nagy Károly",
+    "wrong": [
+      "Julius Caesar",
+      "Nagy Sándor",
+      "Attila"
+    ],
+    "explanation": "A frank uralkodó Karl nevéből lett a szláv kral, abból a mi királyunk – ahogy a császár a Caesar névből."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "A „keksz” szó német közvetítéssel került hozzánk. Melyik angol szó a végső forrása?",
+    "answer": "cakes",
+    "wrong": [
+      "cookies",
+      "crackers",
+      "biscuits"
+    ],
+    "explanation": "A németek az angol cakes (sütemények) szóból alkották a Keks szót, tőlük vettük át."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik szomszédunk nyelvéből vettük át a „palacsinta” szót?",
+    "answer": "A románból",
+    "wrong": [
+      "A szlovákból",
+      "A szerbből",
+      "A németből"
+    ],
+    "explanation": "A román plăcintă a latin placenta, vagyis lepény szóból ered."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik nyelvből származik a bizalmas „haver” szavunk?",
+    "answer": "A jiddisből",
+    "wrong": [
+      "A latinból",
+      "Az angolból",
+      "Az olaszból"
+    ],
+    "explanation": "A jiddis chaver társat, barátot jelent, és végső soron a héberből ered."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a nemzetközi tipográfiában az ő és az ű betű jellegzetes kettős ékezetét?",
+    "answer": "Hungarumlaut",
+    "wrong": [
+      "Umlaut",
+      "Trema",
+      "Cirkumflex"
+    ],
+    "explanation": "A név a Hungarian (magyar) és az umlaut szó összevonásából született."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik napon ünnepeljük 2011 óta a magyar nyelv napját?",
+    "answer": "November 13.",
+    "wrong": [
+      "Január 22.",
+      "Április 11.",
+      "Február 21."
+    ],
+    "explanation": "1844-ben ezen a napon fogadták el a törvényt, amely a magyart államnyelvvé tette."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik ókori király nevéhez kötjük a túl nagy áldozatok árán kivívott, vereséggel felérő győzelmet?",
+    "answer": "Pürrhosz",
+    "wrong": [
+      "Leonidasz",
+      "Xerxész",
+      "Dareiosz"
+    ],
+    "explanation": "Plutarkhosz szerint a rómaiak elleni győzelme után azt mondta: még egy ilyen győzelem, és elvesztünk."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Min keres csomót a szólás szerint az, aki ott is hibát talál, ahol nincs?",
+    "answer": "A kákán",
+    "wrong": [
+      "A nádon",
+      "A sáson",
+      "A gyékényen"
+    ],
+    "explanation": "A káka sima szárú, vízparti növény, amelyen valóban nincs csomó – a nád szárán viszont van."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Ki alkotta meg az eszperantó nyelvet a 19. század végén?",
+    "answer": "Ludwik Zamenhof",
+    "wrong": [
+      "Johann Schleyer",
+      "Noam Chomsky",
+      "Otto Jespersen"
+    ],
+    "explanation": "Első tankönyvét 1887-ben Doktoro Esperanto álnéven adta ki, ami annyit tesz: remélő doktor."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik helyesírási alapelv miatt írjuk a Széchenyi és a Kossuth nevet a régi módon, y-nal és th-val?",
+    "answer": "A hagyomány elve",
+    "wrong": [
+      "A kiejtés elve",
+      "A szóelemzés elve",
+      "Az egyszerűsítés elve"
+    ],
+    "explanation": "A magyar helyesírás négy alapelve a kiejtés, a szóelemzés, a hagyomány és az egyszerűsítés elve."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik nyelvemlékünkben olvasható a „Feheruuaru rea meneh hodu utu rea” szövegrész?",
+    "answer": "A tihanyi apátság alapítólevelében",
+    "wrong": [
+      "A Halotti beszédben",
+      "Az Ómagyar Mária-siralomban",
+      "A Königsbergi töredékben"
+    ],
+    "explanation": "Az 1055-ös latin nyelvű oklevél magyar szavai azt jelentik: „Fehérvárra menő hadi útra”."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik író színművéből terjedt el világszerte a „robot” szó?",
+    "answer": "Karel Čapek",
+    "wrong": [
+      "Isaac Asimov",
+      "H. G. Wells",
+      "Jules Verne"
+    ],
+    "explanation": "Az 1920-as R.U.R. szavát Čapek bátyja, Josef javasolta a cseh robota, azaz kényszermunka szóból."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a koreai nyelv saját ábécéjét?",
+    "answer": "Hangul",
+    "wrong": [
+      "Hiragana",
+      "Kandzsi",
+      "Pinjin"
+    ],
+    "explanation": "Szedzsong király idején, a 15. században hozták létre, hogy az egyszerű emberek is könnyen megtanulhassanak írni."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "Melyik európai nyelvnek nincs egyetlen ismert nyelvrokona sem?",
+    "answer": "Baszk",
+    "wrong": [
+      "Walesi",
+      "Breton",
+      "Izlandi"
+    ],
+    "explanation": "Spanyolország és Franciaország határvidékén beszélik, saját nevén euskara."
+  },
+  {
+    "category": "nyelv",
+    "difficulty": 3,
+    "prompt": "A német, a francia és az olasz mellett melyik Svájc negyedik nemzeti nyelve?",
+    "answer": "Rétoromán",
+    "wrong": [
+      "Katalán",
+      "Okcitán",
+      "Luxemburgi"
+    ],
+    "explanation": "Főleg Graubünden kantonban beszélik, és a latin nyelv egyik leszármazottja."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Ki Eger várkapitánya az Egri csillagokban, amikor a török ostrom alá veszi a várat?",
+    "answer": "Dobó István",
+    "wrong": [
+      "Zrínyi Miklós",
+      "Szondi György",
+      "Losonczy István"
+    ],
+    "explanation": "Gárdonyi Géza is az egri várban nyugszik, a sírján ez áll: „Csak a teste.”"
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik évben ostromolja a török Eger várát az Egri csillagokban?",
+    "answer": "1552",
+    "wrong": [
+      "1526",
+      "1541",
+      "1566"
+    ],
+    "explanation": "A törököknek végül csak 1596-ban sikerült elfoglalniuk Eger várát."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "A Pál utcai fiúk seregében mindenki tiszt, egyvalakit kivéve. Ki a csapat egyetlen közlegénye?",
+    "answer": "Nemecsek",
+    "wrong": [
+      "Csónakos",
+      "Weisz",
+      "Richter"
+    ],
+    "explanation": "Rajta kívül a csapatban mindenki tiszti rangot viselt."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik Pál utcai fiú áll át árulóként a vörösingesekhez?",
+    "answer": "Geréb",
+    "wrong": [
+      "Csele",
+      "Kolnay",
+      "Barabás"
+    ],
+    "explanation": "Molnár Ferenc regénye először 1906-ban jelent meg, folytatásokban."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik város kollégiumában tanul Nyilas Misi a Légy jó mindhalálig című regényben?",
+    "answer": "Debrecen",
+    "wrong": [
+      "Sárospatak",
+      "Pápa",
+      "Kecskemét"
+    ],
+    "explanation": "Móricz Zsigmond maga is a debreceni Református Kollégium diákja volt."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Milyen nemzetiségű vitézt győz le párviadalban Toldi Miklós Arany János Toldi című művének végén?",
+    "answer": "Cseh",
+    "wrong": [
+      "Török",
+      "Német",
+      "Lengyel"
+    ],
+    "explanation": "A győzelem után Nagy Lajos király megbocsát Toldinak, és a vitézei közé fogadja."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Milyen állatokat őriz Kukorica Jancsi a János vitéz elején?",
+    "answer": "Juhokat",
+    "wrong": [
+      "Disznókat",
+      "Lovakat",
+      "Marhákat"
+    ],
+    "explanation": "Míg Iluskával enyeleg, elkószál a nyája, ezért a gazdája elkergeti."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Hol lesz király János vitéz a költemény végén?",
+    "answer": "Tündérországban",
+    "wrong": [
+      "Franciaországban",
+      "Sötétországban",
+      "Tatárországban"
+    ],
+    "explanation": "Iluska is életre kel, amikor Jancsi a sírjáról hozott rózsát a tündérországi tóba dobja."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Ki írta a Kincskereső kisködmönt?",
+    "answer": "Móra Ferenc",
+    "wrong": [
+      "Fekete István",
+      "Gárdonyi Géza",
+      "Benedek Elek"
+    ],
+    "explanation": "Móra Ferenc a szegedi múzeum igazgatója is volt, a múzeum ma az ő nevét viseli."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Ki írta az Abigélt?",
+    "answer": "Szabó Magda",
+    "wrong": [
+      "Kaffka Margit",
+      "Janikovszky Éva",
+      "Fehér Klára"
+    ],
+    "explanation": "A regényből 1978-ban nagy sikerű tévésorozat készült."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Ki írta a Szent Péter esernyőjét?",
+    "answer": "Mikszáth Kálmán",
+    "wrong": [
+      "Jókai Mór",
+      "Móricz Zsigmond",
+      "Gárdonyi Géza"
+    ],
+    "explanation": "Mikszáth Kálmánt a „nagy palóc” néven is emlegették."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik mű utolsó sora: „Mondottam, ember: küzdj és bízva bízzál!”?",
+    "answer": "Az ember tragédiája",
+    "wrong": [
+      "Csongor és Tünde",
+      "Bánk bán",
+      "Toldi estéje"
+    ],
+    "explanation": "Madách Imre művében ezt a mondatot az Úr intézi Ádámhoz."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Hány fia van Baradlay Kázmérnak, a kőszívű embernek?",
+    "answer": "Három",
+    "wrong": [
+      "Kettő",
+      "Négy",
+      "Öt"
+    ],
+    "explanation": "A három fiú Ödön, Richárd és Jenő."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik városban játszódik Shakespeare Rómeó és Júliája?",
+    "answer": "Verona",
+    "wrong": [
+      "Velence",
+      "Firenze",
+      "Padova"
+    ],
+    "explanation": "Veronában ma is látogatható „Júlia háza” a híres erkéllyel."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 1,
+    "prompt": "Melyik ország királyfia Hamlet?",
+    "answer": "Dánia",
+    "wrong": [
+      "Norvégia",
+      "Svédország",
+      "Skócia"
+    ],
+    "explanation": "A dráma a helsingőri királyi várban játszódik."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mit akar mindenáron visszaszerezni Jumurdzsák Bornemissza Gergelytől az Egri csillagokban?",
+    "answer": "A gyűrűjét",
+    "wrong": [
+      "A kardját",
+      "A pajzsát",
+      "A zászlaját"
+    ],
+    "explanation": "A talizmánként őrzött gyűrű még Gergely gyerekkorában került hozzá."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Hol van a vörösingesek főhadiszállása A Pál utcai fiúkban?",
+    "answer": "A Füvészkertben",
+    "wrong": [
+      "A Városligetben",
+      "A Múzeumkertben",
+      "A Népligetben"
+    ],
+    "explanation": "Az ELTE Füvészkertje ma is látogatható Budapest VIII. kerületében."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mit kiáltanak a Pásztor testvérek, mielőtt elszedik a Pál utcai fiúk golyóit?",
+    "answer": "Einstand!",
+    "wrong": [
+      "Achtung!",
+      "Kaputt!",
+      "Verboten!"
+    ],
+    "explanation": "A pesti diáknyelvben ez azt jelentette, hogy az erősebb elveszi a gyengébb játékát."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mivel mutatja meg Toldi Miklós a katonáknak a Budára vezető utat?",
+    "answer": "Egy rúddal",
+    "wrong": [
+      "Egy vasvillával",
+      "Egy kaszával",
+      "Egy ostorral"
+    ],
+    "explanation": "A katonák ámulva nézik, ahogy a nehéz rudat egyetlen kézzel tartja."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Melyik mű kezdődik így: „Ég a napmelegtől a kopár szík sarja”?",
+    "answer": "Toldi",
+    "wrong": [
+      "János vitéz",
+      "Buda halála",
+      "Az apostol"
+    ],
+    "explanation": "Petőfi Sándor e mű elolvasása után írt levelet Arany Jánosnak, így kezdődött a barátságuk."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Milyen lény hátán kel át János vitéz az Óperenciás-tengeren?",
+    "answer": "Egy griffmadár",
+    "wrong": [
+      "Egy sárkány",
+      "Egy táltos ló",
+      "Egy óriáshal"
+    ],
+    "explanation": "A griff a mondákban sasfejű, sasszárnyú és oroszlántestű lény."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Honnan kapta a nevét Kukorica Jancsi?",
+    "answer": "Kukoricásban találtak rá",
+    "wrong": [
+      "Így hívták a nevelőapját",
+      "Kukoricacsősz volt a faluban",
+      "Kukoricát árult a vásárban"
+    ],
+    "explanation": "Petőfi Sándor mindössze 21 évesen, 1844-ben írta a János vitézt."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Ki Jókai Mór Az arany ember című regényének főhőse?",
+    "answer": "Tímár Mihály",
+    "wrong": [
+      "Baradlay Richárd",
+      "Berend Iván",
+      "Kárpáthy Zoltán"
+    ],
+    "explanation": "Kettős életet él: Komáromban a felesége, Tímea, a Senki szigetén pedig Noémi várja."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Melyik Baradlay fiú vállalja a halált a bátyja helyett A kőszívű ember fiaiban?",
+    "answer": "Jenő",
+    "wrong": [
+      "Ödön",
+      "Richárd",
+      "Kázmér"
+    ],
+    "explanation": "A legfiatalabb Baradlay fiú áldozata menti meg Richárd életét."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mi a beceneve Ladó Gyulának, a Tüskevár főhősének?",
+    "answer": "Tutajos",
+    "wrong": [
+      "Bütyök",
+      "Csutak",
+      "Bogáncs"
+    ],
+    "explanation": "Barátja, Bütyök is vele tölti a nyarat az öreg Matula mellett."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Az Abigélben a lányok titkos kéréseikkel Abigélhez fordulnak. Mi Abigél?",
+    "answer": "Egy kerti szobor",
+    "wrong": [
+      "Egy öreg diófa",
+      "Egy régi festmény",
+      "A kápolna harangja"
+    ],
+    "explanation": "A szobornak hagyott üzenetekre egy titokzatos, valódi segítő válaszol."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Kit öl meg Bánk bán Katona József drámájában?",
+    "answer": "Gertrudis királynét",
+    "wrong": [
+      "Ottó herceget",
+      "Biberach lovagot",
+      "Petur bánt"
+    ],
+    "explanation": "A drámát csak évekkel a megírása után, 1833-ban mutatták be először, Kassán."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mi terem a csodafán a Csongor és Tünde első felvonásában?",
+    "answer": "Aranyalma",
+    "wrong": [
+      "Ezüstkörte",
+      "Aranydió",
+      "Gyémántszilva"
+    ],
+    "explanation": "Vörösmarty Mihály 1830-ban fejezte be a drámai mesét."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Mire kell a hét krajcár Móricz Zsigmond Hét krajcár című novellájában?",
+    "answer": "Szappanra",
+    "wrong": [
+      "Kenyérre",
+      "Petróleumra",
+      "Tejre"
+    ],
+    "explanation": "A hetedik krajcárt végül egy koldus adja nekik."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 2,
+    "prompt": "Kitől kapja Júlia a szert, amelytől halottnak látszik?",
+    "answer": "Lőrinc baráttól",
+    "wrong": [
+      "A dajkától",
+      "Paris gróftól",
+      "Capuletnétől"
+    ],
+    "explanation": "A barát levele nem ér el időben Rómeóhoz, ebből lesz a tragédia."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Büntetésből hogyan írja be a gittegylet Nemecsek nevét a jegyzőkönyvbe?",
+    "answer": "Csupa kisbetűvel",
+    "wrong": [
+      "Csupa nagybetűvel",
+      "Piros tintával",
+      "Ceruzával"
+    ],
+    "explanation": "A regény végén jóvátételként csupa nagybetűvel írják be a nevét."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a gabonaszállító hajót Az arany ember elején?",
+    "answer": "Szent Borbála",
+    "wrong": [
+      "Szent Mihály",
+      "Szent Anna",
+      "Szent Miklós"
+    ],
+    "explanation": "A regény az Al-Duna veszélyes szorosánál, a Vaskapunál kezdődik."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Mi a címe Fekete István Tüskevár-folytatásának?",
+    "answer": "Téli berek",
+    "wrong": [
+      "Őszi nádas",
+      "Tavaszi határ",
+      "Nyári zápor"
+    ],
+    "explanation": "A folytatás télen játszódik, ismét az öreg Matula birodalmában."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Kinek olvas fel rendszeresen újságot Nyilas Misi a Légy jó mindhalálig című regényben?",
+    "answer": "Pósalaky úrnak",
+    "wrong": [
+      "Szentkirályi úrnak",
+      "Bányai úrnak",
+      "Kerekes úrnak"
+    ],
+    "explanation": "Móricz Zsigmond regénye 1920-ban jelent meg."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják az Abigélben a leánynevelő intézetet, ahová Vitay Georginát az apja küldi?",
+    "answer": "Matula",
+    "wrong": [
+      "Bethlen",
+      "Rákóczi",
+      "Szent Klára"
+    ],
+    "explanation": "A név a Tüskevár olvasóinak is ismerős: ott az öreg réti embert hívják így."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Az ember tragédiája prágai színében melyik tudós alakját ölti magára Ádám?",
+    "answer": "Kepler",
+    "wrong": [
+      "Galilei",
+      "Kopernikusz",
+      "Tycho Brahe"
+    ],
+    "explanation": "Éva ebben a színben Borbála, Kepler felesége."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a Bánk bánban a parasztot, aki a nép nyomoráról panaszkodik Bánknak?",
+    "answer": "Tiborc",
+    "wrong": [
+      "Biberach",
+      "Petur",
+      "Mikhál"
+    ],
+    "explanation": "A „Tiborc panasza” néven ismert jelenet a dráma egyik leghíresebb része."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "A Csongor és Tündében a hármas úton a Kalmár és a Fejedelem mellett ki a harmadik vándor?",
+    "answer": "A Tudós",
+    "wrong": [
+      "A Pap",
+      "A Költő",
+      "A Hadvezér"
+    ],
+    "explanation": "A három vándor a gazdagságot, a hatalmat és a tudást jelképezi."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Melyik falu plébánosa Bélyi János a Szent Péter esernyőjében?",
+    "answer": "Glogova",
+    "wrong": [
+      "Szklabonya",
+      "Garamszeg",
+      "Bodok"
+    ],
+    "explanation": "A falu népe azt hiszi, hogy a pap kishúgát maga Szent Péter védte meg az esernyővel az esőtől."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Kinek a menekülésével kezdődik Kosztolányi Dezső Édes Anna című regénye?",
+    "answer": "Kun Béla",
+    "wrong": [
+      "Károlyi Mihály",
+      "Tisza István",
+      "IV. Károly"
+    ],
+    "explanation": "A történet így 1919 nyarán, a Tanácsköztársaság bukásakor indul."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Kosztolányi a Pacsirta városát, Sárszeget a szülővárosáról mintázta. Melyik ez a város?",
+    "answer": "Szabadka",
+    "wrong": [
+      "Zombor",
+      "Újvidék",
+      "Szeged"
+    ],
+    "explanation": "A regény arról az egy hétről szól, amíg Pacsirta rokonoknál vendégeskedik."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Melyik városban áll a katonai alreáliskola Ottlik Géza Iskola a határon című regényében?",
+    "answer": "Kőszeg",
+    "wrong": [
+      "Szombathely",
+      "Győr",
+      "Pécs"
+    ],
+    "explanation": "Ottlik Géza maga is a kőszegi katonai alreáliskolába járt."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Kinek a fordításában hangzik így Hamlet monológja: „Lenni vagy nem lenni: az itt a kérdés”?",
+    "answer": "Arany János",
+    "wrong": [
+      "Petőfi Sándor",
+      "Vörösmarty Mihály",
+      "Kosztolányi Dezső"
+    ],
+    "explanation": "Petőfi a Coriolanust, Vörösmarty a Lear királyt fordította le."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Melyik fivérét temeti el Antigoné Kreón király tilalma ellenére?",
+    "answer": "Polüneikészt",
+    "wrong": [
+      "Eteoklészt",
+      "Haimónt",
+      "Menoikeuszt"
+    ],
+    "explanation": "A két fivér, Polüneikész és Eteoklész egymással harcolva esett el."
+  },
+  {
+    "category": "kotelezok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják Odüsszeusz kutyáját, amely húsz év után is felismeri a gazdáját?",
+    "answer": "Argosz",
+    "wrong": [
+      "Kerberosz",
+      "Lailapsz",
+      "Melampusz"
+    ],
+    "explanation": "Az öreg kutya felismeri koldusnak álcázott gazdáját, majd nem sokkal később elpusztul."
   }
 ]
