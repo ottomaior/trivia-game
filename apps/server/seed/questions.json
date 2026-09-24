@@ -13938,5 +13938,545 @@
       "Radics Gigi"
     ],
     "explanation": "Első, a zenekar nevét viselő albumuk 2016-ban jelent meg."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Milyen alakú volt a Tamagotchi, a kilencvenes évek végén hódító, zsebben hordható virtuális kisállat?",
+    "answer": "Tojás alakú",
+    "wrong": [
+      "Szív alakú",
+      "Csillag alakú",
+      "Négyzet alakú"
+    ],
+    "explanation": "A név a japán „tamago”, azaz tojás szóból ered; a kütyüt a Bandai dobta piacra 1996-ban."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Milyen játék volt a 2000-es évek elején az iskolaudvarokat is meghódító Beyblade?",
+    "answer": "Pörgettyű",
+    "wrong": [
+      "Jojó",
+      "Gyűjthető kártya",
+      "Távirányítós autó"
+    ],
+    "explanation": "A csatázó pörgettyűket a japán Takara fejlesztette ki, és a hozzájuk készült anime tette őket világszerte népszerűvé."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Milyen színű a Kinder Meglepetés csokitojás belsejében lapuló, a játékot rejtő műanyag kapszula?",
+    "answer": "Sárga",
+    "wrong": [
+      "Piros",
+      "Fehér",
+      "Kék"
+    ],
+    "explanation": "A csokitojást az olasz Ferrero 1974-ben dobta piacra."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hol bukkantak rá a gyerekek a kilencvenes évek végén a gyűjthető, csatázásra is használt Tazo-korongokra?",
+    "answer": "Chipseszacskókban",
+    "wrong": [
+      "Rágógumi-csomagolásban",
+      "Csokitojásokban",
+      "Üdítősüvegek kupakjában"
+    ],
+    "explanation": "A korongokon többek között Looney Tunes- és Pokémon-figurák szerepeltek, és egymásra dobálva lehetett csatázni velük."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Melyik tévécsatorna saját gyártású rajzfilmje volt a Pindúr pandúrok, a Dexter laboratóriuma és a Johnny Bravo?",
+    "answer": "Cartoon Network",
+    "wrong": [
+      "Nickelodeon",
+      "Disney Channel",
+      "Fox Kids"
+    ],
+    "explanation": "A csatorna ezeket a saját sorozatait a kilencvenes években Cartoon Cartoons néven reklámozta."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hány feje van Süsünek, a bábfilmsorozat jólelkű sárkányának?",
+    "answer": "1",
+    "wrong": [
+      "2",
+      "3",
+      "7"
+    ],
+    "explanation": "A történetet Csukás István írta, Süsü hangja pedig Bodrogi Gyula volt."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hogy hívják magyarul a Hupikék törpikék gonosz varázslóját, aki mindenáron el akarja kapni a törpöket?",
+    "answer": "Hókuszpók",
+    "wrong": [
+      "Sziamiau",
+      "Törpapa",
+      "Okoska"
+    ],
+    "explanation": "A törpöket a belga Peyo rajzolta meg 1958-ban, a varázsló eredeti neve Gargamel."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hogy hívják magyarul Donald kacsa három unokaöccsét a Kacsamesékben?",
+    "answer": "Tiki, Niki és Viki",
+    "wrong": [
+      "Csip, Csap és Csup",
+      "Pif, Paf és Puf",
+      "Huba, Hugó és Hubert"
+    ],
+    "explanation": "Eredetiben Huey, Dewey és Louie a nevük, és a sorozatban Dagobert bácsinál laknak."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Kikről kapták a nevüket a Tini Nindzsa Teknőcök?",
+    "answer": "Reneszánsz művészekről",
+    "wrong": [
+      "Római császárokról",
+      "Görög filozófusokról",
+      "Olasz zeneszerzőkről"
+    ],
+    "explanation": "Leonardo, Raphael, Donatello és Michelangelo New York csatornáiban él, kedvenc ételük pedig a pizza."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Melyik mesehős jelmondata eredetiben: „Can we fix it? Yes, we can!”?",
+    "answer": "Bob, a mester",
+    "wrong": [
+      "Postás Pat",
+      "Sam, a tűzoltó",
+      "Thomas, a gőzmozdony"
+    ],
+    "explanation": "A sorozat főcímdala 2000 karácsonyán a brit slágerlista élére ugrott."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Mi látható a Teletubbyk hasán?",
+    "answer": "Egy tévéképernyő",
+    "wrong": [
+      "Egy nagy szív",
+      "Egy mosolygó nap",
+      "Egy színes csillag"
+    ],
+    "explanation": "A négy tubbi Tinky Winky, Dipsy, Laa-Laa és Po; a sorozat 1997-ben indult a BBC-n."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a kockás füzetben játszott játékot, amelyben az nyer, aki előbb rak ki öt jelet egy sorba?",
+    "answer": "Amőba",
+    "wrong": [
+      "Torpedó",
+      "Akasztófa",
+      "Malom"
+    ],
+    "explanation": "Közeli rokona a japán gomoku, amelyben szintén öt követ kell egy vonalba rakni."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Mi a magyar neve a német Mensch ärgere Dich nicht („Ember, ne bosszankodj!”) társasjátéknak?",
+    "answer": "Ki nevet a végén?",
+    "wrong": [
+      "Gazdálkodj okosan!",
+      "Fekete Péter",
+      "Dáma"
+    ],
+    "explanation": "A játék az indiai pacsiszi leszármazottja, akárcsak az angol Ludo."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Hogy hívták az osztályban a soros diákot, aki letörölte a táblát, és óra elején jelentette a tanárnak a hiányzókat?",
+    "answer": "Hetes",
+    "wrong": [
+      "Osztálybizalmi",
+      "Osztálytitkár",
+      "Faliújság-felelős"
+    ],
+    "explanation": "A nevét onnan kapta, hogy a szolgálat általában egy hétig tartott."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 1,
+    "prompt": "Milyen szóval írják be a magyar bizonyítványba a hármas osztályzatot?",
+    "answer": "Közepes",
+    "wrong": [
+      "Elégséges",
+      "Megfelelő",
+      "Jó"
+    ],
+    "explanation": "A teljes skála felülről lefelé: jeles, jó, közepes, elégséges és elégtelen."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a Pindúr pandúrok zseniális, de gonosz majom ellenfelét?",
+    "answer": "Mohó Jojó",
+    "wrong": [
+      "Mandark",
+      "Aku",
+      "Plankton"
+    ],
+    "explanation": "A kislányokat Utonium professzor alkotta meg cukorból, fűszerből, minden jóból és egy véletlenül beleömlött titokzatos vegyszerből."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Mire gyűjtik a pénzt átverős terveikkel Ed, Edd és Eddy a Cartoon Network sorozatában?",
+    "answer": "Cukigumira",
+    "wrong": [
+      "Képregényekre",
+      "Videojátékra",
+      "Fagylaltra"
+    ],
+    "explanation": "A sorozatban szinte soha nem látszanak a felnőttek, a történet csak a környékbeli gyerekek körül forog."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a karórára emlékeztető szerkezetet, amellyel Ben Tennyson különféle földönkívüliekké változik?",
+    "answer": "Omnitrix",
+    "wrong": [
+      "Transzmorfer",
+      "Galaktix",
+      "Alienátor"
+    ],
+    "explanation": "Ben tízévesen, egy nyári lakóautós kiránduláson talál rá, miután egy kapszula becsapódik mellette az erdőben."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Mi a magyar címe a Nickelodeon Rugrats című rajzfilmsorozatának, amelynek főhőse a kisbaba Tommy Pickles?",
+    "answer": "Fecsegő tipegők",
+    "wrong": [
+      "Pelenkás kalandorok",
+      "Totyogó bajkeverők",
+      "Cumisüveg-banda"
+    ],
+    "explanation": "A bátor Tommy pelenkájában mindig ott lapul egy csavarhúzó, amellyel a járókát is ki tudja nyitni."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a magyar szinkronban Scooby-Doo falánk gazdáját, akit eredetiben Shaggynek neveznek?",
+    "answer": "Bozont",
+    "wrong": [
+      "Borzas",
+      "Kócos",
+      "Loncsos"
+    ],
+    "explanation": "Valódi neve Norville Rogers, a Shaggy csak becenév, jelentése bozontos."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Mitől tudnak magasra pattogni a Gumimacik a Disney rajzfilmsorozatában?",
+    "answer": "A gumibogyószörptől",
+    "wrong": [
+      "Az áfonyaszörptől",
+      "A varázsmézes tejtől",
+      "A csipkebogyóteától"
+    ],
+    "explanation": "Ha ember iszik belőle, nem pattogni kezd, hanem rövid időre emberfeletti erőre tesz szert."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Milyen állat Bogyó, Bartos Erika Bogyó és Babóca meséinek egyik főhőse?",
+    "answer": "Csiga",
+    "wrong": [
+      "Katica",
+      "Méhecske",
+      "Hangya"
+    ],
+    "explanation": "Legjobb barátja Babóca, a katicalány, a könyvekből pedig rajzfilmsorozat is készült."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Mit jelöl a W.I.T.C.H. név öt betűje a lányok körében népszerű képregényben és magazinban?",
+    "answer": "Az öt főhős lány kezdőbetűit",
+    "wrong": [
+      "Öt varázsige kezdőbetűit",
+      "Egy boszorkányiskola nevét",
+      "Az öt titkos világ nevét"
+    ],
+    "explanation": "Will, Irma, Taranee, Cornelia és Hay Lin története 2001-ben indult Olaszországban."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Melyik babasorozat indult 2001-ben Cloe, Jade, Sasha és Yasmin figurájával?",
+    "answer": "Bratz",
+    "wrong": [
+      "Polly Pocket",
+      "My Scene",
+      "Monster High"
+    ],
+    "explanation": "A nagy fejű, divatos babák miatt a gyártó MGA évekig pereskedett a Barbie-t gyártó Mattellel."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Kiről nevezte el Ruth Handler, a Mattel társalapítója az 1959-ben bemutatott Barbie babát?",
+    "answer": "A lányáról",
+    "wrong": [
+      "Az édesanyjáról",
+      "A húgáról",
+      "A legjobb barátnőjéről"
+    ],
+    "explanation": "Lányát Barbarának hívták, Ken pedig Handler fiáról, Kennethről kapta a nevét."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Mit jelent a K betű a 2000-es évszámváltás számítógépes hibájának Y2K rövidítésében?",
+    "answer": "Ezer",
+    "wrong": [
+      "Kód",
+      "Krízis",
+      "Korszak"
+    ],
+    "explanation": "Az Y az év (year) rövidítése; a gond abból adódott, hogy sok program csak két számjeggyel tárolta az évet, így 2000-ből könnyen 1900 lehetett."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Ki fordította magyarra a Harry Potter-könyveket?",
+    "answer": "Tóth Tamás Boldizsár",
+    "wrong": [
+      "Göncz Árpád",
+      "Szobotka Tibor",
+      "Varró Dániel"
+    ],
+    "explanation": "Tőle származik többek között a Roxfort, a Mardekár és a Hugrabug név is."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Melyik évben jelent meg angolul a Harry Potter-sorozat hetedik, befejező kötete?",
+    "answer": "2007",
+    "wrong": [
+      "2005",
+      "2006",
+      "2008"
+    ],
+    "explanation": "A Harry Potter és a Halál ereklyéi július 21-én került a boltokba, sok helyen éjféli nyitással."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Milyen állat volt Diddl, akinek mintás levélpapírjait a 2000-es évek elején lázasan gyűjtötték és cserélgették a gyerekek?",
+    "answer": "Egér",
+    "wrong": [
+      "Nyúl",
+      "Mókus",
+      "Hörcsög"
+    ],
+    "explanation": "A figurát a német Thomas Goletz rajzolta meg 1990-ben; hatalmas lábai miatt ugróegérként emlegetik."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 2,
+    "prompt": "Melyik ország rajzfilmstúdiójában született a Kisvakond, a szinte szavak nélkül mesélő rajzfilmek hőse?",
+    "answer": "Csehszlovákia",
+    "wrong": [
+      "Lengyelország",
+      "Jugoszlávia",
+      "Szovjetunió"
+    ],
+    "explanation": "Zdeněk Miler első, 1957-es filmjében a Kisvakond nadrágot szeretne, ezért a többi állat segítségével lenből készít magának."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Melyik amerikai szervezet tiltotta ki 1999-ben a Furbyt az épületeiből, attól tartva, hogy a játék kifecsegheti a titkokat?",
+    "answer": "NSA",
+    "wrong": [
+      "CIA",
+      "FBI",
+      "NASA"
+    ],
+    "explanation": "A Furby valójában semmit sem tudott rögzíteni: a „tanulást” csak előre beprogramozott szavak fokozatos előhívása utánozta."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Hogy nevezik a LEGO Bionicle elemi erőkkel bíró hőseit, például a tűz urát, Tahut?",
+    "answer": "Toa",
+    "wrong": [
+      "Matoran",
+      "Makuta",
+      "Bohrok"
+    ],
+    "explanation": "A Bionicle név a „biological chronicle”, vagyis biológiai krónika kifejezésből született."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Mi a neve a Bravo magazin olvasói szavazással odaítélt díjának, amelyet arany, ezüst és bronz fokozatban adtak át?",
+    "answer": "Bravo Otto",
+    "wrong": [
+      "Bravo Oscar",
+      "Bravo Star",
+      "Bravo Stern"
+    ],
+    "explanation": "A tinimagazin 1956-ban indult Németországban, a díj névrokona pedig épp ennek a kvíznek a házigazdája."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Melyik rajzfilmsorozat alapja volt eredetileg egy Tamagotchihoz hasonló, zsebben hordható virtuális kisállatjáték?",
+    "answer": "Digimon",
+    "wrong": [
+      "Pokémon",
+      "Yu-Gi-Oh!",
+      "Beyblade"
+    ],
+    "explanation": "A Bandai 1997-ben dobta piacra a Digital Monster kütyüt, amolyan fiúknak szánt Tamagotchiként."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Melyik országban találták fel a figurás adagolókból kínált PEZ cukorkát?",
+    "answer": "Ausztria",
+    "wrong": [
+      "Németország",
+      "Svájc",
+      "Egyesült Államok"
+    ],
+    "explanation": "A név a német Pfefferminz, vagyis borsmenta szóból született: eredetileg felnőtteknek szánt mentacukor volt."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Hogy hívják Jimmy Neutron hűséges robotkutyáját?",
+    "answer": "Goddard",
+    "wrong": [
+      "Newton",
+      "Tesla",
+      "Edison"
+    ],
+    "explanation": "Nevét Robert Goddardról, az amerikai rakétatechnika úttörőjéről kapta."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Melyik ország stúdiója készítette a Totally Spies! című rajzfilmsorozatot Samről, Cloverről és Alexről?",
+    "answer": "Franciaország",
+    "wrong": [
+      "Japán",
+      "Olaszország",
+      "Belgium"
+    ],
+    "explanation": "A sorozat látványvilágát az animék ihlették, a lányok pedig a WOOHP nevű titkos szervezetnek dolgoznak."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a Mézga család 30. századi leszármazottját, aki a jövőből küld nekik különös tárgyakat?",
+    "answer": "MZ/X",
+    "wrong": [
+      "ZX/Q",
+      "KT/7",
+      "RG/2"
+    ],
+    "explanation": "MZ/X az első sorozatban, A Mézga család különös kalandjaiban tűnik fel."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Ki írta a Frédi és Béni, a két kőkorszaki szaki rímekben beszélő, legendás magyar szinkronszövegét?",
+    "answer": "Romhányi József",
+    "wrong": [
+      "Weöres Sándor",
+      "Tandori Dezső",
+      "Kormos István"
+    ],
+    "explanation": "Találó szójátékai miatt rímhányónak is becézték."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Melyik rajzfilmfigura mosott fogat és bújt ágyba a tévében az esti mese után, jelezve a gyerekeknek, hogy ideje aludni?",
+    "answer": "Tévé Maci",
+    "wrong": [
+      "Mazsola",
+      "Vackor",
+      "Dörmögő Dömötör"
+    ],
+    "explanation": "A kis mackó évtizedeken át a Magyar Televízió esti gyerekműsorainak záróképe volt."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a két macskát, akikkel Frakk, a vizsla folyton hadakozik?",
+    "answer": "Lukrécia és Szerénke",
+    "wrong": [
+      "Cirmi és Pamacs",
+      "Mici és Muci",
+      "Lili és Bella"
+    ],
+    "explanation": "Gazdáik Irma néni és Károly bácsi, a figurákat Bálint Ágnes álmodta meg."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Mi a foglalkozása Eder mesternek, akinek a műhelyében Pumukli, a vörös hajú manó felbukkan?",
+    "answer": "Asztalos",
+    "wrong": [
+      "Lakatos",
+      "Cipész",
+      "Órásmester"
+    ],
+    "explanation": "Pumukli beleragadt egy enyvesfazékba, ezért vált láthatóvá a mester számára."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "A naptár szerint melyik napon kezdődött valójában a harmadik évezred?",
+    "answer": "2001. január 1.",
+    "wrong": [
+      "2000. január 1.",
+      "2000. december 31.",
+      "1999. december 31."
+    ],
+    "explanation": "Mivel nincs nulladik év, az évezredek az 1-re végződő évvel kezdődnek; a nagy bulikat mégis 1999 szilveszterén tartották."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Milyen néven futott korábban a Jetix gyerekcsatorna, amelyen a Power Rangers is ment?",
+    "answer": "Fox Kids",
+    "wrong": [
+      "Kids WB",
+      "Nick Jr.",
+      "Boomerang"
+    ],
+    "explanation": "A csatorna a Disney-hez került, amely néhány év múlva a Jetix nevet is saját csatornáira cserélte."
+  },
+  {
+    "category": "gyerekkor",
+    "difficulty": 3,
+    "prompt": "Hogy hívják Bátor, a gyáva kutya kedves, idős gazdasszonyát?",
+    "answer": "Muriel",
+    "wrong": [
+      "Martha",
+      "Mildred",
+      "Margaret"
+    ],
+    "explanation": "Férje, a zsémbes Eustace folyton egy ijesztő maszkkal riogatja Bátort."
   }
 ]
