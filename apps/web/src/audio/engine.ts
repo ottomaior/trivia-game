@@ -22,6 +22,35 @@ const LEVELS = {
   duckVoice: 0.25,
 };
 
+/**
+ * Level of each recorded sound, relative to the effects bus. audio:prepare
+ * brings every file to the same loudness, so a tiny click would otherwise be
+ * as loud as the winner's fanfare.
+ */
+const FILE_LEVELS: Partial<Record<Cue, number>> = {
+  applause: 0.5,
+  cheer: 0.55,
+  drumroll: 0.55,
+  reveal: 0.85,
+  wrong: 0.6,
+  timeUp: 0.55,
+  tick: 0.35,
+  question: 0.5,
+  start: 0.7,
+  winner: 0.8,
+  leadChange: 0.65,
+  scoreboard: 0.45,
+  spinTick: 0.25,
+  spinLand: 0.5,
+  join: 0.45,
+  vote: 0.35,
+  lockIn: 0.4,
+  ooh: 0.6,
+  aww: 0.6,
+  laugh: 0.6,
+  gasp: 0.6,
+};
+
 const FADE_S = 0.6;
 /** When the reveal's "ding" lands after the drumroll starts (matches the TV animation). */
 const REVEAL_HIT_S = 0.75;
@@ -57,7 +86,15 @@ class AudioEngine {
       this.ctx = ctx;
       this.master = ctx.createGain();
       this.master.gain.value = this.muted ? 0 : LEVELS.master;
-      this.master.connect(ctx.destination);
+      // A gentle limiter, so a ding, applause and a cheer landing together never clip.
+      const limiter = ctx.createDynamicsCompressor();
+      limiter.threshold.value = -6;
+      limiter.knee.value = 6;
+      limiter.ratio.value = 12;
+      limiter.attack.value = 0.003;
+      limiter.release.value = 0.25;
+      this.master.connect(limiter);
+      limiter.connect(ctx.destination);
       this.musicBus = this.bus(LEVELS.music);
       this.sfxBus = this.bus(LEVELS.sfx);
       this.voiceBus = this.bus(LEVELS.voice);
@@ -209,12 +246,15 @@ class AudioEngine {
     return variants[Math.floor(Math.random() * variants.length)]!;
   }
 
-  private playFile(name: string, at: number): boolean {
+  private playFile(name: Cue, at: number): boolean {
     const buffer = this.pickFile(name);
     if (!buffer || !this.ctx || !this.sfxBus) return false;
     const src = this.ctx.createBufferSource();
     src.buffer = buffer;
-    src.connect(this.sfxBus);
+    const level = this.ctx.createGain();
+    level.gain.value = FILE_LEVELS[name] ?? 0.6;
+    src.connect(level).connect(this.sfxBus);
+    src.onended = () => level.disconnect();
     src.start(at);
     return true;
   }

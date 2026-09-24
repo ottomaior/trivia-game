@@ -6,7 +6,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { generateVoices, lineHash, ssml } from './generateVoice.ts';
-import { ffmpegArgs, parseName, prepareAudio } from './prepareAudio.ts';
+import { ffmpegArgs, MAX_EFFECT_SECONDS, parseName, prepareAudio } from './prepareAudio.ts';
+import { renderAll, SR, tick, toWav } from './studioSounds.ts';
 
 describe('voice generation', () => {
   it('builds SSML for the Hungarian voice and escapes the text', () => {
@@ -90,4 +91,31 @@ describe('audio preparation', () => {
     expect(existsSync(join(outDir, 'applause-2.mp3'))).toBe(true);
     expect(result.totalBytes).toBeGreaterThan(0);
   }, 30_000);
+});
+
+describe('studio sounds', () => {
+  it('renders every sound audible, unclipped and within the effect length limit', { timeout: 30_000 }, () => {
+    const all = renderAll();
+    for (const [name, samples] of Object.entries(all)) {
+      expect(parseName(`${name}.wav`), name).not.toBeNull();
+      let peak = 0;
+      let finite = true;
+      for (const x of samples) {
+        if (!Number.isFinite(x)) finite = false;
+        peak = Math.max(peak, Math.abs(x));
+      }
+      expect(finite, name).toBe(true);
+      expect(peak, name).toBeGreaterThan(0.5);
+      expect(peak, name).toBeLessThanOrEqual(1);
+      expect(samples.length / SR, name).toBeLessThanOrEqual(MAX_EFFECT_SECONDS + 1);
+    }
+  });
+
+  it('is deterministic and writes valid WAV headers', () => {
+    expect(tick(5)).toEqual(tick(5));
+    const wav = toWav(tick(5));
+    expect(wav.subarray(0, 4).toString()).toBe('RIFF');
+    expect(wav.readUInt32LE(24)).toBe(SR);
+    expect(wav.length).toBe(44 + tick(5).length * 2);
+  });
 });

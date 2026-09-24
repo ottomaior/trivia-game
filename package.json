@@ -19,6 +19,7 @@
     "gen": "pnpm --filter @trivia/server gen",
     "flagged": "pnpm --filter @trivia/server flagged",
     "questions:check": "pnpm --filter @trivia/server questions:check",
+    "audio:render": "pnpm --filter @trivia/server audio:render",
     "audio:prepare": "pnpm --filter @trivia/server audio:prepare",
     "voice:generate": "pnpm --filter @trivia/server voice:generate"
   },

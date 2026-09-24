@@ -13,6 +13,7 @@
     "gen": "tsx scripts/gen-questions.ts",
     "flagged": "tsx scripts/flagged.ts",
     "questions:check": "tsx scripts/check-questions.ts",
+    "audio:render": "tsx scripts/render-sounds.ts",
     "audio:prepare": "tsx scripts/prepare-audio.ts",
     "voice:generate": "tsx scripts/generate-voice.ts"
   },

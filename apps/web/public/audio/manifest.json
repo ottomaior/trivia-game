@@ -1,1 +1,56 @@
-{}
+{
+  "applause": [
+    "applause.mp3",
+    "applause-2.mp3",
+    "applause-3.mp3"
+  ],
+  "cheer": [
+    "cheer.mp3",
+    "cheer-2.mp3"
+  ],
+  "drumroll": [
+    "drumroll.mp3"
+  ],
+  "join": [
+    "join.mp3"
+  ],
+  "leadChange": [
+    "leadChange.mp3"
+  ],
+  "lockIn": [
+    "lockIn.mp3"
+  ],
+  "question": [
+    "question.mp3"
+  ],
+  "reveal": [
+    "reveal.mp3"
+  ],
+  "scoreboard": [
+    "scoreboard.mp3"
+  ],
+  "spinLand": [
+    "spinLand.mp3"
+  ],
+  "spinTick": [
+    "spinTick.mp3"
+  ],
+  "start": [
+    "start.mp3"
+  ],
+  "tick": [
+    "tick.mp3"
+  ],
+  "timeUp": [
+    "timeUp.mp3"
+  ],
+  "vote": [
+    "vote.mp3"
+  ],
+  "winner": [
+    "winner.mp3"
+  ],
+  "wrong": [
+    "wrong.mp3"
+  ]
+}

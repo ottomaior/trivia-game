@@ -1,12 +1,26 @@
 # Studio sounds
 
-Every sound here is optional. Without a file, the game plays its built-in
-synthesized version (or nothing, for the audience reactions). With a file, the
-recording wins. A sound can have several variants (`applause.wav`,
+The game ships with its own studio sound set, rendered offline by
+`pnpm audio:render` (`apps/server/src/tools/studioSounds.ts`): layered
+applause and cheering, a snare drumroll, bells, a buzzer, brass fanfares and
+clicks. Every sample is computed, so there is no licence to track. The crowd
+voices (`ooh`, `aww`, `laugh`, `gasp`) and the music loops have no rendered
+version: the voices stay silent and the music is synthesized live.
+
+Real recordings replace rendered sounds name by name: put `applause.wav` (or
+`.mp3`, …) in `audio-src/`, delete the rendered file of the same name there,
+and run `pnpm audio:prepare`. Without any file at all, the game falls back to
+its live synthesized version. Levels per sound are in `FILE_LEVELS` in
+`apps/web/src/audio/engine.ts`. A sound can have several variants (`applause.wav`,
 `applause-2.wav`, `applause-3.wav`); the game picks one at random each time, so
 repeats don't get stale.
 
 ## How to add sounds
+
+To regenerate the rendered set (after changing `studioSounds.ts`):
+`pnpm audio:render --force && pnpm audio:prepare`, then commit this folder.
+
+To add real recordings:
 
 1. Download a free Sonniss GDC bundle (sonniss.com/gameaudiogdc, royalty-free,
    commercial use, no attribution needed).
