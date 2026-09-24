@@ -1,4 +1,5 @@
-import { ottoText, type OttoLine, type OttoLineKey } from '@trivia/shared';
+import { ottoText, type OttoLine, type OttoLineKey, type PlayerSummary } from '@trivia/shared';
+import { Blob } from './Blob.tsx';
 import { useEffect, useState } from 'react';
 import styles from './Otto.module.css';
 
@@ -94,7 +95,19 @@ export function OttoFace({
 const TALK_MS = 1600;
 
 /** Otto with a speech bubble. The bubble hides when there's nothing to say. */
-export function Otto({ line, size, bubbleDelay }: { line: OttoLine | null; size?: string; bubbleDelay?: string }) {
+export function Otto({
+  line,
+  size,
+  bubbleDelay,
+  players = [],
+}: {
+  line: OttoLine | null;
+  size?: string;
+  bubbleDelay?: string;
+  /** To show who the line is about (lines never contain names themselves). */
+  players?: PlayerSummary[];
+}) {
+  const focus = line ? players.filter((p) => line.focus.includes(p.id)) : [];
   const text = line ? ottoText(line) : null;
   const [talking, setTalking] = useState(false);
   // Talk while the bubble appears; if the bubble is delayed, so is the talking.
@@ -116,6 +129,16 @@ export function Otto({ line, size, bubbleDelay }: { line: OttoLine | null; size?
       {text && (
         <p className={styles.bubble} key={text} data-testid="otto-line" style={bubbleDelay ? { animationDelay: bubbleDelay } : undefined}>
           {text}
+          {focus.length > 0 && (
+            <span className={styles.focus}>
+              {focus.map((p) => (
+                <span key={p.id} className={styles.chip}>
+                  <Blob avatar={p.avatar} size="1.4em" />
+                  {p.name}
+                </span>
+              ))}
+            </span>
+          )}
         </p>
       )}
     </div>

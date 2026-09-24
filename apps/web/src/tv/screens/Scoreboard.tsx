@@ -26,7 +26,7 @@ export function Scoreboard({ view, standings }: { view: HostView; standings: Sta
         })}
       </ol>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} size="9em" />
+        <Otto line={view.otto} players={view.players} size="9em" />
       </footer>
     </div>
   );

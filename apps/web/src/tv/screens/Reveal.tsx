@@ -51,7 +51,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
         })}
       </ol>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} size="9em" bubbleDelay="1.6s" />
+        <Otto line={view.otto} players={view.players} size="9em" bubbleDelay="1.6s" />
         <div className={styles.revealNotes}>
           {stage.explanation && <p className={styles.explanation}>{stage.explanation}</p>}
           {noAnswer.length > 0 && (

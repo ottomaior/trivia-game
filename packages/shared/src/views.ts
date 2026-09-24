@@ -8,6 +8,7 @@ export type Phase =
   | 'lobby'
   | 'intro'
   | 'vote'
+  | 'vote_result'
   | 'question_read'
   | 'question_open'
   | 'reveal'
@@ -59,6 +60,8 @@ export type Stage =
   | { phase: 'lobby' }
   | { phase: 'intro' }
   | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number> }
+  /** The vote is decided; the TV spins to `chosen` before the question. */
+  | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number }
   | { phase: 'question_read'; question: PublicQuestion }
   | { phase: 'question_open'; question: PublicQuestion; answered: string[] }
   | {
@@ -71,11 +74,16 @@ export type Stage =
   | { phase: 'scoreboard'; standings: Standing[] }
   | { phase: 'final'; standings: Standing[] };
 
-/** A line for Otto: the key picks the text, the variant picks one of its versions. */
+/**
+ * A line for Otto: the key picks the text, the variant one of its versions.
+ * Lines never contain names or numbers, so each can be pre-recorded as a voice
+ * clip (`${key}-${variant}`); `focus` names the players the line is about, and
+ * the TV points the spotlight at them instead.
+ */
 export interface OttoLine {
   key: OttoLineKey;
   variant: number;
-  vars: Record<string, string>;
+  focus: string[];
 }
 
 export type OttoLineKey =

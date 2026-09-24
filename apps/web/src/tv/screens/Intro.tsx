@@ -8,7 +8,7 @@ export function Intro({ view }: { view: HostView }) {
   return (
     <div className={styles.intro}>
       <Logo />
-      <Otto line={view.otto} size="18em" />
+      <Otto line={view.otto} players={view.players} size="18em" />
       <ul className={styles.blobRow}>
         {view.players.map((p) => (
           <li key={p.id} className={styles.blobRowItem}>

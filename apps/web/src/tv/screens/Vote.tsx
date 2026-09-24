@@ -7,7 +7,7 @@ import { TILE } from '../../ui/answers.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
-type VoteStage = Extract<Stage, { phase: 'vote' }>;
+type VoteStage = Extract<Stage, { phase: 'vote' | 'vote_result' }>;
 
 export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
   return (
@@ -23,7 +23,10 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
           return (
             <li
               key={o.id}
-              className={styles.voteCard}
+              className={`${styles.voteCard} ${
+                stage.phase === 'vote_result' ? (i === stage.chosen ? styles.voteChosen : styles.voteLost) : ''
+              }`}
+              data-testid={stage.phase === 'vote_result' && i === stage.chosen ? 'chosen-category' : undefined}
               style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
             >
               <span className={styles.voteName}>{o.name}</span>
@@ -37,9 +40,9 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
         })}
       </ul>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} size="9em" />
+        <Otto line={view.otto} players={view.players} size="9em" />
         <div className={styles.footerTimer}>
-          <TimerBar endsAt={view.phaseEndsAt} totalMs={TIMINGS.vote} />
+          {stage.phase === 'vote' && <TimerBar endsAt={view.phaseEndsAt} totalMs={TIMINGS.vote} />}
         </div>
       </footer>
     </div>

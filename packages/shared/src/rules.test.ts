@@ -6,7 +6,7 @@ import {
   normalizeName,
   scoreAnswer,
 } from './rules.ts';
-import { ottoText } from './strings.ts';
+import { ottoText, ottoVoiceId } from './strings.ts';
 
 describe('normalizeName', () => {
   it('trims, collapses whitespace and clamps length', () => {
@@ -53,10 +53,12 @@ describe('difficultyForRound', () => {
 });
 
 describe('ottoText', () => {
-  it('fills placeholders and wraps variants', () => {
-    expect(ottoText({ key: 'winner', variant: 0, vars: { name: 'Győző' } })).toBe(
-      'Győző nyeri a műsort! Meghajlás!',
-    );
-    expect(ottoText({ key: 'paused', variant: 5, vars: {} })).toBe('Rövid reklámszünet következik…');
+  it('picks the variant and wraps around', () => {
+    expect(ottoText({ key: 'winner', variant: 1 })).toBe('Íme, a műsor győztese! Meghajlás!');
+    expect(ottoText({ key: 'paused', variant: 5 })).toBe('Rövid reklámszünet következik…');
+  });
+
+  it('names voice clips after the key and wrapped variant', () => {
+    expect(ottoVoiceId({ key: 'paused', variant: 5 })).toBe('paused-0');
   });
 });

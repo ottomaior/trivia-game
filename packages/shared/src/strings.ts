@@ -46,6 +46,8 @@ export const t = {
   newFace: 'Új arc',
   remove: 'Kiküld',
   voteTitle: 'Válaszd ki a következő kategóriát',
+  chosenCategory: 'A következő kategória',
+  roundCard: (n: number) => `${n}. kérdés`,
   voted: 'Szavaztál!',
   lockedIn: 'Beküldve!',
   waitForOthers: 'Várjuk a többieket…',
@@ -83,35 +85,35 @@ export const t = {
   },
   otto: {
     welcome: [
-      'Jó estét, és üdv a műsorban! Ma este {n} bátor versenyzőnk van.',
-      'Fény, kamera, bajusz! Üdv, {n} versenyző!',
+      'Jó estét, és üdv a műsorban! Lássuk, ki a legokosabb a teremben!',
+      'Fény, kamera, bajusz! Kezdődik az évszázad kvízműsora!',
     ],
     welcomeSolo: [
       'Jó estét! Ma egyetlen, ám annál bátrabb versenyzőnk van.',
       'Egyszemélyes műsor? Otto erre is készen áll!',
     ],
-    pickCategory: ['Tiétek a döntés. Válasszatok bölcsen!', 'Mi legyen a következő?'],
+    pickCategory: ['Tiétek a döntés. Válasszatok bölcsen!', 'Mi legyen a következő?', 'Na, melyik témában vagytok otthon?'],
     lastRound: ['Utolsó kör! Most dől el minden!', 'Elérkeztünk az utolsó kérdéshez!'],
-    question: ['{category}! Ujjakat a gombokra…', 'Jöjjön egy kérdés: {category}…'],
+    question: ['Figyelem, jön a kérdés!', 'Ujjakat a gombokra!', 'Lássuk, ki tudja!'],
     allCorrect: ['Mindenki eltalálta! Túl könnyű? Majd teszek róla.', 'Hibátlan kör! Bravó!'],
     noneCorrect: ['Senki? Tényleg? Még egy szerencsés tipp sem?', 'Nulla találat. A bajszom csalódott.'],
     noneCorrectAgain: ['Már megint senki? Kezdek aggódni…', 'Két kör egymás után találat nélkül. Ilyet még nem láttam!'],
-    streak: ['{name} már {n} kérdést talált el sorban!', '{n} egymás után! {name} lángol!'],
-    lightning: ['Villámgyors! {name} gondolkodás nélkül rávágta.', '{name} gyorsabb volt, mint a saját árnyéka!'],
-    fastest: ['{name} volt a leggyorsabb!', 'A fürge {name} viszi a legtöbb pontot!'],
+    streak: ['Valaki itt nagyon formában van!', 'Sorozatban talál, ez már nem véletlen!'],
+    lightning: ['Villámgyors! Gondolkodás nélkül rávágta.', 'Ez gyorsabb volt, mint a saját árnyéka!'],
+    fastest: ['Íme a leggyorsabb versenyző!', 'A fürge ujjak viszik a legtöbb pontot!'],
     someCorrect: ['Volt, aki tudta. És volt, aki… nem.', 'Nem rossz, egyáltalán nem rossz.'],
     soloCorrect: ['Szép munka, pontosan így kell!', 'Telitalálat!'],
     soloWrong: ['Ez most nem jött össze. Jöhet a következő!', 'Hoppá! Semmi baj, van még kérdés.'],
-    newLeader: ['{name} átveszi a vezetést!', 'Új vezető: {name}!'],
-    comeback: ['{name} hatalmasat lépett előre!', 'Nézzék csak, {name} feljön hátulról!'],
-    blowout: ['{name} elhúzott, a többieknek igyekezniük kell!', '{name} kényelmes előnyben van. Egyelőre.'],
-    closeRace: ['Fej fej mellett: {a} és {b}!', 'Szoros a verseny {a} és {b} között!'],
-    standings: ['{name} áll az élen — egyelőre.', 'Még bárki nyerhet!'],
-    soloScore: ['Eddig {score} pont. Csak így tovább!', '{score} pont a számládon. Szép!'],
-    winner: ['{name} nyeri a műsort! Meghajlás!', 'És a bajnok nem más, mint… {name}!'],
-    tie: ['Holtverseny az élen! {name} osztozik a dicsőségen!', 'Döntetlen! {name} együtt állhat a dobogó tetején!'],
-    soloFinalHigh: ['{score} pont! Ez bajnoki teljesítmény!', 'Lenyűgöző: {score} pont. Le a kalappal!'],
-    soloFinalLow: ['{score} pont. Legközelebb még jobb lesz!', 'Vége a műsornak: {score} pont. Gyakorlat teszi a mestert!'],
+    newLeader: ['Új vezetőnk van!', 'Fordulat! Megvan az új listavezető!'],
+    comeback: ['Nézzék csak, ki jön fel hátulról!', 'Hatalmas előrelépés!'],
+    blowout: ['Valaki nagyon elhúzott, a többieknek igyekezniük kell!', 'Kényelmes előny az élen. Egyelőre.'],
+    closeRace: ['Fej fej mellett az élen!', 'Szoros a verseny, bármi megtörténhet!'],
+    standings: ['Így áll most a verseny.', 'Még bárki nyerhet!'],
+    soloScore: ['Szépen gyűlnek a pontok. Csak így tovább!', 'Jó úton jársz!'],
+    winner: ['És a bajnok nem más, mint…', 'Íme, a műsor győztese! Meghajlás!'],
+    tie: ['Holtverseny az élen! Osztozzatok a dicsőségen!', 'Döntetlen! Több bajnokunk is van!'],
+    soloFinalHigh: ['Ez bajnoki teljesítmény volt!', 'Lenyűgöző eredmény. Le a kalappal!'],
+    soloFinalLow: ['Legközelebb még jobb lesz!', 'Vége a műsornak. Gyakorlat teszi a mestert!'],
     paused: ['Rövid reklámszünet következik…'],
   } satisfies Record<OttoLineKey, string[]>,
 };
@@ -123,9 +125,20 @@ export function ottoVariants(key: OttoLineKey): number {
   return t.otto[key].length;
 }
 
-/** Fills {placeholders} in one of Otto's lines. */
-export function ottoText(line: OttoLine): string {
+/** The words of one of Otto's lines. */
+export function ottoText(line: Pick<OttoLine, 'key' | 'variant'>): string {
   const variants = t.otto[line.key];
-  const template = variants[line.variant % variants.length] ?? '';
-  return template.replace(/\{(\w+)\}/g, (_, k: string) => line.vars[k] ?? '');
+  return variants[line.variant % variants.length] ?? '';
+}
+
+/** File name (without extension) of a line's pre-recorded voice clip. */
+export function ottoVoiceId(line: Pick<OttoLine, 'key' | 'variant'>): string {
+  return `${line.key}-${line.variant % t.otto[line.key].length}`;
+}
+
+/** Every line Otto can say, for voice generation. */
+export function allOttoLines(): { id: string; text: string }[] {
+  return (Object.keys(t.otto) as OttoLineKey[]).flatMap((key) =>
+    t.otto[key].map((text, variant) => ({ id: ottoVoiceId({ key, variant }), text })),
+  );
 }

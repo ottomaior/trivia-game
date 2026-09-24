@@ -149,6 +149,9 @@ export class RoomRunner {
       case 'vote':
         this.finishVote();
         return;
+      case 'vote_result':
+        this.startQuestion();
+        return;
       case 'question_read':
         this.room.openAnswers(now);
         this.schedule('questionOpen');
@@ -208,7 +211,13 @@ export class RoomRunner {
   }
 
   private finishVote(): void {
-    const { question } = this.room.resolveVote();
+    this.room.enterVoteResult(this.room.resolveVote());
+    this.schedule('voteResult');
+    this.changed();
+  }
+
+  private startQuestion(): void {
+    const { question } = this.room.voteOptions[this.room.chosenOption]!;
     this.room.enterQuestionRead(question);
     this.deps.store
       .markSeen(this.room.householdId, question.id)

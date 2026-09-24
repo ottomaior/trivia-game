@@ -19,7 +19,7 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
       {!lowFx && <Confetti />}
       <h2 className={styles.gameTitle}>{t.finalResults}</h2>
       <div className={styles.finalBody}>
-        <Otto line={view.otto} size="13em" />
+        <Otto line={view.otto} players={view.players} size="13em" />
         <ol className={styles.podium}>
           {podium.map((s) => {
             const p = byId.get(s.playerId)!;

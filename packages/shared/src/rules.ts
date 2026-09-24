@@ -52,9 +52,11 @@ export const CHOICES_PER_QUESTION = 4;
 export const TIMINGS = {
   intro: 4_000,
   vote: 8_000,
+  /** The TV spins to the winning category. */
+  voteResult: 1_600,
   questionRead: 2_000,
   questionOpen: 20_000,
-  reveal: 6_000,
+  reveal: 7_000,
   scoreboard: 4_000,
 } as const;
 export type TimingKey = keyof typeof TIMINGS;

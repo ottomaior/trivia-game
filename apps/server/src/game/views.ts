@@ -33,6 +33,13 @@ function stage(room: Room): Stage {
         options: room.voteOptions.map((o) => ({ id: o.category.id, name: o.category.name })),
         votes: Object.fromEntries(room.votes),
       };
+    case 'vote_result':
+      return {
+        phase: 'vote_result',
+        options: room.voteOptions.map((o) => ({ id: o.category.id, name: o.category.name })),
+        votes: Object.fromEntries(room.votes),
+        chosen: room.chosenOption,
+      };
     case 'question_read':
       return { phase: 'question_read', question: publicQuestion(q!) };
     case 'question_open':
@@ -71,7 +78,7 @@ export function toHostView(room: Room, now: number): HostView {
 export function toPlayerView(room: Room, playerId: string, now: number): PlayerView | null {
   const player = room.players.get(playerId);
   if (!player) return null;
-  const inVote = room.phase === 'vote';
+  const inVote = room.phase === 'vote' || room.phase === 'vote_result';
   const q = room.question;
   return {
     role: 'player',

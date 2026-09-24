@@ -49,6 +49,7 @@ export function musicFor(phase: Phase, paused: boolean): Track | null {
   switch (phase) {
     case 'lobby':
     case 'vote':
+    case 'vote_result':
     case 'scoreboard':
       return 'lobby';
     case 'question_read':

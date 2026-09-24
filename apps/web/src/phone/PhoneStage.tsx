@@ -28,6 +28,12 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
           {stage.phase === 'lobby' && <LobbyScreen view={view} socket={socket} />}
           {stage.phase === 'intro' && <p className={styles.bigNote}>{t.lookAtTv}</p>}
           {stage.phase === 'vote' && <VoteScreen view={view} stage={stage} socket={socket} />}
+          {stage.phase === 'vote_result' && (
+            <div className={styles.column}>
+              <p className={styles.hint}>{t.chosenCategory}</p>
+              <h2 className={styles.rankBig}>{stage.options[stage.chosen]?.name}</h2>
+            </div>
+          )}
           {(stage.phase === 'question_read' || stage.phase === 'question_open') && (
             <QuestionScreen view={view} stage={stage} socket={socket} />
           )}

@@ -16,7 +16,7 @@ export function TvStage({ view }: { view: HostView }) {
     <>
       {stage.phase === 'lobby' && <Lobby view={view} />}
       {stage.phase === 'intro' && <Intro view={view} />}
-      {stage.phase === 'vote' && <Vote view={view} stage={stage} />}
+      {(stage.phase === 'vote' || stage.phase === 'vote_result') && <Vote view={view} stage={stage} />}
       {(stage.phase === 'question_read' || stage.phase === 'question_open') && <Question view={view} stage={stage} />}
       {stage.phase === 'reveal' && <Reveal view={view} stage={stage} />}
       {stage.phase === 'scoreboard' && <Scoreboard view={view} standings={stage.standings} />}

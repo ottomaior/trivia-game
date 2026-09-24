@@ -69,6 +69,7 @@ export class Room {
   paused = false;
 
   voteOptions: VoteOption[] = [];
+  chosenOption = 0;
   readonly votes = new Map<string, number>();
   question: Question | null = null;
   answersOpenedAt: number | null = null;
@@ -242,13 +243,19 @@ export class Room {
     return { ok: true };
   }
 
-  /** Most votes wins; ties and no-votes are settled randomly. */
-  resolveVote(): VoteOption {
+  /** Most votes wins; ties and no-votes are settled randomly. Returns the option's index. */
+  resolveVote(): number {
     const tally = this.voteOptions.map(() => 0);
     for (const v of this.votes.values()) tally[v]! += 1;
     const best = Math.max(...tally);
     const leaders = tally.flatMap((n, i) => (n === best ? [i] : []));
-    return this.voteOptions[leaders[Math.floor(this.rng() * leaders.length)]!]!;
+    return leaders[Math.floor(this.rng() * leaders.length)]!;
+  }
+
+  /** Shows the decided category for a moment (the TV spins to it). */
+  enterVoteResult(chosen: number): void {
+    this.chosenOption = chosen;
+    this.phase = 'vote_result';
   }
 
   enterQuestionRead(question: Question): void {
@@ -258,7 +265,7 @@ export class Room {
     this.answers.clear();
     this.answersOpenedAt = null;
     this.phase = 'question_read';
-    this.say('question', { category: question.category });
+    this.say('question');
   }
 
   openAnswers(now: number): void {
@@ -303,7 +310,7 @@ export class Room {
     for (const p of this.picks) this.streaks.set(p.playerId, p.correct ? (this.streaks.get(p.playerId) ?? 0) + 1 : 0);
     this.noneCorrectRun = this.picks.some((p) => p.correct) ? 0 : this.noneCorrectRun + 1;
     const facts = this.picks.map((p) => ({
-      name: this.nameOf(p.playerId),
+      id: p.playerId,
       correct: p.correct,
       responseMs: p.responseMs,
       streak: this.streaks.get(p.playerId) ?? 0,
@@ -380,16 +387,12 @@ export class Room {
     });
   }
 
-  private say(key: OttoLineKey, vars: Record<string, string> = {}): void {
-    this.otto = line(key, this.rng, vars);
+  private say(key: OttoLineKey): void {
+    this.otto = line(key, this.rng);
   }
 
   private standingFacts() {
-    return this.standings.map((s) => ({ name: this.nameOf(s.playerId), score: s.score, rank: s.rank, prevRank: s.prevRank }));
-  }
-
-  private nameOf(playerId: string): string {
-    return this.players.get(playerId)?.name ?? '';
+    return this.standings.map((s) => ({ id: s.playerId, score: s.score, rank: s.rank, prevRank: s.prevRank }));
   }
 
   private freeSeat(): number {

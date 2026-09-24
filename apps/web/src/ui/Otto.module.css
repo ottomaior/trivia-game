@@ -117,3 +117,21 @@
     transform: translateY(-3px) rotate(-1deg);
   }
 }
+
+.focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin-top: 0.4em;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.1em 0.6em 0.1em 0.2em;
+  background: var(--burgundy);
+  color: var(--cream);
+  border-radius: 999px;
+  font-size: 0.9em;
+}

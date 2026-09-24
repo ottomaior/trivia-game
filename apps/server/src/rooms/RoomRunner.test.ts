@@ -56,7 +56,8 @@ describe('RoomRunner', () => {
     for (let round = 1; round <= TOTAL_ROUNDS; round++) {
       expect(room.phase).toBe('vote');
       runner.vote(solo!.id, 0);
-      await vi.advanceTimersByTimeAsync(TIMINGS.questionRead + 1_000);
+      expect(room.phase).toBe('vote_result');
+      await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead + 1_000);
       runner.answer(solo!.id, room.question!.id, room.question!.correct);
       expect(room.phase).toBe('reveal');
       await vi.advanceTimersByTimeAsync(TIMINGS.reveal + (round < TOTAL_ROUNDS ? TIMINGS.scoreboard : 0));
@@ -80,7 +81,7 @@ describe('RoomRunner', () => {
     }
     expect(room.phase).toBe('final');
     expect(room.round).toBe(TOTAL_ROUNDS);
-    expect([...seenPhases]).toEqual(['intro', 'vote', 'question_read', 'question_open', 'reveal', 'scoreboard']);
+    expect([...seenPhases]).toEqual(['intro', 'vote', 'vote_result', 'question_read', 'question_open', 'reveal', 'scoreboard']);
     expect(room.askedQuestionIds.size).toBe(TOTAL_ROUNDS);
 
     await flush();
@@ -97,6 +98,9 @@ describe('RoomRunner', () => {
     expect(room.phase).toBe('vote');
 
     for (const p of players) runner.vote(p.id, 1);
+    expect(room.phase).toBe('vote_result');
+    expect(room.chosenOption).toBe(1);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
     expect(room.phase).toBe('question_read');
     expect(room.question?.categoryId).toBe(room.voteOptions[1]!.category.id);
 
@@ -117,6 +121,7 @@ describe('RoomRunner', () => {
     runner.start(players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
 
@@ -138,6 +143,7 @@ describe('RoomRunner', () => {
     const positions = new Set<number>();
     for (let i = 0; i < 6; i++) {
       for (const p of players) runner.vote(p.id, 0);
+      await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
       positions.add(room.question!.correct);
       await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
       for (const p of players) runner.answer(p.id, room.question!.id, 0);
@@ -151,6 +157,7 @@ describe('RoomRunner', () => {
     runner.start(players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead + 5_000);
     expect(room.phase).toBe('question_open');
 
@@ -197,6 +204,7 @@ describe('RoomRunner', () => {
     runner.start(players[0]!.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
     const qid = room.question!.id;
     expect(runner.flag(players[0]!.id, qid, 'typo')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // not before reveal
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead + TIMINGS.questionOpen);
