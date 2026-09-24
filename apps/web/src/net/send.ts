@@ -13,6 +13,8 @@ type PlayerCommand =
   | 'vip:newLobby'
   | 'vote:cast'
   | 'answer:submit'
+  | 'ladder:walk'
+  | 'ladder:lifeline'
   | 'question:flag';
 
 /** Sends a phone command and resolves to its result; a timeout counts as a failure. */

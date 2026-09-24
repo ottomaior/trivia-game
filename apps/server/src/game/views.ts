@@ -1,4 +1,5 @@
 import {
+  LADDER_RUNGS,
   MIN_GAME_QUESTIONS,
   type HostView,
   type PlayerSummary,
@@ -57,6 +58,16 @@ function stage(room: Room): Stage {
         votes: Object.fromEntries(room.votes),
         chosen: room.chosenOption,
       };
+    case 'ladder_step': {
+      const next = room.voteOptions[0]!;
+      return {
+        phase: 'ladder_step',
+        rung: room.round,
+        category: { id: next.category.id, name: next.category.name },
+        difficulty: next.question.difficulty,
+        walking: room.ladder?.decisions() ?? {},
+      };
+    }
     case 'question_read':
       return { phase: 'question_read', question: publicQuestion(q!) };
     case 'question_open':
@@ -100,16 +111,19 @@ function lobbyStage(room: Room): Stage {
 }
 
 function base(room: Room, now: number) {
+  const { ladder } = room;
   return {
     roomCode: room.code,
     stage: stage(room),
     round: room.round,
-    totalRounds: room.totalRounds,
+    totalRounds: ladder ? LADDER_RUNGS : room.totalRounds,
     serverNow: now,
     phaseEndsAt: room.phaseEndsAt,
     paused: room.paused,
     players: [...room.players.values()].map((p) => summarize(room, p)),
     pack: room.pack?.name ?? null,
+    mode: room.mode,
+    ladder: ladder ? { seats: ladder.seatsView([...room.players.keys()]) } : null,
   };
 }
 
@@ -130,6 +144,8 @@ export function toPlayerView(room: Room, playerId: string, now: number): PlayerV
       vote: inVote ? (room.votes.get(playerId) ?? null) : null,
       choice: q && !inVote ? (room.answers.get(playerId)?.choice ?? null) : null,
       flagged: q ? room.hasFlagged(playerId, q.id) : false,
+      // Only this player's own lifeline results; other phones never see them.
+      ladder: room.ladder && q ? room.ladder.help(playerId, room.answers, q.choices.length) : null,
     },
   };
 }

@@ -4,6 +4,8 @@ import {
   hostCreateSchema,
   hostResumeSchema,
   kickSchema,
+  ladderWalkSchema,
+  lifelineSchema,
   packVoteSchema,
   playerJoinSchema,
   playerResumeSchema,
@@ -232,6 +234,13 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       'answer:submit',
       playerCommand(answerSchema, (runner, playerId, { questionId, choice }) =>
         runner.answer(playerId, questionId, choice),
+      ),
+    );
+    socket.on('ladder:walk', playerCommand(ladderWalkSchema, (runner, playerId, { walk }) => runner.walk(playerId, walk)));
+    socket.on(
+      'ladder:lifeline',
+      playerCommand(lifelineSchema, (runner, playerId, input) =>
+        runner.lifeline(playerId, input.kind, input.kind === 'phone' ? input.friendId : undefined),
       ),
     );
     socket.on(

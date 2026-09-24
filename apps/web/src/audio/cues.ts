@@ -64,6 +64,8 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
     }
   } else if (a.phase === 'vote' && b.phase === 'vote') {
     if (Object.keys(b.votes).length > Object.keys(a.votes).length) cues.push(now('vote'));
+  } else if (a.phase === 'ladder_step' && b.phase === 'ladder_step') {
+    if (Object.keys(b.walking).length > Object.keys(a.walking).length) cues.push(now('vote'));
   } else if (a.phase === 'question_open' && b.phase === 'question_open') {
     if (b.answered.length > a.answered.length) cues.push(now('lockIn'));
   }
@@ -88,6 +90,7 @@ export function musicFor(phase: Phase, paused: boolean): Track | null {
     case 'lobby':
     case 'vote':
     case 'vote_result':
+    case 'ladder_step':
     case 'scoreboard':
       return 'lobby';
     case 'question_read':

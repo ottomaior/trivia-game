@@ -52,6 +52,15 @@ export const packVoteSchema = z.object({ pack: z.string().min(1).max(40) });
 
 export const setCategorySchema = z.object({ categoryId: z.int().min(1), enabled: z.boolean() });
 
+/** Milliomos-létra: stop before the next rung (true) or keep climbing (false). */
+export const ladderWalkSchema = z.object({ walk: z.boolean() });
+
+export const lifelineSchema = z.discriminatedUnion('kind', [
+  z.object({ kind: z.literal('fifty') }),
+  z.object({ kind: z.literal('audience') }),
+  z.object({ kind: z.literal('phone'), friendId: z.string().min(1).max(64) }),
+]);
+
 export const answerSchema = z.object({
   questionId: z.string().min(1).max(64),
   choice: z.int().min(0).max(CHOICES_PER_QUESTION - 1),
@@ -77,6 +86,8 @@ export type KickPayload = z.infer<typeof kickSchema>;
 export type VotePayload = z.infer<typeof voteSchema>;
 export type PackVotePayload = z.infer<typeof packVoteSchema>;
 export type SetCategoryPayload = z.infer<typeof setCategorySchema>;
+export type LadderWalkPayload = z.infer<typeof ladderWalkSchema>;
+export type LifelinePayload = z.infer<typeof lifelineSchema>;
 export type AnswerPayload = z.infer<typeof answerSchema>;
 export type FlagPayload = z.infer<typeof flagSchema>;
 export type TimePingPayload = z.infer<typeof timePingSchema>;

@@ -53,6 +53,7 @@ export function shotsFor(phase: Phase): CameraCue[] {
       ];
     case 'vote':
     case 'vote_result':
+    case 'ladder_step':
     case 'question_read':
       return [{ at: 0, shot: 'board', duration: 1 }];
     case 'question_open':

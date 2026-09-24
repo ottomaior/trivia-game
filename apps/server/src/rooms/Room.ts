@@ -13,6 +13,7 @@ import {
   type Avatar,
   type ErrorCode,
   type GameMode,
+  type Lifeline,
   type OttoLine,
   type Phase,
   type Pick,
@@ -21,8 +22,21 @@ import {
 import type { PackOffer } from '../content/packs.ts';
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
-import { categoryLine, finalLine, LinePicker, revealLine, scoreboardLine, voteLine, welcomeLine } from '../game/otto.ts';
+import {
+  categoryLine,
+  finalLine,
+  ladderRevealLine,
+  ladderStepLine,
+  line,
+  LinePicker,
+  revealLine,
+  scoreboardLine,
+  SOLO_LADDER_HIGH,
+  voteLine,
+  welcomeLine,
+} from '../game/otto.ts';
 import { randomId, randomToken } from './ids.ts';
+import { LadderGame } from './Ladder.ts';
 
 export interface Player {
   id: string;
@@ -96,6 +110,9 @@ export class Room {
   readonly streaks = new Map<string, number>();
   /** Rounds in a row that nobody answered correctly. */
   noneCorrectRun = 0;
+
+  /** Milliomos-létra state for this game; null in the classic game. */
+  ladder: LadderGame | null = null;
 
   /** Questions asked this game, so none repeats and flags can be checked. */
   readonly askedQuestionIds = new Set<string>();
@@ -321,7 +338,8 @@ export class Room {
     this.streaks.clear();
     this.noneCorrectRun = 0;
     this.phase = 'intro';
-    this.otto = welcomeLine(this.players.size, this.lines);
+    this.ladder = this.mode === 'ladder' ? new LadderGame([...this.players.keys()], this.rng) : null;
+    this.otto = this.ladder ? line('ladderWelcome', this.lines) : welcomeLine(this.players.size, this.lines);
   }
 
   enterVote(options: VoteOption[]): void {
@@ -356,6 +374,64 @@ export class Room {
     this.otto = categoryLine(this.voteOptions[chosen]!.category.slug, this.lines);
   }
 
+  // --- Milliomos-létra ------------------------------------------------------
+
+  /** Shows the next rung and its (pre-fetched) question's category; climbers may choose to stop. */
+  enterLadderStep(option: VoteOption): void {
+    const ladder = this.ladder!;
+    this.round = ladder.nextRung();
+    this.voteOptions = [option];
+    this.chosenOption = 0;
+    this.votes.clear();
+    this.question = null;
+    this.answers.clear();
+    this.phase = 'ladder_step';
+    this.otto = ladderStepLine(this.round, this.lines);
+  }
+
+  decideWalk(playerId: string, walk: boolean): Result {
+    if (this.phase !== 'ladder_step' || !this.ladder) return { ok: false, error: 'NOT_ALLOWED' };
+    return this.ladder.decide(playerId, walk);
+  }
+
+  /** Ends the step: those who chose to stop leave the ladder. */
+  finishLadderStep(): void {
+    this.ladder?.applyWalks();
+  }
+
+  useLifeline(playerId: string, kind: Lifeline, friendId?: string): Result {
+    const q = this.question;
+    if (this.phase !== 'question_open' || !this.ladder || !q) return { ok: false, error: 'NOT_ALLOWED' };
+    return this.ladder.useLifeline(playerId, kind, {
+      answered: this.answers.has(playerId),
+      correct: q.correct,
+      choices: q.choices.length,
+      friendId,
+      players: [...this.players.keys()],
+    });
+  }
+
+  /** Settles the rung: scores become the rungs everyone holds. */
+  enterLadderReveal(): void {
+    const q = this.question;
+    const ladder = this.ladder;
+    if (!q || !ladder) throw new Error('ladder reveal without a question');
+    const prevRanks = new Map(this.rankedStandings().map((s) => [s.playerId, s.rank]));
+    const connected = new Set(this.connectedPlayers().map((p) => p.id));
+    const outcomes = ladder.settle(this.answers, q.correct, connected);
+    this.picks = outcomes.map((o) => ({
+      playerId: o.playerId,
+      choice: o.choice,
+      correct: o.correct,
+      points: o.delta,
+      responseMs: o.responseMs,
+    }));
+    for (const p of this.players.values()) p.score = ladder.rungOf(p.id);
+    this.standings = this.rankedStandings(prevRanks);
+    this.phase = 'reveal';
+    this.otto = ladderRevealLine(outcomes, ladder.rung, this.lines);
+  }
+
   enterQuestionRead(question: Question): void {
     this.question = question;
     this.askedQuestionIds.add(question.id);
@@ -381,6 +457,8 @@ export class Room {
     }
     if (this.answers.has(playerId)) return { ok: false, error: 'NOT_ALLOWED' }; // no changing
     if (choice < 0 || choice >= this.question.choices.length) return { ok: false, error: 'BAD_REQUEST' };
+    // 50:50 took these choices away from this player.
+    if (this.ladder?.hiddenFor(playerId).includes(choice)) return { ok: false, error: 'BAD_REQUEST' };
     const elapsed = now - (this.answersOpenedAt ?? now) - player.latencyMs;
     this.answers.set(playerId, { choice, responseMs: Math.max(0, Math.round(elapsed)) });
     return { ok: true };
@@ -425,7 +503,7 @@ export class Room {
   enterFinal(): void {
     this.phase = 'final';
     this.standings = this.rankedStandings(new Map(this.standings.map((s) => [s.playerId, s.rank])));
-    this.otto = finalLine(this.standingFacts(), this.lines);
+    this.otto = finalLine(this.standingFacts(), this.lines, this.ladder ? SOLO_LADDER_HIGH : undefined);
   }
 
   /** Back to the lobby for a new game: the pack vote starts over. */
@@ -436,6 +514,7 @@ export class Room {
     this.packVotes.clear();
     this.pack = null;
     this.enabledCategories.clear();
+    this.ladder = null;
     this.round = 0;
     this.standings = [];
     this.picks = [];
@@ -443,12 +522,20 @@ export class Room {
     this.otto = null;
   }
 
-  /** True when every connected player has voted/answered (phases end early). */
+  /**
+   * True when every connected player has voted/answered (phases end early).
+   * On the ladder only the climbers count: the audience's answers are optional.
+   */
   allActed(): boolean {
     const connected = this.connectedPlayers();
     if (connected.length === 0) return false;
     if (this.phase === 'vote') return connected.every((p) => this.votes.has(p.id));
-    if (this.phase === 'question_open') return connected.every((p) => this.answers.has(p.id));
+    if (this.phase === 'ladder_step') return this.ladder?.allDecided(connected.map((p) => p.id)) ?? false;
+    if (this.phase === 'question_open') {
+      const ladder = this.ladder;
+      const waitFor = ladder ? connected.filter((p) => ladder.status(p.id) === 'in') : connected;
+      return waitFor.every((p) => this.answers.has(p.id));
+    }
     return false;
   }
 
@@ -478,9 +565,13 @@ export class Room {
 
   private rankedStandings(prevRanks = new Map<string, number>()): Standing[] {
     const deltas = new Map(this.picks.map((p) => [p.playerId, p.points]));
-    const sorted = [...this.players.values()].sort((a, b) => b.score - a.score || a.seat - b.seat);
+    // On the ladder, equal rungs go to whoever climbed faster.
+    const ladder = this.ladder;
+    const tieBreak = (a: Player, b: Player) => (ladder ? ladder.totalMs(a.id) - ladder.totalMs(b.id) : 0);
+    const ahead = (o: Player, p: Player) => o.score > p.score || (o.score === p.score && tieBreak(o, p) < 0);
+    const sorted = [...this.players.values()].sort((a, b) => b.score - a.score || tieBreak(a, b) || a.seat - b.seat);
     return sorted.map((p) => {
-      const rank = 1 + sorted.filter((o) => o.score > p.score).length;
+      const rank = 1 + sorted.filter((o) => ahead(o, p)).length;
       return {
         playerId: p.id,
         score: p.score,

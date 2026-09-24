@@ -1,4 +1,4 @@
-import { t, type HostView, type Standing } from '@trivia/shared';
+import { scoreText, t, type HostView, type Standing } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { useLowFx } from '../../ui/lowfx.ts';
@@ -38,7 +38,7 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
               >
                 <Blob avatar={p.avatar} size={s.rank === 1 ? '7em' : '5em'} />
                 <span className={styles.podiumName}>{p.name}</span>
-                <span className={styles.podiumScore}>{t.points(s.score)}</span>
+                <span className={styles.podiumScore}>{scoreText(view.mode, s.score)}</span>
                 <span className={styles.podiumBlock}>{s.rank}</span>
               </li>
             );
@@ -49,7 +49,7 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
         <ol className={styles.finalRest}>
           {rest.map((s) => (
             <li key={s.playerId}>
-              {s.rank}. {byId.get(s.playerId)?.name} — {t.points(s.score)}
+              {s.rank}. {byId.get(s.playerId)?.name} — {scoreText(view.mode, s.score)}
             </li>
           ))}
         </ol>
@@ -78,7 +78,7 @@ function FinalBoard({ view, standings }: { view: HostView; standings: Standing[]
               <span className={styles.finalRank}>{s.rank}.</span>
               <Blob avatar={p.avatar} size="3.4em" />
               <span className={styles.finalName}>{p.name}</span>
-              <span className={styles.finalScore}>{t.points(s.score)}</span>
+              <span className={styles.finalScore}>{scoreText(view.mode, s.score)}</span>
             </li>
           );
         })}

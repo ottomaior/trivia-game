@@ -1,8 +1,9 @@
-import { t, type PlayerView } from '@trivia/shared';
+import { scoreText, t, type PlayerView } from '@trivia/shared';
 import type { GameSocket } from '../net/socket.ts';
 import { Blob } from '../ui/Blob.tsx';
 import styles from './Phone.module.css';
 import { FinalScreen } from './screens/FinalScreen.tsx';
+import { LadderStepScreen } from './screens/LadderStepScreen.tsx';
 import { LobbyScreen } from './screens/LobbyScreen.tsx';
 import { QuestionScreen } from './screens/QuestionScreen.tsx';
 import { RevealScreen } from './screens/RevealScreen.tsx';
@@ -18,7 +19,7 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
         <header className={styles.meBar}>
           <Blob avatar={me.avatar} size="2.4rem" />
           <span className={styles.meName}>{me.name}</span>
-          <span className={styles.meScore}>{t.points(me.score)}</span>
+          <span className={styles.meScore}>{scoreText(view.mode, me.score)}</span>
         </header>
       )}
       {view.paused ? (
@@ -28,6 +29,7 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
           {stage.phase === 'lobby' && <LobbyScreen view={view} stage={stage} socket={socket} />}
           {stage.phase === 'intro' && <p className={styles.bigNote}>{t.lookAtTv}</p>}
           {stage.phase === 'vote' && <VoteScreen view={view} stage={stage} socket={socket} />}
+          {stage.phase === 'ladder_step' && <LadderStepScreen view={view} stage={stage} socket={socket} />}
           {stage.phase === 'vote_result' && (
             <div className={styles.column}>
               <p className={styles.hint}>{t.chosenCategory}</p>

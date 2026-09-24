@@ -247,7 +247,7 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 ### Phase 2.6 — Question packs and a bigger bank (in progress)
 - ✅ Packs (`seed/packs.json`): the phones vote for a pack in the lobby, the VIP locks the vote and can switch categories off, and each round's category vote offers only the pack's categories (skipped when one is left). A pack is offered from 60 questions; the choice is saved in `matches.settings`.
 - Content: 28 categories aimed at an 18–35 friend group (series, franchises, games, internet, 2000s hits, Hungarian music and film, Budapest, school classics, football, Formula 1…), 45 questions each (15 per difficulty), written in the session and blind-checked. No other quiz's questions are copied (see CLAUDE.md).
-- Milliomos-létra: a separate game mode picked like a pack. 15 rungs that get harder, safe rungs at 5 and 10, everyone answers at once, a wrong answer drops you to your last safe rung, walk away before any rung, and one each of 50:50, ask the audience (the players already out) and phone a friend.
+- ✅ Milliomos-létra: a separate game mode picked like a pack. 15 rungs that get harder, safe rungs at 5 and 10, everyone answers at once, a wrong answer drops you to your last safe rung, walk away before any rung, and one each of 50:50, ask the audience (the players already out) and phone a friend.
 - Voice last: the new Otto lines and the read-alouds for the new questions are recorded once everything is in.
 
 ### Phase 3 — Power Plays

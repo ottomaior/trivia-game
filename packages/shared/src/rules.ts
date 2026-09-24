@@ -50,6 +50,7 @@ export const PACK_MIN_QUESTIONS = 60;
 /** Switching categories off must leave at least this many questions on. */
 export const MIN_GAME_QUESTIONS = 30;
 
+/** `classic`: ten rounds with a category vote; `ladder`: Milliomos-létra. */
 export const GAME_MODES = ['classic', 'ladder'] as const;
 export type GameMode = (typeof GAME_MODES)[number];
 export const VOTE_OPTIONS = 3;
@@ -65,6 +66,10 @@ export const TIMINGS = {
   questionOpen: 20_000,
   reveal: 7_000,
   scoreboard: 4_000,
+  /** Ladder: the next rung's category shows, and players may walk away. */
+  ladderStep: 7_000,
+  /** Ladder answers get longer: there are lifelines to use. */
+  ladderOpen: 30_000,
 } as const;
 export type TimingKey = keyof typeof TIMINGS;
 
@@ -101,3 +106,28 @@ export type FlagReason = (typeof FLAG_REASONS)[number];
 
 /** A question is retired once flags come from this many different matches. */
 export const FLAG_RETIRE_MATCHES = 2;
+
+// ---------------------------------------------------------------------------
+// Milliomos-létra: everyone climbs the same ladder, one question per rung.
+
+export const LADDER_RUNGS = 15;
+/** Reaching these rungs banks them: a later wrong answer falls back here, not to zero. */
+export const LADDER_SAFE_RUNGS: readonly number[] = [5, 10];
+/** Walking away needs something to keep, so it opens from this rung on. */
+export const LADDER_WALK_FROM = 2;
+
+/** 50:50, ask the audience, phone a friend: each once per game. */
+export const LIFELINES = ['fifty', 'audience', 'phone'] as const;
+export type Lifeline = (typeof LIFELINES)[number];
+
+/** Easy for rungs 1–5, medium for 6–10, hard for 11–15. */
+export function ladderDifficulty(rung: number): Difficulty {
+  if (rung <= 5) return 1;
+  if (rung <= 10) return 2;
+  return 3;
+}
+
+/** What a wrong answer on `rung` leaves you with: the highest safe rung below it. */
+export function fallbackRung(rung: number): number {
+  return Math.max(0, ...LADDER_SAFE_RUNGS.filter((r) => r < rung));
+}

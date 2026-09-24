@@ -1,4 +1,4 @@
-import { t, type HostView } from '@trivia/shared';
+import { roundText, type HostView } from '@trivia/shared';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useRef } from 'react';
@@ -25,7 +25,7 @@ export function Intro({ view }: { view: HostView }) {
           </li>
         ))}
       </ul>
-      <p className={styles.status}>{t.round(1, view.totalRounds)}</p>
+      <p className={styles.status}>{roundText(view.mode, 1, view.totalRounds)}</p>
     </div>
   );
 }
@@ -58,7 +58,7 @@ function TitleCard({ view }: { view: HostView }) {
       <div className={styles.titleLogo}>
         <Logo />
       </div>
-      <p className={styles.titleRibbon}>{t.round(1, view.totalRounds)}</p>
+      <p className={styles.titleRibbon}>{roundText(view.mode, 1, view.totalRounds)}</p>
     </div>
   );
 }

@@ -559,6 +559,96 @@
   font-weight: 800;
 }
 
+/* Milliomos-létra: stay or walk away */
+.stayButton,
+.walkButton {
+  justify-content: center;
+  min-height: 88px;
+  text-align: center;
+}
+
+.stayButton {
+  background: var(--teal);
+  color: var(--cream);
+}
+
+.walkButton {
+  background: var(--mustard);
+  color: var(--burgundy);
+}
+
+.stayButton .choiceText,
+.walkButton .choiceText {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.8rem;
+}
+
+/* Lifelines */
+.lifelineRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.lifeline {
+  min-height: 48px;
+  padding: 6px 4px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--ice);
+  color: var(--burgundy);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.lifeline:disabled {
+  opacity: 0.35;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.lifelines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.helpNotes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.friendPick {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.friendPick strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.6rem;
+  color: var(--mustard);
+}
+
+/* 50:50 took this choice away. */
+.choiceGone {
+  display: none;
+}
+
+.audienceVotes {
+  margin-left: auto;
+  padding: 2px 10px;
+  background: var(--burgundy-deep);
+  color: var(--cream);
+  border-radius: 999px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
 @keyframes flipIn {
   from {
     transform: perspective(600px) rotateX(90deg);

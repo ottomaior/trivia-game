@@ -255,9 +255,10 @@
   text-decoration: line-through;
 }
 
-/* The pack's name leads the round counter in game. */
+/* The pack's name sits above the round counter in game. */
 .packTag {
-  margin-right: 0.7em;
+  display: block;
+  margin-bottom: 0.2em;
   color: var(--mustard);
 }
 
@@ -645,6 +646,107 @@
   background: var(--mustard);
   border: 0.15em solid var(--burgundy-deep);
   border-radius: 50%;
+}
+
+/* Milliomos-létra: a staircase, one step per rung, players standing on theirs. */
+.stairs {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.35em;
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  max-width: 5.6em;
+}
+
+.stepPlayers {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.1em;
+  min-height: 2.8em;
+}
+
+/* Each rung sits a little higher than the one before. */
+.stepFace {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.2em;
+  width: 100%;
+  height: calc(1.6em + var(--h) * 1.25em);
+  padding-top: 0.35em;
+  background: var(--teal);
+  border: 0.18em solid var(--burgundy-deep);
+  border-bottom: 0;
+  border-radius: 0.5em 0.5em 0 0;
+  transition: background 300ms;
+}
+
+.stepAhead .stepFace {
+  background: color-mix(in srgb, var(--cream) 12%, var(--burgundy-deep));
+}
+
+.stepSafe .stepFace {
+  box-shadow: inset 0 0.35em 0 var(--ice);
+}
+
+.stepNext .stepFace {
+  background: var(--mustard);
+  color: var(--burgundy);
+  animation: stepPulse 0.9s ease-in-out infinite alternate;
+}
+
+.stepNumber {
+  font-family: var(--font-display);
+  font-size: 1.6em;
+  line-height: 1;
+}
+
+.stepSafeTag {
+  font-size: 0.75em;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--ice);
+}
+
+.stepNext .stepSafeTag {
+  color: var(--burgundy);
+}
+
+@keyframes stepPulse {
+  to {
+    box-shadow: 0 0 1.4em color-mix(in srgb, var(--mustard) 70%, transparent);
+  }
+}
+
+.climber {
+  opacity: 1;
+}
+
+.climber[data-status='out'],
+.climber[data-status='walked'] {
+  opacity: 0.55;
+}
+
+.climberState {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--ice);
 }
 
 .revealNotes {

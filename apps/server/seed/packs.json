@@ -4,7 +4,16 @@
     "name": "Alap",
     "description": "A klasszikus nyolc: történelemtől a gasztróig.",
     "mode": "classic",
-    "categories": ["tortenelem", "foldrajz", "tudomany", "film", "zene", "sport", "gasztro", "magyarorszag"]
+    "categories": [
+      "tortenelem",
+      "foldrajz",
+      "tudomany",
+      "film",
+      "zene",
+      "sport",
+      "gasztro",
+      "magyarorszag"
+    ]
   },
   {
     "slug": "nagymix",
@@ -18,55 +27,115 @@
     "name": "Popkultúra",
     "description": "Sorozatok, filmek, játékok, mémek és slágerek.",
     "mode": "classic",
-    "categories": ["sorozatok", "film", "univerzumok", "animacio", "slagerek", "internet", "jatekok", "magyarfilm"]
+    "categories": [
+      "sorozatok",
+      "film",
+      "univerzumok",
+      "animacio",
+      "slagerek",
+      "internet",
+      "jatekok",
+      "magyarfilm"
+    ]
   },
   {
     "slug": "mozi",
     "name": "Mozi és sorozat",
     "description": "Hollywoodtól a Barátok köztig.",
     "mode": "classic",
-    "categories": ["film", "sorozatok", "univerzumok", "animacio", "magyarfilm"]
+    "categories": [
+      "film",
+      "sorozatok",
+      "univerzumok",
+      "animacio",
+      "magyarfilm"
+    ]
   },
   {
     "slug": "zene",
     "name": "Zene",
     "description": "Klasszikusok, világslágerek és magyar zene.",
     "mode": "classic",
-    "categories": ["zene", "slagerek", "magyarzene"]
+    "categories": [
+      "zene",
+      "slagerek",
+      "magyarzene"
+    ]
   },
   {
     "slug": "magyarorszag",
     "name": "Magyarország",
     "description": "Budapest, kötelezők, magyar zene és film.",
     "mode": "classic",
-    "categories": ["magyarorszag", "budapest", "kotelezok", "nyelv", "magyarzene", "magyarfilm"]
+    "categories": [
+      "magyarorszag",
+      "budapest",
+      "kotelezok",
+      "nyelv",
+      "magyarzene",
+      "magyarfilm"
+    ]
   },
   {
     "slug": "gyerekkor",
     "name": "Gyerekkorunk",
     "description": "Tamagotchi, Cartoon Network és a nagy klasszikusok.",
     "mode": "classic",
-    "categories": ["gyerekkor", "animacio", "jatekok", "slagerek", "internet", "tech", "markak"]
+    "categories": [
+      "gyerekkor",
+      "animacio",
+      "jatekok",
+      "slagerek",
+      "internet",
+      "tech",
+      "markak"
+    ]
   },
   {
     "slug": "sport",
     "name": "Sport",
     "description": "Foci, Forma–1 és minden, ami mozog.",
     "mode": "classic",
-    "categories": ["sport", "foci", "f1"]
+    "categories": [
+      "sport",
+      "foci",
+      "f1"
+    ]
   },
   {
     "slug": "okoskodo",
     "name": "Okoskodó",
     "description": "Történelem, tudomány, űr és a nagyvilág.",
     "mode": "classic",
-    "categories": ["tortenelem", "foldrajz", "tudomany", "ur", "allatok", "tech", "utazas"]
+    "categories": [
+      "tortenelem",
+      "foldrajz",
+      "tudomany",
+      "ur",
+      "allatok",
+      "tech",
+      "utazas"
+    ]
   },
   {
     "slug": "buli",
     "name": "Buli",
     "description": "Koktélok, márkák, mémek és utazás.",
     "mode": "classic",
-    "categories": ["italok", "gasztro", "markak", "slagerek", "internet", "utazas"]
+    "categories": [
+      "italok",
+      "gasztro",
+      "markak",
+      "slagerek",
+      "internet",
+      "utazas"
+    ]
+  },
+  {
+    "slug": "milliomos",
+    "name": "Milliomos-létra",
+    "description": "Tizenöt egyre nehezebb kérdés, biztos pontok és segítségek. Meddig jutsz?",
+    "mode": "ladder",
+    "categories": "*"
   }
 ]

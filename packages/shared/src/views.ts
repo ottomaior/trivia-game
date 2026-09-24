@@ -1,4 +1,4 @@
-import type { Avatar, Difficulty } from './rules.ts';
+import type { Avatar, Difficulty, GameMode, Lifeline } from './rules.ts';
 
 // Views are complete, role-specific snapshots. The server sends a fresh one on
 // every change, so a reconnecting client resyncs just by receiving the next one.
@@ -9,6 +9,8 @@ export type Phase =
   | 'intro'
   | 'vote'
   | 'vote_result'
+  /** Milliomos-létra: the next rung's category shows, and players may walk away. */
+  | 'ladder_step'
   | 'question_read'
   | 'question_open'
   | 'reveal'
@@ -44,6 +46,21 @@ export interface PackCategory {
 export interface CategoryOption {
   id: number;
   name: string;
+}
+
+/**
+ * Milliomos-létra, per player: `in` is still climbing, `out` answered wrong
+ * and fell back to a safe rung, `walked` stopped and kept their rung, `top`
+ * reached the last rung. `rung` is the highest rung they have banked.
+ */
+export type LadderStatus = 'in' | 'out' | 'walked' | 'top';
+
+export interface LadderSeat {
+  playerId: string;
+  status: LadderStatus;
+  rung: number;
+  /** Lifelines already used this game. */
+  used: Lifeline[];
 }
 
 /** A question as screens may see it before the reveal: no answer key. */
@@ -84,6 +101,8 @@ export type Stage =
   | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number> }
   /** The vote is decided; the TV spins to `chosen` before the question. */
   | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number }
+  /** `rung` is about to be played; `walking` maps player id to their choice so far (true: stop here). */
+  | { phase: 'ladder_step'; rung: number; category: CategoryOption; difficulty: Difficulty; walking: Record<string, boolean> }
   | { phase: 'question_read'; question: PublicQuestion }
   | { phase: 'question_open'; question: PublicQuestion; answered: string[] }
   | {
@@ -118,6 +137,26 @@ export const CATEGORY_LINES = {
   sport: 'catSport',
   gasztro: 'catGasztro',
   magyarorszag: 'catMagyarorszag',
+  sorozatok: 'catSorozatok',
+  animacio: 'catAnimacio',
+  univerzumok: 'catUniverzumok',
+  magyarfilm: 'catMagyarfilm',
+  slagerek: 'catSlagerek',
+  magyarzene: 'catMagyarzene',
+  jatekok: 'catJatekok',
+  internet: 'catInternet',
+  tech: 'catTech',
+  markak: 'catMarkak',
+  gyerekkor: 'catGyerekkor',
+  kotelezok: 'catKotelezok',
+  nyelv: 'catNyelv',
+  budapest: 'catBudapest',
+  utazas: 'catUtazas',
+  italok: 'catItalok',
+  foci: 'catFoci',
+  f1: 'catForma',
+  ur: 'catUr',
+  allatok: 'catAllatok',
 } as const;
 export type CategoryLineKey = (typeof CATEGORY_LINES)[keyof typeof CATEGORY_LINES];
 
@@ -150,7 +189,21 @@ export type OttoLineKey =
   | 'tie'
   | 'soloFinalHigh'
   | 'soloFinalLow'
-  | 'paused';
+  | 'paused'
+  | LadderLineKey;
+
+/** Otto's lines for Milliomos-létra. */
+export type LadderLineKey =
+  | 'ladderWelcome'
+  | 'ladderFirst'
+  | 'ladderStep'
+  | 'ladderSafeAhead'
+  | 'ladderLastRung'
+  | 'ladderClimb'
+  | 'ladderSafe'
+  | 'ladderFell'
+  | 'ladderAllFell'
+  | 'ladderTop';
 
 interface BaseView {
   roomCode: string;
@@ -166,6 +219,9 @@ interface BaseView {
   players: PlayerSummary[];
   /** Name of the locked question pack, once there is one. */
   pack: string | null;
+  mode: GameMode;
+  /** Milliomos-létra: where everyone stands. Null in the classic game. */
+  ladder: { seats: LadderSeat[] } | null;
 }
 
 export interface HostView extends BaseView {
@@ -181,5 +237,17 @@ export interface PlayerView extends BaseView {
     vote: number | null;
     choice: number | null;
     flagged: boolean;
+    /** Milliomos-létra: what this player's lifelines show on the current question. */
+    ladder: LadderHelp | null;
   };
+}
+
+/** Lifeline results, only on the phone of the player who used them. */
+export interface LadderHelp {
+  /** 50:50: the two wrong choices taken away. */
+  hidden: number[];
+  /** Ask the audience: how many of the players already off the ladder picked each choice so far. */
+  audience: number[] | null;
+  /** Phone a friend: whom you asked, and their pick once they have made it. */
+  friend: { playerId: string; choice: number | null } | null;
 }

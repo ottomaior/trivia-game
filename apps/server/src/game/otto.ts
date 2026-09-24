@@ -1,4 +1,12 @@
-import { CATEGORY_LINES, ottoVariants, type OttoLine, type OttoLineKey } from '@trivia/shared';
+import {
+  CATEGORY_LINES,
+  LADDER_RUNGS,
+  LADDER_SAFE_RUNGS,
+  ottoVariants,
+  type LadderStatus,
+  type OttoLine,
+  type OttoLineKey,
+} from '@trivia/shared';
 import type { Rng } from '../content/select.ts';
 
 // Chooses what Otto says. Pure apart from the LinePicker's decks: the room
@@ -12,6 +20,8 @@ export const COMEBACK_PLACES = 2;
 export const BLOWOUT_POINTS = 2_000;
 export const CLOSE_RACE_POINTS = 300;
 export const SOLO_FINAL_HIGH = 6_000;
+/** On the ladder, a solo climber who banks this rung gets the "champion" ending. */
+export const SOLO_LADDER_HIGH = 10;
 /** "Only one of you knew it" needs a crowd to mean something. */
 export const ONLY_ONE_MIN_PLAYERS = 3;
 
@@ -118,13 +128,39 @@ export function scoreboardLine(standings: StandingFact[], round: number, pick: L
   return line('standings', pick, leaders.map((s) => s.id));
 }
 
-export function finalLine(standings: StandingFact[], pick: LinePicker): OttoLine | null {
+/** `soloHigh`: the score a solo player needs for the "champion" ending (points, or a ladder rung). */
+export function finalLine(standings: StandingFact[], pick: LinePicker, soloHigh = SOLO_FINAL_HIGH): OttoLine | null {
   if (standings.length === 1) {
     const { id, score } = standings[0]!;
-    return line(score >= SOLO_FINAL_HIGH ? 'soloFinalHigh' : 'soloFinalLow', pick, [id]);
+    return line(score >= soloHigh ? 'soloFinalHigh' : 'soloFinalLow', pick, [id]);
   }
   const winners = standings.filter((s) => s.rank === 1).map((s) => s.id);
   if (winners.length === 1) return line('winner', pick, winners);
   if (winners.length > 1) return line('tie', pick, winners);
   return null;
+}
+
+// ---------------------------------------------------------------------------
+// Milliomos-létra
+
+/** Before a rung: the first, the safe rungs and the last one get their own lines. */
+export function ladderStepLine(rung: number, pick: LinePicker): OttoLine {
+  if (rung === 1) return line('ladderFirst', pick);
+  if (rung === LADDER_RUNGS) return line('ladderLastRung', pick);
+  if (LADDER_SAFE_RUNGS.includes(rung)) return line('ladderSafeAhead', pick);
+  return line('ladderStep', pick);
+}
+
+/** After a rung, about the players who were still climbing it. */
+export function ladderRevealLine(
+  outcomes: { playerId: string; correct: boolean; status: LadderStatus }[],
+  rung: number,
+  pick: LinePicker,
+): OttoLine | null {
+  const climbed = outcomes.filter((o) => o.correct).map((o) => o.playerId);
+  const fell = outcomes.filter((o) => o.status === 'out').map((o) => o.playerId);
+  if (climbed.length > 0 && rung === LADDER_RUNGS) return line('ladderTop', pick, climbed);
+  if (fell.length > 0) return line(climbed.length > 0 ? 'ladderFell' : 'ladderAllFell', pick, fell);
+  if (climbed.length === 0) return null;
+  return line(LADDER_SAFE_RUNGS.includes(rung) ? 'ladderSafe' : 'ladderClimb', pick, climbed);
 }

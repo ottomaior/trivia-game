@@ -1,8 +1,11 @@
+import type { GameMode, Lifeline } from './rules.ts';
 import type { OttoLine, OttoLineKey } from './views.ts';
 
 // All player-facing text. The game is Hungarian only.
 
 const fmt = (n: number) => n.toLocaleString('hu');
+/** A banked ladder rung; zero means still at the bottom. */
+const rungText = (n: number) => (n === 0 ? 'Start' : `${n}. lépcső`);
 
 export const t = {
   tagline: 'Az évszázad kvízműsora',
@@ -79,6 +82,33 @@ export const t = {
     other: 'Egyéb',
   },
   flagThanks: 'Köszönjük — Otto utánanéz.',
+  // Milliomos-létra
+  ladderTitle: 'Milliomos-létra',
+  rungOf: (n: number, total: number) => `${n}. lépcső / ${total}`,
+  rung: rungText,
+  safeRung: 'Biztos pont',
+  stay: 'Maradok',
+  walk: 'Megállok',
+  walkQuestion: 'Mész tovább, vagy megállsz?',
+  walkKeeps: (n: number) => `Ha most megállsz, ${n}. lépcsővel zársz.`,
+  firstRung: 'Indul a létra! Az első lépcsőn még nincs mit megtartani.',
+  staying: 'Marad',
+  walking: 'Megáll',
+  seatStatus: { in: 'Mászik', out: 'Leesett', walked: 'Megállt', top: 'Csúcs!' } as Record<string, string>,
+  climbed: 'Feljebb léptél!',
+  fell: 'Leestél a létráról',
+  reachedTop: 'Tiéd a csúcs!',
+  youWalked: 'Megálltál',
+  // "az első", "az ötödik", otherwise "a" (rungs only go up to fifteen).
+  youKeep: (n: number) => (n === 0 ? 'Most nem viszel haza semmit.' : `${n === 1 || n === 5 ? 'Az' : 'A'} ${n}. lépcső a tiéd.`),
+  audienceMode: 'Te most a közönség vagy: tippelj, a versenyzők ebből kérhetnek segítséget!',
+  lifelinesLabel: 'Segítségek',
+  lifelines: { fifty: 'Felezés', audience: 'Közönség', phone: 'Telefon' } as Record<Lifeline, string>,
+  noAudienceYet: 'Még nincs közönség',
+  audienceSays: 'A közönség szavazata:',
+  pickFriend: 'Kit hívsz fel?',
+  friendThinking: (name: string) => `${name} még gondolkodik…`,
+  friendSays: (name: string) => `${name} tippje:`,
   cancel: 'Mégse',
   yourRank: (rank: number) => `${rank}. helyen állsz`,
   playAgain: 'Új játék',
@@ -195,6 +225,106 @@ export const t = {
       '[proudly] Magyarország! Hazai pálya, itt nincs kifogás.',
       '[mischievously] Magyarország! Most kiderül, ki ismeri igazán a hazáját.',
       '[playfully] Hazai témák! Ezt illik tudni, kérem szépen.',
+    ],
+    catSorozatok: [
+      '[excited] Sorozatok! Csak még egy rész, és utána tényleg alszunk.',
+      '[playfully] Sorozatok! Aki végigdarálta a hétvégéket, most behozhatja az árát.',
+      '[mischievously] Sorozatok! Spoilerveszély! [whispers] Aki nem látta a végét, fogja be a fülét.',
+    ],
+    catAnimacio: [
+      '[cheerfully] Animáció! Rajzfilmek, anime, és egy csipetnyi gyerekkor.',
+      '[chuckles] Rajzfilmek! Ezzel a bajusszal én is lehetnék rajzfilmfigura.',
+      '[excited] Animáció és anime! Előkerülnek a szombat reggeli emlékek.',
+    ],
+    catUniverzumok: [
+      '[dramatically] Filmes univerzumok! Varázspálcák, fénykardok és szuperhősök következnek.',
+      '[excited] Filmes univerzumok! Remélem, mindenki megvárta a stáblista utáni jelenetet is.',
+      '[mischievously] Filmes univerzumok! A rajongók végre megmutathatják, mit tudnak.',
+    ],
+    catMagyarfilm: [
+      '[proudly] Magyar film és tévé! Az élet nem habostorta, de ez a kategória az.',
+      '[warmly] Magyar film és tévé! Idézetekből most senki sem szenved hiányt.',
+      '[playfully] Magyar mozi és tévé! Papucsot fel, kényelembe helyezkedni.',
+    ],
+    catSlagerek: [
+      '[excited] Slágerek! Aki a refrént is tudja, duplán örülhet.',
+      '[playfully] Slágerek! Ezekre táncoltatok a szalagavatón. [chuckles] Ne is tagadjátok.',
+      '[cheerfully] Slágerek! Jön a nosztalgia egyenesen a fülhallgatóból.',
+    ],
+    catMagyarzene: [
+      '[proudly] Magyar zene! Most kiderül, ki volt ott a fesztiválokon.',
+      '[excited] Magyar zene! Hangolódjunk rá, a hazai színpad a miénk.',
+      '[playfully] Hazai dallamok! Dúdolni szabad, [whispers] akár hamisan is.',
+    ],
+    catJatekok: [
+      '[excited] Videójátékok! Kontrollert a kézbe, [playfully] vagyis telefont.',
+      '[mischievously] Videójátékok! Mentsétek el az állást, nehéz pálya jön.',
+      '[playfully] Videójátékok! Ki ült több órát a képernyő előtt, mint az iskolapadban?',
+    ],
+    catInternet: [
+      '[playfully] Internet és mémek! Most kiderül, ki görget hajnalig.',
+      '[excited] Internet és mémek! Frissítsük az oldalt, jönnek a kérdések.',
+      '[chuckles] Mémek! A bajszomból is lehetne egy. [whispers] Lehet, hogy már az is.',
+    ],
+    catTech: [
+      '[curious] Tech és kütyük! Töltőt mindenkinek, indulunk.',
+      '[playfully] Kütyük! Ha valami nem megy, kapcsolják ki és vissza. [chuckles] Nálam mindig beválik.',
+      '[excited] Tech és kütyük! Most kiderül, ki olvassa el a használati utasítást.',
+    ],
+    catMarkak: [
+      '[mischievously] Márkák és logók! Ez nem reklám, [whispers] bár Otto nyitott az ajánlatokra.',
+      '[cheerfully] Márkák! Most megmutathatjátok, mennyit figyeltetek a boltok polcain.',
+      '[playfully] Logók és márkák! A szem már ismeri őket, lássuk, a fej is.',
+    ],
+    catGyerekkor: [
+      '[warmly] Gyerekkorunk! Matricák, rajzfilmek és zsebpénz. [sighs] Szép idők voltak.',
+      '[playfully] Gyerekkorunk! Jön a nosztalgia, zsebkendőt elő!',
+      '[excited] Vissza a gyerekkorba! Iskolatáska le, kérdések fel.',
+    ],
+    catKotelezok: [
+      '[mischievously] Kötelező olvasmányok! Most kiderül, ki olvasta el tényleg, és ki csak a rövidített változatot.',
+      '[sighs] Kötelezők! Én még most is az olvasónaplóval álmodom.',
+      '[playfully] Kötelező olvasmányok! Irodalomóra következik, de puskázni tilos.',
+    ],
+    catNyelv: [
+      '[proudly] Nyelv és szólások! Addig üsd a vasat, amíg meleg.',
+      '[curious] Nyelv és szólások! Anyanyelvünk szépségei következnek.',
+      '[playfully] Szólások! Aki másnak vermet ás, [chuckles] az most jól figyeljen.',
+    ],
+    catBudapest: [
+      '[proudly] Budapest! A Duna királynője, kérem szépen.',
+      '[excited] Budapest! Villamosra fel, indul a városnézés.',
+      '[playfully] Budapest! Aki ismeri a hidakat, most könnyen átkel a nehézségeken.',
+    ],
+    catUtazas: [
+      '[excited] Utazás! Csomagolni nem kell, csak tippelni.',
+      '[cheerfully] Utazás és nevezetességek! A beszállókártyákat kérem.',
+      '[playfully] Világjárás! A bajszom már a bőröndben van.',
+    ],
+    catItalok: [
+      '[cheerfully] Italok és koktélok! Egészségünkre, de csak mértékkel.',
+      '[playfully] Koktélok! Rázva vagy keverve, a kérdés marad.',
+      '[mischievously] Italok! A bárpult nyitva, a válaszokat viszont ki kell érdemelni.',
+    ],
+    catFoci: [
+      '[excited] Foci! Most mindenki szövetségi kapitány lehet.',
+      '[dramatically] Foci! Kezdőrúgás, a labda a tiétek.',
+      '[playfully] Futball! Itt nincs les, csak tudás.',
+    ],
+    catForma: [
+      '[excited] Száguldás! Gázt adunk, a kérdések boxkiállás nélkül jönnek.',
+      '[dramatically] Rajtrács, kialvó lámpák, indulás! Jöjjön a száguldó cirkusz.',
+      '[playfully] Száguldó cirkusz! Kormány nem kell, csak gyors ujjak.',
+    ],
+    catUr: [
+      '[amazed] Űr és csillagászat! Kapaszkodjanak, indul a rakéta.',
+      '[whispers] A világűr végtelen. [playfully] A kérdéseink szerencsére nem.',
+      '[excited] Csillagászat! Irány az ég, a bajuszt becsatolni!',
+    ],
+    catAllatok: [
+      '[cheerfully] Állatvilág! Tudják, a bajszom is inkább rozmár, mint emberi.',
+      '[playfully] Állatok! Most kiderül, ki nézett túl sok természetfilmet.',
+      '[excited] Állatvilág! Bundák, tollak és pikkelyek következnek.',
     ],
     allCorrect: [
       '[amazed] Mindenki eltalálta! [mischievously] Túl könnyű? Majd teszek róla.',
@@ -362,10 +492,89 @@ export const t = {
       '[calmly] Egy pillanat, technikai szünet. [playfully] Addig megigazítom a bajszomat.',
       '[dramatically] Megszakadt az adás! [whispers] Ne kapcsoljanak el!',
     ],
+    // Milliomos-létra. The ladder is never named: pack names stay on screen.
+    ladderWelcome: [
+      '[dramatically] Üdvözlöm a létra alján! Minden lépcső egy kérdés, és mindegyik nehezebb az előzőnél.',
+      '[excited] Indul a létra! Minél feljebb jutunk, annál szédítőbb a kilátás.',
+      '[mischievously] Ma létrát mászunk. [whispers] Csak ne nézzenek le.',
+      '[warmly] Jó estét! Ma a csúcsra törünk, lépcsőről lépcsőre.',
+      '[suspenseful] Egyetlen rossz válasz, és vége a mászásnak. [excited] Kezdjük!',
+    ],
+    ladderFirst: [
+      '[cheerfully] Az első lépcső. Ez még csak bemelegítés.',
+      '[warmly] Kezdjük lent, szépen óvatosan.',
+      '[playfully] Az első lépcsőfok. Ide még lámpaláz sem kell.',
+      '[excited] Lábat a létrára! Indulunk!',
+    ],
+    ladderStep: [
+      '[curious] Következő lépcső! Mentek tovább, vagy megálltok?',
+      '[suspenseful] Egy lépcsővel feljebb. [whispers] Maradtok, vagy elég volt?',
+      '[mischievously] Feljebb, feljebb! Vagy talán inkább megállnátok?',
+      '[dramatically] Újabb lépcső vár. Aki megáll, megtartja, amit elért.',
+      '[playfully] Ne nézzenek le! Jön a következő kérdés.',
+      '[curious] Merre tovább? Felfelé, vagy haza a nyereménnyel?',
+      '[suspenseful] A létra nem inog. [short pause] Egyelőre.',
+      '[cheerfully] Szépen haladunk! Ki mer még egyet lépni?',
+    ],
+    ladderSafeAhead: [
+      '[excited] Biztos pont következik! Aki ezt megugorja, onnan már nem zuhan a mélybe.',
+      '[suspenseful] A következő lépcső biztos pont. Érdemes lenne megszerezni.',
+      '[dramatically] Biztos pont a láthatáron! Egy jó válasz, és lesz hová visszaesni.',
+      '[playfully] Egy kérdésnyire vagyunk a biztonsági hálótól!',
+    ],
+    ladderLastRung: [
+      '[dramatically] Az utolsó lépcső! Innen már csak a csúcs következik.',
+      '[suspenseful] Egyetlen kérdés választ el a csúcstól. [whispers] A bajszom remeg.',
+      '[dramatically] Hölgyeim és uraim, a létra teteje! Ki meri megmászni?',
+      '[excited] Az utolsó kérdés! Most dől el, ki ér fel a csúcsra.',
+    ],
+    ladderClimb: [
+      '[cheerfully] Mindenki feljebb lépett!',
+      '[excited] Egy lépcsővel közelebb a csúcshoz!',
+      '[impressed] Szép mászás! Senki sem csúszott meg.',
+      '[playfully] Fel, fel, egyre feljebb! A létra bírja.',
+      '[warmly] Hibátlan lépés! Így kell ezt.',
+      '[mischievously] Ezt mindenki megúszta. [whispers] A következő lépcső csúszósabb.',
+    ],
+    ladderSafe: [
+      '[excited] Biztos pont! Ezt már senki sem veheti el.',
+      '[proudly] Megvan a biztos pont! Innen már senki sem zuhan a mélybe.',
+      '[cheerfully] Kifeszítettük a biztonsági hálót! Szép munka.',
+    ],
+    ladderFell: [
+      '[sympathetic] Valaki megcsúszott a létrán.',
+      '[dramatically] Zuhanás! A létra nem kegyelmez.',
+      '[sighs] Egy rossz lépés, és vége a mászásnak. [warmly] Innen már a közönségből lehet szurkolni.',
+      '[surprised] Hoppá! Valaki lecsúszott.',
+      '[sympathetic] Ez most nem jött össze. [warmly] A biztos pont legalább megmarad.',
+      '[dramatically] Megingott a létra! Nem mindenki bírta.',
+    ],
+    ladderAllFell: [
+      '[sighs] Mindenki lecsúszott. [dramatically] Kiürült a létra.',
+      '[surprised] Senki sem maradt a létrán! Ez a kérdés mindenkit legyőzött.',
+      '[dramatically] Teljes zuhanás! A létra ma győzött.',
+      '[sympathetic] Ez most senkinek sem sikerült. [warmly] Majd legközelebb!',
+    ],
+    ladderTop: [
+      '[excited] Fent van a csúcson! Micsoda mászás!',
+      '[amazed] A létra teteje! Ez maga a legenda!',
+      '[proudly] Megvan a csúcs! Ezt a napot be kell keretezni!',
+      '[dramatically] Hölgyeim és uraim, a csúcsra ért! Tapsot kérek!',
+    ],
   } satisfies Record<OttoLineKey, string[]>,
 };
 
 export type ErrorText = keyof typeof t.errors;
+
+/** A player's score as the mode counts it: points, or the ladder rung they hold. */
+export function scoreText(mode: GameMode, score: number): string {
+  return mode === 'ladder' ? t.rung(score) : t.points(score);
+}
+
+/** Round counter: "3. kör / 10", or on the ladder "3. lépcső / 15". */
+export function roundText(mode: GameMode, round: number, total: number): string {
+  return mode === 'ladder' ? t.rungOf(round, total) : t.round(round, total);
+}
 
 /** Number of text variants Otto has for a line. */
 export function ottoVariants(key: OttoLineKey): number {

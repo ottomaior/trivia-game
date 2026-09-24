@@ -43,7 +43,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
                     return (
                       <span key={p.playerId} className={styles.picker} style={{ '--j': j } as CSSProperties}>
                         <Blob avatar={player.avatar} size="2.8em" />
-                        {p.points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(p.points)}</span>}
+                        {view.mode === 'classic' && p.points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(p.points)}</span>}
                       </span>
                     );
                   })}

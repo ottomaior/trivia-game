@@ -9,7 +9,7 @@ import { io as connect, type Socket } from 'socket.io-client';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { createApp } from '../app.ts';
 import { MemoryStore } from '../db/store.ts';
-import { fixtureContent, HOUSEHOLD, TEST_PACKS } from '../testing.ts';
+import { fixtureContent, HOUSEHOLD, TEST_LADDER_PACK, TEST_PACKS } from '../testing.ts';
 
 type Client = Socket<ServerToClientEvents, ClientToServerEvents>;
 
@@ -21,7 +21,7 @@ const clients: Client[] = [];
 beforeEach(async () => {
   store = new MemoryStore(fixtureContent());
   // 2% of real phase lengths: a full game takes a few seconds.
-  const { app } = await createApp({ store, logger: false, timingScale: 0.02, packs: TEST_PACKS, minPackQuestions: 1 });
+  const { app } = await createApp({ store, logger: false, timingScale: 0.02, packs: [...TEST_PACKS, TEST_LADDER_PACK], minPackQuestions: 1 });
   await app.listen({ port: 0, host: '127.0.0.1' });
   url = `http://127.0.0.1:${(app.server.address() as AddressInfo).port}`;
   close = () => app.close();
@@ -191,7 +191,7 @@ describe('a game over sockets', () => {
     expect(await bela!.phone.emitWithAck('pack:vote', { pack: 'nincs' })).toEqual({ ok: false, error: 'BAD_REQUEST' });
     const packs = await tallied;
     if (packs.stage.phase !== 'lobby' || packs.stage.step !== 'packs') throw new Error();
-    expect(packs.stage.packs?.map((p) => p.slug)).toEqual(['minden']);
+    expect(packs.stage.packs?.map((p) => p.slug)).toEqual(['minden', 'letra']);
     expect(packs.stage.votes).toEqual({ [bela!.id]: 'minden' });
 
     expect(await bela!.phone.emitWithAck('vip:lockPack', {})).toEqual({ ok: false, error: 'NOT_ALLOWED' });
@@ -212,6 +212,31 @@ describe('a game over sockets', () => {
     if (vote.stage.phase !== 'vote') throw new Error();
     expect(vote.stage.options.map((o) => o.id)).not.toContain(2);
   });
+
+  it('plays Milliomos-létra from the pack vote to the final', async () => {
+    const { tv, phones } = await lobbyWith(['Anna', 'Béla']);
+    const [anna] = phones;
+    // Both keep climbing and always tap the first choice, until they fall.
+    for (const { phone, id } of phones) {
+      await phone.emitWithAck('pack:vote', { pack: 'letra' });
+      phone.on('view:player', (v) => {
+        const s = v.stage;
+        if (s.phase === 'ladder_step' && s.rung > 1 && !(id in s.walking)) phone.emit('ladder:walk', { walk: false }, () => {});
+        if (s.phase === 'question_open' && v.mine.choice === null) {
+          phone.emit('answer:submit', { questionId: s.question.id, choice: 0 }, () => {});
+        }
+      });
+    }
+    expect(await anna!.phone.emitWithAck('vip:lockPack', {})).toEqual({ ok: true });
+    const finalView = next(tv, 'view:host', (v) => v.stage.phase === 'final');
+    expect(await anna!.phone.emitWithAck('vip:start', {})).toEqual({ ok: true });
+    const view = await finalView;
+    if (view.stage.phase !== 'final') throw new Error();
+    expect(view.mode).toBe('ladder');
+    expect(view.totalRounds).toBe(15);
+    expect(view.stage.standings).toHaveLength(2);
+    expect(view.ladder?.seats.every((s) => s.status !== 'in')).toBe(true);
+  }, 20_000);
 
   it('lets the VIP kick a player, who is told so', async () => {
     const { tv, phones } = await lobbyWith(['Anna', 'Béla']);

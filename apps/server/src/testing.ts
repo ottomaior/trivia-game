@@ -40,3 +40,12 @@ export function fixtureContent(categories = 4, perCategory = 12): SeedData {
 export const TEST_PACKS: PackDef[] = [
   { slug: 'minden', name: 'Minden', description: 'Minden kategória.', mode: 'classic', categories: '*' },
 ];
+
+/** Milliomos-létra over every fixture category. */
+export const TEST_LADDER_PACK: PackDef = {
+  slug: 'letra',
+  name: 'Létra',
+  description: 'Milliomos-létra.',
+  mode: 'ladder',
+  categories: '*',
+};

@@ -4,6 +4,8 @@ import { seededRng } from '../testing.ts';
 import {
   categoryLine,
   finalLine,
+  ladderRevealLine,
+  ladderStepLine,
   LinePicker,
   revealLine,
   scoreboardLine,
@@ -119,5 +121,36 @@ describe('voiceable lines', () => {
     }
     expect(new Set(lines.map((l) => l.id)).size).toBe(lines.length);
     expect(ottoText({ key: 'winner', variant: 0 })).toBe('És a bajnok nem más, mint…');
+  });
+});
+
+describe('ladder lines', () => {
+  it('marks the first rung, the safe rungs and the last one before they are played', () => {
+    const pick = new LinePicker(seededRng());
+    expect(ladderStepLine(1, pick).key).toBe('ladderFirst');
+    expect(ladderStepLine(2, pick).key).toBe('ladderStep');
+    expect(ladderStepLine(5, pick).key).toBe('ladderSafeAhead');
+    expect(ladderStepLine(10, pick).key).toBe('ladderSafeAhead');
+    expect(ladderStepLine(15, pick).key).toBe('ladderLastRung');
+  });
+
+  it('reacts to falls first, then to safe rungs and the top', () => {
+    const pick = new LinePicker(seededRng());
+    const up = (id: string) => ({ playerId: id, correct: true, status: 'in' as const });
+    const down = (id: string) => ({ playerId: id, correct: false, status: 'out' as const });
+    expect(ladderRevealLine([up('a'), down('b')], 7, pick)).toMatchObject({ key: 'ladderFell', focus: ['b'] });
+    expect(ladderRevealLine([down('a'), down('b')], 7, pick)?.key).toBe('ladderAllFell');
+    expect(ladderRevealLine([up('a'), up('b')], 5, pick)?.key).toBe('ladderSafe');
+    expect(ladderRevealLine([up('a')], 7, pick)?.key).toBe('ladderClimb');
+    expect(ladderRevealLine([{ playerId: 'a', correct: true, status: 'top' }, down('b')], 15, pick)).toMatchObject({
+      key: 'ladderTop',
+      focus: ['a'],
+    });
+    // A phone that dropped walked away quietly: nothing to say.
+    expect(ladderRevealLine([{ playerId: 'a', correct: false, status: 'walked' }], 7, pick)).toBeNull();
+  });
+
+  it('has a line for every new category', () => {
+    for (const slug of ['sorozatok', 'budapest', 'f1', 'allatok']) expect(categoryLine(slug, rng).key).not.toBe('categoryPicked');
   });
 });

@@ -5,6 +5,8 @@ import type {
   HostCreatePayload,
   HostResumePayload,
   KickPayload,
+  LadderWalkPayload,
+  LifelinePayload,
   PackVotePayload,
   PlayerJoinPayload,
   PlayerResumePayload,
@@ -63,6 +65,8 @@ export interface ClientToServerEvents {
   'vip:newLobby': (payload: object, ack: Ack) => void;
   'vote:cast': (payload: VotePayload, ack: Ack) => void;
   'answer:submit': (payload: AnswerPayload, ack: Ack) => void;
+  'ladder:walk': (payload: LadderWalkPayload, ack: Ack) => void;
+  'ladder:lifeline': (payload: LifelinePayload, ack: Ack) => void;
   'question:flag': (payload: FlagPayload, ack: Ack) => void;
   'time:ping': (payload: TimePingPayload, ack: (res: { t: number; serverNow: number }) => void) => void;
 }

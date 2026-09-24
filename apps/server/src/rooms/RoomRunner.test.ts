@@ -1,9 +1,9 @@
-import { TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
+import { LADDER_RUNGS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryStore } from '../db/store.ts';
 import { toHostView, toPlayerView } from '../game/views.ts';
-import { fixtureContent, HOUSEHOLD, seededRng, TEST_PACKS } from '../testing.ts';
-import { Room } from './Room.ts';
+import { fixtureContent, HOUSEHOLD, seededRng, TEST_LADDER_PACK, TEST_PACKS } from '../testing.ts';
+import { Room, type Player } from './Room.ts';
 import { RoomRunner } from './RoomRunner.ts';
 
 beforeEach(() => {
@@ -20,7 +20,7 @@ function setup(opts: { players?: number; store?: MemoryStore } = {}) {
     store,
     clock: () => Date.now(),
     rng: seededRng(5),
-    packs: TEST_PACKS,
+    packs: [...TEST_PACKS, TEST_LADDER_PACK],
     minPackQuestions: 1,
     timingScale: 1,
     onChange: (r) => changes.push(r.phase),
@@ -54,7 +54,7 @@ describe('RoomRunner', () => {
   it('only lets the VIP lock the pack and start, and only once a pack is locked', async () => {
     const { runner, room, players } = setup({ players: 2 });
     await flush();
-    expect(room.packOffers?.map((o) => o.slug)).toEqual(['minden']);
+    expect(room.packOffers?.map((o) => o.slug)).toEqual(['minden', 'letra']);
     expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
     expect(runner.lockPack(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
     expect(runner.lockPack(players[0]!.id)).toEqual({ ok: true });
@@ -299,5 +299,120 @@ describe('RoomRunner', () => {
     expect(runner.newLobby(players[0]!.id)).toEqual({ ok: true });
     await flush();
     expect(room.packOffers?.[0]?.questions).toBe(47);
+  });
+});
+
+describe('RoomRunner: Milliomos-létra', () => {
+  /** Votes for the ladder pack, locks it and starts. */
+  async function beginLadder(runner: RoomRunner, room: Room, vipId: string) {
+    await flush();
+    expect(runner.votePack(vipId, 'letra')).toEqual({ ok: true });
+    expect(runner.lockPack(vipId)).toEqual({ ok: true });
+    expect(room.mode).toBe('ladder');
+    expect(runner.start(vipId)).toEqual({ ok: true });
+  }
+
+  it('climbs solo to the top, a rung per right answer, harder as it goes', async () => {
+    const { runner, room, players } = setup({ players: 1 });
+    const solo = players[0]!;
+    await beginLadder(runner, room, solo.id);
+    const difficulties: number[] = [];
+    for (let i = 0; i < 2000 && room.phase !== 'final'; i++) {
+      if (room.phase === 'ladder_step' && room.ladder!.canWalk() && room.ladder!.decisions()[solo.id] === undefined) {
+        expect(runner.walk(solo.id, false)).toEqual({ ok: true });
+      }
+      if (room.phase === 'question_open' && !room.answers.has(solo.id)) {
+        difficulties.push(room.question!.difficulty);
+        runner.answer(solo.id, room.question!.id, room.question!.correct);
+      }
+      await vi.advanceTimersByTimeAsync(500);
+    }
+    expect(room.phase).toBe('final');
+    expect(room.round).toBe(LADDER_RUNGS);
+    expect(room.ladder!.status(solo.id)).toBe('top');
+    expect(room.standings[0]).toMatchObject({ playerId: solo.id, score: LADDER_RUNGS, rank: 1 });
+    expect(difficulties).toEqual([1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]);
+    expect(room.otto?.key).toBe('soloFinalHigh');
+  });
+
+  it('walking away banks the rung, the audience may answer, and the climb ends when nobody is left', async () => {
+    const { runner, room, players, store } = setup({ players: 2 });
+    const [a, b] = players as [Player, Player];
+    await beginLadder(runner, room, a.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    expect(room.phase).toBe('ladder_step');
+    expect(runner.walk(a.id, true)).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // nothing to keep yet
+    await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep + TIMINGS.questionRead);
+    expect(room.phase).toBe('question_open');
+    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    expect(room.phase).toBe('reveal');
+    expect(room.picks.map((p) => p.points)).toEqual([1, 1]);
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal);
+    expect([room.phase, room.round]).toEqual(['ladder_step', 2]);
+    expect(runner.walk(a.id, true)).toEqual({ ok: true });
+    expect(room.phase).toBe('ladder_step'); // still waiting for b
+    expect(runner.walk(b.id, false)).toEqual({ ok: true });
+    expect(room.phase).toBe('question_read');
+    expect(room.ladder!.status(a.id)).toBe('walked');
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    const q = room.question!;
+    expect(runner.answer(a.id, q.id, q.correct)).toEqual({ ok: true }); // a tips as the audience…
+    expect(room.phase).toBe('question_open'); // …but only b's answer is awaited
+    runner.answer(b.id, q.id, (q.correct + 1) % 4);
+    expect(room.phase).toBe('reveal');
+    expect(room.picks.map((p) => p.playerId)).toEqual([b.id]);
+    expect(room.otto?.key).toBe('ladderAllFell');
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal);
+    expect(room.phase).toBe('final');
+    expect(room.standings.map((s) => [s.playerId, s.score, s.rank])).toEqual([
+      [a.id, 1, 1],
+      [b.id, 0, 2],
+    ]);
+    await flush();
+    const [match] = [...store.matches.values()];
+    expect(match?.start.settings?.mode).toBe('ladder');
+  });
+
+  it('shows lifeline results only on the phone that asked, and 50:50 choices cannot be picked', async () => {
+    const { runner, room, players } = setup({ players: 3 });
+    const [a, b, c] = players as [Player, Player, Player];
+    await beginLadder(runner, room, a.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderStep + TIMINGS.questionRead);
+    const q1 = room.question!;
+    expect(runner.lifeline(a.id, 'audience')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // no audience yet
+    runner.answer(a.id, q1.id, q1.correct);
+    runner.answer(b.id, q1.id, q1.correct);
+    runner.answer(c.id, q1.id, (q1.correct + 1) % 4); // c falls, and becomes the audience
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal);
+    runner.walk(a.id, false);
+    runner.walk(b.id, false);
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    expect(room.phase).toBe('question_open');
+
+    const q = room.question!;
+    const now = () => Date.now();
+    expect(runner.lifeline(a.id, 'fifty')).toEqual({ ok: true });
+    const hidden = toPlayerView(room, a.id, now())!.mine.ladder!.hidden;
+    expect(hidden).toHaveLength(2);
+    expect(hidden).not.toContain(q.correct);
+    expect(toPlayerView(room, b.id, now())!.mine.ladder!.hidden).toEqual([]);
+    expect(runner.answer(a.id, q.id, hidden[0]!)).toEqual({ ok: false, error: 'BAD_REQUEST' });
+
+    expect(runner.lifeline(a.id, 'audience')).toEqual({ ok: true });
+    runner.answer(c.id, q.id, q.correct);
+    expect(toPlayerView(room, a.id, now())!.mine.ladder!.audience![q.correct]).toBe(1);
+    expect(toPlayerView(room, b.id, now())!.mine.ladder!.audience).toBeNull();
+
+    expect(runner.lifeline(b.id, 'phone', a.id)).toEqual({ ok: true });
+    runner.answer(a.id, q.id, q.correct);
+    expect(toPlayerView(room, b.id, now())!.mine.ladder!.friend).toEqual({ playerId: a.id, choice: q.correct });
+    expect(room.phase).toBe('question_open'); // b hasn't answered
+    for (const v of [toHostView(room, now()), toPlayerView(room, b.id, now()), toPlayerView(room, c.id, now())]) {
+      expect(JSON.stringify(v)).not.toMatch(/"correct"/);
+    }
+    expect(toHostView(room, now()).ladder!.seats.find((s) => s.playerId === a.id)!.used).toEqual(['fifty', 'audience']);
   });
 });

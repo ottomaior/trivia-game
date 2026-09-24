@@ -1,4 +1,13 @@
-import { difficultyForRound, TIMINGS, VOTE_OPTIONS, type ErrorCode, type FlagReason, type TimingKey } from '@trivia/shared';
+import {
+  difficultyForRound,
+  ladderDifficulty,
+  TIMINGS,
+  VOTE_OPTIONS,
+  type ErrorCode,
+  type FlagReason,
+  type Lifeline,
+  type TimingKey,
+} from '@trivia/shared';
 import type { Clock } from '../clock.ts';
 import { buildOffers, type PackDef } from '../content/packs.ts';
 import { shuffleChoices, type Rng } from '../content/select.ts';
@@ -102,6 +111,19 @@ export class RoomRunner {
     return res;
   }
 
+  /** Milliomos-létra: stop before the next rung, or keep climbing. */
+  walk(playerId: string, walk: boolean): Result {
+    const res = this.room.decideWalk(playerId, walk);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  lifeline(playerId: string, kind: Lifeline, friendId?: string): Result {
+    const res = this.room.useLifeline(playerId, kind, friendId);
+    if (res.ok) this.changed();
+    return res;
+  }
+
   flag(playerId: string, questionId: string, reason: FlagReason): Result {
     const res = this.room.flag(playerId, questionId);
     if (!res.ok) return res;
@@ -176,6 +198,10 @@ export class RoomRunner {
   /** Called when a phase timer fires (or everyone acted early). */
   private advance(): void {
     this.timer = null;
+    if (this.room.ladder) {
+      this.advanceLadder();
+      return;
+    }
     const now = this.deps.clock();
     switch (this.room.phase) {
       case 'intro':
@@ -205,9 +231,76 @@ export class RoomRunner {
         }
         return;
       case 'lobby':
+      case 'ladder_step':
       case 'final':
         return;
     }
+  }
+
+  /**
+   * Milliomos-létra: step (walk away?) → read → answer → reveal, one rung at a
+   * time, until nobody is left climbing or the questions run out.
+   */
+  private advanceLadder(): void {
+    const { room } = this;
+    const ladder = room.ladder!;
+    switch (room.phase) {
+      case 'intro':
+      case 'reveal':
+        if (ladder.isOver()) this.finishGame();
+        else void this.beginRung();
+        return;
+      case 'ladder_step':
+        room.finishLadderStep();
+        if (ladder.isOver()) this.finishGame();
+        else this.startQuestion();
+        return;
+      case 'question_read':
+        room.openAnswers(this.deps.clock());
+        this.schedule('ladderOpen');
+        this.changed();
+        return;
+      case 'question_open':
+        room.enterLadderReveal();
+        this.recordRound();
+        this.schedule('reveal');
+        this.changed();
+        return;
+      default:
+        return;
+    }
+  }
+
+  private async beginRung(): Promise<void> {
+    const epoch = ++this.epoch;
+    this.room.phaseEndsAt = null;
+    let option: VoteOption | null = null;
+    try {
+      option = await this.prepareRung();
+    } catch (err) {
+      this.deps.log.warn({ err }, 'preparing a rung failed');
+    }
+    if (epoch !== this.epoch) return;
+    if (!option) {
+      // Out of questions (or the DB is down): everyone keeps what they hold.
+      this.finishGame();
+      return;
+    }
+    this.room.enterLadderStep(option);
+    this.schedule('ladderStep');
+    this.changed();
+  }
+
+  /** The next rung's question: a fresh category from the pack, as hard as the rung. */
+  private async prepareRung(): Promise<VoteOption | null> {
+    const { store } = this.deps;
+    const { room } = this;
+    const difficulty = ladderDifficulty(room.ladder!.rung + 1);
+    const exclude = room.lastCategoryId === null ? [] : [room.lastCategoryId];
+    const [category] = await store.pickCategories(room.householdId, 1, exclude, [...room.enabledCategories]);
+    if (!category) return null;
+    const q = await store.pickQuestion(room.householdId, category.id, difficulty, [...room.askedQuestionIds]);
+    return q ? { category, question: shuffleChoices(q, this.deps.rng) } : null;
   }
 
   private async beginRound(): Promise<void> {
@@ -268,8 +361,15 @@ export class RoomRunner {
   }
 
   private finishQuestion(): void {
+    this.room.enterReveal(this.duration('questionOpen'));
+    this.recordRound();
+    this.schedule('reveal');
+    this.changed();
+  }
+
+  /** Saves the revealed round's answers with the match (fire-and-forget). */
+  private recordRound(): void {
     const { room } = this;
-    room.enterReveal(this.duration('questionOpen'));
     const question = room.question!;
     const round = room.round;
     const answers = room.picks.map((p) => ({
@@ -284,8 +384,6 @@ export class RoomRunner {
         if (matchId) await this.deps.store.recordRound({ matchId, round, questionId: question.id, answers });
       })
       .catch((err: unknown) => this.deps.log.warn({ err }, 'recordRound failed'));
-    this.schedule('reveal');
-    this.changed();
   }
 
   private finishGame(): void {

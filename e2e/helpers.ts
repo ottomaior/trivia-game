@@ -42,8 +42,9 @@ export async function joinByLink(browser: Browser, code: string, name: string): 
 }
 
 /**
- * Plays like a person: votes for the first category and taps answer
- * `choice` whenever those buttons are on screen, until the final screen.
+ * Plays like a person: votes for the first category, keeps climbing the
+ * ladder, and taps answer `choice` whenever those buttons are on screen,
+ * until the final screen.
  */
 export async function autoplay(phone: Page, choice = 0): Promise<void> {
   const final = phone.getByRole('heading', { name: 'Végeredmény' });
@@ -51,6 +52,11 @@ export async function autoplay(phone: Page, choice = 0): Promise<void> {
     const vote = phone.getByRole('heading', { name: 'Válaszd ki a következő kategóriát' });
     if (await vote.isVisible()) {
       await phone.locator('button').filter({ hasNotText: 'Belépés' }).first().click({ timeout: 1_000 }).catch(() => {});
+    }
+    // Milliomos-létra: keep climbing.
+    const stay = phone.getByRole('button', { name: 'Maradok' });
+    if ((await stay.isVisible()) && (await stay.getAttribute('aria-pressed')) !== 'true') {
+      await stay.click({ timeout: 1_000 }).catch(() => {});
     }
     const answer = phone.getByTestId(`choice-${choice}`);
     if ((await answer.isVisible()) && (await answer.isEnabled())) {

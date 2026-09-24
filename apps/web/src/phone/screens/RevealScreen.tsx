@@ -1,4 +1,4 @@
-import { FLAG_REASONS, t, type FlagReason, type PlayerView, type Stage } from '@trivia/shared';
+import { FLAG_REASONS, t, type FlagReason, type LadderSeat, type PlayerView, type Stage } from '@trivia/shared';
 import { useEffect, useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
@@ -11,6 +11,7 @@ type RevealStage = Extract<Stage, { phase: 'reveal' }>;
 export function RevealScreen({ view, stage, socket }: { view: PlayerView; stage: RevealStage; socket: GameSocket }) {
   const pick = stage.picks.find((p) => p.playerId === view.me.id);
   const correct = pick?.correct ?? false;
+  const seat = view.ladder?.seats.find((s) => s.playerId === view.me.id) ?? null;
   // One buzz per reveal: two short taps for right, one long for wrong.
   useEffect(() => {
     navigator.vibrate?.(correct ? [60, 50, 60] : [250]);
@@ -18,16 +19,44 @@ export function RevealScreen({ view, stage, socket }: { view: PlayerView; stage:
   const verdict = pick?.correct ? t.correct : pick?.choice === null ? t.tooSlow : t.wrong;
   return (
     <div className={styles.column}>
-      <div className={`${styles.verdict} ${pick?.correct ? styles.verdictGood : styles.verdictBad}`} data-testid="verdict">
-        {pick?.correct && <Burst count={22} />}
-        <span className={styles.verdictText}>{verdict}</span>
-        {pick && pick.points > 0 && <span className={styles.verdictPoints}>{t.plusPoints(pick.points)}</span>}
-      </div>
+      {seat ? (
+        <LadderVerdict seat={seat} climbed={pick !== undefined} correct={correct} />
+      ) : (
+        <div className={`${styles.verdict} ${pick?.correct ? styles.verdictGood : styles.verdictBad}`} data-testid="verdict">
+          {pick?.correct && <Burst count={22} />}
+          <span className={styles.verdictText}>{verdict}</span>
+          {pick && pick.points > 0 && <span className={styles.verdictPoints}>{t.plusPoints(pick.points)}</span>}
+        </div>
+      )}
       <p className={styles.hint}>{t.theAnswerWas}</p>
       <p className={styles.answerText}>
         {LETTERS[stage.correct]}: {stage.question.choices[stage.correct]}
       </p>
       <FlagButton questionId={stage.question.id} flagged={view.mine.flagged} socket={socket} />
+    </div>
+  );
+}
+
+/**
+ * Milliomos-létra: what this rung did to you. Those already off the ladder
+ * (the audience) just see where they ended up.
+ */
+function LadderVerdict({ seat, climbed, correct }: { seat: LadderSeat; climbed: boolean; correct: boolean }) {
+  const good = seat.status === 'top' || (climbed && correct);
+  const text = !climbed
+    ? t.seatStatus[seat.status]
+    : seat.status === 'top'
+      ? t.reachedTop
+      : correct
+        ? t.climbed
+        : seat.status === 'walked'
+          ? t.youWalked
+          : t.fell;
+  return (
+    <div className={`${styles.verdict} ${good ? styles.verdictGood : styles.verdictBad}`} data-testid="verdict">
+      {good && <Burst count={22} />}
+      <span className={styles.verdictText}>{text}</span>
+      <span className={styles.verdictPoints}>{seat.status === 'in' || seat.status === 'top' ? t.rung(seat.rung) : t.youKeep(seat.rung)}</span>
     </div>
   );
 }

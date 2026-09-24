@@ -1,4 +1,4 @@
-import { MAX_PLAYERS, t, type HostView, type Pick, type PlayerSummary } from '@trivia/shared';
+import { MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary } from '@trivia/shared';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Blob, type Expression } from '../ui/Blob.tsx';
 import { useCountUp } from '../ui/countUp.ts';
@@ -51,6 +51,8 @@ export function Desks({ view }: { view: HostView }) {
   const leaders = ranked ? new Set(ranked.filter((s) => s.rank === 1 && s.score > 0).map((s) => s.playerId)) : new Set<string>();
   const picks = stage.phase === 'reveal' ? new Map(stage.picks.map((p) => [p.playerId, p])) : null;
   const answered = stage.phase === 'question_open' ? new Set(stage.answered) : new Set<string>();
+  // On the ladder, those who fell or stopped sit back from the rest.
+  const offLadder = new Set(view.ladder?.seats.filter((s) => s.status === 'out' || s.status === 'walked').map((s) => s.playerId));
 
   // In the lobby, empty desks wait for the rest of the players.
   const empty = stage.phase === 'lobby' ? Math.max(0, MAX_PLAYERS - view.players.length) : 0;
@@ -74,6 +76,8 @@ export function Desks({ view }: { view: HostView }) {
           pick={picks?.get(p.id) ?? null}
           leader={leaders.has(p.id)}
           phaseKey={`${stage.phase}-${view.round}`}
+          mode={view.mode}
+          off={offLadder.has(p.id)}
         />
       ))}
     </div>
@@ -88,6 +92,8 @@ function Desk({
   leader,
   phaseKey,
   place,
+  mode,
+  off,
 }: {
   player: PlayerSummary;
   slot: number;
@@ -97,6 +103,9 @@ function Desk({
   pick: Pick | null;
   leader: boolean;
   phaseKey: string;
+  mode: GameMode;
+  /** Off the ladder (fell or stopped). */
+  off: boolean;
 }) {
   // Faces change on the reveal beat when the camera reaches the desks.
   const [expression, setExpression] = useState<Expression | undefined>();
@@ -126,13 +135,13 @@ function Desk({
             <path d="M2 22 L6 4 L14 14 L20 2 L26 14 L34 4 L38 22 Z" fill="var(--mustard)" stroke="var(--burgundy-deep)" strokeWidth="2.5" strokeLinejoin="round" />
           </svg>
         )}
-        <Blob avatar={player.avatar} size="6em" dimmed={!player.connected} expression={expression} />
+        <Blob avatar={player.avatar} size="6em" dimmed={!player.connected || off} expression={expression} />
       </div>
       <div className={styles.deskFront}>
         <span className={styles.lamp} />
         <span className={styles.nameplate}>{player.name}</span>
-        <span className={styles.score}>{t.points(score)}</span>
-        {gained > 0 && <span className={styles.gain}>{t.plusPoints(gained)}</span>}
+        <span className={styles.score}>{scoreText(mode, score)}</span>
+        {mode === 'classic' && gained > 0 && <span className={styles.gain}>{t.plusPoints(gained)}</span>}
       </div>
       {riser && (
         <div

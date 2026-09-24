@@ -20,6 +20,11 @@ const CARD_OUT = 0.7;
 /** …and when the question's words start landing, once the card is gone. */
 const WORDS_IN = CARD_OUT + 0.28;
 
+/** The ladder gives more time to answer: there are lifelines to use. */
+function openMs(view: HostView): number {
+  return view.mode === 'ladder' ? TIMINGS.ladderOpen : TIMINGS.questionOpen;
+}
+
 export function Question({ view, stage }: { view: HostView; stage: QuestionStage }) {
   const { question } = stage;
   const open = stage.phase === 'question_open';
@@ -73,11 +78,13 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
       </ol>
       {inStudio && stage.phase === 'question_read' && (
         <div className={styles.roundCard} aria-hidden="true">
-          <span className={styles.roundCardNumber}>{t.roundCard(view.round)}</span>
+          <span className={styles.roundCardNumber}>{view.mode === 'ladder' ? t.rung(view.round) : t.roundCard(view.round)}</span>
           <span className={styles.roundCardMeta}>
             {question.category} · {t.difficulty[question.difficulty]}
           </span>
-          {pointsMultiplier(view.round, view.totalRounds) > 1 && <span className={styles.doubleBadge}>{t.doublePoints}</span>}
+          {view.mode === 'classic' && pointsMultiplier(view.round, view.totalRounds) > 1 && (
+            <span className={styles.doubleBadge}>{t.doublePoints}</span>
+          )}
         </div>
       )}
       {!inStudio && (
@@ -92,7 +99,7 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
             ))}
           </ul>
           <div className={styles.footerTimer}>
-            <TimerBar endsAt={view.phaseEndsAt} totalMs={open ? TIMINGS.questionOpen : TIMINGS.questionRead} />
+            <TimerBar endsAt={view.phaseEndsAt} totalMs={open ? openMs(view) : TIMINGS.questionRead} />
           </div>
         </footer>
       )}

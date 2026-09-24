@@ -1,4 +1,4 @@
-import { t, type PlayerView, type Standing } from '@trivia/shared';
+import { scoreText, t, type PlayerView, type Standing } from '@trivia/shared';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { MeBlob } from '../MeBlob.tsx';
@@ -11,7 +11,7 @@ export function FinalScreen({ view, standings, socket }: { view: PlayerView; sta
       <h2 className={styles.screenTitle}>{t.finalResults}</h2>
       {mine && <MeBlob view={view} leader={mine.rank === 1} />}
       {mine && <p className={styles.rankBig}>{t.yourRank(mine.rank)}</p>}
-      {mine && <p className={styles.answerText}>{t.points(mine.score)}</p>}
+      {mine && <p className={styles.answerText}>{scoreText(view.mode, mine.score)}</p>}
       {view.me.isVip ? (
         <>
           <button className={styles.primary} onClick={() => void send(socket, 'vip:playAgain', {})}>
