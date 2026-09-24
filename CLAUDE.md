@@ -14,7 +14,7 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 - Live at https://triviaserver-production-d945.up.railway.app (TV: `/tv`, health: `/healthz`).
 - Railway project `efficient-perception`: one app service `@trivia/server` plus `Postgres`, region US East. Details are in `README.md` under "Deploying to Railway".
 - **Railway deploys the `main` branch.** Every push to `main` redeploys and ends any game in progress; pushing to other branches deploys nothing. To ship work from a branch, merge it into `main`.
-- Railway does **not** read `railway.json` for this service (Railway stopped letting new services opt into config-as-code). Build, pre-deploy, and health check settings live in the Railway dashboard, so editing `railway.json` changes nothing.
+- There is no Railway config file in the repo (Railway stopped letting new services use config-as-code). Build, pre-deploy, and health check settings live only in the Railway dashboard.
 - A cloud session can't reach Railway. Deploy settings, logs, and variables need the owner's Railway dashboard or the `railway` CLI on their machine.
 
 ## Adding questions

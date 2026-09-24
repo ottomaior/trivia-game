@@ -37,4 +37,11 @@
 
 .urgent .seconds {
   color: var(--rust);
+  animation: pulse 500ms ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(1.2);
+  }
 }

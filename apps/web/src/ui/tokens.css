@@ -53,3 +53,20 @@ input {
   outline: 4px solid var(--ice);
   outline-offset: 3px;
 }
+
+/* Low-motion mode: everything jumps straight to its final state. */
+[data-lowfx='true'] *,
+[data-lowfx='true'] *::before,
+[data-lowfx='true'] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,4 +1,5 @@
 import { t, type HostView, type Stage } from '@trivia/shared';
+import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { Otto } from '../../ui/Otto.tsx';
 import { LETTERS, TILE } from '../../ui/answers.ts';
@@ -26,7 +27,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
             <li
               key={i}
               className={`${styles.tile} ${isCorrect ? styles.tileCorrect : styles.tileWrong}`}
-              style={{ background: TILE[i]!.bg, color: TILE[i]!.fg }}
+              style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
               data-testid={isCorrect ? 'correct-tile' : undefined}
             >
               <span className={styles.tileLetter}>{LETTERS[i]}</span>
@@ -34,11 +35,11 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
               <span className={styles.pickers}>
                 {picks
                   .filter((p) => p.choice === i)
-                  .map((p) => {
+                  .map((p, j) => {
                     const player = byId.get(p.playerId);
                     if (!player) return null;
                     return (
-                      <span key={p.playerId} className={styles.picker}>
+                      <span key={p.playerId} className={styles.picker} style={{ '--j': j } as CSSProperties}>
                         <Blob avatar={player.avatar} size="2.8em" />
                         {p.points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(p.points)}</span>}
                       </span>
@@ -50,7 +51,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
         })}
       </ol>
       <footer className={styles.gameFooter}>
-        <Otto line={view.otto} size="9em" />
+        <Otto line={view.otto} size="9em" bubbleDelay="1.6s" />
         <div className={styles.revealNotes}>
           {stage.explanation && <p className={styles.explanation}>{stage.explanation}</p>}
           {noAnswer.length > 0 && (

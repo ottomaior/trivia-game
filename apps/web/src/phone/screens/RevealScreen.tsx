@@ -1,5 +1,5 @@
 import { FLAG_REASONS, t, type FlagReason, type PlayerView, type Stage } from '@trivia/shared';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { LETTERS } from '../../ui/answers.ts';
@@ -9,6 +9,11 @@ type RevealStage = Extract<Stage, { phase: 'reveal' }>;
 
 export function RevealScreen({ view, stage, socket }: { view: PlayerView; stage: RevealStage; socket: GameSocket }) {
   const pick = stage.picks.find((p) => p.playerId === view.me.id);
+  const correct = pick?.correct ?? false;
+  // One buzz per reveal: two short taps for right, one long for wrong.
+  useEffect(() => {
+    navigator.vibrate?.(correct ? [60, 50, 60] : [250]);
+  }, [stage.question.id, correct]);
   const verdict = pick?.correct ? t.correct : pick?.choice === null ? t.tooSlow : t.wrong;
   return (
     <div className={styles.column}>

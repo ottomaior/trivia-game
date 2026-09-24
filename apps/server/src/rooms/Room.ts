@@ -6,7 +6,6 @@ import {
   MAX_PLAYERS,
   MIN_PLAYERS,
   normalizeName,
-  ottoVariants,
   scoreAnswer,
   TOTAL_ROUNDS,
   type Avatar,
@@ -19,6 +18,7 @@ import {
 } from '@trivia/shared';
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
+import { finalLine, line, revealLine, scoreboardLine, voteLine, welcomeLine } from '../game/otto.ts';
 import { randomId, randomToken } from './ids.ts';
 
 export interface Player {
@@ -76,6 +76,10 @@ export class Room {
   picks: Pick[] = [];
   standings: Standing[] = [];
   otto: OttoLine | null = null;
+  /** Consecutive correct answers per player, for Otto's commentary. */
+  readonly streaks = new Map<string, number>();
+  /** Rounds in a row that nobody answered correctly. */
+  noneCorrectRun = 0;
 
   /** Questions asked this game, so none repeats and flags can be checked. */
   readonly askedQuestionIds = new Set<string>();
@@ -214,8 +218,10 @@ export class Room {
     this.standings = [];
     this.picks = [];
     this.question = null;
+    this.streaks.clear();
+    this.noneCorrectRun = 0;
     this.phase = 'intro';
-    this.say('welcome', { n: String(this.players.size) });
+    this.otto = welcomeLine(this.players.size, this.rng);
   }
 
   enterVote(options: VoteOption[]): void {
@@ -225,7 +231,7 @@ export class Room {
     this.question = null;
     this.answers.clear();
     this.phase = 'vote';
-    this.say('pickCategory');
+    this.otto = voteLine(this.round, this.totalRounds, this.rng);
   }
 
   castVote(playerId: string, option: number): Result {
@@ -294,30 +300,26 @@ export class Room {
     this.standings = this.rankedStandings(prevRanks);
     this.phase = 'reveal';
 
-    const right = this.picks.filter((p) => p.correct);
-    if (right.length === 0) this.say('noneCorrect');
-    else if (right.length === this.picks.length) this.say('allCorrect');
-    else {
-      const fastest = right.reduce((a, b) => ((a.responseMs ?? 0) <= (b.responseMs ?? 0) ? a : b));
-      this.say(this.rng() < 0.6 ? 'fastest' : 'someCorrect', { name: this.nameOf(fastest.playerId) });
-    }
+    for (const p of this.picks) this.streaks.set(p.playerId, p.correct ? (this.streaks.get(p.playerId) ?? 0) + 1 : 0);
+    this.noneCorrectRun = this.picks.some((p) => p.correct) ? 0 : this.noneCorrectRun + 1;
+    const facts = this.picks.map((p) => ({
+      name: this.nameOf(p.playerId),
+      correct: p.correct,
+      responseMs: p.responseMs,
+      streak: this.streaks.get(p.playerId) ?? 0,
+    }));
+    this.otto = revealLine(facts, this.noneCorrectRun, this.rng);
   }
 
   enterScoreboard(): void {
     this.phase = 'scoreboard';
-    const leaders = this.standings.filter((s) => s.rank === 1);
-    const leader = leaders.length === 1 ? leaders[0]! : null;
-    if (leader && leader.prevRank !== 1 && this.round > 1) this.say('newLeader', { name: this.nameOf(leader.playerId) });
-    else if (leader) this.say('standings', { name: this.nameOf(leader.playerId) });
-    else this.say('standings', { name: leaders.map((s) => this.nameOf(s.playerId)).join(' és ') });
+    this.otto = scoreboardLine(this.standingFacts(), this.round, this.rng);
   }
 
   enterFinal(): void {
     this.phase = 'final';
     this.standings = this.rankedStandings(new Map(this.standings.map((s) => [s.playerId, s.rank])));
-    const winners = this.standings.filter((s) => s.rank === 1).map((s) => this.nameOf(s.playerId));
-    if (winners.length === 1) this.say('winner', { name: winners[0]! });
-    else if (winners.length > 1) this.say('tie', { name: winners.join(' és ') });
+    this.otto = finalLine(this.standingFacts(), this.rng);
   }
 
   enterLobby(): void {
@@ -379,7 +381,11 @@ export class Room {
   }
 
   private say(key: OttoLineKey, vars: Record<string, string> = {}): void {
-    this.otto = { key, variant: Math.floor(this.rng() * ottoVariants(key)), vars };
+    this.otto = line(key, this.rng, vars);
+  }
+
+  private standingFacts() {
+    return this.standings.map((s) => ({ name: this.nameOf(s.playerId), score: s.score, rank: s.rank, prevRank: s.prevRank }));
   }
 
   private nameOf(playerId: string): string {

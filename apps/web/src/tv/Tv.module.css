@@ -684,3 +684,241 @@
   font-size: 1.6em;
   font-weight: 600;
 }
+
+.mute {
+  position: absolute;
+  top: 0.9em;
+  right: 0.9em;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  width: 2.4em;
+  height: 2.4em;
+  padding: 0;
+  border: 0.15em solid var(--burgundy-deep);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--burgundy-deep) 70%, transparent);
+  color: var(--cream);
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.mute:hover,
+.mute:focus-visible,
+.mute[aria-pressed='true'] {
+  opacity: 1;
+}
+
+.mute[aria-pressed='true'] {
+  color: var(--rust);
+}
+
+/* ------------------------------------------------------------------------
+   Animation. Keyframes only define a *starting* state and end at the
+   element's normal style, so low-motion mode (animations off) still shows
+   every screen correctly. */
+
+@keyframes hopIn {
+  from {
+    transform: translateY(1.5em) scale(0.6);
+    opacity: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(3em);
+    opacity: 0;
+  }
+}
+
+@keyframes dropIn {
+  from {
+    transform: translateY(-2em);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes hop {
+  40% {
+    transform: translateY(-1em);
+  }
+}
+
+@keyframes pulse {
+  to {
+    transform: scale(1.25);
+  }
+}
+
+@keyframes correctFlash {
+  0% {
+    transform: none;
+    outline-color: transparent;
+  }
+  35% {
+    transform: scale(1.07);
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: translateY(calc(var(--from) * (100% + 0.7em)));
+  }
+}
+
+@keyframes grow {
+  from {
+    width: var(--w0);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes bounce {
+  to {
+    transform: translateY(-0.6em);
+  }
+}
+
+@keyframes fall {
+  from {
+    transform: translate(0, -2em) rotate(0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--drift), 60em) rotate(var(--spin));
+    opacity: 1;
+  }
+}
+
+/* Lobby: new players hop into their seat. */
+.seat[data-testid='seat'] {
+  animation: hopIn 500ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.vip {
+  animation: pop 400ms 250ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Intro. */
+.intro .blobRowItem {
+  animation: hopIn 500ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.intro .blobRowItem:nth-child(2) { animation-delay: 100ms; }
+.intro .blobRowItem:nth-child(3) { animation-delay: 200ms; }
+.intro .blobRowItem:nth-child(4) { animation-delay: 300ms; }
+.intro .blobRowItem:nth-child(5) { animation-delay: 400ms; }
+.intro .blobRowItem:nth-child(6) { animation-delay: 500ms; }
+
+/* Vote: cards slide in one after another; votes drop onto them. */
+.voteCard {
+  animation: slideUp 450ms calc(var(--i, 0) * 120ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+
+.voters > svg {
+  animation: hopIn 350ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Question: the card drops in; answers pop in when they open. */
+.prompt {
+  animation: dropIn 450ms cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+
+.tilesOpen .tile {
+  animation: pop 320ms calc(var(--i, 0) * 70ms) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.lockedIn {
+  animation: hop 400ms ease-out;
+}
+
+/* Reveal, timed to the drumroll: wrong answers dim one by one, the right
+   one flashes on the "ding" (~0.75s), then everyone's picks drop in. */
+.tileWrong::after {
+  animation: fadeIn 250ms calc(var(--i, 0) * 150ms) both;
+}
+
+.tileCorrect {
+  animation: correctFlash 700ms 750ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.picker {
+  animation: dropIn 350ms calc(1.3s + var(--j, 0) * 120ms) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.pickerPoints {
+  animation: pop 300ms 1.9s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.revealNotes {
+  animation: fadeIn 500ms 2.2s both;
+}
+
+/* Scoreboard: rows slide from last round's order, bars grow, scores count. */
+.standingRow {
+  animation: flip 700ms 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.barFill {
+  width: var(--w);
+  animation: grow 900ms 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.delta {
+  animation: pop 300ms 900ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Final: podium rises 3rd → 2nd → 1st, the winner keeps bouncing. */
+.podiumBlock {
+  transform-origin: bottom;
+  animation: rise 600ms var(--d, 0s) cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+.podiumSpot > :not(.podiumBlock) {
+  animation: hopIn 450ms calc(var(--d, 0s) + 0.45s) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.podiumSpot[data-rank='1'] > svg {
+  animation:
+    hopIn 450ms calc(var(--d, 0s) + 0.45s) cubic-bezier(0.3, 1.6, 0.5, 1) both,
+    bounce 450ms 3.2s ease-in-out infinite alternate;
+}
+
+.final {
+  position: relative;
+}
+
+.confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti span {
+  position: absolute;
+  top: -2em;
+  width: 0.9em;
+  height: 0.5em;
+  border-radius: 0.1em;
+  opacity: 0;
+  animation: fall var(--dur) var(--delay) linear forwards;
+}

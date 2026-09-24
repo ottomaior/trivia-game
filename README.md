@@ -38,6 +38,16 @@ pnpm build && pnpm e2e                      # Playwright; CHROMIUM_PATH=/path/to
 
 After changing `apps/server/src/db/schema.ts`, run `pnpm db:generate` and commit the new file in `apps/server/drizzle/`. Railway applies it on the next deploy.
 
+## Sound and motion
+
+The TV plays music and sound effects; phones stay silent (they vibrate instead). Everything is synthesized in the browser with the Web Audio API, in `apps/web/src/audio/`, so there are no audio files to manage.
+
+- **Mute:** press **M** on the TV, or click the speaker button in the top-right corner. The choice is remembered.
+- **Levels:** music, effects and ducking levels are in the `LEVELS` table in `apps/web/src/audio/engine.ts`.
+- **Replacing a sound with a recording:** put the file in `apps/web/public/audio/` and list it in `manifest.json` there (see the README in that folder). Missing entries keep the synthesized sound.
+- **Low-motion mode** for slow smart-TV browsers: open `/tv?lowfx=1` once (remembered; `?lowfx=0` turns it off). It stops all animation and confetti; the OS "reduce motion" setting does the same.
+- **Hearing the sounds without a game:** `pnpm build && pnpm e2e` includes `e2e/sound.spec.ts`, which renders every sound offline through `/tv?audiotest` and checks it is audible and doesn't clip.
+
 ## Questions
 
 - **Starter set:** `apps/server/seed/questions.json` has 120 hand-written questions. Every deploy loads any new ones and skips ones already in the database.
@@ -65,7 +75,7 @@ Deployed on 2026-09-24 and live at **https://triviaserver-production-d945.up.rai
 
 The first deploy logged `Migrations applied` and `Seed: 8 categories, 120 new questions`, and `/healthz` returned `{"ok":true,"rooms":0,"db":true}`.
 
-**`railway.json` is not used.** Railway deprecated config-as-code, and services created after 2026-08-28 can't opt into it, so the settings in the table were entered by hand in the service's dashboard settings. Changing `railway.json` has no effect; change the dashboard instead. (Railway's replacement is Infrastructure as Code in `.railway/railway.ts`; migrating to it is optional.)
+**Settings live only in the Railway dashboard.** Railway deprecated config-as-code (`railway.json`), and services created after 2026-08-28 can't opt into it, so the repo has no Railway config file; the settings in the table were entered in the service's dashboard. (Railway's replacement is Infrastructure as Code in `.railway/railway.ts`; migrating to it is optional.)
 
 **Things to know:**
 - Railway's GitHub import detects the pnpm workspace and offers one service per package (`@trivia/web`, `@trivia/server`) with `pnpm … dev` start commands. That's wrong for this app: it runs as one service built from the root Dockerfile. The `@trivia/web` service was discarded, and the build/start/watch overrides on `@trivia/server` were removed.

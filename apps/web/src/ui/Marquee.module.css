@@ -1,17 +1,72 @@
 .frame {
+  position: relative;
   height: 100%;
   padding: 1.2rem;
   background: var(--burgundy-deep);
 }
 
-/* A thick dotted border renders as round dots: our marquee bulbs. */
 .inner {
   position: relative;
   height: 100%;
-  border: 0.9rem dotted var(--mustard);
+  border: 0.9rem solid var(--burgundy-deep);
   border-radius: 2rem;
   outline: 0.35rem solid var(--rust);
   outline-offset: 0.35rem;
   background: var(--burgundy);
   overflow: hidden;
+}
+
+/* Sits on the centre line of the dark border strip. */
+.bulbs {
+  position: absolute;
+  inset: calc(1.2rem + 0.45rem);
+  width: calc(100% - 2 * (1.2rem + 0.45rem));
+  height: calc(100% - 2 * (1.2rem + 0.45rem));
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bulbs rect {
+  rx: 1.55rem;
+  fill: none;
+  stroke-width: 0.62rem;
+  stroke-linecap: round;
+  /* 1000 / 8 = 125 bulbs around the frame. */
+  stroke-dasharray: 0 8;
+}
+
+.dim {
+  stroke: color-mix(in srgb, var(--mustard) 28%, var(--burgundy-deep));
+}
+
+.lit {
+  stroke: #ffd66b;
+  stroke-dasharray: 0 24; /* every third bulb */
+  filter: drop-shadow(0 0 0.25rem #ffd66b);
+  animation: chase 1.2s steps(3) infinite;
+}
+
+.frame[data-mode='fast'] .lit {
+  animation-duration: 0.45s;
+}
+
+.frame[data-mode='flash'] .lit {
+  stroke-dasharray: 0 8;
+  animation: flash 0.5s steps(2) infinite;
+}
+
+.frame[data-mode='still'] .lit {
+  animation: none;
+}
+
+@keyframes chase {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
 }

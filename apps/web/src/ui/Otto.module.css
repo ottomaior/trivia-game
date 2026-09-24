@@ -84,3 +84,36 @@
     animation: none;
   }
 }
+
+.brows {
+  transition: transform 200ms;
+}
+
+.face[data-mood='shocked'] .brows {
+  transform: translateY(-9px);
+}
+
+.mouth {
+  transform-box: fill-box;
+  transform-origin: center top;
+}
+
+.talking .mouth {
+  animation: talk 180ms ease-in-out infinite alternate;
+}
+
+.talking .mustache {
+  animation: talkStache 180ms ease-in-out infinite alternate;
+}
+
+@keyframes talk {
+  to {
+    transform: scaleY(1.7);
+  }
+}
+
+@keyframes talkStache {
+  to {
+    transform: translateY(-3px) rotate(-1deg);
+  }
+}

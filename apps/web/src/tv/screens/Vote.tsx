@@ -1,4 +1,5 @@
 import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
+import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { Otto } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
@@ -20,7 +21,11 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
         {stage.options.map((o, i) => {
           const voters = view.players.filter((p) => stage.votes[p.id] === i);
           return (
-            <li key={o.id} className={styles.voteCard} style={{ background: TILE[i]!.bg, color: TILE[i]!.fg }}>
+            <li
+              key={o.id}
+              className={styles.voteCard}
+              style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
+            >
               <span className={styles.voteName}>{o.name}</span>
               <span className={styles.voters}>
                 {voters.map((p) => (

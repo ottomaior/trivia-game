@@ -1,4 +1,5 @@
 import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
+import type { CSSProperties } from 'react';
 import { Blob } from '../../ui/Blob.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
@@ -24,9 +25,9 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
       <h2 className={styles.prompt} data-testid="prompt">
         {question.prompt}
       </h2>
-      <ol className={`${styles.tiles} ${open ? '' : styles.tilesWaiting}`}>
+      <ol className={`${styles.tiles} ${open ? styles.tilesOpen : styles.tilesWaiting}`}>
         {question.choices.map((c, i) => (
-          <li key={i} className={styles.tile} style={{ background: TILE[i]!.bg, color: TILE[i]!.fg }}>
+          <li key={i} className={styles.tile} style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}>
             <span className={styles.tileLetter}>{LETTERS[i]}</span>
             <span className={styles.tileText}>{c}</span>
           </li>

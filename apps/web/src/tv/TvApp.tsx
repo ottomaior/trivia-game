@@ -1,11 +1,15 @@
 import { t, type HostSession, type HostView } from '@trivia/shared';
 import { useEffect, useState } from 'react';
+import { audio } from '../audio/engine.ts';
+import { useAudioCues } from '../audio/useAudioCues.ts';
 import { roughSync, syncClock } from '../net/clock.ts';
 import { ACK_TIMEOUT_MS } from '../net/socket.ts';
 import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
 import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
-import { Marquee } from '../ui/Marquee.tsx';
+import { initialLowFx, LowFxContext } from '../ui/lowfx.ts';
+import { Marquee, type MarqueeMode } from '../ui/Marquee.tsx';
+import { MuteButton } from './MuteButton.tsx';
 import { StartScreen } from './StartScreen.tsx';
 import { TvStage } from './TvStage.tsx';
 import styles from './Tv.module.css';
@@ -31,6 +35,31 @@ export function TvApp() {
   const [creating, setCreating] = useState(false);
   // Browsers only allow sound after a click; a resumed TV needs one again.
   const [activated, setActivated] = useState(() => navigator.userActivation?.hasBeenActive ?? false);
+  const [lowFx] = useState(initialLowFx);
+  const liveView = screen.kind === 'live' ? screen.view : null;
+  useAudioCues(liveView);
+
+  // Chrome keeps the earlier click across a reload, so sound can start right away.
+  useEffect(() => {
+    if (activated) audio.unlock();
+  }, [activated]);
+
+  // Test hook: /tv?audiotest exposes an offline render of every sound.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has('audiotest')) return;
+    void import('../audio/selftest.ts').then((m) => {
+      (window as unknown as { __audioSelfTest: typeof m.renderAll }).__audioSelfTest = m.renderAll;
+    });
+  }, []);
+
+  // M toggles sound (works from a keyboard or a TV remote with keys).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'm' || e.key === 'M') audio.toggleMute();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   useEffect(() => {
     // Runs on first connect and after every reconnect: re-claim the TV seat.
@@ -78,6 +107,7 @@ export function TvApp() {
     if (creating) return;
     setCreating(true);
     setActivated(true);
+    audio.unlock();
     goFullscreen();
     try {
       const res = await socket.timeout(ACK_TIMEOUT_MS).emitWithAck('host:create', { householdId: householdId() });
@@ -93,31 +123,49 @@ export function TvApp() {
   }
 
   return (
-    <div className={styles.tv}>
-      <Marquee>
-        {screen.kind === 'start' && <StartScreen onStart={createRoom} disabled={creating || !connected} />}
-        {screen.kind === 'live' && screen.view && <TvStage view={screen.view} />}
-        {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
-          <p className={styles.center}>{t.connecting}</p>
-        )}
-        {!connected && screen.kind !== 'boot' && (
-          <div className={styles.banner} role="status">
-            {t.reconnecting}
-          </div>
-        )}
-        {screen.kind === 'live' && !activated && (
-          <button
-            className={styles.activate}
-            autoFocus
-            onClick={() => {
-              setActivated(true);
-              goFullscreen();
-            }}
-          >
-            {t.clickToContinue}
-          </button>
-        )}
-      </Marquee>
-    </div>
+    <LowFxContext.Provider value={lowFx}>
+      <div className={styles.tv} data-lowfx={lowFx}>
+        <Marquee mode={marqueeMode(liveView, lowFx)}>
+          {screen.kind === 'start' && <StartScreen onStart={createRoom} disabled={creating || !connected} />}
+          {screen.kind === 'live' && screen.view && <TvStage view={screen.view} />}
+          {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
+            <p className={styles.center}>{t.connecting}</p>
+          )}
+          {!connected && screen.kind !== 'boot' && (
+            <div className={styles.banner} role="status">
+              {t.reconnecting}
+            </div>
+          )}
+          {screen.kind === 'live' && <MuteButton />}
+          {screen.kind === 'live' && !activated && (
+            <button
+              className={styles.activate}
+              autoFocus
+              onClick={() => {
+                setActivated(true);
+                audio.unlock();
+                goFullscreen();
+              }}
+            >
+              {t.clickToContinue}
+            </button>
+          )}
+        </Marquee>
+      </div>
+    </LowFxContext.Provider>
   );
+}
+
+/** Bulbs chase faster while the clock runs and flash at the reveal. */
+function marqueeMode(view: HostView | null, lowFx: boolean): MarqueeMode {
+  if (lowFx) return 'still';
+  switch (view?.stage.phase) {
+    case 'question_open':
+      return 'fast';
+    case 'reveal':
+    case 'final':
+      return 'flash';
+    default:
+      return 'idle';
+  }
 }

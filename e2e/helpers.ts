@@ -1,13 +1,24 @@
 import { devices, expect, type Browser, type Page } from '@playwright/test';
 
-export async function openTv(browser: Browser): Promise<{ tv: Page; code: string }> {
+/** Collects console errors and uncaught exceptions from a page. */
+export function trackErrors(page: Page): string[] {
+  const errors: string[] = [];
+  page.on('console', (m) => {
+    if (m.type() === 'error') errors.push(m.text());
+  });
+  page.on('pageerror', (e) => errors.push(e.message));
+  return errors;
+}
+
+export async function openTv(browser: Browser, path = '/tv'): Promise<{ tv: Page; code: string; errors: string[] }> {
   const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
   const tv = await context.newPage();
-  await tv.goto('/tv');
+  const errors = trackErrors(tv);
+  await tv.goto(path);
   await tv.getByRole('button', { name: 'Kezdés' }).click();
   const codeEl = tv.getByTestId('room-code');
   await expect(codeEl).toHaveText(/^[A-Z]{4}$/);
-  return { tv, code: (await codeEl.textContent())! };
+  return { tv, code: (await codeEl.textContent())!, errors };
 }
 
 export async function openPhone(browser: Browser, path = '/'): Promise<Page> {

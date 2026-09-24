@@ -1,11 +1,51 @@
-import { ottoText, type OttoLine } from '@trivia/shared';
+import { ottoText, type OttoLine, type OttoLineKey } from '@trivia/shared';
+import { useEffect, useState } from 'react';
 import styles from './Otto.module.css';
 
+export type OttoMood = 'neutral' | 'happy' | 'shocked';
+
+const MOODS: Partial<Record<OttoLineKey, OttoMood>> = {
+  noneCorrect: 'shocked',
+  noneCorrectAgain: 'shocked',
+  soloWrong: 'shocked',
+  closeRace: 'shocked',
+  allCorrect: 'happy',
+  streak: 'happy',
+  lightning: 'happy',
+  soloCorrect: 'happy',
+  newLeader: 'happy',
+  comeback: 'happy',
+  winner: 'happy',
+  tie: 'happy',
+  soloFinalHigh: 'happy',
+  welcome: 'happy',
+  welcomeSolo: 'happy',
+};
+
+export function moodFor(line: OttoLine | null): OttoMood {
+  return (line && MOODS[line.key]) ?? 'neutral';
+}
+
 /** Otto, the host: slicked hair, big mustache, bow tie. Drawn in SVG. */
-export function OttoFace({ size = '12em' }: { size?: string }) {
+export function OttoFace({
+  size = '12em',
+  mood = 'neutral',
+  talking = false,
+}: {
+  size?: string;
+  mood?: OttoMood;
+  talking?: boolean;
+}) {
   const ink = 'var(--burgundy)';
   return (
-    <svg viewBox="0 0 200 220" width={size} height={size} aria-hidden="true" className={styles.face}>
+    <svg
+      viewBox="0 0 200 220"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      className={`${styles.face} ${talking ? styles.talking : ''}`}
+      data-mood={mood}
+    >
       {/* suit and bow tie */}
       <path d="M30 220 C34 176 66 160 100 160 C134 160 166 176 170 220 Z" fill="var(--teal)" stroke={ink} strokeWidth="5" />
       <path d="M84 160 L100 200 L116 160 Z" fill="var(--cream)" stroke={ink} strokeWidth="4" />
@@ -18,13 +58,25 @@ export function OttoFace({ size = '12em' }: { size?: string }) {
       {/* slicked hair with a shine */}
       <path d="M38 88 C36 40 70 20 104 22 C140 24 166 46 162 88 C150 60 124 50 96 52 C70 54 50 66 38 88 Z" fill="#3A1A10" stroke={ink} strokeWidth="5" strokeLinejoin="round" />
       <path d="M70 40 C86 32 106 30 122 34" stroke="var(--cream)" strokeWidth="5" fill="none" strokeLinecap="round" opacity="0.6" />
-      {/* eyebrows and eyes */}
-      <path d="M60 76 Q74 66 88 74" stroke="#3A1A10" strokeWidth="7" fill="none" strokeLinecap="round" />
-      <path d="M112 74 Q126 66 140 76" stroke="#3A1A10" strokeWidth="7" fill="none" strokeLinecap="round" />
+      {/* eyebrows (raised when shocked) and eyes */}
+      <g className={styles.brows}>
+        <path d="M60 76 Q74 66 88 74" stroke="#3A1A10" strokeWidth="7" fill="none" strokeLinecap="round" />
+        <path d="M112 74 Q126 66 140 76" stroke="#3A1A10" strokeWidth="7" fill="none" strokeLinecap="round" />
+      </g>
       <circle cx="76" cy="92" r="7" fill={ink} className={styles.eye} />
       <circle cx="124" cy="92" r="7" fill={ink} className={styles.eye} />
       {/* nose */}
       <path d="M100 96 Q112 118 98 122" stroke={ink} strokeWidth="5" fill="none" strokeLinecap="round" />
+      {/* mouth, drawn before the mustache so the mustache overlaps it */}
+      <g className={styles.mouth}>
+        {mood === 'shocked' ? (
+          <ellipse cx="100" cy="152" rx="9" ry="11" fill={ink} />
+        ) : mood === 'happy' ? (
+          <path d="M78 144 Q100 170 122 144 Z" fill={ink} stroke={ink} strokeWidth="4" strokeLinejoin="round" />
+        ) : (
+          <path d="M82 148 Q100 160 118 148" stroke={ink} strokeWidth="5" fill="none" strokeLinecap="round" />
+        )}
+      </g>
       {/* the mustache */}
       <path
         className={styles.mustache}
@@ -34,20 +86,35 @@ export function OttoFace({ size = '12em' }: { size?: string }) {
         strokeWidth="4"
         strokeLinejoin="round"
       />
-      {/* grin */}
-      <path d="M82 148 Q100 160 118 148" stroke={ink} strokeWidth="5" fill="none" strokeLinecap="round" />
     </svg>
   );
 }
 
+/** How long Otto's mouth moves after a new line appears. */
+const TALK_MS = 1600;
+
 /** Otto with a speech bubble. The bubble hides when there's nothing to say. */
-export function Otto({ line, size }: { line: OttoLine | null; size?: string }) {
+export function Otto({ line, size, bubbleDelay }: { line: OttoLine | null; size?: string; bubbleDelay?: string }) {
   const text = line ? ottoText(line) : null;
+  const [talking, setTalking] = useState(false);
+  // Talk while the bubble appears; if the bubble is delayed, so is the talking.
+  const delayMs = bubbleDelay ? parseFloat(bubbleDelay) * 1000 : 0;
+  useEffect(() => {
+    if (!text) return;
+    const start = setTimeout(() => setTalking(true), delayMs);
+    const stop = setTimeout(() => setTalking(false), delayMs + TALK_MS);
+    return () => {
+      clearTimeout(start);
+      clearTimeout(stop);
+      setTalking(false);
+    };
+  }, [text, delayMs]);
+
   return (
     <div className={styles.otto}>
-      <OttoFace size={size} />
+      <OttoFace size={size} mood={moodFor(line)} talking={talking} />
       {text && (
-        <p className={styles.bubble} key={text} data-testid="otto-line">
+        <p className={styles.bubble} key={text} data-testid="otto-line" style={bubbleDelay ? { animationDelay: bubbleDelay } : undefined}>
           {text}
         </p>
       )}

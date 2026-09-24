@@ -80,16 +80,29 @@ export interface OttoLine {
 
 export type OttoLineKey =
   | 'welcome'
+  | 'welcomeSolo'
   | 'pickCategory'
+  | 'lastRound'
   | 'question'
   | 'allCorrect'
   | 'noneCorrect'
+  | 'noneCorrectAgain'
+  | 'streak'
+  | 'lightning'
   | 'fastest'
   | 'someCorrect'
+  | 'soloCorrect'
+  | 'soloWrong'
   | 'newLeader'
+  | 'comeback'
+  | 'blowout'
+  | 'closeRace'
   | 'standings'
+  | 'soloScore'
   | 'winner'
   | 'tie'
+  | 'soloFinalHigh'
+  | 'soloFinalLow'
   | 'paused';
 
 interface BaseView {

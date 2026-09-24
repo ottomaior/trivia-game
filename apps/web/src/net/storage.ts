@@ -40,4 +40,6 @@ export const KEYS = {
   household: 'otto.household',
   hostSession: 'otto.hostSession',
   playerSession: 'otto.playerSession',
+  audio: 'otto.audio',
+  lowFx: 'otto.lowfx',
 } as const;

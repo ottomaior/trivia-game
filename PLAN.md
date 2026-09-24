@@ -29,7 +29,7 @@ The game is **Hungarian only**: all UI text, Otto's lines, and questions are in 
 | Server | Node 22 + **Fastify** + Socket.IO | Fastify also serves the built web app, `/healthz`, and a small JSON API. |
 | DB | **Postgres on Railway** + **Drizzle ORM** (drizzle-kit migrations) | This is better than SQLite on a volume. Railway volumes block zero-downtime deploys and tie the service to one volume, while Postgres gets managed backups, lets the generator scripts run from your laptop over the public URL, and gives us `pg_trgm` for duplicate detection. Drizzle is TS-first and lightweight. |
 | Validation | **zod** schemas in `shared` | All client→server payloads get validated at runtime. The same schemas validate AI-generated question JSON. |
-| Client | React 19 + Vite, React Router, CSS Modules with CSS variables for tokens | There's no UI kit, which keeps generic app styling out. Framer Motion comes in Phase 2 for animations. |
+| Client | React 19 + Vite, React Router, CSS Modules with CSS variables for tokens | There's no UI kit, which keeps generic app styling out. Animations are plain CSS keyframes (light enough for TV browsers). |
 | QR | `qrcode` (renders SVG on the TV) | |
 | Tests | **Vitest** (engine unit tests with a fake clock) + **Playwright** (1 TV context plus N phone contexts in one browser) | |
 | Package mgmt | **pnpm workspaces** | |
@@ -227,10 +227,10 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 - Tests: engine unit tests (phase transitions, early end, scoring, secrecy: no `correct` field in pre-reveal views, reconnect), plus a Playwright test running 1 TV and 3 phones through a full game.
 - ✅ **Milestone:** a full 10-question game on your TV with 3+ phones. Refreshing a phone mid-question restores the same player. Refreshing the TV resumes the game. A second game from the same TV shows no repeated questions.
 
-### Phase 2 — Juice and content quality
-- Sound system: music bed, SFX (tick, lock-in, reveal, fanfare), per-cue volumes, mute toggle.
-- Otto animation (idle blink, mustache wiggle, reactions). Staged reveal animations with Framer Motion. Score count-up.
-- Otto line engine: event triggers (streaks, everyone wrong, blowout lead, comeback).
+### Phase 2 — Juice and content quality — sound, animation and Otto's commentary built
+- ✅ Sound system: synthesized music (lounge loop, thinking pulse) and 12 effects via Web Audio, derived from view changes on the TV, mute toggle (M key / button), optional MP3 overrides.
+- ✅ Otto animation (blink, mustache wiggle, talking mouth, moods), chasing marquee bulbs, staged reveal, FLIP scoreboard with count-up, rising podium and confetti — all in CSS, no Framer Motion. Low-motion mode (`?lowfx=1`).
+- ✅ Otto line engine: streaks, everyone wrong twice, lightning answers, comebacks, blowouts, close races, last round, solo wording.
 - Content: `pg_trgm` dedupe, Message Batches bulk generation, `flagged.ts` re-verification, difficulty recalibration from `times_correct/times_shown`, and a `flagged.ts` option to re-verify flagged questions with Claude.
 - Smart-TV pass: `@vitejs/plugin-legacy` for the `/tv` route, a reduced-motion or low-end mode, and a test on your TV's browser.
 - ✅ **Milestone:** a game with full audio and animation, and a question bank of at least 1,500. The flagged-question workflow gets used once for real.

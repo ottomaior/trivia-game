@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { autoplay, joinByLink, openTv } from './helpers.ts';
 
 test('three phones play a full 10-round game on one TV', async ({ browser }) => {
-  const { tv, code } = await openTv(browser);
+  const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
   const cili = await joinByLink(browser, code, 'Cili');
@@ -31,4 +31,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   // Back to a fresh lobby with the same players.
   await anna.getByRole('button', { name: 'Új váró' }).click();
   await expect(tv.getByTestId('seat')).toHaveCount(3);
+
+  // Sound, music and animations ran the whole game without a single error.
+  expect(errors).toEqual([]);
 });

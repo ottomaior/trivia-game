@@ -64,7 +64,7 @@ describe('RoomRunner', () => {
     expect(room.phase).toBe('final');
     expect(room.standings).toEqual([expect.objectContaining({ playerId: solo!.id, rank: 1 })]);
     expect(solo!.score).toBe(TOTAL_ROUNDS * 975); // answered 1s into the 20s window every round
-    expect(room.otto?.key).toBe('winner');
+    expect(room.otto?.key).toBe('soloFinalHigh');
   });
 
   it('plays a full game on timers alone and records it', async () => {
