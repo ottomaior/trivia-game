@@ -1,482 +1,602 @@
 {
   "0347f38b16110684": {
     "file": "0347f38b16110684.mp3",
-    "hash": "b3f1eb8bf1cf8806"
+    "hash": "b3f1eb8bf1cf8806",
+    "durationMs": 3265
   },
   "0357a43c168f5786": {
     "file": "0357a43c168f5786.mp3",
-    "hash": "5b4b64d409950adf"
+    "hash": "5b4b64d409950adf",
+    "durationMs": 1985
   },
   "0578f5cd60cc589e": {
     "file": "0578f5cd60cc589e.mp3",
-    "hash": "693b0292d1c2a33c"
+    "hash": "693b0292d1c2a33c",
+    "durationMs": 2795
   },
   "07cb44cf011fb93e": {
     "file": "07cb44cf011fb93e.mp3",
-    "hash": "2a8a692cc1353deb"
+    "hash": "2a8a692cc1353deb",
+    "durationMs": 2873
   },
   "0a073f70526b1ced": {
     "file": "0a073f70526b1ced.mp3",
-    "hash": "eca4d070e7ea8ac6"
+    "hash": "eca4d070e7ea8ac6",
+    "durationMs": 2612
   },
   "0c65b39f4c997830": {
     "file": "0c65b39f4c997830.mp3",
-    "hash": "b0191e709985aac5"
+    "hash": "b0191e709985aac5",
+    "durationMs": 3997
   },
   "126aa18bd00ed26a": {
     "file": "126aa18bd00ed26a.mp3",
-    "hash": "0036ee5687d1c35a"
+    "hash": "0036ee5687d1c35a",
+    "durationMs": 2952
   },
   "13e589690dc11515": {
     "file": "13e589690dc11515.mp3",
-    "hash": "a3efce99058172ff"
+    "hash": "a3efce99058172ff",
+    "durationMs": 2952
   },
   "156ec22245817f59": {
     "file": "156ec22245817f59.mp3",
-    "hash": "ce9470e0a7e17276"
+    "hash": "ce9470e0a7e17276",
+    "durationMs": 2377
   },
   "170d7d696c375c88": {
     "file": "170d7d696c375c88.mp3",
-    "hash": "1f69862926609200"
+    "hash": "1f69862926609200",
+    "durationMs": 4545
   },
   "19b0b11133c8324e": {
     "file": "19b0b11133c8324e.mp3",
-    "hash": "95351cbbc92e0e94"
+    "hash": "95351cbbc92e0e94",
+    "durationMs": 2377
   },
   "1ab5859d3d67397b": {
     "file": "1ab5859d3d67397b.mp3",
-    "hash": "687490013906c167"
+    "hash": "687490013906c167",
+    "durationMs": 2534
   },
   "1f65026bce08462a": {
     "file": "1f65026bce08462a.mp3",
-    "hash": "87a064eef627a952"
+    "hash": "87a064eef627a952",
+    "durationMs": 2064
   },
   "2500635912a50baa": {
     "file": "2500635912a50baa.mp3",
-    "hash": "03a8ae274c83e29d"
+    "hash": "03a8ae274c83e29d",
+    "durationMs": 3814
   },
   "258cd14fce3ea10f": {
     "file": "258cd14fce3ea10f.mp3",
-    "hash": "96ca81ce338a6035"
+    "hash": "96ca81ce338a6035",
+    "durationMs": 5825
   },
   "2807e41646992c89": {
     "file": "2807e41646992c89.mp3",
-    "hash": "9418b3e02c211cc8"
+    "hash": "9418b3e02c211cc8",
+    "durationMs": 2456
   },
   "284faba84b00c73e": {
     "file": "284faba84b00c73e.mp3",
-    "hash": "44781c7eb2c5aebe"
+    "hash": "44781c7eb2c5aebe",
+    "durationMs": 4389
   },
   "289ea2e414dca818": {
     "file": "289ea2e414dca818.mp3",
-    "hash": "d8c182bd9b2a0443"
+    "hash": "d8c182bd9b2a0443",
+    "durationMs": 1829
   },
   "2942610c62021ab7": {
     "file": "2942610c62021ab7.mp3",
-    "hash": "21bdea0604e6281d"
+    "hash": "21bdea0604e6281d",
+    "durationMs": 5094
   },
   "2ae80402f3f57079": {
     "file": "2ae80402f3f57079.mp3",
-    "hash": "3aeb45951c8d008c"
+    "hash": "3aeb45951c8d008c",
+    "durationMs": 2377
   },
   "2c5d0aff33763ab6": {
     "file": "2c5d0aff33763ab6.mp3",
-    "hash": "426852ef5f344162"
+    "hash": "426852ef5f344162",
+    "durationMs": 3030
   },
   "2cd6cd9b38aedc07": {
     "file": "2cd6cd9b38aedc07.mp3",
-    "hash": "f26e24ec4af03491"
+    "hash": "f26e24ec4af03491",
+    "durationMs": 1985
   },
   "2ea6d8453981c35e": {
     "file": "2ea6d8453981c35e.mp3",
-    "hash": "e0e66fac09a117a0"
+    "hash": "e0e66fac09a117a0",
+    "durationMs": 1985
   },
   "2ff5b51a96db5a9f": {
     "file": "2ff5b51a96db5a9f.mp3",
-    "hash": "ca98684c0499ed7e"
+    "hash": "ca98684c0499ed7e",
+    "durationMs": 4780
   },
   "3031caf7ee56efbb": {
     "file": "3031caf7ee56efbb.mp3",
-    "hash": "8996e340b737e8be"
+    "hash": "8996e340b737e8be",
+    "durationMs": 2534
   },
   "332b301b274771fc": {
     "file": "332b301b274771fc.mp3",
-    "hash": "59c5b9ba3087b835"
+    "hash": "59c5b9ba3087b835",
+    "durationMs": 3265
   },
   "342a15611e331cac": {
     "file": "342a15611e331cac.mp3",
-    "hash": "c3601326190a7d85"
+    "hash": "c3601326190a7d85",
+    "durationMs": 4702
   },
   "348f1b5bcad93624": {
     "file": "348f1b5bcad93624.mp3",
-    "hash": "e977cbef209c16b0"
+    "hash": "e977cbef209c16b0",
+    "durationMs": 1829
   },
   "35685a2198030b51": {
     "file": "35685a2198030b51.mp3",
-    "hash": "b450623ba1cd5a20"
+    "hash": "b450623ba1cd5a20",
+    "durationMs": 2299
   },
   "35b8131ad505aa84": {
     "file": "35b8131ad505aa84.mp3",
-    "hash": "e88e6b919c19e6be"
+    "hash": "e88e6b919c19e6be",
+    "durationMs": 3892
   },
   "3905d29e73c86c43": {
     "file": "3905d29e73c86c43.mp3",
-    "hash": "91a4d0156c7d752b"
+    "hash": "91a4d0156c7d752b",
+    "durationMs": 2142
   },
   "3b110a79da5dda2b": {
     "file": "3b110a79da5dda2b.mp3",
-    "hash": "d63a19fa3be765d8"
+    "hash": "d63a19fa3be765d8",
+    "durationMs": 3422
   },
   "3ccc2fce5d9df7ea": {
     "file": "3ccc2fce5d9df7ea.mp3",
-    "hash": "8379460a6c9ac8f4"
+    "hash": "8379460a6c9ac8f4",
+    "durationMs": 3109
   },
   "3dddbb5a648e8de3": {
     "file": "3dddbb5a648e8de3.mp3",
-    "hash": "f5cd085f342aacb3"
+    "hash": "f5cd085f342aacb3",
+    "durationMs": 2299
   },
   "3e000234b7c13b01": {
     "file": "3e000234b7c13b01.mp3",
-    "hash": "60cdfe3dd84ab865"
+    "hash": "60cdfe3dd84ab865",
+    "durationMs": 2377
   },
   "3f0b6bf48b8fd588": {
     "file": "3f0b6bf48b8fd588.mp3",
-    "hash": "ad444e8414c2a17f"
+    "hash": "ad444e8414c2a17f",
+    "durationMs": 3500
   },
   "3f95c8b6213f297f": {
     "file": "3f95c8b6213f297f.mp3",
-    "hash": "9e8ee470e836c924"
+    "hash": "9e8ee470e836c924",
+    "durationMs": 1985
   },
   "3fa947eb5c8a3945": {
     "file": "3fa947eb5c8a3945.mp3",
-    "hash": "f332b0bbfc4272c1"
+    "hash": "f332b0bbfc4272c1",
+    "durationMs": 1750
   },
   "42d4a7454d928bbb": {
     "file": "42d4a7454d928bbb.mp3",
-    "hash": "dcd62a99d27499d7"
+    "hash": "dcd62a99d27499d7",
+    "durationMs": 2717
   },
   "44c00ff71002bcdc": {
     "file": "44c00ff71002bcdc.mp3",
-    "hash": "b8534ecde4a0ee88"
+    "hash": "b8534ecde4a0ee88",
+    "durationMs": 2377
   },
   "460d7e3c8cf14cb4": {
     "file": "460d7e3c8cf14cb4.mp3",
-    "hash": "c54647978d61c9e0"
+    "hash": "c54647978d61c9e0",
+    "durationMs": 2142
   },
   "4676f12ee36d5e4f": {
     "file": "4676f12ee36d5e4f.mp3",
-    "hash": "be1b9911922baaa3"
+    "hash": "be1b9911922baaa3",
+    "durationMs": 3344
   },
   "4b3db1eab676c263": {
     "file": "4b3db1eab676c263.mp3",
-    "hash": "74054d6c2cf4654d"
+    "hash": "74054d6c2cf4654d",
+    "durationMs": 2064
   },
   "4d282aebdca97d60": {
     "file": "4d282aebdca97d60.mp3",
-    "hash": "b33c5815f8bf20e4"
+    "hash": "b33c5815f8bf20e4",
+    "durationMs": 3500
   },
   "4e0c4d3f99d7585b": {
     "file": "4e0c4d3f99d7585b.mp3",
-    "hash": "f505c816c4cc3021"
+    "hash": "f505c816c4cc3021",
+    "durationMs": 2064
   },
   "4f5f91483912abf8": {
     "file": "4f5f91483912abf8.mp3",
-    "hash": "a6b75d784db71411"
+    "hash": "a6b75d784db71411",
+    "durationMs": 3422
   },
   "511747f313fcc0dd": {
     "file": "511747f313fcc0dd.mp3",
-    "hash": "ab59607a90002565"
+    "hash": "ab59607a90002565",
+    "durationMs": 3500
   },
   "5445091c6b11a1c0": {
     "file": "5445091c6b11a1c0.mp3",
-    "hash": "8b0966738ed9d538"
+    "hash": "8b0966738ed9d538",
+    "durationMs": 5825
   },
   "5520002b7302ee3b": {
     "file": "5520002b7302ee3b.mp3",
-    "hash": "6c71ac3715820293"
+    "hash": "6c71ac3715820293",
+    "durationMs": 1985
   },
   "55ec7b1d4568cfce": {
     "file": "55ec7b1d4568cfce.mp3",
-    "hash": "90e808fb1db27533"
+    "hash": "90e808fb1db27533",
+    "durationMs": 4545
   },
   "620b8371986bce30": {
     "file": "620b8371986bce30.mp3",
-    "hash": "827f2b48e9e39e48"
+    "hash": "827f2b48e9e39e48",
+    "durationMs": 2064
   },
   "674a5bf45b86ecea": {
     "file": "674a5bf45b86ecea.mp3",
-    "hash": "15903ff29c623762"
+    "hash": "15903ff29c623762",
+    "durationMs": 4310
   },
   "71765aad7ff336bc": {
     "file": "71765aad7ff336bc.mp3",
-    "hash": "e07c8b5d80cdf5d5"
+    "hash": "e07c8b5d80cdf5d5",
+    "durationMs": 2220
   },
   "791a5df49a18e665": {
     "file": "791a5df49a18e665.mp3",
-    "hash": "ad939c32c6d46386"
+    "hash": "ad939c32c6d46386",
+    "durationMs": 3109
   },
   "7992eec26d826aa2": {
     "file": "7992eec26d826aa2.mp3",
-    "hash": "9e1e3a35bc4e856b"
+    "hash": "9e1e3a35bc4e856b",
+    "durationMs": 1829
   },
   "7c2aaa0119218ef5": {
     "file": "7c2aaa0119218ef5.mp3",
-    "hash": "96bf5e3db5e0102f"
+    "hash": "96bf5e3db5e0102f",
+    "durationMs": 5982
   },
   "7fbdca625e579dae": {
     "file": "7fbdca625e579dae.mp3",
-    "hash": "0c08c0ed4f1f7b7b"
+    "hash": "0c08c0ed4f1f7b7b",
+    "durationMs": 3500
   },
   "827ee97d2931a989": {
     "file": "827ee97d2931a989.mp3",
-    "hash": "52e1b7414c896b48"
+    "hash": "52e1b7414c896b48",
+    "durationMs": 2873
   },
   "83dbdd1d4a111243": {
     "file": "83dbdd1d4a111243.mp3",
-    "hash": "3cad10c997f293af"
+    "hash": "3cad10c997f293af",
+    "durationMs": 2456
   },
   "84db535dadbccd4f": {
     "file": "84db535dadbccd4f.mp3",
-    "hash": "c48358471799ed59"
+    "hash": "c48358471799ed59",
+    "durationMs": 1985
   },
   "8602252dc91ba0a1": {
     "file": "8602252dc91ba0a1.mp3",
-    "hash": "07995d7e463fbe14"
+    "hash": "07995d7e463fbe14",
+    "durationMs": 1829
   },
   "86ad06c29d30499f": {
     "file": "86ad06c29d30499f.mp3",
-    "hash": "d78623d0a5aef8b9"
+    "hash": "d78623d0a5aef8b9",
+    "durationMs": 2064
   },
   "8bc96e557cacd7dc": {
     "file": "8bc96e557cacd7dc.mp3",
-    "hash": "769d07ef955f958e"
+    "hash": "769d07ef955f958e",
+    "durationMs": 1985
   },
   "8cc7d14c91b6b74a": {
     "file": "8cc7d14c91b6b74a.mp3",
-    "hash": "0e98c1f8b9df2130"
+    "hash": "0e98c1f8b9df2130",
+    "durationMs": 1750
   },
   "904ac9dc52fbc244": {
     "file": "904ac9dc52fbc244.mp3",
-    "hash": "a575e65435af61b7"
+    "hash": "a575e65435af61b7",
+    "durationMs": 3344
   },
   "90ea7fba4c42ad0f": {
     "file": "90ea7fba4c42ad0f.mp3",
-    "hash": "f2869515682f5aa8"
+    "hash": "f2869515682f5aa8",
+    "durationMs": 2795
   },
   "917004a29d27f68d": {
     "file": "917004a29d27f68d.mp3",
-    "hash": "bc8c394802cd29e0"
+    "hash": "bc8c394802cd29e0",
+    "durationMs": 2064
   },
   "923c75e242506ea1": {
     "file": "923c75e242506ea1.mp3",
-    "hash": "fce66aa841c864f3"
+    "hash": "fce66aa841c864f3",
+    "durationMs": 4545
   },
   "945ff6d3d55ef7e7": {
     "file": "945ff6d3d55ef7e7.mp3",
-    "hash": "c573a8f030417338"
+    "hash": "c573a8f030417338",
+    "durationMs": 1332
   },
   "95e40e2f6cd731a3": {
     "file": "95e40e2f6cd731a3.mp3",
-    "hash": "6c5f421214e5c0fc"
+    "hash": "6c5f421214e5c0fc",
+    "durationMs": 2064
   },
   "97cc54899111a811": {
     "file": "97cc54899111a811.mp3",
-    "hash": "cd219ef0373b7649"
+    "hash": "cd219ef0373b7649",
+    "durationMs": 3579
   },
   "9884ce9e25d10933": {
     "file": "9884ce9e25d10933.mp3",
-    "hash": "9c55cf52073db2cf"
+    "hash": "9c55cf52073db2cf",
+    "durationMs": 3736
   },
   "9f2e39c0548804a3": {
     "file": "9f2e39c0548804a3.mp3",
-    "hash": "c3fa8a2fd2a826cf"
+    "hash": "c3fa8a2fd2a826cf",
+    "durationMs": 5590
   },
   "a0f560016339dffe": {
     "file": "a0f560016339dffe.mp3",
-    "hash": "a38032b9bfd5a4fb"
+    "hash": "a38032b9bfd5a4fb",
+    "durationMs": 1750
   },
   "a3e08fe09d67dc90": {
     "file": "a3e08fe09d67dc90.mp3",
-    "hash": "2c5aec890f528fda"
+    "hash": "2c5aec890f528fda",
+    "durationMs": 3657
   },
   "a53dba0da297279d": {
     "file": "a53dba0da297279d.mp3",
-    "hash": "eac98aa6ad8c9139"
+    "hash": "eac98aa6ad8c9139",
+    "durationMs": 2612
   },
   "a841be5c529f4aa2": {
     "file": "a841be5c529f4aa2.mp3",
-    "hash": "c379f45032bcb7aa"
+    "hash": "c379f45032bcb7aa",
+    "durationMs": 2952
   },
   "a95bb6d35dad739f": {
     "file": "a95bb6d35dad739f.mp3",
-    "hash": "e749441b8806559b"
+    "hash": "e749441b8806559b",
+    "durationMs": 2220
   },
   "aa5ffc066e266fbd": {
     "file": "aa5ffc066e266fbd.mp3",
-    "hash": "2ae184f939ee158c"
+    "hash": "2ae184f939ee158c",
+    "durationMs": 2717
   },
   "aa7692940eb6b11b": {
     "file": "aa7692940eb6b11b.mp3",
-    "hash": "10aba5f8f76494f9"
+    "hash": "10aba5f8f76494f9",
+    "durationMs": 2534
   },
   "b1e7e51c19c2866c": {
     "file": "b1e7e51c19c2866c.mp3",
-    "hash": "352760ff346d16a2"
+    "hash": "352760ff346d16a2",
+    "durationMs": 4153
   },
   "b289b6872be48baa": {
     "file": "b289b6872be48baa.mp3",
-    "hash": "495c6c5fb0ac0152"
+    "hash": "495c6c5fb0ac0152",
+    "durationMs": 2299
   },
   "b486fc47f550edca": {
     "file": "b486fc47f550edca.mp3",
-    "hash": "069f757e9b5741a5"
+    "hash": "069f757e9b5741a5",
+    "durationMs": 3579
   },
   "b5e21667109dedf2": {
     "file": "b5e21667109dedf2.mp3",
-    "hash": "a5f03dccb1ef7d56"
+    "hash": "a5f03dccb1ef7d56",
+    "durationMs": 2612
   },
   "b5e39cc532d5f574": {
     "file": "b5e39cc532d5f574.mp3",
-    "hash": "f54222a42144afdf"
+    "hash": "f54222a42144afdf",
+    "durationMs": 2873
   },
   "b9f21c9184c95c4d": {
     "file": "b9f21c9184c95c4d.mp3",
-    "hash": "8f01edcf2b8d3b16"
+    "hash": "8f01edcf2b8d3b16",
+    "durationMs": 4937
   },
   "bb083efa93b4f052": {
     "file": "bb083efa93b4f052.mp3",
-    "hash": "946b911495ff4cdc"
+    "hash": "946b911495ff4cdc",
+    "durationMs": 3109
   },
   "bb885ff82782fdcc": {
     "file": "bb885ff82782fdcc.mp3",
-    "hash": "0c25641479adedb2"
+    "hash": "0c25641479adedb2",
+    "durationMs": 2873
   },
   "be9df3198d8b0840": {
     "file": "be9df3198d8b0840.mp3",
-    "hash": "58035005dfc4da53"
+    "hash": "58035005dfc4da53",
+    "durationMs": 2534
   },
   "c0091d319aff98ba": {
     "file": "c0091d319aff98ba.mp3",
-    "hash": "197124e763ce2c84"
+    "hash": "197124e763ce2c84",
+    "durationMs": 3422
   },
   "c00dbb62c0da2a67": {
     "file": "c00dbb62c0da2a67.mp3",
-    "hash": "807a0e6bb35e980d"
+    "hash": "807a0e6bb35e980d",
+    "durationMs": 3579
   },
   "c108a5761b1e04a0": {
     "file": "c108a5761b1e04a0.mp3",
-    "hash": "c22cd14d8b0e9ab1"
+    "hash": "c22cd14d8b0e9ab1",
+    "durationMs": 5433
   },
   "c31d32a9aa96a1f3": {
     "file": "c31d32a9aa96a1f3.mp3",
-    "hash": "c17ecd7a5921b32c"
+    "hash": "c17ecd7a5921b32c",
+    "durationMs": 1985
   },
   "c4c922206b51dc03": {
     "file": "c4c922206b51dc03.mp3",
-    "hash": "378ca6c81f6295b2"
+    "hash": "378ca6c81f6295b2",
+    "durationMs": 3030
   },
   "c96d16ea78427b51": {
     "file": "c96d16ea78427b51.mp3",
-    "hash": "43d3e1a92e8321cb"
+    "hash": "43d3e1a92e8321cb",
+    "durationMs": 3657
   },
   "cb663bd1eb37d955": {
     "file": "cb663bd1eb37d955.mp3",
-    "hash": "583a85fe35ae0f96"
+    "hash": "583a85fe35ae0f96",
+    "durationMs": 3187
   },
   "ce4d6865c5e18b23": {
     "file": "ce4d6865c5e18b23.mp3",
-    "hash": "70d19d6a6ad5700d"
+    "hash": "70d19d6a6ad5700d",
+    "durationMs": 2299
   },
   "ce79ee7d04327040": {
     "file": "ce79ee7d04327040.mp3",
-    "hash": "96f7c8f73a7b8d4b"
+    "hash": "96f7c8f73a7b8d4b",
+    "durationMs": 3187
   },
   "d1040bb9b17d52d7": {
     "file": "d1040bb9b17d52d7.mp3",
-    "hash": "667aa1fad1d936f3"
+    "hash": "667aa1fad1d936f3",
+    "durationMs": 3736
   },
   "d24edb0e48fa1edf": {
     "file": "d24edb0e48fa1edf.mp3",
-    "hash": "a21ba8606d34169e"
+    "hash": "a21ba8606d34169e",
+    "durationMs": 4389
   },
   "d4701cf1a2420b0c": {
     "file": "d4701cf1a2420b0c.mp3",
-    "hash": "6e521a16ba850e2a"
+    "hash": "6e521a16ba850e2a",
+    "durationMs": 5094
   },
   "d9c648b482e7ebb9": {
     "file": "d9c648b482e7ebb9.mp3",
-    "hash": "7db69dd02e8d5b67"
+    "hash": "7db69dd02e8d5b67",
+    "durationMs": 2377
   },
   "daa0a0bef3ba9f0d": {
     "file": "daa0a0bef3ba9f0d.mp3",
-    "hash": "6c3e8c4f39148bf3"
+    "hash": "6c3e8c4f39148bf3",
+    "durationMs": 2717
   },
   "dc9758d9c8908a01": {
     "file": "dc9758d9c8908a01.mp3",
-    "hash": "801a381a31004def"
+    "hash": "801a381a31004def",
+    "durationMs": 2795
   },
   "dd358bdb29f66dd5": {
     "file": "dd358bdb29f66dd5.mp3",
-    "hash": "40ec8c055f8153f9"
+    "hash": "40ec8c055f8153f9",
+    "durationMs": 2299
   },
   "df8518b9f0ebe1b3": {
     "file": "df8518b9f0ebe1b3.mp3",
-    "hash": "43897bb2ed3a58d9"
+    "hash": "43897bb2ed3a58d9",
+    "durationMs": 2456
   },
   "e06b992793acbe21": {
     "file": "e06b992793acbe21.mp3",
-    "hash": "c675d1894c0a077a"
+    "hash": "c675d1894c0a077a",
+    "durationMs": 2377
   },
   "e0dd612021d6a370": {
     "file": "e0dd612021d6a370.mp3",
-    "hash": "421dc3c830ffafdc"
+    "hash": "421dc3c830ffafdc",
+    "durationMs": 2795
   },
   "e2f31964f26592db": {
     "file": "e2f31964f26592db.mp3",
-    "hash": "f126bdb3009f1583"
+    "hash": "f126bdb3009f1583",
+    "durationMs": 3109
   },
   "e7dd00e4d0029536": {
     "file": "e7dd00e4d0029536.mp3",
-    "hash": "6767db0d1d6ea7fb"
+    "hash": "6767db0d1d6ea7fb",
+    "durationMs": 4389
   },
   "e81e3333b5be4a9e": {
     "file": "e81e3333b5be4a9e.mp3",
-    "hash": "40aa50d53c376e79"
+    "hash": "40aa50d53c376e79",
+    "durationMs": 3422
   },
   "ead07472e0f07aaf": {
     "file": "ead07472e0f07aaf.mp3",
-    "hash": "b539b93cfbb80853"
+    "hash": "b539b93cfbb80853",
+    "durationMs": 2220
   },
   "ebd18f759625d8c1": {
     "file": "ebd18f759625d8c1.mp3",
-    "hash": "6350eea9a422e430"
+    "hash": "6350eea9a422e430",
+    "durationMs": 2952
   },
   "ed3b1891fe761fe9": {
     "file": "ed3b1891fe761fe9.mp3",
-    "hash": "85f1d6d14044bdc2"
+    "hash": "85f1d6d14044bdc2",
+    "durationMs": 2377
   },
   "f2a6445d8dbdefa8": {
     "file": "f2a6445d8dbdefa8.mp3",
-    "hash": "6479b80fcf5583e1"
+    "hash": "6479b80fcf5583e1",
+    "durationMs": 5355
   },
   "f3c4493004d0c421": {
     "file": "f3c4493004d0c421.mp3",
-    "hash": "06a65dcaf7cd4010"
+    "hash": "06a65dcaf7cd4010",
+    "durationMs": 3657
   },
   "fb5624e285a56bb6": {
     "file": "fb5624e285a56bb6.mp3",
-    "hash": "5b3a52130f6f2d77"
+    "hash": "5b3a52130f6f2d77",
+    "durationMs": 1985
   },
   "fc3e46dea5ee2acd": {
     "file": "fc3e46dea5ee2acd.mp3",
-    "hash": "82e3297da4e89f63"
+    "hash": "82e3297da4e89f63",
+    "durationMs": 2612
   },
   "ff616018c4cf9c46": {
     "file": "ff616018c4cf9c46.mp3",
-    "hash": "4bbb1cc30c416afb"
+    "hash": "4bbb1cc30c416afb",
+    "durationMs": 2220
   },
   "ffd45377cdac37ab": {
     "file": "ffd45377cdac37ab.mp3",
-    "hash": "1bc7e2891ac75ab1"
+    "hash": "1bc7e2891ac75ab1",
+    "durationMs": 3736
   }
 }

@@ -106,49 +106,27 @@ export interface OttoLine {
   focus: string[];
 }
 
-/** Otto's reaction to a chosen category, by the category's slug. */
-export const CATEGORY_LINES = {
-  tortenelem: 'catTortenelem',
-  foldrajz: 'catFoldrajz',
-  tudomany: 'catTudomany',
-  film: 'catFilm',
-  zene: 'catZene',
-  sport: 'catSport',
-  gasztro: 'catGasztro',
-  magyarorszag: 'catMagyarorszag',
-} as const;
-export type CategoryLineKey = (typeof CATEGORY_LINES)[keyof typeof CATEGORY_LINES];
-
 export type OttoLineKey =
   | 'welcome'
   | 'welcomeSolo'
-  | 'firstRound'
-  | 'pickCategory'
-  | 'halfway'
   | 'lastRound'
-  | 'categoryPicked'
   | 'powerGranted'
   | 'powerFreeze'
   | 'powerSlime'
   | 'powerMany'
   | 'powerGangUp'
-  | CategoryLineKey
   | 'allCorrect'
   | 'noneCorrect'
   | 'noneCorrectAgain'
   | 'onlyOne'
   | 'streak'
   | 'lightning'
-  | 'fastest'
-  | 'someCorrect'
   | 'soloCorrect'
   | 'soloWrong'
   | 'newLeader'
   | 'comeback'
   | 'blowout'
   | 'closeRace'
-  | 'standings'
-  | 'soloScore'
   | 'winner'
   | 'tie'
   | 'soloFinalHigh'

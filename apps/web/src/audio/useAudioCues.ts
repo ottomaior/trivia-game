@@ -1,11 +1,11 @@
-import type { HostView } from '@trivia/shared';
+import { QUESTION_VOICE_DELAY_MS, type HostView } from '@trivia/shared';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { serverNow } from '../net/clock.ts';
 import { cuesFor, musicFor, ottoDelay } from './cues.ts';
 import { audio } from './engine.ts';
 
-/** Lets the question card land before Otto starts reading. */
-const QUESTION_VOICE_DELAY_S = 0.4;
+/** Lets the question card land before Otto starts reading (the server times the phase to match). */
+const QUESTION_VOICE_DELAY_S = QUESTION_VOICE_DELAY_MS / 1000;
 
 /** Plays sounds, music and Otto's voice for each new TV view, plus the countdown ticks. */
 export function useAudioCues(view: HostView | null): void {
@@ -22,7 +22,7 @@ export function useAudioCues(view: HostView | null): void {
     if (line && (phaseChanged || line.key !== before?.otto?.key || line.variant !== before?.otto?.variant)) {
       audio.voice(line, ottoDelay(view.stage.phase));
     }
-    // Otto reads each new question out, once his reaction to the category is done.
+    // Otto reads each new question out; the answers open when he has finished.
     if (view.stage.phase === 'question_read' && before?.stage.phase !== 'question_read') {
       audio.question(view.stage.question.voice, QUESTION_VOICE_DELAY_S);
     }

@@ -16,11 +16,23 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-  webServer: {
-    command: 'node apps/server/dist/index.js',
-    url: `http://localhost:${port}/healthz`,
-    // Phases run at 15% of real length so a whole game fits in a test.
-    env: { PORT: String(port), DATABASE_URL: process.env.E2E_DATABASE_URL ?? '', TIMING_SCALE: '0.15' },
-    reuseExistingServer: false,
-  },
+  webServer: [
+    {
+      command: 'node apps/server/dist/index.js',
+      url: `http://localhost:${port}/healthz`,
+      // Phases run at 15% of real length so a whole game fits in a test.
+      env: { PORT: String(port), DATABASE_URL: process.env.E2E_DATABASE_URL ?? '', TIMING_SCALE: '0.15' },
+      reuseExistingServer: false,
+    },
+    {
+      // Tests that need a few taps inside one vote (power plays) use this slower server: 40% speed.
+      command: 'node apps/server/dist/index.js',
+      url: `http://localhost:${port + 1}/healthz`,
+      env: { PORT: String(port + 1), DATABASE_URL: process.env.E2E_DATABASE_URL ?? '', TIMING_SCALE: '0.4' },
+      reuseExistingServer: false,
+    },
+  ],
 });
+
+/** Base URL of the slower E2E server (see webServer). */
+export const SLOW_BASE_URL = `http://localhost:${port + 1}`;

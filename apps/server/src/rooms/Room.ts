@@ -23,7 +23,6 @@ import {
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
 import {
-  categoryLine,
   finalLine,
   LinePicker,
   powerLine,
@@ -96,6 +95,13 @@ export class Room {
   readonly streaks = new Map<string, number>();
   /** Rounds in a row that nobody answered correctly. */
   noneCorrectRun = 0;
+  /** Last round Otto commented on (power plays, reveal or scoreboard): he doesn't chatter every round. */
+  lastCommentRound = -1;
+  /** Otto commented on this round already. */
+  private spokeThisRound = false;
+  private blowoutCalled = false;
+  /** Power plays get explained the first time they are handed out in this room. */
+  private powersExplained = false;
 
   /** Questions asked this game, so none repeats and flags can be checked. */
   readonly askedQuestionIds = new Set<string>();
@@ -244,6 +250,8 @@ export class Room {
     this.question = null;
     this.streaks.clear();
     this.noneCorrectRun = 0;
+    this.lastCommentRound = -1;
+    this.blowoutCalled = false;
     this.powers.clear();
     this.powerPasses.clear();
     this.hits = [];
@@ -263,7 +271,24 @@ export class Room {
     const granted = grantsPowerPlay(this.round) && this.players.size > 1;
     if (granted) for (const id of this.players.keys()) this.powers.add(id);
     this.phase = 'vote';
-    this.otto = voteLine(this.round, this.totalRounds, this.lines, granted);
+    this.otto = voteLine(this.round, this.totalRounds, this.lines, granted && !this.powersExplained);
+    // An announcement fills this round's talking; it doesn't make the next one quieter.
+    this.spokeThisRound = this.otto !== null;
+    if (granted) this.powersExplained = true;
+  }
+
+  /** A comment on this round: remembered so the next round's small moments pass quietly. */
+  private comment(line: OttoLine | null): OttoLine | null {
+    if (line) {
+      this.spokeThisRound = true;
+      this.lastCommentRound = this.round;
+    }
+    return line;
+  }
+
+  /** Otto kept quiet in the previous round (and hasn't spoken in this one yet). */
+  private get quietBefore(): boolean {
+    return !this.spokeThisRound && this.lastCommentRound < this.round - 1;
   }
 
   /** True while the vote should wait for someone to decide on their power play. */
@@ -346,11 +371,8 @@ export class Room {
   enterVoteResult(chosen: number): void {
     this.chosenOption = chosen;
     this.phase = 'vote_result';
-    // Thrown power plays upstage the category: Otto comments on the carnage.
-    this.otto =
-      this.hits.length > 0
-        ? powerLine(this.hits, this.lines)
-        : categoryLine(this.voteOptions[chosen]!.category.slug, this.lines);
+    // The category speaks for itself (the question is read next); thrown power plays get a word.
+    this.otto = this.hits.length > 0 ? this.comment(powerLine(this.hits, this.lines, this.quietBefore)) : null;
   }
 
   enterQuestionRead(question: Question): void {
@@ -412,12 +434,24 @@ export class Room {
       responseMs: p.responseMs,
       streak: this.streaks.get(p.playerId) ?? 0,
     }));
-    this.otto = revealLine(facts, this.noneCorrectRun, this.lines);
+    this.otto = this.comment(revealLine(facts, this.noneCorrectRun, this.lines, this.quietBefore));
   }
 
   enterScoreboard(): void {
     this.phase = 'scoreboard';
-    this.otto = scoreboardLine(this.standingFacts(), this.round, this.lines);
+    const line = scoreboardLine(
+      this.standingFacts(),
+      {
+        round: this.round,
+        totalRounds: this.totalRounds,
+        spokeThisRound: this.otto !== null,
+        quietBefore: this.quietBefore,
+        blowoutCalled: this.blowoutCalled,
+      },
+      this.lines,
+    );
+    if (line?.key === 'blowout') this.blowoutCalled = true;
+    this.otto = this.comment(line);
   }
 
   enterFinal(): void {

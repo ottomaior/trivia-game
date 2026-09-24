@@ -1,6 +1,7 @@
 import type { Clock } from '../clock.ts';
 import type { Rng } from '../content/select.ts';
 import type { Store } from '../db/store.ts';
+import { silentSpeech, type SpeechLengths } from '../game/speech.ts';
 import { randomRoomCode } from './ids.ts';
 import { Room } from './Room.ts';
 import { RoomRunner } from './RoomRunner.ts';
@@ -10,6 +11,7 @@ export interface RoomManagerOptions {
   store: Store;
   rng?: Rng;
   timingScale?: number;
+  speech?: SpeechLengths;
   totalRounds?: number;
   lobbyGraceMs: number;
   hostAbsentTtlMs: number;
@@ -39,6 +41,7 @@ export class RoomManager {
       clock: this.opts.clock,
       rng,
       timingScale: this.opts.timingScale ?? 1,
+      speech: this.opts.speech ?? silentSpeech,
       onChange: this.opts.onChange,
       log: this.opts.log,
     });

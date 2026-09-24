@@ -1,4 +1,4 @@
-import type { HostView, OttoLineKey, Phase, PowerHit } from '@trivia/shared';
+import { ottoLineOffsetMs, type HostView, type OttoLineKey, type Phase, type PowerHit } from '@trivia/shared';
 import type { Track } from './music.ts';
 import type { Cue } from './sfx.ts';
 
@@ -100,7 +100,7 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
 
 /** Seconds after a phase starts that Otto speaks (the reveal waits for the drumroll and pan). */
 export function ottoDelay(phase: Phase): number {
-  return phase === 'reveal' ? 3.2 : 0;
+  return ottoLineOffsetMs(phase) / 1000;
 }
 
 /** Background loop per phase: lounge between questions, a pulse under them, a finale theme. */

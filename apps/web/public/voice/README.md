@@ -6,9 +6,10 @@ MP3s in this folder. Without them Otto is text-only. The lines live in
 one recording fits every game; the TV shows whom a line is about.
 
 `pnpm voice:generate` records only new or changed lines, deletes clips of
-lines that were removed, and writes `manifest.json` (and `credit.json` when
-the service asks to be credited on screen). Keys go in your own shell: never
-commit them or paste them anywhere.
+lines that were removed, and writes `manifest.json` with each clip's length
+(the server waits for Otto to finish a line before moving on), plus
+`credit.json` when the service asks to be credited on screen. Keys go in
+your own shell: never commit them or paste them anywhere.
 
 ## ElevenLabs (recommended)
 

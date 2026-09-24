@@ -1,3 +1,5 @@
+import type { Phase } from './views.ts';
+
 // Single source of truth for game limits and timings. Server and clients both
 // import from here so the numbers can never drift apart.
 
@@ -62,6 +64,24 @@ export const TIMINGS = {
   scoreboard: 4_000,
 } as const;
 export type TimingKey = keyof typeof TIMINGS;
+
+// Otto's voice. The show never talks over him: a phase in which he speaks
+// lasts until he has finished (see the server's RoomRunner), and screens start
+// his lines at these offsets.
+
+/** Otto comments on the reveal this long into it, after the drumroll and the pan to the desks. */
+export const OTTO_REVEAL_DELAY_MS = 3_200;
+/** The question card lands before Otto starts reading it. */
+export const QUESTION_VOICE_DELAY_MS = 400;
+/** A breath after Otto finishes before the show moves on. */
+export const SPEECH_TAIL_MS = 500;
+/** Otto's speaking rate, for estimating lines that haven't been recorded yet. */
+export const SPEECH_CHARS_PER_SECOND = 13;
+
+/** Milliseconds into a phase at which Otto's line for that phase starts. */
+export function ottoLineOffsetMs(phase: Phase): number {
+  return phase === 'reveal' ? OTTO_REVEAL_DELAY_MS : 0;
+}
 
 export type Difficulty = 1 | 2 | 3;
 

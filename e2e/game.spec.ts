@@ -9,7 +9,6 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   await expect(tv.getByTestId('seat')).toHaveCount(3);
 
   await anna.getByRole('button', { name: 'Indulhat a műsor' }).click();
-  await expect(tv.getByTestId('otto-line')).toBeVisible();
 
   // First question: check the TV and phones agree, and survive a phone reload.
   await expect(tv.getByTestId('prompt')).toBeVisible({ timeout: 10_000 });
@@ -21,6 +20,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
 
   await expect(tv.getByRole('heading', { name: 'Végeredmény' })).toBeVisible();
   await expect(tv.getByTestId('podium')).toHaveCount(3);
+  await expect(tv.getByTestId('otto-line')).toBeVisible(); // Otto crowns the winner
   await expect(anna.getByRole('button', { name: 'Új játék' })).toBeVisible();
   await expect(bela.getByText('A VIP dönti el, mi jön.')).toBeVisible();
 

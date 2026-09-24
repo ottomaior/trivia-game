@@ -54,8 +54,16 @@ const FILE_LEVELS: Partial<Record<Cue, number>> = {
 const FADE_S = 0.6;
 /** When the reveal's "ding" lands after the drumroll starts (matches the TV animation). */
 const REVEAL_HIT_S = 0.75;
-/** A question read-aloud waits at most this long for Otto to finish his line, then talks over its end. */
-const MAX_QUEUE_WAIT_S = 3;
+/**
+ * The server waits for Otto to finish before moving on, so his lines never
+ * overlap; if one still would (a slow load, a reconnect), the new line waits
+ * up to this long for the old one to end, and otherwise fades it out.
+ */
+const MAX_QUEUE_WAIT_S = 1.5;
+/** Fade for a line that has to make way, instead of a hard cut. */
+const VOICE_FADE_S = 0.15;
+/** /tv?audiolog prints when Otto starts, finishes or gets faded out, to check timing in a real game. */
+const LOG_VOICE = typeof location !== 'undefined' && new URLSearchParams(location.search).has('audiolog');
 
 interface Settings {
   muted: boolean;
@@ -78,7 +86,8 @@ class AudioEngine {
   /** Read-alouds of the questions, by PublicQuestion.voice. */
   private questionManifest: VoiceManifest = {};
   private voices = new Map<string, Promise<AudioBuffer | null>>();
-  private voicePlaying: AudioBufferSourceNode | null = null;
+  private voicePlaying: { src: AudioBufferSourceNode; gain: GainNode } | null = null;
+  private voiceKey = '';
   /** Context time the current voice clip ends, so a question can wait for Otto to finish. */
   private voiceEndsAt = 0;
   private listeners = new Set<Listener>();
@@ -190,7 +199,7 @@ class AudioEngine {
     return line !== null && ottoVoiceId(line) in this.voiceManifest;
   }
 
-  /** Plays Otto's recorded line (if there is one), cutting off whatever he was saying. */
+  /** Plays Otto's recorded line (if there is one), after whatever he is still saying. */
   voice(line: Pick<OttoLine, 'key' | 'variant'>, delay = 0): void {
     if (!this.hasVoice(line)) return;
     const id = ottoVoiceId(line);
@@ -233,7 +242,11 @@ class AudioEngine {
 
   // ---------------------------------------------------------------------------
 
-  /** Plays a voice clip, ducking the music under it; `queue` waits for the clip already playing. */
+  /**
+   * Plays a voice clip after `delay` seconds, ducking the music under it. If
+   * Otto is still talking then, it waits a moment for him to finish (always,
+   * for a `queue`d question), and otherwise fades him out: never a hard cut.
+   */
   private speak(key: string, url: string, delay: number, queue: boolean): void {
     const { ctx, voiceBus } = this;
     if (!ctx || !voiceBus || this.muted) return;
@@ -242,17 +255,36 @@ class AudioEngine {
       if (!buffer || !this.ctx) return;
       const now = this.ctx.currentTime;
       let at = Math.max(now, startAt);
-      if (queue && this.voiceEndsAt > at) at = Math.max(at, Math.min(this.voiceEndsAt + 0.15, now + MAX_QUEUE_WAIT_S));
-      else this.voicePlaying?.stop();
+      const busy = this.voicePlaying && this.voiceEndsAt > at;
+      if (busy) {
+        const limit = queue ? MAX_QUEUE_WAIT_S * 2 : MAX_QUEUE_WAIT_S;
+        at = Math.max(at, Math.min(this.voiceEndsAt + 0.1, now + limit));
+        if (this.voiceEndsAt > at) {
+          this.fadeOut(this.voicePlaying!, at);
+          if (LOG_VOICE) console.info(`[otto] fading out ${this.voiceKey} for ${key}`);
+        }
+      }
+      const gain = this.ctx.createGain();
       const src = this.ctx.createBufferSource();
       src.buffer = buffer;
-      src.connect(voiceBus);
+      src.connect(gain).connect(voiceBus);
       src.start(at);
-      if (queue) this.voicePlaying?.stop(at);
-      this.voicePlaying = src;
+      src.onended = () => {
+        gain.disconnect();
+        if (LOG_VOICE) console.info(`[otto] done ${key}`);
+      };
+      if (LOG_VOICE) console.info(`[otto] ${key} at +${(at - now).toFixed(2)}s for ${buffer.duration.toFixed(2)}s`);
+      this.voicePlaying = { src, gain };
+      this.voiceKey = key;
       this.voiceEndsAt = at + buffer.duration;
       this.duck(LEVELS.duckVoice, at - now + buffer.duration + 0.2);
     });
+  }
+
+  private fadeOut({ src, gain }: { src: AudioBufferSourceNode; gain: GainNode }, at: number): void {
+    gain.gain.setValueAtTime(1, at);
+    gain.gain.linearRampToValueAtTime(0, at + VOICE_FADE_S);
+    src.stop(at + VOICE_FADE_S);
   }
 
   private bus(level: number): GainNode {

@@ -1,4 +1,4 @@
-import type { Phase } from '@trivia/shared';
+import { OTTO_REVEAL_DELAY_MS, type Phase } from '@trivia/shared';
 
 // The studio "camera": named shots and which one each moment of the show
 // uses. Pure data here (unit-tested); Studio.tsx animates between them.
@@ -84,5 +84,6 @@ export const REVEAL_BEATS = {
   correctFlash: 0.75,
   toContestants: 1.5,
   pointsFly: 1.9,
-  otto: 3.2,
+  /** Otto comments (the server holds the reveal until he's done). */
+  otto: OTTO_REVEAL_DELAY_MS / 1000,
 } as const;
