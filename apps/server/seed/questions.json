@@ -7098,5 +7098,905 @@
       "Freddie Mercury"
     ],
     "explanation": "A figura az 1972-es The Rise and Fall of Ziggy Stardust and the Spiders from Mars című albumon mutatkozott be."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Milyen istennő volt a görög mitológiában Nike, akiről a sportmárka a nevét kapta?",
+    "answer": "A győzelem istennője",
+    "wrong": [
+      "A vadászat istennője",
+      "A hajnal istennője",
+      "A bölcsesség istennője"
+    ],
+    "explanation": "A cég eredetileg Blue Ribbon Sports néven indult az Egyesült Államokban."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik gyorsétteremlánc szlogenje az „I'm lovin' it”?",
+    "answer": "McDonald's",
+    "wrong": [
+      "Burger King",
+      "KFC",
+      "Subway"
+    ],
+    "explanation": "A 2003-ban indult kampány első reklámdalát Justin Timberlake énekelte."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Milyen színű pöttyök díszítik a Pöttyös Túró Rudi csomagolását?",
+    "answer": "Piros",
+    "wrong": [
+      "Kék",
+      "Zöld",
+      "Fekete"
+    ],
+    "explanation": "A csokoládéval bevont túrós édességet 1968 óta gyártják Magyarországon."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik városban alapította Pick Márk a híres szalámigyárat?",
+    "answer": "Szeged",
+    "wrong": [
+      "Győr",
+      "Debrecen",
+      "Kecskemét"
+    ],
+    "explanation": "A városban külön múzeum mutatja be a téliszalámi és a paprika történetét."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Mit gyártott a legendás magyar Ikarus gyár?",
+    "answer": "Autóbuszokat",
+    "wrong": [
+      "Teherautókat",
+      "Villamosokat",
+      "Mozdonyokat"
+    ],
+    "explanation": "A csuklós Ikarus 280-asok évtizedekig a magyar városi közlekedés jelképei voltak."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik ország autómárkája a Škoda?",
+    "answer": "Csehország",
+    "wrong": [
+      "Szlovákia",
+      "Lengyelország",
+      "Szlovénia"
+    ],
+    "explanation": "Az elődcég, a Laurin & Klement még kerékpárokat gyártott Mladá Boleslavban."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik ország óriáscége a Samsung?",
+    "answer": "Dél-Korea",
+    "wrong": [
+      "Japán",
+      "Kína",
+      "Tajvan"
+    ],
+    "explanation": "A Samsung név koreaiul azt jelenti: „három csillag”."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik országból indult hódító útjára a H&M divatlánc?",
+    "answer": "Svédország",
+    "wrong": [
+      "Dánia",
+      "Hollandia",
+      "Németország"
+    ],
+    "explanation": "Az első üzlet 1947-ben Västeråsban nyílt Hennes néven, és csak női ruhákat árult."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Mit jelent magyarul a Volkswagen név?",
+    "answer": "Népautó",
+    "wrong": [
+      "Farkasautó",
+      "Gyorsautó",
+      "Városautó"
+    ],
+    "explanation": "A legendás Bogarat Ferdinand Porsche tervezte."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Milyen állat látható a Lamborghini logóján?",
+    "answer": "Bika",
+    "wrong": [
+      "Ló",
+      "Oroszlán",
+      "Jaguár"
+    ],
+    "explanation": "Ferruccio Lamborghini csillagjegye Bika volt, és sok modellje is híres harci bikákról kapta a nevét."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "A Shell olajcég az alapító apjának londoni üzletéről kapta a nevét. Mit árult ez a bolt?",
+    "answer": "Tengeri kagylókat",
+    "wrong": [
+      "Gyöngysorokat",
+      "Korallékszereket",
+      "Teknőspáncélokat"
+    ],
+    "explanation": "Ezért díszíti a cég logóját is egy sárga-piros fésűkagyló."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Mit rövidít a KFC gyorsétteremlánc neve?",
+    "answer": "Kentucky Fried Chicken",
+    "wrong": [
+      "Kansas Fried Chicken",
+      "Kentucky Farm Chicken",
+      "King's Fried Chicken"
+    ],
+    "explanation": "Az alapító, Harland Sanders „ezredesi” rangja valójában Kentucky állam tiszteletbeli címe volt."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Melyik szám szerepel a Chanel legendás, 1921-ben bemutatott parfümjének nevében?",
+    "answer": "5",
+    "wrong": [
+      "3",
+      "7",
+      "9"
+    ],
+    "explanation": "Coco Chanel a parfümőr által elé tett illatminták közül az ötödiket választotta."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Hogyan folytatódik a híres csokireklám szlogenje: „Have a break, have a…”?",
+    "answer": "KitKat",
+    "wrong": [
+      "Twix",
+      "Snickers",
+      "Bounty"
+    ],
+    "explanation": "A ropogós ostyaszeletet 1935-ben az angol Rowntree's cég dobta piacra."
+  },
+  {
+    "category": "markak",
+    "difficulty": 1,
+    "prompt": "Milyen színű tehén a Milka csokoládé reklámarca?",
+    "answer": "Lila",
+    "wrong": [
+      "Barna",
+      "Kék",
+      "Rózsaszín"
+    ],
+    "explanation": "A Milka név a tej (Milch) és a kakaó (Kakao) német szavából született."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "A LEGO név a dán „leg godt” kifejezésből született. Mit jelent ez magyarul?",
+    "answer": "Játssz jól!",
+    "wrong": [
+      "Építs bátran!",
+      "Légy boldog!",
+      "Álmodj nagyot!"
+    ],
+    "explanation": "A dániai Billundban alapított cég eredetileg fajátékokat készített."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Melyik országban alapították a skandinávnak hangzó nevű Häagen-Dazs fagylaltmárkát?",
+    "answer": "Egyesült Államok",
+    "wrong": [
+      "Dánia",
+      "Svédország",
+      "Norvégia"
+    ],
+    "explanation": "A nevet a New York-i alapító, Reuben Mattus találta ki, a szavaknak nincs jelentésük."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Melyik regény egyik szereplőjéről kapta a nevét a Starbucks kávézólánc?",
+    "answer": "Moby Dick",
+    "wrong": [
+      "A kincses sziget",
+      "Robinson Crusoe",
+      "Az öreg halász és a tenger"
+    ],
+    "explanation": "Starbuck a Pequod bálnavadászhajó első tisztje, a logón pedig egy kétfarkú szirén látható."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Mit köt össze az Amazon logóján a mosolyra emlékeztető nyíl?",
+    "answer": "Az A és a Z betűt",
+    "wrong": [
+      "Az A és az N betűt",
+      "Az M és a Z betűt",
+      "Az A és az O betűt"
+    ],
+    "explanation": "Az üzenet az, hogy az áruházban A-tól Z-ig minden kapható."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Melyik cég szlogenje volt 1997-től a „Think different”?",
+    "answer": "Apple",
+    "wrong": [
+      "Microsoft",
+      "IBM",
+      "Nokia"
+    ],
+    "explanation": "Az első reklámfilmben Einstein, Gandhi és más ikonikus alakok tűntek fel."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Hány ellipszisből áll a Toyota logója?",
+    "answer": "3",
+    "wrong": [
+      "2",
+      "4",
+      "5"
+    ],
+    "explanation": "A két egymásra merőleges belső ellipszis egy T betűt formáz."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Mi rejtőzik a FedEx logójában, az E és az x betű közötti fehér térben?",
+    "answer": "Egy nyíl",
+    "wrong": [
+      "Egy repülőgép",
+      "Egy csomag",
+      "Egy villám"
+    ],
+    "explanation": "A rejtett nyíl a gyorsaságot és a pontosságot jelképezi."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Mivel lett híres René Lacoste, a krokodilos ruhamárka alapítója?",
+    "answer": "Teniszezőként",
+    "wrong": [
+      "Golfozóként",
+      "Autóversenyzőként",
+      "Vitorlázóként"
+    ],
+    "explanation": "Hétszeres Grand Slam-győztes volt, a sajtó pedig krokodilnak becézte, innen a logó."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Mit jelképez a Mercedes-Benz háromágú csillaga?",
+    "answer": "A szárazföldet, a vizet és a levegőt",
+    "wrong": [
+      "A múltat, a jelent és a jövőt",
+      "A cég három első gyárát",
+      "A három alapító mérnököt"
+    ],
+    "explanation": "Gottlieb Daimler motorjait a szárazföldön, a vízen és a levegőben is használni akarta."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Melyik országból indult a Zara divatlánc?",
+    "answer": "Spanyolország",
+    "wrong": [
+      "Olaszország",
+      "Portugália",
+      "Franciaország"
+    ],
+    "explanation": "Az üzlet eredetileg a Zorba nevet kapta volna, de a közelben már volt egy ilyen nevű bár."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "A HARIBO név az alapító nevének és városának kezdőbetűiből áll. Melyik város ez?",
+    "answer": "Bonn",
+    "wrong": [
+      "Bochum",
+      "Berlin",
+      "Köln"
+    ],
+    "explanation": "Hans Riegel 1920-ban alapította a céget, a gumimacik két évvel később jelentek meg."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "A legenda szerint melyik uralkodó kiáltott fel a Zwack család italát megkóstolva: „Das ist ein Unikum!”?",
+    "answer": "II. József",
+    "wrong": [
+      "Mária Terézia",
+      "Ferenc József",
+      "II. Lipót"
+    ],
+    "explanation": "A gyógynövénylikőr receptje a Habsburg udvar orvosától, Zwack Józseftől származik, és ma is titok."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Mi a neve a pécsi Zsolnay-gyár jellegzetes, fémesen csillogó mázának?",
+    "answer": "Eozin",
+    "wrong": [
+      "Pirogránit",
+      "Kobaltmáz",
+      "Szeladon"
+    ],
+    "explanation": "Nevét a hajnalpírt jelentő görög éosz szóból kapta."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Melyik híres festő tervezte a Chupa Chups nyalóka virágos logóját?",
+    "answer": "Salvador Dalí",
+    "wrong": [
+      "Pablo Picasso",
+      "Joan Miró",
+      "Andy Warhol"
+    ],
+    "explanation": "Dalí azt javasolta, hogy a logó a csomagolás tetejére kerüljön, így mindig jól látszik."
+  },
+  {
+    "category": "markak",
+    "difficulty": 2,
+    "prompt": "Milyen sportot űzött Chuck Taylor, akiről a Converse legendás cipője a nevét kapta?",
+    "answer": "Kosárlabdát",
+    "wrong": [
+      "Teniszt",
+      "Baseballt",
+      "Atlétikát"
+    ],
+    "explanation": "Taylor a cég ügynökeként járta Amerikát, és kosárlabda-bemutatókon népszerűsítette a cipőt."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Az IKEA nevében az I és a K az alapító, Ingvar Kamprad monogramja. Mire utal az E és az A?",
+    "answer": "A gazdaságra és a falura, ahol felnőtt",
+    "wrong": [
+      "Két testvére keresztnevére",
+      "Az első bolt utcájára és városára",
+      "A szülei keresztnevére"
+    ],
+    "explanation": "Elmtaryd a családi gazdaság, Agunnaryd pedig a közeli falu neve Dél-Svédországban."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Az Audi név latinul azt jelenti: „Hallgasd!”. Melyik alapító vezetéknevének fordítása ez?",
+    "answer": "August Horch",
+    "wrong": [
+      "Gottlieb Daimler",
+      "Carl Benz",
+      "Wilhelm Maybach"
+    ],
+    "explanation": "Horch a saját nevét nem használhatta, mert azt korábbi cége viselte."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "A Google neve egy óriási szám, a googol nevéből ered. Hány nulla áll ebben a számban az 1-es után?",
+    "answer": "100",
+    "wrong": [
+      "10",
+      "64",
+      "1000"
+    ],
+    "explanation": "A googol szót egy amerikai matematikus kilencéves unokaöccse találta ki."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Mi látható az Apple legelső, 1976-os logóján?",
+    "answer": "Isaac Newton egy almafa alatt",
+    "wrong": [
+      "Ádám és Éva az almafa alatt",
+      "Hófehérke egy almával a kezében",
+      "Tell Vilmos fia almával a fején"
+    ],
+    "explanation": "A rajzot a harmadik alapító, Ronald Wayne készítette, de egy év múlva lecserélték a szivárványos almára."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Hány dollárt kapott 1971-ben az egyetemista Carolyn Davidson a Nike pipa alakú logójának megtervezéséért?",
+    "answer": "35",
+    "wrong": [
+      "350",
+      "3500",
+      "35 000"
+    ],
+    "explanation": "Évekkel később köszönetként egy gyémántos, pipa alakú gyűrűt és Nike-részvényeket is kapott."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik első világháborús olasz vadászpilóta gépét díszítette eredetileg a Ferrari ágaskodó lova?",
+    "answer": "Francesco Baracca",
+    "wrong": [
+      "Fulco Ruffo di Calabria",
+      "Italo Balbo",
+      "Gabriele D'Annunzio"
+    ],
+    "explanation": "A pilóta édesanyja kérte Enzo Ferraritól, hogy szerencsehozóként használja a lovat."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Mivel foglalkozott a Nokia, amikor 1865-ben megalapították Finnországban?",
+    "answer": "Papírgyártással",
+    "wrong": [
+      "Hajóépítéssel",
+      "Sörfőzéssel",
+      "Fegyvergyártással"
+    ],
+    "explanation": "Később gumicsizmákat és kábeleket is gyártott, mielőtt a mobiltelefonokba kezdett."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik országban alapították 1932-ben a SPAR üzletláncot?",
+    "answer": "Hollandia",
+    "wrong": [
+      "Ausztria",
+      "Németország",
+      "Svájc"
+    ],
+    "explanation": "A spar szó hollandul lucfenyőt is jelent, innen a fenyőfás logó."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik ország energiaitala ihlette a Red Bullt?",
+    "answer": "Thaiföld",
+    "wrong": [
+      "Japán",
+      "Dél-Korea",
+      "Vietnám"
+    ],
+    "explanation": "Az eredeti ital, a Krating Daeng neve vörös gaurt, vagyis egy ázsiai vadmarhát jelent."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Mi a neve a gumiabroncsokból összerakott Michelin-emberkének?",
+    "answer": "Bibendum",
+    "wrong": [
+      "Rotundus",
+      "Pneumaticus",
+      "Volvendum"
+    ],
+    "explanation": "Nevét az első, 1898-as plakátjáról kapta, amelyen a „Nunc est bibendum”, azaz „Most igyunk!” felirat állt."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik latin mondás kezdőbetűiből áll az ASICS sportmárka neve?",
+    "answer": "Ép testben ép lélek",
+    "wrong": [
+      "Gyorsabban, magasabban, erősebben",
+      "Göröngyös úton a csillagokig",
+      "Jöttem, láttam, győztem"
+    ],
+    "explanation": "Az alapító a mondás „mens sana” kezdetét „anima sanára” cserélte, hogy kijöjjön a név."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik ország édességéről mintázták a Túró Rudit, miután magyar tejipari szakemberek tanulmányúton jártak ott?",
+    "answer": "Szovjetunió",
+    "wrong": [
+      "Lengyelország",
+      "NDK",
+      "Csehszlovákia"
+    ],
+    "explanation": "A minta a csokoládéval bevont szovjet túrós édesség, a szirok volt."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik fém angol és német nevéből alkották meg a Tungsram márkanevet?",
+    "answer": "Volfrám",
+    "wrong": [
+      "Ozmium",
+      "Molibdén",
+      "Tantál"
+    ],
+    "explanation": "A tungsten és a Wolfram ugyanazt a fémet jelöli, ebből készült az izzók izzószála."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik uralkodóról kapta nevét a Herendi porcelán lepkés-virágos mintája, miután 1851-ben a londoni világkiállításon rendelt belőle?",
+    "answer": "Viktória királynő",
+    "wrong": [
+      "Erzsébet királyné",
+      "Mária Terézia",
+      "II. Katalin cárnő"
+    ],
+    "explanation": "Egy másik híres herendi minta a Rothschild család nevét viseli."
+  },
+  {
+    "category": "markak",
+    "difficulty": 3,
+    "prompt": "Melyik tollmárka alapítója vásárolta meg Bíró László golyóstoll-szabadalmát?",
+    "answer": "BIC",
+    "wrong": [
+      "Parker",
+      "Pilot",
+      "Montblanc"
+    ],
+    "explanation": "A márkanév az alapító, Marcel Bich nevéből ered, legendás Cristal tolla 1950-ben jelent meg."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Mi Törökország fővárosa?",
+    "answer": "Ankara",
+    "wrong": [
+      "Isztambul",
+      "Izmir",
+      "Antalya"
+    ],
+    "explanation": "Atatürk 1923-ban tette az új köztársaság fővárosává, a régi birodalmi központ, Isztambul helyett."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik tengerbe ömlik a Duna?",
+    "answer": "Fekete-tenger",
+    "wrong": [
+      "Adriai-tenger",
+      "Égei-tenger",
+      "Földközi-tenger"
+    ],
+    "explanation": "A torkolatánál, Románia és Ukrajna határán elterülő Duna-delta a világörökség része."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Ha Ausztráliát kontinensnek tekintjük, melyik a világ legnagyobb szigete?",
+    "answer": "Grönland",
+    "wrong": [
+      "Új-Guinea",
+      "Borneó",
+      "Madagaszkár"
+    ],
+    "explanation": "Grönland Dániához tartozik, de széles körű önkormányzattal rendelkezik."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik államot veszi körül teljesen Róma városa?",
+    "answer": "Vatikán",
+    "wrong": [
+      "San Marino",
+      "Monaco",
+      "Málta"
+    ],
+    "explanation": "Kevesebb mint fél négyzetkilométeres területével a világ legkisebb független állama."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik londoni városrész csillagvizsgálóján halad át a kezdő délkör, vagyis a 0°-os hosszúsági kör?",
+    "answer": "Greenwich",
+    "wrong": [
+      "Westminster",
+      "Camden",
+      "Chelsea"
+    ],
+    "explanation": "Innen kapta a nevét a GMT, azaz a greenwichi középidő is."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik tengerszoros választja el Európát Afrikától?",
+    "answer": "Gibraltári-szoros",
+    "wrong": [
+      "Boszporusz",
+      "Dardanellák",
+      "Doveri-szoros"
+    ],
+    "explanation": "Legkeskenyebb pontján nagyjából 14 kilométer széles."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik hegység húzódik Spanyolország és Franciaország határán?",
+    "answer": "Pireneusok",
+    "wrong": [
+      "Alpok",
+      "Appenninek",
+      "Kantábriai-hegység"
+    ],
+    "explanation": "Legmagasabb csúcsa, az Aneto, a spanyol oldalon emelkedik."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik országhoz tartozik Bali szigete?",
+    "answer": "Indonézia",
+    "wrong": [
+      "Thaiföld",
+      "Malajzia",
+      "Fülöp-szigetek"
+    ],
+    "explanation": "Bali lakóinak többsége, Indonézia többi részétől eltérően, hindu vallású."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik tavon osztozik Magyarország Ausztriával?",
+    "answer": "Fertő-tó",
+    "wrong": [
+      "Velencei-tó",
+      "Tisza-tó",
+      "Hévízi-tó"
+    ],
+    "explanation": "A tó nagyobbik része Ausztriában fekszik, ott Neusiedler See a neve."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 1,
+    "prompt": "Melyik város Borsod-Abaúj-Zemplén vármegye székhelye?",
+    "answer": "Miskolc",
+    "wrong": [
+      "Eger",
+      "Nyíregyháza",
+      "Kazincbarcika"
+    ],
+    "explanation": "A városhoz tartozó Miskolctapolcán működik a híres Barlangfürdő."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik városban ülésezik a svájci szövetségi parlament és kormány?",
+    "answer": "Bern",
+    "wrong": [
+      "Zürich",
+      "Genf",
+      "Bázel"
+    ],
+    "explanation": "Svájc alkotmánya nem nevez meg fővárost, Bern hivatalosan „szövetségi város”."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Mi Új-Zéland fővárosa?",
+    "answer": "Wellington",
+    "wrong": [
+      "Auckland",
+      "Christchurch",
+      "Queenstown"
+    ],
+    "explanation": "Wellington a független államok legdélebbi fekvésű fővárosa."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik város volt Brazília fővárosa, mielőtt a kormány 1960-ban átköltözött a semmiből felépített Brazíliavárosba?",
+    "answer": "Rio de Janeiro",
+    "wrong": [
+      "São Paulo",
+      "Salvador",
+      "Belo Horizonte"
+    ],
+    "explanation": "Brazíliaváros alaprajza felülről egy repülőgépre emlékeztet."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik szomszédunkkal a leghosszabb Magyarország közös határa?",
+    "answer": "Szlovákia",
+    "wrong": [
+      "Románia",
+      "Ausztria",
+      "Horvátország"
+    ],
+    "explanation": "A határ jelentős részét a Duna és az Ipoly folyása jelöli ki."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Hány időzónát használ hivatalosan a hatalmas Kína?",
+    "answer": "Egyet",
+    "wrong": [
+      "Kettőt",
+      "Hármat",
+      "Ötöt"
+    ],
+    "explanation": "Az egész ország a pekingi időt követi, így a távoli nyugaton télen akár 10 óra körül kel fel a nap."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik törpeállam fekszik Svájc és Ausztria között?",
+    "answer": "Liechtenstein",
+    "wrong": [
+      "Andorra",
+      "Luxemburg",
+      "San Marino"
+    ],
+    "explanation": "Üzbegisztánnal együtt azon két ország egyike, ahonnan két határt kell átlépni, hogy tengerhez jussunk."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik év első napjától hívják hivatalosan ismét vármegyének a magyar megyéket?",
+    "answer": "2023",
+    "wrong": [
+      "2021",
+      "2022",
+      "2024"
+    ],
+    "explanation": "A megye elnevezést 1950-ben, a tanácsrendszerrel együtt vezették be."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik Magyarország első nemzeti parkja, amelyet 1973-ban hoztak létre?",
+    "answer": "Hortobágyi Nemzeti Park",
+    "wrong": [
+      "Kiskunsági Nemzeti Park",
+      "Bükki Nemzeti Park",
+      "Aggteleki Nemzeti Park"
+    ],
+    "explanation": "A puszta 1999-ben a világörökség része lett."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Melyik nemzeti park területén található a Baradla-barlang?",
+    "answer": "Aggteleki Nemzeti Park",
+    "wrong": [
+      "Bükki Nemzeti Park",
+      "Duna–Ipoly Nemzeti Park",
+      "Balaton-felvidéki Nemzeti Park"
+    ],
+    "explanation": "A barlangrendszer a határon túl, Szlovákiában Domica néven folytatódik."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 2,
+    "prompt": "Nepál és melyik ország határán emelkedik a Mount Everest?",
+    "answer": "Kína",
+    "wrong": [
+      "India",
+      "Bhután",
+      "Pakisztán"
+    ],
+    "explanation": "Nepáliul Szagarmatha, tibetiül Csomolungma a neve."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Mi Marokkó fővárosa?",
+    "answer": "Rabat",
+    "wrong": [
+      "Casablanca",
+      "Marrákes",
+      "Fez"
+    ],
+    "explanation": "Bár Casablanca ismertebb, a királyi palota és a parlament Rabatban van."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Hány fővárosa van a Dél-afrikai Köztársaságnak?",
+    "answer": "3",
+    "wrong": [
+      "1",
+      "2",
+      "4"
+    ],
+    "explanation": "Pretoria a kormány, Fokváros a parlament székhelye, Bloemfontein pedig az igazságszolgáltatás fővárosa."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Lengyelország mellett melyik ország határolja az oroszországi Kalinyingrádi területet?",
+    "answer": "Litvánia",
+    "wrong": [
+      "Lettország",
+      "Fehéroroszország",
+      "Észtország"
+    ],
+    "explanation": "Központja, a mai Kalinyingrád egykor Königsberg néven Kelet-Poroszország székhelye volt."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Andorra két társhercege közül az egyik a francia köztársasági elnök. Ki a másik?",
+    "answer": "Az urgelli püspök",
+    "wrong": [
+      "A spanyol király",
+      "A római pápa",
+      "Katalónia elnöke"
+    ],
+    "explanation": "A megosztott uralom egy 1278-as egyezségre vezethető vissza."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik afrikai ország kapta a nevét az Atlanti-óceán partján húzódó sivatagról?",
+    "answer": "Namíbia",
+    "wrong": [
+      "Mauritánia",
+      "Angola",
+      "Szenegál"
+    ],
+    "explanation": "A Namíb-sivatagot a Föld egyik legősibb sivatagának tartják."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik a Kárpátok legmagasabb csúcsa?",
+    "answer": "Gerlachfalvi-csúcs",
+    "wrong": [
+      "Lomnici-csúcs",
+      "Moldoveanu",
+      "Hoverla"
+    ],
+    "explanation": "A szlovákiai Magas-Tátrában emelkedik, mintegy 2650 méter magasan."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik hazai hegységünk legmagasabb csúcsa az Istállós-kő?",
+    "answer": "Bükk",
+    "wrong": [
+      "Mátra",
+      "Zempléni-hegység",
+      "Börzsöny"
+    ],
+    "explanation": "Oldalában nyílik az Istállós-kői-barlang, ahol ősemberi leleteket is találtak."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik város Pest vármegye székhelye?",
+    "answer": "Budapest",
+    "wrong": [
+      "Gödöllő",
+      "Érd",
+      "Cegléd"
+    ],
+    "explanation": "Érdekesség, hogy maga Budapest nem része a vármegyének."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Hány európai fővároson folyik keresztül a Duna?",
+    "answer": "4",
+    "wrong": [
+      "3",
+      "5",
+      "6"
+    ],
+    "explanation": "Bécs, Pozsony, Budapest és Belgrád is a partján fekszik."
+  },
+  {
+    "category": "foldrajz",
+    "difficulty": 3,
+    "prompt": "Melyik folyón zúdul alá a Viktória-vízesés?",
+    "answer": "Zambézi",
+    "wrong": [
+      "Kongó",
+      "Nílus",
+      "Limpopo"
+    ],
+    "explanation": "Zambia és Zimbabwe határán fekszik, helyi neve azt jelenti: „mennydörgő füst”."
   }
 ]
