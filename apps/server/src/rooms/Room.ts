@@ -2,6 +2,7 @@ import { timingSafeEqual } from 'node:crypto';
 import {
   AVATAR_COLORS,
   AVATAR_FACES,
+  grantsPowerPlay,
   MAX_LATENCY_CREDIT_MS,
   MAX_PLAYERS,
   MIN_GAME_QUESTIONS,
@@ -17,18 +18,21 @@ import {
   type OttoLine,
   type Phase,
   type Pick,
+  type PowerHit,
+  type PowerPlay,
+  type PowerState,
   type Standing,
 } from '@trivia/shared';
 import type { PackOffer } from '../content/packs.ts';
 import type { Category, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
 import {
-  categoryLine,
   finalLine,
   ladderRevealLine,
   ladderStepLine,
   line,
   LinePicker,
+  powerLine,
   revealLine,
   scoreboardLine,
   SOLO_LADDER_HIGH,
@@ -110,6 +114,13 @@ export class Room {
   readonly streaks = new Map<string, number>();
   /** Rounds in a row that nobody answered correctly. */
   noneCorrectRun = 0;
+  /** Last round Otto commented on (power plays, reveal or scoreboard): he doesn't chatter every round. */
+  lastCommentRound = -1;
+  /** Otto commented on this round already. */
+  private spokeThisRound = false;
+  private blowoutCalled = false;
+  /** Power plays get explained the first time they are handed out in this room. */
+  private powersExplained = false;
 
   /** Milliomos-létra state for this game; null in the classic game. */
   ladder: LadderGame | null = null;
@@ -119,6 +130,13 @@ export class Room {
   lastCategoryId: number | null = null;
   /** `${playerId}:${questionId}` for flags already sent. */
   readonly flags = new Set<string>();
+
+  /** Players holding an unused power play. */
+  readonly powers = new Set<string>();
+  /** Holders who chose to keep theirs this vote. */
+  readonly powerPasses = new Set<string>();
+  /** Power plays thrown this round. */
+  hits: PowerHit[] = [];
 
   constructor(
     readonly code: string,
@@ -337,6 +355,11 @@ export class Room {
     this.question = null;
     this.streaks.clear();
     this.noneCorrectRun = 0;
+    this.lastCommentRound = -1;
+    this.blowoutCalled = false;
+    this.powers.clear();
+    this.powerPasses.clear();
+    this.hits = [];
     this.phase = 'intro';
     this.ladder = this.mode === 'ladder' ? new LadderGame([...this.players.keys()], this.rng) : null;
     this.otto = this.ladder ? line('ladderWelcome', this.lines) : welcomeLine(this.players.size, this.lines);
@@ -348,8 +371,89 @@ export class Room {
     this.votes.clear();
     this.question = null;
     this.answers.clear();
+    this.hits = [];
+    this.powerPasses.clear();
+    // Power plays need someone to throw them at: none in a solo game.
+    const granted = grantsPowerPlay(this.round) && this.players.size > 1;
+    if (granted) for (const id of this.players.keys()) this.powers.add(id);
     this.phase = 'vote';
-    this.otto = voteLine(this.round, this.totalRounds, this.lines);
+    this.otto = voteLine(this.round, this.totalRounds, this.lines, granted && !this.powersExplained);
+    // An announcement fills this round's talking; it doesn't make the next one quieter.
+    this.spokeThisRound = this.otto !== null;
+    if (granted) this.powersExplained = true;
+  }
+
+  /** A comment on this round: remembered so the next round's small moments pass quietly. */
+  private comment(line: OttoLine | null): OttoLine | null {
+    if (line) {
+      this.spokeThisRound = true;
+      this.lastCommentRound = this.round;
+    }
+    return line;
+  }
+
+  /** Otto kept quiet in the previous round (and hasn't spoken in this one yet). */
+  private get quietBefore(): boolean {
+    return !this.spokeThisRound && this.lastCommentRound < this.round - 1;
+  }
+
+  /** True while the vote should wait for someone to decide on their power play. */
+  powerVote(): boolean {
+    return this.connectedPlayers().some((p) => this.powerPending(p.id));
+  }
+
+  /** Throws `playerId`'s power play at `targetId`. Only in the vote, once per round. */
+  choosePower(playerId: string, power: PowerPlay, targetId: string): Result {
+    if (this.phase !== 'vote') return { ok: false, error: 'NOT_ALLOWED' };
+    if (!this.players.has(playerId)) return { ok: false, error: 'NOT_FOUND' };
+    if (!this.powers.has(playerId)) return { ok: false, error: 'NOT_ALLOWED' };
+    if (targetId === playerId) return { ok: false, error: 'NOT_ALLOWED' };
+    const target = this.players.get(targetId);
+    if (!target) return { ok: false, error: 'NOT_FOUND' };
+    if (!target.connected) return { ok: false, error: 'NOT_ALLOWED' };
+    this.powers.delete(playerId);
+    this.powerPasses.delete(playerId);
+    this.hits.push({ by: playerId, target: targetId, power, cleared: false });
+    return { ok: true };
+  }
+
+  /** Keeps the power play for a later round. */
+  passPower(playerId: string): Result {
+    if (this.phase !== 'vote') return { ok: false, error: 'NOT_ALLOWED' };
+    if (!this.powers.has(playerId)) return { ok: false, error: 'NOT_ALLOWED' };
+    this.powerPasses.add(playerId);
+    return { ok: true };
+  }
+
+  /** The target broke the ice or wiped the slime off (every hit of that kind on them). */
+  clearPower(playerId: string, power: PowerPlay): Result {
+    if (this.phase !== 'question_open') return { ok: false, error: 'NOT_ALLOWED' };
+    const mine = this.hits.filter((h) => h.target === playerId && h.power === power && !h.cleared);
+    if (mine.length === 0) return { ok: false, error: 'NOT_FOUND' };
+    for (const h of mine) h.cleared = true;
+    return { ok: true };
+  }
+
+  /** Whether an obstacle still covers this player's answer buttons. */
+  blocked(playerId: string): boolean {
+    return this.hits.some((h) => h.target === playerId && !h.cleared);
+  }
+
+  powerState(playerId: string): PowerState {
+    if (this.hits.some((h) => h.by === playerId)) return 'used';
+    if (!this.powers.has(playerId)) return 'none';
+    if (this.phase !== 'vote') return 'held';
+    if (this.powerPasses.has(playerId)) return 'passed';
+    return this.hasTarget(playerId) ? 'ready' : 'held';
+  }
+
+  /** Holds a power play, hasn't decided on it this vote, and has someone to aim at. */
+  private powerPending(playerId: string): boolean {
+    return this.powers.has(playerId) && !this.powerPasses.has(playerId) && this.hasTarget(playerId);
+  }
+
+  private hasTarget(playerId: string): boolean {
+    return this.connectedPlayers().some((p) => p.id !== playerId);
   }
 
   castVote(playerId: string, option: number): Result {
@@ -371,7 +475,8 @@ export class Room {
   enterVoteResult(chosen: number): void {
     this.chosenOption = chosen;
     this.phase = 'vote_result';
-    this.otto = categoryLine(this.voteOptions[chosen]!.category.slug, this.lines);
+    // The category speaks for itself (the question is read next); thrown power plays get a word.
+    this.otto = this.hits.length > 0 ? this.comment(powerLine(this.hits, this.lines, this.quietBefore)) : null;
   }
 
   // --- Milliomos-létra ------------------------------------------------------
@@ -456,6 +561,7 @@ export class Room {
       return { ok: false, error: 'NOT_ALLOWED' };
     }
     if (this.answers.has(playerId)) return { ok: false, error: 'NOT_ALLOWED' }; // no changing
+    if (this.blocked(playerId)) return { ok: false, error: 'NOT_ALLOWED' }; // clear the obstacle first
     if (choice < 0 || choice >= this.question.choices.length) return { ok: false, error: 'BAD_REQUEST' };
     // 50:50 took these choices away from this player.
     if (this.ladder?.hiddenFor(playerId).includes(choice)) return { ok: false, error: 'BAD_REQUEST' };
@@ -492,12 +598,24 @@ export class Room {
       responseMs: p.responseMs,
       streak: this.streaks.get(p.playerId) ?? 0,
     }));
-    this.otto = revealLine(facts, this.noneCorrectRun, this.lines);
+    this.otto = this.comment(revealLine(facts, this.noneCorrectRun, this.lines, this.quietBefore));
   }
 
   enterScoreboard(): void {
     this.phase = 'scoreboard';
-    this.otto = scoreboardLine(this.standingFacts(), this.round, this.lines);
+    const line = scoreboardLine(
+      this.standingFacts(),
+      {
+        round: this.round,
+        totalRounds: this.totalRounds,
+        spokeThisRound: this.otto !== null,
+        quietBefore: this.quietBefore,
+        blowoutCalled: this.blowoutCalled,
+      },
+      this.lines,
+    );
+    if (line?.key === 'blowout') this.blowoutCalled = true;
+    this.otto = this.comment(line);
   }
 
   enterFinal(): void {
@@ -509,6 +627,8 @@ export class Room {
   /** Back to the lobby for a new game: the pack vote starts over. */
   enterLobby(): void {
     for (const p of this.players.values()) p.score = 0;
+    this.powers.clear();
+    this.hits = [];
     this.phase = 'lobby';
     this.lobbyStep = 'packs';
     this.packVotes.clear();
@@ -529,7 +649,7 @@ export class Room {
   allActed(): boolean {
     const connected = this.connectedPlayers();
     if (connected.length === 0) return false;
-    if (this.phase === 'vote') return connected.every((p) => this.votes.has(p.id));
+    if (this.phase === 'vote') return connected.every((p) => this.votes.has(p.id) && !this.powerPending(p.id));
     if (this.phase === 'ladder_step') return this.ladder?.allDecided(connected.map((p) => p.id)) ?? false;
     if (this.phase === 'question_open') {
       const ladder = this.ladder;

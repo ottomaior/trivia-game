@@ -6,6 +6,7 @@ import { useInStudio } from '../../stage/StudioContext.ts';
 import { Blob } from '../../ui/Blob.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
+import { PowerIcon } from '../../ui/PowerIcon.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import { LETTERS, TILE } from '../../ui/answers.ts';
 import styles from '../Tv.module.css';
@@ -95,6 +96,13 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
               <li key={p.id} className={`${styles.answerRowItem} ${answered.has(p.id) ? styles.lockedIn : ''}`}>
                 <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
                 <span>{p.name}</span>
+                <span className={styles.rowHits}>
+                  {stage.hits
+                    .filter((h) => h.target === p.id && !h.cleared)
+                    .map((h, i) => (
+                      <PowerIcon key={i} power={h.power} size="1.4em" />
+                    ))}
+                </span>
               </li>
             ))}
           </ul>

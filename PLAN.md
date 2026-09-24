@@ -6,7 +6,7 @@ This is a couch party trivia game for 2–6 friends in the same room, inspired b
 
 The game is **Hungarian only**: all UI text, Otto's lines, and questions are in Hungarian.
 
-**Status:** Phase 0 and Phase 1 are built and tested, and the game is deployed on Railway at https://triviaserver-production-d945.up.railway.app (see README, "Deploying to Railway"). What's left for Phase 1 is a real game night.
+**Status:** Phases 0, 1, 2.5, 2.6 and 3 are built and tested, and the game is deployed on Railway at https://triviaserver-production-d945.up.railway.app (see README, "Deploying to Railway"). Otto's voice and the studio sounds are recorded. What's left: a real game night, the rest of Phase 2 (question bank, smart-TV pass), then Phases 4–5.
 
 **Decisions already made in Q&A:**
 | Topic | Decision |
@@ -242,20 +242,28 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 - ✅ Audio engine with buses, random variants of recorded sounds, studio audience reactions; `pnpm audio:prepare` and a sound shopping list.
 - ✅ Rollout: intro title card with bouncing logo letters, empty desks waiting in the lobby, desks that shrink to fit six players, the final on a rising three-step podium with a drifting camera and the full results on the board.
 - ✅ Phones: faint sunburst backdrop, answer buttons that pop in and squash, a confetti pop for right answers and a shake for wrong ones, the player's blob (with a crown when leading) on the standings and final screens.
-- Next: record the sounds and Otto's voice (owner), then tune levels and timings after a real game night.
+- ✅ Sounds and Otto's voice recorded (ElevenLabs, see `apps/web/public/voice/README.md`), including a read-aloud for every question.
+- Next: tune levels and timings after a real game night.
 
-### Phase 2.6 — Question packs and a bigger bank (in progress)
+### Phase 2.6 — Otto's pacing (built; needs re-recording)
+The first real test found Otto talking nonstop (about 5 clips a round, ~51 a game, into phases shorter than the clips) and cutting himself off, because every phase change set a new line and the TV hard-stopped the old one.
+- ✅ **Talk less:** each round Otto reads the question and says at most one more thing, only when something happened. Big moments (a streak at 3, 5, 7…, nobody right twice, the only one right, a new leader, a comeback, a gang-up) always get a line; small ones (everyone right, a lightning answer, nobody right, plain power-play hits, a blowout once, a close race near the end) only after a quiet round. Gone: "pick a category", the category reactions, halfway, first round, "fastest"/"some got it", "standings". Votes are silent except the double-points finale and the first time power plays are handed out. A simulated game has ~10 lines plus the 10 read-alouds (was ~51).
+- ✅ **Never cut off:** clip lengths are stored in the voice manifests (`durationMs`, read from the MP3 frames); the server holds any phase until Otto has finished (plus 0.5s), even when everyone has acted. The answers open once the question has been read out. On the TV, a line that would still overlap waits up to 1.5s or fades the old one out; `/tv?audiolog` logs every start, finish and fade.
+- ✅ **Shorter lines:** `ottoMaxChars` budgets (60 for greetings and the power-play explanation, 50 for the finale, 45 for reactions), enforced by a test. 76 lines were rewritten or are new.
+- Next: `pnpm voice:generate` on the owner's PC (about 4,300 characters), then a game night to judge the rhythm.
+
+### Phase 3 — Power Plays (built; needs a real game night)
+- ✅ Everyone gets a power play in rounds 2, 5 and 8 (`grantsPowerPlay` in `rules.ts`; at most one held, unused ones carry over; none in a solo game). After voting, the phone offers **Jégcsapda** (freeze) or **Trutyibomba** (slime) and a target, or "Nem most" to keep it. No extra phase: the vote waits for everyone's decision and runs 12s instead of 8s while someone can still throw one.
+- ✅ **Freeze:** the target's answer buttons are covered in ice that takes 15 taps to break. **Slime:** a canvas of goo that has to be 70% wiped off (tracked on a 10×14 grid). Both at once: slime first, then the ice. The server rejects the target's answer until they report it cleared (`power:clear`); the clock keeps running, which is the whole penalty.
+- ✅ The TV shows who threw what at whom under the vote, a projectile from desk to desk, ice or slime on the target's desk until cleared, and a badge on desks holding one. Otto comments at the category spin (`powerFreeze`, `powerSlime`, `powerMany`, `powerGangUp`; always on a gang-up, otherwise only after a quiet round) and explains them the first time they're handed out (`powerGranted`). Synthesized freeze/splat/shatter/wipe sounds.
+- ✅ Tests: targeting rules (not yourself, not someone offline, one per round, only in the vote), the vote waiting for decisions, the answer block, a target who disconnects keeps the hit, plus a socket test and a Playwright test of a real freeze.
+- Next: record Otto's new power lines (with the Phase 2.6 re-recording); tune the tap count, wipe share and grant rounds after a game night.
+
+### Phase 3.5 — Question packs, a bigger bank and Milliomos-létra (built)
 - ✅ Packs (`seed/packs.json`): the phones vote for a pack in the lobby, the VIP locks the vote and can switch categories off, and each round's category vote offers only the pack's categories (skipped when one is left). A pack is offered from 60 questions; the choice is saved in `matches.settings`.
-- Content: 28 categories aimed at an 18–35 friend group (series, franchises, games, internet, 2000s hits, Hungarian music and film, Budapest, school classics, football, Formula 1…), 45 questions each (15 per difficulty), written in the session and blind-checked. No other quiz's questions are copied (see CLAUDE.md).
+- ✅ Content: 28 categories aimed at an 18–35 friend group (series, franchises, games, internet, 2000s hits, Hungarian music and film, Budapest, school classics, football, Formula 1…), 45 questions each (15 per difficulty), written in the session and blind-checked. No other quiz's questions are copied (see CLAUDE.md).
 - ✅ Milliomos-létra: a separate game mode picked like a pack. 15 rungs that get harder, safe rungs at 5 and 10, everyone answers at once, a wrong answer drops you to your last safe rung, walk away before any rung, and one each of 50:50, ask the audience (the players already out) and phone a friend.
 - Voice last: the new Otto lines and the read-alouds for the new questions are recorded once everything is in.
-
-### Phase 3 — Power Plays
-- One power play per player, granted every N rounds. The player picks it **during the category vote**, on the same screen, so no extra phase is added.
-- **Freeze:** the target's answer screen is covered in ice and needs N taps to break. The server sends the obstacle in the target's `PlayerView`. The timer keeps running, which is the whole penalty.
-- **Slime:** the target has to swipe to wipe the canvas until at least 70% is clear. Coverage is computed on the client with a downsampled pixel grid.
-- The TV shows who hit whom, with animation and Otto commentary.
-- ✅ **Milestone:** each power play works in a 4-player game, and no phase takes longer because of it. Unit tests cover targeting rules (can't target yourself, one per round, what happens if the target disconnects).
 
 ### Phase 4 — Special rounds
 - **Linking** (match 4 left items to 4 right items) and **Sorting** (drag or tap items into one of 2 bins). These use the `kind`/`payload` columns, and the generator and verifier get prompts for each kind.

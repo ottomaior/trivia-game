@@ -1,6 +1,8 @@
-import { LADDER_RUNGS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
+import { LADDER_RUNGS, ottoLineOffsetMs, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
+import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryStore } from '../db/store.ts';
+import { loadSpeechLengths, silentSpeech, type SpeechLengths } from '../game/speech.ts';
 import { toHostView, toPlayerView } from '../game/views.ts';
 import { fixtureContent, HOUSEHOLD, seededRng, TEST_LADDER_PACK, TEST_PACKS } from '../testing.ts';
 import { Room, type Player } from './Room.ts';
@@ -12,7 +14,7 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 
-function setup(opts: { players?: number; store?: MemoryStore } = {}) {
+function setup(opts: { players?: number; store?: MemoryStore; speech?: SpeechLengths } = {}) {
   const store = opts.store ?? new MemoryStore(fixtureContent(), seededRng(7));
   const room = new Room('BCDF', HOUSEHOLD, Date.now(), seededRng(3));
   const changes: string[] = [];
@@ -23,6 +25,7 @@ function setup(opts: { players?: number; store?: MemoryStore } = {}) {
     packs: [...TEST_PACKS, TEST_LADDER_PACK],
     minPackQuestions: 1,
     timingScale: 1,
+    speech: opts.speech ?? silentSpeech,
     onChange: (r) => changes.push(r.phase),
     log: { warn: () => {} },
   });
@@ -157,6 +160,7 @@ describe('RoomRunner', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     const positions = new Set<number>();
     for (let i = 0; i < 6; i++) {
+      for (const p of players) runner.passPower(p.id);
       for (const p of players) runner.vote(p.id, 0);
       await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
       positions.add(room.question!.correct);
@@ -188,6 +192,44 @@ describe('RoomRunner', () => {
     // The minute away does not count against answer time.
     runner.answer(players[0]!.id, room.question!.id, room.question!.correct);
     expect(room.answers.get(players[0]!.id)?.responseMs).toBe(5_000);
+  });
+
+  it('gives power-play votes longer, and lets a frozen player answer once the ice is broken', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    const [a, b] = players;
+    await begin(runner, a!.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
+    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal + TIMINGS.scoreboard);
+
+    // Round 2 hands out power plays: the vote waits for both decisions.
+    expect(room.phase).toBe('vote');
+    expect(room.phaseEndsAt).toBe(Date.now() + TIMINGS.votePower);
+    for (const p of players) runner.vote(p.id, 0);
+    expect(room.phase).toBe('vote');
+    expect(runner.choosePower(a!.id, 'freeze', b!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('vote');
+    expect(runner.passPower(b!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('vote_result');
+    expect(room.otto).toBeNull(); // Otto just explained power plays: one freeze needs no second word
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
+    const q = room.question!;
+    const bView = toPlayerView(room, b!.id, Date.now());
+    expect(bView?.stage.phase === 'question_open' && bView.stage.hits).toEqual([
+      { by: a!.id, target: b!.id, power: 'freeze', cleared: false },
+    ]);
+    expect(runner.answer(b!.id, q.id, q.correct)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    await vi.advanceTimersByTimeAsync(3_000);
+    expect(runner.clearPower(b!.id, 'freeze')).toEqual({ ok: true });
+    expect(runner.answer(b!.id, q.id, q.correct)).toEqual({ ok: true });
+    runner.answer(a!.id, q.id, q.correct);
+    expect(room.phase).toBe('reveal');
+    // Instant in round 1; in round 2 the ice cost three seconds of speed bonus.
+    expect(room.picks.find((p) => p.playerId === b!.id)?.points).toBe(925);
+    expect(toPlayerView(room, b!.id, Date.now())?.mine.power).toBe('held');
   });
 
   it('finishes early with what it has when questions run out', async () => {
@@ -414,5 +456,94 @@ describe('RoomRunner: Milliomos-létra', () => {
       expect(JSON.stringify(v)).not.toMatch(/"correct"/);
     }
     expect(toHostView(room, now()).ladder!.seats.find((s) => s.playerId === a.id)!.used).toEqual(['fifty', 'audience']);
+  });
+});
+
+describe("RoomRunner: Otto's pacing", () => {
+  it('lets Otto finish: a phase lasts until his line is over, even when everyone has acted', async () => {
+    const speech: SpeechLengths = { line: () => 6_000, question: () => 3_000 };
+    const { runner, room, players } = setup({ players: 2, speech });
+    await begin(runner, players[0]!.id);
+    // The welcome takes 6s: the 4s intro waits for it.
+    expect(room.phaseEndsAt).toBe(Date.now() + 6_000 + SPEECH_TAIL_MS);
+    await vi.advanceTimersByTimeAsync(6_000 + SPEECH_TAIL_MS);
+    expect(room.phase).toBe('vote');
+    for (const p of players) runner.vote(p.id, 0);
+    expect(room.phase).toBe('vote_result'); // Otto is quiet in an ordinary vote
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
+    // Answers open once the question has been read out.
+    expect(room.phase).toBe('question_read');
+    expect(room.phaseEndsAt).toBe(Date.now() + QUESTION_VOICE_DELAY_MS + 3_000 + SPEECH_TAIL_MS);
+    await vi.advanceTimersByTimeAsync(QUESTION_VOICE_DELAY_MS + 3_000 + SPEECH_TAIL_MS);
+    expect(room.phase).toBe('question_open');
+    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    expect(room.phase).toBe('reveal');
+
+    // Round 2's vote explains power plays: voting fast doesn't cut Otto off.
+    for (let i = 0; i < 400 && room.phase !== 'vote'; i++) await vi.advanceTimersByTimeAsync(100);
+    expect(room.phase).toBe('vote');
+    expect(room.otto?.key).toBe('powerGranted');
+    await vi.advanceTimersByTimeAsync(1_000);
+    for (const p of players) {
+      runner.vote(p.id, 0);
+      runner.passPower(p.id);
+    }
+    expect(room.phase).toBe('vote');
+    expect(room.phaseEndsAt).toBe(Date.now() + 5_000 + SPEECH_TAIL_MS);
+    await vi.advanceTimersByTimeAsync(5_000 + SPEECH_TAIL_MS);
+    expect(room.phase).toBe('vote_result');
+  });
+
+  it('plays a whole game on the real recordings without ever cutting Otto off, and he talks sparingly', async () => {
+    const recorded = loadSpeechLengths(fileURLToPath(new URL('../../../web/public/voice', import.meta.url)));
+    const speech: SpeechLengths = { line: (l) => recorded.line(l), question: () => 3_500 };
+    for (const seed of [1, 2, 3]) {
+      const { runner, room, players } = setup({ players: 4, speech });
+      const rng = seededRng(seed);
+      // Who's talking when: [start, end, what], plus when each phase began.
+      const talk: [number, number, string][] = [];
+      const phaseStarts: number[] = [];
+      let lastPhase = '';
+      const record = () => {
+        if (room.phase === lastPhase) return;
+        lastPhase = room.phase;
+        const now = Date.now();
+        phaseStarts.push(now);
+        if (room.phase === 'question_read') talk.push([now + QUESTION_VOICE_DELAY_MS, now + QUESTION_VOICE_DELAY_MS + 3_500, 'question']);
+        else if (room.otto) {
+          const at = now + ottoLineOffsetMs(room.phase);
+          talk.push([at, at + speech.line(room.otto), room.otto.key]);
+        }
+      };
+      await begin(runner, players[0]!.id);
+      record();
+      for (let i = 0; i < 4000 && room.phase !== 'final'; i++) {
+        for (const p of players) {
+          if (room.phase === 'vote' && rng() < 0.3) {
+            runner.vote(p.id, 0);
+            if (rng() < 0.5) runner.choosePower(p.id, 'freeze', players[(p.seat + 1) % 4]!.id);
+            else runner.passPower(p.id);
+          }
+          if (room.phase === 'question_open' && rng() < 0.1) {
+            for (const power of ['freeze', 'slime'] as const) runner.clearPower(p.id, power);
+            runner.answer(p.id, room.question!.id, rng() < 0.6 ? room.question!.correct : (room.question!.correct + 1) % 4);
+          }
+          record();
+        }
+        await vi.advanceTimersByTimeAsync(250);
+        record();
+      }
+      expect(room.phase).toBe('final');
+      // Nothing Otto says overlaps the next thing, and no phase ends while he's talking.
+      for (let i = 1; i < talk.length; i++) expect(talk[i]![0], talk[i]![2]).toBeGreaterThanOrEqual(talk[i - 1]![1]);
+      for (const [start, end, what] of talk.slice(0, -1)) {
+        const nextPhase = phaseStarts.find((t) => t > start);
+        if (nextPhase !== undefined) expect(nextPhase, what).toBeGreaterThanOrEqual(end);
+      }
+      // Besides reading the ten questions, a handful of lines: nowhere near one per phase.
+      const lines = talk.filter(([, , what]) => what !== 'question');
+      expect(lines.length).toBeLessThanOrEqual(12);
+      expect(lines.length).toBeGreaterThanOrEqual(3);
+    }
   });
 });

@@ -12,7 +12,6 @@ const MOODS: Partial<Record<OttoLineKey, OttoMood>> = {
   closeRace: 'shocked',
   allCorrect: 'happy',
   onlyOne: 'shocked',
-  firstRound: 'happy',
   lastRound: 'shocked',
   streak: 'happy',
   lightning: 'happy',
@@ -24,6 +23,10 @@ const MOODS: Partial<Record<OttoLineKey, OttoMood>> = {
   soloFinalHigh: 'happy',
   welcome: 'happy',
   welcomeSolo: 'happy',
+  powerGranted: 'happy',
+  powerSlime: 'shocked',
+  powerGangUp: 'shocked',
+  powerMany: 'happy',
 };
 
 export function moodFor(line: OttoLine | null): OttoMood {

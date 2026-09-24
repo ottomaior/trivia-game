@@ -1,4 +1,4 @@
-import type { Avatar, Difficulty, GameMode, Lifeline } from './rules.ts';
+import type { Avatar, Difficulty, GameMode, Lifeline, PowerPlay } from './rules.ts';
 
 // Views are complete, role-specific snapshots. The server sends a fresh one on
 // every change, so a reconnecting client resyncs just by receiving the next one.
@@ -24,6 +24,8 @@ export interface PlayerSummary {
   connected: boolean;
   isVip: boolean;
   score: number;
+  /** Holds an unused power play. */
+  hasPower: boolean;
 }
 
 /** A question pack as the lobby offers it. */
@@ -74,6 +76,21 @@ export interface PublicQuestion {
   voice: string;
 }
 
+/** A power play thrown this round: `target` has to clear it before answering. */
+export interface PowerHit {
+  by: string;
+  target: string;
+  power: PowerPlay;
+  cleared: boolean;
+}
+
+/**
+ * This player's power play: `ready` while they can throw it now (in the vote,
+ * with someone to target), `passed` when they are keeping it for later,
+ * `held` outside the vote, `used` once thrown this round.
+ */
+export type PowerState = 'none' | 'held' | 'ready' | 'passed' | 'used';
+
 export interface Pick {
   playerId: string;
   choice: number | null;
@@ -98,13 +115,14 @@ export type Stage =
   /** The pack is locked; the VIP may switch categories off before starting. */
   | { phase: 'lobby'; step: 'setup'; pack: PackOption; categories: PackCategory[]; minQuestions: number }
   | { phase: 'intro' }
-  | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number> }
+  /** `powerVote`: someone can throw a power play, so the vote runs longer (TIMINGS.votePower). */
+  | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number>; hits: PowerHit[]; powerVote: boolean }
   /** The vote is decided; the TV spins to `chosen` before the question. */
-  | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number }
+  | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number; hits: PowerHit[] }
   /** `rung` is about to be played; `walking` maps player id to their choice so far (true: stop here). */
   | { phase: 'ladder_step'; rung: number; category: CategoryOption; difficulty: Difficulty; walking: Record<string, boolean> }
-  | { phase: 'question_read'; question: PublicQuestion }
-  | { phase: 'question_open'; question: PublicQuestion; answered: string[] }
+  | { phase: 'question_read'; question: PublicQuestion; hits: PowerHit[] }
+  | { phase: 'question_open'; question: PublicQuestion; answered: string[]; hits: PowerHit[] }
   | {
       phase: 'reveal';
       question: PublicQuestion;
@@ -127,64 +145,27 @@ export interface OttoLine {
   focus: string[];
 }
 
-/** Otto's reaction to a chosen category, by the category's slug. */
-export const CATEGORY_LINES = {
-  tortenelem: 'catTortenelem',
-  foldrajz: 'catFoldrajz',
-  tudomany: 'catTudomany',
-  film: 'catFilm',
-  zene: 'catZene',
-  sport: 'catSport',
-  gasztro: 'catGasztro',
-  magyarorszag: 'catMagyarorszag',
-  sorozatok: 'catSorozatok',
-  animacio: 'catAnimacio',
-  univerzumok: 'catUniverzumok',
-  magyarfilm: 'catMagyarfilm',
-  slagerek: 'catSlagerek',
-  magyarzene: 'catMagyarzene',
-  jatekok: 'catJatekok',
-  internet: 'catInternet',
-  tech: 'catTech',
-  markak: 'catMarkak',
-  gyerekkor: 'catGyerekkor',
-  kotelezok: 'catKotelezok',
-  nyelv: 'catNyelv',
-  budapest: 'catBudapest',
-  utazas: 'catUtazas',
-  italok: 'catItalok',
-  foci: 'catFoci',
-  f1: 'catForma',
-  ur: 'catUr',
-  allatok: 'catAllatok',
-} as const;
-export type CategoryLineKey = (typeof CATEGORY_LINES)[keyof typeof CATEGORY_LINES];
-
 export type OttoLineKey =
   | 'welcome'
   | 'welcomeSolo'
-  | 'firstRound'
-  | 'pickCategory'
-  | 'halfway'
   | 'lastRound'
-  | 'categoryPicked'
-  | CategoryLineKey
+  | 'powerGranted'
+  | 'powerFreeze'
+  | 'powerSlime'
+  | 'powerMany'
+  | 'powerGangUp'
   | 'allCorrect'
   | 'noneCorrect'
   | 'noneCorrectAgain'
   | 'onlyOne'
   | 'streak'
   | 'lightning'
-  | 'fastest'
-  | 'someCorrect'
   | 'soloCorrect'
   | 'soloWrong'
   | 'newLeader'
   | 'comeback'
   | 'blowout'
   | 'closeRace'
-  | 'standings'
-  | 'soloScore'
   | 'winner'
   | 'tie'
   | 'soloFinalHigh'
@@ -196,10 +177,8 @@ export type OttoLineKey =
 export type LadderLineKey =
   | 'ladderWelcome'
   | 'ladderFirst'
-  | 'ladderStep'
   | 'ladderSafeAhead'
   | 'ladderLastRung'
-  | 'ladderClimb'
   | 'ladderSafe'
   | 'ladderFell'
   | 'ladderAllFell'
@@ -239,6 +218,7 @@ export interface PlayerView extends BaseView {
     flagged: boolean;
     /** Milliomos-létra: what this player's lifelines show on the current question. */
     ladder: LadderHelp | null;
+    power: PowerState;
   };
 }
 

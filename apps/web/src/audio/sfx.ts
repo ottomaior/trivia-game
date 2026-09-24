@@ -210,6 +210,34 @@ export const SFX: Partial<Record<Cue, (ctx: Ctx, out: AudioNode, t: number) => n
     bell(ctx, out, N(15), t, 0.2);
     return 1;
   },
+  freeze(ctx, out, t) {
+    // A glassy downward shimmer with a crackle of forming ice.
+    [N(27), N(22), N(19), N(15)].forEach((f, i) => bell(ctx, out, f, t + i * 0.06, 0.12));
+    for (let i = 0; i < 8; i++) {
+      noise(ctx, out, { start: t + 0.1 + i * 0.045, dur: 0.03, gain: 0.05, type: 'bandpass', freq: 5000 + i * 300, q: 4 });
+    }
+    return 1.1;
+  },
+  splat(ctx, out, t) {
+    // A wet low thud with a squelchy pitch drop.
+    noise(ctx, out, { start: t, dur: 0.3, gain: 0.35, type: 'lowpass', freq: 1400, sweepTo: 200 });
+    tone(ctx, out, { freq: 260, glideTo: 70, start: t, dur: 0.28, type: 'sine', gain: 0.3 });
+    tone(ctx, out, { freq: 520, glideTo: 180, start: t + 0.05, dur: 0.18, type: 'triangle', gain: 0.08, filter: 1200 });
+    return 0.4;
+  },
+  shatter(ctx, out, t) {
+    // Breaking ice: a sharp crack, then tinkling shards.
+    noise(ctx, out, { start: t, dur: 0.12, gain: 0.3, type: 'highpass', freq: 2500 });
+    for (let i = 0; i < 7; i++) {
+      bell(ctx, out, N(24 + ((i * 5) % 12)), t + 0.04 + i * 0.05 + Math.random() * 0.03, 0.06);
+    }
+    return 0.9;
+  },
+  wipe(ctx, out, t) {
+    // A quick squeegee swipe.
+    noise(ctx, out, { start: t, dur: 0.25, gain: 0.25, type: 'bandpass', freq: 800, sweepTo: 3500, q: 1.5 });
+    return 0.3;
+  },
   winner(ctx, out, t) {
     const steps = [C5, E5, G5, C6, G5, C6];
     steps.forEach((f, i) => brass(ctx, out, [f], t + i * 0.14, 0.13, 0.12));

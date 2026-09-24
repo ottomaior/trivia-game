@@ -18,6 +18,11 @@ export const SOUND_CUES = [
   'scoreboard',
   'leadChange',
   'winner',
+  // power plays
+  'freeze',
+  'splat',
+  'shatter',
+  'wipe',
   // the studio audience
   'applause',
   'cheer',
@@ -34,5 +39,5 @@ export type MusicTrack = (typeof MUSIC_TRACKS)[number];
 /** public/audio/manifest.json: each name maps to one or more files (variants are picked at random). */
 export type AudioManifest = Partial<Record<SoundCue | MusicTrack, string | string[]>>;
 
-/** public/voice/manifest.json: Otto's pre-recorded lines by voice id. */
-export type VoiceManifest = Record<string, { file: string; hash: string }>;
+/** public/voice/manifest.json: Otto's pre-recorded lines by voice id, with each clip's length. */
+export type VoiceManifest = Record<string, { file: string; hash: string; durationMs?: number }>;

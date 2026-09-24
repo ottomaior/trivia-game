@@ -15,7 +15,10 @@ type PlayerCommand =
   | 'answer:submit'
   | 'ladder:walk'
   | 'ladder:lifeline'
-  | 'question:flag';
+  | 'question:flag'
+  | 'power:choose'
+  | 'power:pass'
+  | 'power:clear';
 
 /** Sends a phone command and resolves to its result; a timeout counts as a failure. */
 export async function send<E extends PlayerCommand>(

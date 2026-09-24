@@ -12,6 +12,7 @@ import { systemClock, type Clock } from './clock.ts';
 import type { Rng } from './content/select.ts';
 import type { Store } from './db/store.ts';
 import type { PackDef } from './content/packs.ts';
+import type { SpeechLengths } from './game/speech.ts';
 import { attachSocketHandlers, broadcast, closeRoom, type SocketData } from './net/socketServer.ts';
 import { RoomManager } from './rooms/RoomManager.ts';
 
@@ -28,6 +29,8 @@ export interface AppOptions {
   /** Built web app to serve; skipped when missing (dev uses the Vite server). */
   webDistDir?: string;
   sweepIntervalMs?: number;
+  /** How long Otto's recorded lines take (none by default). */
+  speech?: SpeechLengths;
   logger?: boolean;
 }
 
@@ -46,6 +49,7 @@ export async function createApp(opts: AppOptions) {
     store: opts.store,
     rng: opts.rng,
     timingScale: opts.timingScale,
+    speech: opts.speech,
     totalRounds: opts.totalRounds,
     packs: opts.packs,
     minPackQuestions: opts.minPackQuestions,

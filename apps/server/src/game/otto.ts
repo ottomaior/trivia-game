@@ -1,18 +1,23 @@
 import {
-  CATEGORY_LINES,
   LADDER_RUNGS,
   LADDER_SAFE_RUNGS,
   ottoVariants,
   type LadderStatus,
   type OttoLine,
   type OttoLineKey,
+  type PowerHit,
 } from '@trivia/shared';
 import type { Rng } from '../content/select.ts';
 
-// Chooses what Otto says. Pure apart from the LinePicker's decks: the room
-// passes in facts, gets a line back. Lines carry no names (they are
-// pre-recorded); `focus` says who they're about. Each picker checks the most
-// remarkable thing first, so a streak beats a plain "everyone got it".
+// Chooses what Otto says, and above all when he stays quiet. Pure apart from
+// the LinePicker's decks: the room passes in facts, gets a line or null back.
+// Lines carry no names (they are pre-recorded); `focus` says who they're about.
+//
+// Otto is a host, not a commentator: each round he reads the question, and
+// says at most one more thing, only when something happened. Big moments
+// (a streak, a new leader) always get a line; small ones (everyone right, a
+// lightning answer) only after a round in which he kept quiet. Silence and
+// the studio sounds carry the rest.
 
 export const STREAK_MIN = 3;
 export const LIGHTNING_MS = 2_000;
@@ -66,18 +71,30 @@ export function welcomeLine(players: number, pick: LinePicker): OttoLine {
   return line(players === 1 ? 'welcomeSolo' : 'welcome', pick);
 }
 
-/** For the round about to be voted on: the opener, halfway and the double-points finale get their own lines. */
-export function voteLine(round: number, totalRounds: number, pick: LinePicker): OttoLine {
+/**
+ * For the round about to be voted on: only the double-points finale and the
+ * first round that hands out power plays (they need explaining) get a line.
+ */
+export function voteLine(round: number, totalRounds: number, pick: LinePicker, explainPowers = false): OttoLine | null {
   if (round === totalRounds) return line('lastRound', pick);
-  if (round === 1) return line('firstRound', pick);
-  if (totalRounds >= 6 && round === Math.floor(totalRounds / 2) + 1) return line('halfway', pick);
-  return line('pickCategory', pick);
+  if (explainPowers) return line('powerGranted', pick);
+  return null;
 }
 
-/** Otto's reaction to the category that won the vote. */
-export function categoryLine(slug: string, pick: LinePicker): OttoLine {
-  const key: OttoLineKey = (CATEGORY_LINES as Record<string, OttoLineKey>)[slug] ?? 'categoryPicked';
-  return line(key, pick);
+/**
+ * Otto's take on the power plays thrown this round (`hits` is never empty):
+ * always on a gang-up, otherwise only after a quiet round (the TV shows the
+ * hits either way).
+ */
+export function powerLine(hits: PowerHit[], pick: LinePicker, quietBefore = true): OttoLine | null {
+  const byTarget = new Map<string, number>();
+  for (const h of hits) byTarget.set(h.target, (byTarget.get(h.target) ?? 0) + 1);
+  const ganged = [...byTarget].filter(([, n]) => n >= 2).map(([id]) => id);
+  if (ganged.length > 0) return line('powerGangUp', pick, ganged);
+  if (!quietBefore) return null;
+  const targets = [...byTarget.keys()];
+  if (hits.length > 1) return line('powerMany', pick, targets);
+  return line(hits[0]!.power === 'freeze' ? 'powerFreeze' : 'powerSlime', pick, targets);
 }
 
 export interface RevealFact {
@@ -88,17 +105,34 @@ export interface RevealFact {
   streak: number;
 }
 
-export function revealLine(facts: RevealFact[], noneCorrectRun: number, pick: LinePicker): OttoLine {
-  if (facts.length === 1) return line(facts[0]!.correct ? 'soloCorrect' : 'soloWrong', pick);
+/** Streak lines at three right in a row, then every other one (not every round of a hot run). */
+const streakWorthMentioning = (streak: number) => streak >= STREAK_MIN && (streak - STREAK_MIN) % 2 === 0;
+
+/**
+ * The reveal's comment, or null. `quietBefore`: Otto made no comment last
+ * round, so a small moment may get one now.
+ */
+export function revealLine(facts: RevealFact[], noneCorrectRun: number, pick: LinePicker, quietBefore = true): OttoLine | null {
+  if (facts.length === 1) {
+    const [f] = facts;
+    if (f!.correct && streakWorthMentioning(f!.streak)) return line('soloCorrect', pick, [f!.id]);
+    if (!f!.correct && noneCorrectRun === 2) return line('soloWrong', pick, [f!.id]);
+    if (quietBefore && f!.correct && (f!.responseMs ?? Infinity) < LIGHTNING_MS) return line('soloCorrect', pick, [f!.id]);
+    return null;
+  }
   const right = facts.filter((f) => f.correct);
-  if (right.length === 0) return line(noneCorrectRun >= 2 ? 'noneCorrectAgain' : 'noneCorrect', pick);
-  const hot = right.filter((f) => f.streak >= STREAK_MIN).sort((a, b) => b.streak - a.streak)[0];
+  // Big moments: always worth a line.
+  if (right.length === 0 && noneCorrectRun === 2) return line('noneCorrectAgain', pick);
+  const hot = right.filter((f) => streakWorthMentioning(f.streak)).sort((a, b) => b.streak - a.streak)[0];
   if (hot) return line('streak', pick, [hot.id]);
-  if (right.length === facts.length) return line('allCorrect', pick, right.map((f) => f.id));
   if (right.length === 1 && facts.length >= ONLY_ONE_MIN_PLAYERS) return line('onlyOne', pick, [right[0]!.id]);
-  const fastest = right.reduce((a, b) => ((a.responseMs ?? Infinity) <= (b.responseMs ?? Infinity) ? a : b));
-  if ((fastest.responseMs ?? Infinity) < LIGHTNING_MS) return line('lightning', pick, [fastest.id]);
-  return pick.rng() < 0.6 ? line('fastest', pick, [fastest.id]) : line('someCorrect', pick, right.map((f) => f.id));
+  // Small moments: only after a quiet round.
+  if (!quietBefore) return null;
+  if (right.length === 0 && noneCorrectRun === 1) return line('noneCorrect', pick);
+  if (right.length === facts.length && facts.length >= ONLY_ONE_MIN_PLAYERS) return line('allCorrect', pick, right.map((f) => f.id));
+  const fastest = right.reduce<RevealFact | null>((a, b) => (a && (a.responseMs ?? Infinity) <= (b.responseMs ?? Infinity) ? a : b), null);
+  if (fastest && (fastest.responseMs ?? Infinity) < LIGHTNING_MS) return line('lightning', pick, [fastest.id]);
+  return null;
 }
 
 export interface StandingFact {
@@ -108,24 +142,37 @@ export interface StandingFact {
   prevRank: number;
 }
 
-/** `standings` must be sorted best first. */
-export function scoreboardLine(standings: StandingFact[], round: number, pick: LinePicker): OttoLine {
-  if (standings.length === 1) return line('soloScore', pick, [standings[0]!.id]);
+export interface ScoreboardContext {
+  round: number;
+  totalRounds: number;
+  /** Otto already commented on this round's reveal. */
+  spokeThisRound: boolean;
+  quietBefore: boolean;
+  /** A blowout is called once a game. */
+  blowoutCalled: boolean;
+}
+
+/** The scoreboard's comment, or null. `standings` must be sorted best first. */
+export function scoreboardLine(standings: StandingFact[], ctx: ScoreboardContext, pick: LinePicker): OttoLine | null {
+  if (standings.length === 1 || ctx.spokeThisRound) return null;
   const leaders = standings.filter((s) => s.rank === 1);
   const leader = leaders.length === 1 ? leaders[0]! : null;
-  if (leader && leader.prevRank !== 1 && round > 1) return line('newLeader', pick, [leader.id]);
+  if (leader && leader.prevRank !== 1 && ctx.round > 1) return line('newLeader', pick, [leader.id]);
   const climber = standings
     .filter((s) => s.prevRank - s.rank >= COMEBACK_PLACES)
     .sort((a, b) => b.prevRank - b.rank - (a.prevRank - a.rank))[0];
   if (climber) return line('comeback', pick, [climber.id]);
+  if (!ctx.quietBefore) return null;
   const [first, second] = standings;
-  if (first && second && leader && round >= 3 && first.score - second.score >= BLOWOUT_POINTS) {
+  if (first && second && leader && !ctx.blowoutCalled && ctx.round >= 4 && first.score - second.score >= BLOWOUT_POINTS) {
     return line('blowout', pick, [first.id]);
   }
-  if (first && second && second.score > 0 && first.score - second.score <= CLOSE_RACE_POINTS) {
+  // A close race only matters towards the end.
+  const late = ctx.round >= ctx.totalRounds - 3;
+  if (late && first && second && second.score > 0 && first.score - second.score <= CLOSE_RACE_POINTS) {
     return line('closeRace', pick, [first.id, second.id]);
   }
-  return line('standings', pick, leaders.map((s) => s.id));
+  return null;
 }
 
 /** `soloHigh`: the score a solo player needs for the "champion" ending (points, or a ladder rung). */
@@ -143,15 +190,15 @@ export function finalLine(standings: StandingFact[], pick: LinePicker, soloHigh 
 // ---------------------------------------------------------------------------
 // Milliomos-létra
 
-/** Before a rung: the first, the safe rungs and the last one get their own lines. */
-export function ladderStepLine(rung: number, pick: LinePicker): OttoLine {
+/** Before a rung Otto speaks only at the first, the safe rungs and the last one. */
+export function ladderStepLine(rung: number, pick: LinePicker): OttoLine | null {
   if (rung === 1) return line('ladderFirst', pick);
   if (rung === LADDER_RUNGS) return line('ladderLastRung', pick);
   if (LADDER_SAFE_RUNGS.includes(rung)) return line('ladderSafeAhead', pick);
-  return line('ladderStep', pick);
+  return null;
 }
 
-/** After a rung, about the players who were still climbing it. */
+/** After a rung: falls, the safe rungs and the top get a line; a plain climb doesn't. */
 export function ladderRevealLine(
   outcomes: { playerId: string; correct: boolean; status: LadderStatus }[],
   rung: number,
@@ -161,6 +208,6 @@ export function ladderRevealLine(
   const fell = outcomes.filter((o) => o.status === 'out').map((o) => o.playerId);
   if (climbed.length > 0 && rung === LADDER_RUNGS) return line('ladderTop', pick, climbed);
   if (fell.length > 0) return line(climbed.length > 0 ? 'ladderFell' : 'ladderAllFell', pick, fell);
-  if (climbed.length === 0) return null;
-  return line(LADDER_SAFE_RUNGS.includes(rung) ? 'ladderSafe' : 'ladderClimb', pick, climbed);
+  if (climbed.length === 0 || !LADDER_SAFE_RUNGS.includes(rung)) return null;
+  return line('ladderSafe', pick, climbed);
 }

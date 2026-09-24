@@ -1,11 +1,15 @@
-import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type PlayerView, type Stage } from '@trivia/shared';
+import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type PlayerView, type PowerPlay, type Stage } from '@trivia/shared';
 import { useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { LETTERS, TILE } from '../../ui/answers.ts';
+import { FreezeCover, SlimeCover } from '../Obstacles.tsx';
 import styles from '../Phone.module.css';
 
 type QuestionStage = Extract<Stage, { phase: 'question_read' | 'question_open' }>;
+
+/** With both on you, the slime comes off first, then the ice underneath. */
+const COVER_ORDER: PowerPlay[] = ['slime', 'freeze'];
 
 export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stage: QuestionStage; socket: GameSocket }) {
   const { question } = stage;
@@ -20,12 +24,24 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
   const help = view.mine.ladder;
   const hidden = new Set(help?.hidden ?? []);
 
+  // Power plays thrown at me this round; a cleared one goes at once, before the server confirms.
+  const [clearedHere, setClearedHere] = useState<string[]>([]);
+  const onMe = stage.hits.filter((h) => h.target === view.me.id);
+  const cover = COVER_ORDER.find(
+    (power) => onMe.some((h) => h.power === power && !h.cleared) && !clearedHere.includes(`${question.id}:${power}`),
+  );
+
   async function answer(choice: number) {
-    if (!open || mine !== null || hidden.has(choice)) return;
+    if (!open || mine !== null || cover || hidden.has(choice)) return;
     setPending({ questionId: question.id, choice });
     navigator.vibrate?.(40);
     const res = await send(socket, 'answer:submit', { questionId: question.id, choice });
     if (!res.ok) setPending(null);
+  }
+
+  function cleared(power: PowerPlay) {
+    setClearedHere((keys) => [...keys, `${question.id}:${power}`]);
+    void send(socket, 'power:clear', { power });
   }
 
   if (mine !== null) {
@@ -42,6 +58,7 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
   }
 
   const audienceTotal = help?.audience?.reduce((a, b) => a + b, 0) ?? 0;
+  const byline = cover ? throwers(view, onMe.filter((h) => h.power === cover).map((h) => h.by), cover) : '';
   return (
     <div className={styles.column}>
       <p className={styles.phonePrompt}>{question.prompt}</p>
@@ -49,15 +66,16 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
       {view.ladder && !climbing && <p className={styles.hint}>{t.audienceMode}</p>}
       {open && climbing && seat && <LifelineBar view={view} seat={seat} socket={socket} />}
       {help && <HelpNotes view={view} help={help} total={audienceTotal} />}
-      {question.choices.map((c, i) => {
-        const gone = hidden.has(i);
-        const votes = help?.audience?.[i] ?? null;
-        return (
+      <div className={styles.choices}>
+        {question.choices.map((c, i) => {
+          const gone = hidden.has(i);
+          const votes = help?.audience?.[i] ?? null;
+          return (
           <button
             key={i}
             className={`${styles.choice} ${gone ? styles.choiceGone : ''}`}
             style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
-            disabled={!open || gone}
+            disabled={!open || cover !== undefined || gone}
             onClick={() => answer(i)}
             data-testid={`choice-${i}`}
           >
@@ -67,10 +85,23 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
               <span className={styles.audienceVotes}>{audienceTotal > 0 ? `${Math.round((votes / audienceTotal) * 100)}%` : '–'}</span>
             )}
           </button>
-        );
-      })}
+          );
+        })}
+        {cover === 'freeze' && (
+          <FreezeCover key={`${question.id}-freeze`} active={open} byline={byline} onCleared={() => cleared('freeze')} />
+        )}
+        {cover === 'slime' && (
+          <SlimeCover key={`${question.id}-slime`} active={open} byline={byline} onCleared={() => cleared('slime')} />
+        )}
+      </div>
     </div>
   );
+}
+
+/** "Anna sent you an ice trap!" (with every thrower's name when several teamed up). */
+function throwers(view: PlayerView, ids: string[], power: PowerPlay): string {
+  const names = ids.map((id) => view.players.find((p) => p.id === id)?.name ?? '?');
+  return t.powerHitYou(names.join(', '), power);
 }
 
 /** 50:50, ask the audience, phone a friend: one of each per game. */

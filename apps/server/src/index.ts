@@ -1,7 +1,9 @@
+import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { createApp } from './app.ts';
 import { seedData } from './content/seed.ts';
 import { MemoryStore, PgStore, type Store } from './db/store.ts';
+import { loadSpeechLengths } from './game/speech.ts';
 
 const port = Number(process.env.PORT ?? 3000);
 const host = process.env.HOST ?? '0.0.0.0';
@@ -19,7 +21,13 @@ if (process.env.DATABASE_URL) {
 // Resolves to apps/web/dist from both src/ (tsx) and dist/ (bundled).
 const webDistDir = fileURLToPath(new URL('../../web/dist', import.meta.url));
 
-const { app } = await createApp({ store, webDistDir, timingScale });
+// Otto's clip lengths: from the build, or straight from public/ when running from source.
+const builtVoice = fileURLToPath(new URL('../../web/dist/voice', import.meta.url));
+const speech = loadSpeechLengths(
+  existsSync(builtVoice) ? builtVoice : fileURLToPath(new URL('../../web/public/voice', import.meta.url)),
+);
+
+const { app } = await createApp({ store, webDistDir, timingScale, speech });
 
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.once(signal, () => {

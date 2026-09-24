@@ -8,6 +8,9 @@
   --ice: #9fd3e0;
   --rust: #b8462a;
   --plum: #6a3d7a;
+  /* Power plays. */
+  --slime: #86c440;
+  --slime-deep: #3f6e1c;
 
   /* Answer tiles A–D. */
   --answer-a: var(--rust);

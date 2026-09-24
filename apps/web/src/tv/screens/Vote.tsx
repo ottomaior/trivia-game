@@ -9,6 +9,7 @@ import { audio } from '../../audio/engine.ts';
 import { useLowFx } from '../../ui/lowfx.ts';
 import { useSlotSpin } from '../../ui/slotSpin.ts';
 import styles from '../Tv.module.css';
+import { PowerHits } from '../PowerHits.tsx';
 import { RoundLabel } from './common.tsx';
 
 type VoteStage = Extract<Stage, { phase: 'vote' | 'vote_result' }>;
@@ -61,10 +62,13 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
           );
         })}
       </ul>
+      <PowerHits hits={stage.hits} players={view.players} waiting={stage.phase === 'vote' && stage.powerVote} />
       <footer className={styles.gameFooter}>
         {!inStudio && <Otto line={view.otto} players={view.players} size="9em" />}
         <div className={styles.footerTimer}>
-          {stage.phase === 'vote' && <TimerBar endsAt={view.phaseEndsAt} totalMs={TIMINGS.vote} />}
+          {stage.phase === 'vote' && (
+            <TimerBar endsAt={view.phaseEndsAt} totalMs={stage.powerVote ? TIMINGS.votePower : TIMINGS.vote} />
+          )}
         </div>
       </footer>
     </div>

@@ -1,17 +1,23 @@
 import {
   difficultyForRound,
   ladderDifficulty,
+  ottoLineOffsetMs,
+  QUESTION_VOICE_DELAY_MS,
+  SPEECH_TAIL_MS,
   TIMINGS,
   VOTE_OPTIONS,
   type ErrorCode,
   type FlagReason,
   type Lifeline,
+  type PowerPlay,
   type TimingKey,
 } from '@trivia/shared';
 import type { Clock } from '../clock.ts';
 import { buildOffers, type PackDef } from '../content/packs.ts';
 import { shuffleChoices, type Rng } from '../content/select.ts';
 import type { Store } from '../db/store.ts';
+import { questionVoiceId } from '../content/normalize.ts';
+import type { SpeechLengths } from '../game/speech.ts';
 import type { Room, VoteOption } from './Room.ts';
 
 type Result = { ok: true } | { ok: false; error: ErrorCode };
@@ -26,14 +32,17 @@ export interface RunnerDeps {
   minPackQuestions: number;
   /** Multiplies every phase length (tests and E2E run faster). */
   timingScale: number;
+  /** How long Otto talks: a phase never ends while he is still speaking. */
+  speech: SpeechLengths;
   onChange: (room: Room) => void;
   log: { warn: (obj: object, msg: string) => void };
 }
 
 /**
  * Drives one Room through the game: owns its single phase timer, talks to the
- * store at phase boundaries, and ends phases early when everyone has acted.
- * All store writes are fire-and-forget; a database hiccup never stalls a game.
+ * store at phase boundaries, and ends phases early when everyone has acted,
+ * but never while Otto is still talking. All store writes are fire-and-forget;
+ * a database hiccup never stalls a game.
  */
 export class RoomRunner {
   private timer: ReturnType<typeof setTimeout> | null = null;
@@ -44,6 +53,8 @@ export class RoomRunner {
   private matchId: Promise<string | null> = Promise.resolve(null);
   /** Bumped on every pack-offer load so only the latest result lands. */
   private offersLoad = 0;
+  /** Server time Otto finishes the current phase's line (plus a breath); 0 when he's quiet. */
+  private speechUntil = 0;
 
   constructor(
     readonly room: Room,
@@ -118,8 +129,27 @@ export class RoomRunner {
     return res;
   }
 
+  choosePower(playerId: string, power: PowerPlay, targetId: string): Result {
+    const res = this.room.choosePower(playerId, power, targetId);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
   lifeline(playerId: string, kind: Lifeline, friendId?: string): Result {
     const res = this.room.useLifeline(playerId, kind, friendId);
+    if (res.ok) this.changed();
+    return res;
+  }
+
+  passPower(playerId: string): Result {
+    const res = this.room.passPower(playerId);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  /** Clearing an obstacle only unlocks the buttons; it never ends the question. */
+  clearPower(playerId: string, power: PowerPlay): Result {
+    const res = this.room.clearPower(playerId, power);
     if (res.ok) this.changed();
     return res;
   }
@@ -162,12 +192,15 @@ export class RoomRunner {
     if (this.room.paused) {
       const now = this.deps.clock();
       this.room.paused = false;
-      if (this.pausedAt !== null) this.room.shiftAnswerClock(now - this.pausedAt);
+      if (this.pausedAt !== null) {
+        this.room.shiftAnswerClock(now - this.pausedAt);
+        if (this.speechUntil > this.pausedAt) this.speechUntil += now - this.pausedAt;
+      }
       const remaining = this.pausedRemaining;
       this.pausedAt = null;
       this.pausedRemaining = null;
       if (remaining !== null) this.scheduleMs(remaining);
-      if (this.room.allActed()) this.advanceNow();
+      if (this.room.allActed()) this.advanceWhenQuiet();
     }
     this.changed();
   }
@@ -320,11 +353,11 @@ export class RoomRunner {
     }
     this.room.enterVote(options);
     // One category left in the pack: nothing to vote on, go straight to it.
-    if (options.length === 1) {
+    if (options.length === 1 && !this.room.powerVote()) {
       this.finishVote();
       return;
     }
-    this.schedule('vote');
+    this.schedule(this.room.powerVote() ? 'votePower' : 'vote');
     this.changed();
   }
 
@@ -419,8 +452,32 @@ export class RoomRunner {
   }
 
   private afterAction(): void {
-    if (!this.room.paused && this.room.allActed()) this.advanceNow();
+    if (!this.room.paused && this.room.allActed()) this.advanceWhenQuiet();
     else this.changed();
+  }
+
+  /** Everyone has acted: move on now, or as soon as Otto has finished his line. */
+  private advanceWhenQuiet(): void {
+    const left = this.speechUntil - this.deps.clock();
+    if (left <= 0) return this.advanceNow();
+    this.scheduleMs(left);
+    this.changed();
+  }
+
+  /**
+   * Notes how long Otto talks in the phase just entered: his line (at its
+   * offset into the phase) or, while the question is read, its read-aloud.
+   */
+  private noteSpeech(): void {
+    const { room, deps } = this;
+    let ms = 0;
+    if (room.phase === 'question_read' && room.question) {
+      const read = deps.speech.question(questionVoiceId(room.question.prompt));
+      if (read > 0) ms = QUESTION_VOICE_DELAY_MS + read;
+    } else if (room.otto) {
+      ms = ottoLineOffsetMs(room.phase) + deps.speech.line(room.otto);
+    }
+    this.speechUntil = ms > 0 ? deps.clock() + Math.round((ms + SPEECH_TAIL_MS) * deps.timingScale) : 0;
   }
 
   private advanceNow(): void {
@@ -432,8 +489,10 @@ export class RoomRunner {
     return Math.round(TIMINGS[key] * this.deps.timingScale);
   }
 
+  /** Schedules the end of the phase just entered: its usual length, or longer if Otto needs it. */
   private schedule(key: TimingKey): void {
-    this.scheduleMs(this.duration(key));
+    this.noteSpeech();
+    this.scheduleMs(Math.max(this.duration(key), this.speechUntil - this.deps.clock()));
   }
 
   private scheduleMs(ms: number): void {

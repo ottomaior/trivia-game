@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { mp3DurationMs } from './mp3.ts';
 
 // Records Otto's lines once, into public/voice/, with a text-to-speech
 // service: ElevenLabs (the most expressive host voice) or Azure. Lines whose
@@ -215,7 +216,7 @@ export async function generateVoices(opts: GenerateOptions): Promise<GenerateRes
       }
       const audio = await opts.provider.synthesize(line.text);
       await writeFile(join(opts.outDir, file), audio);
-      manifest[line.id] = { file, hash: lineHash(line.text, opts.provider.fingerprint) };
+      manifest[line.id] = { file, hash: lineHash(line.text, opts.provider.fingerprint), durationMs: mp3DurationMs(audio) };
       generated.push(line.id);
       // Save progress after every clip, so a run that gets killed never pays for the same line twice.
       await writeManifest(opts.outDir, withOld(manifest, old, opts.lines), opts.provider);
@@ -252,8 +253,29 @@ async function readManifest(outDir: string): Promise<VoiceManifest> {
   return existsSync(path) ? (JSON.parse(await readFile(path, 'utf8')) as VoiceManifest) : {};
 }
 
+/** Adds the length of every clip that lacks one (clips recorded before lengths were stored). */
+export async function fillDurations(outDir: string, manifest: VoiceManifest): Promise<VoiceManifest> {
+  for (const entry of Object.values(manifest)) {
+    const path = join(outDir, entry.file);
+    if (entry.durationMs === undefined && existsSync(path)) entry.durationMs = mp3DurationMs(await readFile(path));
+  }
+  return manifest;
+}
+
+/** Updates an existing manifest in place with its clips' lengths; returns how many it filled. */
+export async function backfillDurations(outDir: string): Promise<number> {
+  const manifest = await readManifest(outDir);
+  const missing = Object.values(manifest).filter((e) => e.durationMs === undefined).length;
+  if (missing > 0) {
+    const sorted = Object.fromEntries(Object.entries(await fillDurations(outDir, manifest)).sort(([a], [b]) => a.localeCompare(b)));
+    await writeFile(join(outDir, 'manifest.json'), JSON.stringify(sorted, null, 2) + '\n');
+  }
+  return missing;
+}
+
 /** Writes the manifest, and the TV's voice credit when the service asks for one. */
 async function writeManifest(outDir: string, manifest: VoiceManifest, provider: VoiceProvider): Promise<void> {
+  await fillDurations(outDir, manifest);
   const sorted = Object.fromEntries(Object.entries(manifest).sort(([a], [b]) => a.localeCompare(b)));
   await writeFile(join(outDir, 'manifest.json'), JSON.stringify(sorted, null, 2) + '\n');
   const creditPath = join(outDir, 'credit.json');

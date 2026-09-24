@@ -1,4 +1,4 @@
-import type { HostView, OttoLineKey, Phase } from '@trivia/shared';
+import { ottoLineOffsetMs, type HostView, type OttoLineKey, type Phase, type PowerHit } from '@trivia/shared';
 import type { Track } from './music.ts';
 import type { Cue } from './sfx.ts';
 
@@ -20,7 +20,19 @@ const AUDIENCE: Partial<Record<OttoLineKey, CueEvent>> = {
   streak: { cue: 'ooh', at: 0.2 },
   closeRace: { cue: 'gasp', at: 0.1 },
   comeback: { cue: 'cheer', at: 0.2 },
+  powerFreeze: { cue: 'ooh', at: 0.3 },
+  powerSlime: { cue: 'laugh', at: 0.6 },
+  powerMany: { cue: 'laugh', at: 0.6 },
+  powerGangUp: { cue: 'gasp', at: 0.2 },
 };
+
+const HIT_CUE = { freeze: 'freeze', slime: 'splat' } as const;
+const CLEAR_CUE = { freeze: 'shatter', slime: 'wipe' } as const;
+
+/** Power plays on the stage, whichever phase it is. */
+function hitsOf(stage: HostView['stage']): PowerHit[] {
+  return 'hits' in stage ? stage.hits : [];
+}
 
 export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
   // First view after load or reconnect: we don't know what changed.
@@ -70,6 +82,16 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
     if (b.answered.length > a.answered.length) cues.push(now('lockIn'));
   }
 
+  // A power play lands on someone, or its target breaks free.
+  const before = hitsOf(a);
+  const after = hitsOf(b);
+  if (after.length > before.length) for (const h of after.slice(before.length)) cues.push(now(HIT_CUE[h.power]));
+  if (after.length === before.length) {
+    after.forEach((h, i) => {
+      if (h.cleared && !before[i]!.cleared) cues.push(now(CLEAR_CUE[h.power]));
+    });
+  }
+
   // The audience reacts to some of Otto's lines, when he says them.
   const line = next.otto;
   const lineChanged = line && (line.key !== prev.otto?.key || line.variant !== prev.otto?.variant || a.phase !== b.phase);
@@ -80,7 +102,7 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
 
 /** Seconds after a phase starts that Otto speaks (the reveal waits for the drumroll and pan). */
 export function ottoDelay(phase: Phase): number {
-  return phase === 'reveal' ? 3.2 : 0;
+  return ottoLineOffsetMs(phase) / 1000;
 }
 
 /** Background loop per phase: lounge between questions, a pulse under them, a finale theme. */

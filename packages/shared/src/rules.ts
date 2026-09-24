@@ -1,3 +1,5 @@
+import type { Phase } from './views.ts';
+
 // Single source of truth for game limits and timings. Server and clients both
 // import from here so the numbers can never drift apart.
 
@@ -60,6 +62,8 @@ export const CHOICES_PER_QUESTION = 4;
 export const TIMINGS = {
   intro: 4_000,
   vote: 8_000,
+  /** A vote where someone can still use a power play: picking a target takes a moment. */
+  votePower: 12_000,
   /** The TV spins to the winning category, and Otto reacts to it. */
   voteResult: 2_600,
   questionRead: 2_000,
@@ -72,6 +76,24 @@ export const TIMINGS = {
   ladderOpen: 30_000,
 } as const;
 export type TimingKey = keyof typeof TIMINGS;
+
+// Otto's voice. The show never talks over him: a phase in which he speaks
+// lasts until he has finished (see the server's RoomRunner), and screens start
+// his lines at these offsets.
+
+/** Otto comments on the reveal this long into it, after the drumroll and the pan to the desks. */
+export const OTTO_REVEAL_DELAY_MS = 3_200;
+/** The question card lands before Otto starts reading it. */
+export const QUESTION_VOICE_DELAY_MS = 400;
+/** A breath after Otto finishes before the show moves on. */
+export const SPEECH_TAIL_MS = 500;
+/** Otto's speaking rate, for estimating lines that haven't been recorded yet. */
+export const SPEECH_CHARS_PER_SECOND = 13;
+
+/** Milliseconds into a phase at which Otto's line for that phase starts. */
+export function ottoLineOffsetMs(phase: Phase): number {
+  return phase === 'reveal' ? OTTO_REVEAL_DELAY_MS : 0;
+}
 
 export type Difficulty = 1 | 2 | 3;
 
@@ -97,6 +119,29 @@ export function scoreAnswer(correct: boolean, responseMs: number, openMs: number
   const used = Math.min(1, Math.max(0, responseMs / openMs));
   return Math.round(POINTS_BASE + POINTS_SPEED_BONUS * (1 - used));
 }
+
+// ---------------------------------------------------------------------------
+// Power plays: after voting, a player can throw one at another player, whose
+// answer buttons are then covered until they clear it. The clock keeps
+// running, which is the whole penalty.
+
+export const POWER_PLAYS = ['freeze', 'slime'] as const;
+export type PowerPlay = (typeof POWER_PLAYS)[number];
+
+/** Everyone gets a power play every this many rounds (holding at most one)… */
+export const POWER_PLAY_EVERY = 3;
+/** …starting from this round, so the first round is just the quiz. */
+export const POWER_PLAY_FIRST_ROUND = 2;
+
+/** True for rounds whose vote hands everyone a power play (2, 5, 8 in a 10-round game). */
+export function grantsPowerPlay(round: number): boolean {
+  return round >= POWER_PLAY_FIRST_ROUND && (round - POWER_PLAY_FIRST_ROUND) % POWER_PLAY_EVERY === 0;
+}
+
+/** Taps it takes to break the ice. */
+export const FREEZE_TAPS = 15;
+/** Share of the slime that has to be wiped off. */
+export const SLIME_CLEAR_SHARE = 0.7;
 
 /** Upper bound on the latency credit a slow phone gets (one-way, ms). */
 export const MAX_LATENCY_CREDIT_MS = 150;

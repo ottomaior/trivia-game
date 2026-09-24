@@ -238,6 +238,44 @@ describe('a game over sockets', () => {
     expect(view.ladder?.seats.every((s) => s.status !== 'in')).toBe(true);
   }, 20_000);
 
+  it('lets a player throw a power play that the target has to clear before answering', async () => {
+    const { phones } = await lobbyWith(['Anna', 'Béla']);
+    const [anna, bela] = phones;
+    // Both vote and answer as soon as they can; Anna slimes Béla when she gets the chance.
+    for (const { phone } of phones) {
+      phone.on('view:player', (v) => {
+        if (v.stage.phase === 'vote' && v.mine.vote === null) phone.emit('vote:cast', { option: 0 }, () => {});
+        if (v.stage.phase === 'question_open' && v.mine.choice === null && !v.stage.hits.length) {
+          phone.emit('answer:submit', { questionId: v.stage.question.id, choice: 0 }, () => {});
+        }
+      });
+    }
+    const powerReady = next(anna!.phone, 'view:player', (v) => v.mine.power === 'ready');
+    const slimed = next(bela!.phone, 'view:player', (v) => v.stage.phase === 'question_open' && v.stage.hits.length > 0);
+    await anna!.phone.emitWithAck('vip:lockPack', {});
+    await anna!.phone.emitWithAck('vip:start', {});
+
+    const ready = await powerReady;
+    expect(ready.round).toBe(2);
+    expect(await anna!.phone.emitWithAck('power:choose', { power: 'lava', targetId: bela!.id } as never)).toEqual({
+      ok: false,
+      error: 'BAD_REQUEST',
+    });
+    expect(await anna!.phone.emitWithAck('power:choose', { power: 'slime', targetId: bela!.id })).toEqual({ ok: true });
+    expect(await bela!.phone.emitWithAck('power:pass', {})).toEqual({ ok: true });
+
+    const view = await slimed;
+    if (view.stage.phase !== 'question_open') throw new Error();
+    const questionId = view.stage.question.id;
+    expect(view.stage.hits).toEqual([{ by: anna!.id, target: bela!.id, power: 'slime', cleared: false }]);
+    expect(await bela!.phone.emitWithAck('answer:submit', { questionId, choice: 0 })).toEqual({
+      ok: false,
+      error: 'NOT_ALLOWED',
+    });
+    expect(await bela!.phone.emitWithAck('power:clear', { power: 'slime' })).toEqual({ ok: true });
+    expect(await bela!.phone.emitWithAck('answer:submit', { questionId, choice: 0 })).toEqual({ ok: true });
+  }, 20_000);
+
   it('lets the VIP kick a player, who is told so', async () => {
     const { tv, phones } = await lobbyWith(['Anna', 'Béla']);
     const [anna, bela] = phones;

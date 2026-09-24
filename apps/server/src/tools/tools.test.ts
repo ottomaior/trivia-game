@@ -219,3 +219,14 @@ describe('studio sounds', () => {
     expect(wav.length).toBe(44 + tick(5).length * 2);
   });
 });
+
+describe('mp3DurationMs', () => {
+  it('measures a recorded clip from its frames, and finds nothing in junk', async () => {
+    const { mp3DurationMs } = await import('./mp3.ts');
+    const { readFileSync } = await import('node:fs');
+    const clip = readFileSync(new URL('../../../web/public/voice/winner-0.mp3', import.meta.url));
+    // 128 kbit/s CBR: the length follows from the size, give or take a frame.
+    expect(Math.abs(mp3DurationMs(clip) - (clip.length * 8) / 128)).toBeLessThan(60);
+    expect(mp3DurationMs(new Uint8Array(1000))).toBe(0);
+  });
+});

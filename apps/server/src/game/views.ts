@@ -24,6 +24,7 @@ function summarize(room: Room, p: Player): PlayerSummary {
     connected: p.connected,
     isVip: room.vipId === p.id,
     score: p.score,
+    hasPower: room.powers.has(p.id),
   };
 }
 
@@ -50,6 +51,8 @@ function stage(room: Room): Stage {
         phase: 'vote',
         options: room.voteOptions.map((o) => ({ id: o.category.id, name: o.category.name })),
         votes: Object.fromEntries(room.votes),
+        hits: room.hits,
+        powerVote: room.powerVote(),
       };
     case 'vote_result':
       return {
@@ -57,6 +60,7 @@ function stage(room: Room): Stage {
         options: room.voteOptions.map((o) => ({ id: o.category.id, name: o.category.name })),
         votes: Object.fromEntries(room.votes),
         chosen: room.chosenOption,
+        hits: room.hits,
       };
     case 'ladder_step': {
       const next = room.voteOptions[0]!;
@@ -69,9 +73,14 @@ function stage(room: Room): Stage {
       };
     }
     case 'question_read':
-      return { phase: 'question_read', question: publicQuestion(q!) };
+      return { phase: 'question_read', question: publicQuestion(q!), hits: room.hits };
     case 'question_open':
-      return { phase: 'question_open', question: publicQuestion(q!), answered: [...room.answers.keys()] };
+      return {
+        phase: 'question_open',
+        question: publicQuestion(q!),
+        answered: [...room.answers.keys()],
+        hits: room.hits,
+      };
     case 'reveal':
       return {
         phase: 'reveal',
@@ -146,6 +155,7 @@ export function toPlayerView(room: Room, playerId: string, now: number): PlayerV
       flagged: q ? room.hasFlagged(playerId, q.id) : false,
       // Only this player's own lifeline results; other phones never see them.
       ladder: room.ladder && q ? room.ladder.help(playerId, room.answers, q.choices.length) : null,
+      power: room.powerState(playerId),
     },
   };
 }

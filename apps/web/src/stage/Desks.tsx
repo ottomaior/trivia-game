@@ -1,7 +1,8 @@
-import { MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary } from '@trivia/shared';
+import { MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type PowerHit } from '@trivia/shared';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Blob, type Expression } from '../ui/Blob.tsx';
 import { useCountUp } from '../ui/countUp.ts';
+import { PowerIcon } from '../ui/PowerIcon.tsx';
 import { REVEAL_BEATS } from './director.ts';
 import styles from './Studio.module.css';
 
@@ -53,6 +54,9 @@ export function Desks({ view }: { view: HostView }) {
   const answered = stage.phase === 'question_open' ? new Set(stage.answered) : new Set<string>();
   // On the ladder, those who fell or stopped sit back from the rest.
   const offLadder = new Set(view.ladder?.seats.filter((s) => s.status === 'out' || s.status === 'walked').map((s) => s.playerId));
+  const hits = 'hits' in stage ? stage.hits : [];
+  // Held power plays show on the desks during the game, not in the lobby or on the podium.
+  const showPowers = stage.phase !== 'lobby' && stage.phase !== 'final';
 
   // In the lobby, empty desks wait for the rest of the players.
   const empty = stage.phase === 'lobby' ? Math.max(0, MAX_PLAYERS - view.players.length) : 0;
@@ -75,6 +79,8 @@ export function Desks({ view }: { view: HostView }) {
           locked={answered.has(p.id)}
           pick={picks?.get(p.id) ?? null}
           leader={leaders.has(p.id)}
+          hits={hits.filter((h) => h.target === p.id)}
+          holdsPower={showPowers && p.hasPower}
           phaseKey={`${stage.phase}-${view.round}`}
           mode={view.mode}
           off={offLadder.has(p.id)}
@@ -90,6 +96,8 @@ function Desk({
   locked,
   pick,
   leader,
+  hits,
+  holdsPower,
   phaseKey,
   place,
   mode,
@@ -102,6 +110,9 @@ function Desk({
   locked: boolean;
   pick: Pick | null;
   leader: boolean;
+  /** Power plays thrown at this player this round. */
+  hits: PowerHit[];
+  holdsPower: boolean;
   phaseKey: string;
   mode: GameMode;
   /** Off the ladder (fell or stopped). */
@@ -136,9 +147,29 @@ function Desk({
           </svg>
         )}
         <Blob avatar={player.avatar} size="6em" dimmed={!player.connected || off} expression={expression} />
+        {(['freeze', 'slime'] as const).map((power) => {
+          const mine = hits.filter((h) => h.power === power);
+          if (mine.length === 0) return null;
+          // Stays mounted once cleared, so the shatter/drip-off animation can play.
+          const cleared = mine.every((h) => h.cleared);
+          return (
+            <span
+              key={power}
+              className={`${styles.deskHit} ${styles[`deskHit_${power}`]} ${cleared ? styles.deskHitCleared : ''}`}
+              data-testid={`desk-${power}`}
+              data-cleared={cleared}
+            />
+          );
+        })}
       </div>
       <div className={styles.deskFront}>
         <span className={styles.lamp} />
+        {holdsPower && (
+          <span className={styles.powerBadge} title={t.powerHasOne}>
+            <PowerIcon power="freeze" />
+            <PowerIcon power="slime" />
+          </span>
+        )}
         <span className={styles.nameplate}>{player.name}</span>
         <span className={styles.score}>{scoreText(mode, score)}</span>
         {mode === 'classic' && gained > 0 && <span className={styles.gain}>{t.plusPoints(gained)}</span>}
