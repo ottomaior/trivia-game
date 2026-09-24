@@ -14478,5 +14478,545 @@
       "Margaret"
     ],
     "explanation": "Férje, a zsémbes Eustace folyton egy ijesztő maszkkal riogatja Bátort."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Hol játszódik szinte végig Antal Nimród 2003-as Kontroll című filmje?",
+    "answer": "A budapesti metróban",
+    "wrong": [
+      "Egy vidéki vasútállomáson",
+      "Egy pesti bérházban",
+      "Egy budapesti kórházban"
+    ],
+    "explanation": "A jegyellenőrökről szóló filmet valódi budapesti metróállomásokon forgatták."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Melyik téren állt a ház, ahol a Barátok közt szereplőinek többsége lakott?",
+    "answer": "Mátyás király tér",
+    "wrong": [
+      "Szent István tér",
+      "Kossuth Lajos tér",
+      "Rákóczi Ferenc tér"
+    ],
+    "explanation": "A sorozatbeli ház valójában a kispesti Kós Károly téren áll."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Mi volt a Való Világ című valóságshow jelmondata?",
+    "answer": "Itt a lét a tét!",
+    "wrong": [
+      "Csak egy maradhat!",
+      "A győztes mindent visz!",
+      "Mindent vagy semmit!"
+    ],
+    "explanation": "A játékosok egy villába költöztek be, ezért villalakóknak hívták őket."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a kitalált falut, ahol A mi kis falunk című vígjátéksorozat játszódik?",
+    "answer": "Pajkaszeg",
+    "wrong": [
+      "Felsőszeg",
+      "Kisbékás",
+      "Rétfalva"
+    ],
+    "explanation": "A sorozat a szlovák Horná Dolná magyar változata, a jeleneteket Pilisszentléleken forgatták."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Ki vezette a Legyen Ön is milliomos! című kvízműsort az indulásától, 2000-től 2008-ig?",
+    "answer": "Vágó István",
+    "wrong": [
+      "Fábry Sándor",
+      "Friderikusz Sándor",
+      "Gundel Takács Gábor"
+    ],
+    "explanation": "A műsor a brit Who Wants to Be a Millionaire? magyar változataként indult az RTL Klubon."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Ki alakítja Lalit, az Amerika-mániás büfést az Üvegtigris-filmekben?",
+    "answer": "Rudolf Péter",
+    "wrong": [
+      "Kern András",
+      "Gálvölgyi János",
+      "Mucsi Zoltán"
+    ],
+    "explanation": "Az első részt Kapitány Ivánnal közösen rendezte is, a másodikat és a harmadikat már egyedül."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Kinek az életét mutatja be Bereményi Géza A Hídember (2002) című filmje?",
+    "answer": "Széchenyi István",
+    "wrong": [
+      "Kossuth Lajos",
+      "Deák Ferenc",
+      "Batthyány Lajos"
+    ],
+    "explanation": "A címszerepet Eperjes Károly játszotta, Kossuthot pedig Nagy Ervin."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Melyik tehetségkutatóban volt mentor 2010-ben Geszti Péter, Keresztes Ildikó, Malek Miklós és Nagy Feró?",
+    "answer": "X-Faktor",
+    "wrong": [
+      "Megasztár",
+      "Sztárban sztár",
+      "A Dal"
+    ],
+    "explanation": "A műsor a brit The X Factor formátuma alapján indult az RTL Klubon."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Egy híres magyar filmjelenetben egy citromot mutatnak be azzal, hogy „kicsit sárgább, kicsit savanyúbb, de a miénk”. Minek adják ki?",
+    "answer": "Magyar narancsnak",
+    "wrong": [
+      "Magyar mandarinnak",
+      "Magyar banánnak",
+      "Magyar grapefruitnak"
+    ],
+    "explanation": "Az 1989-ben indult Magyar Narancs hetilap is erről a híres mondatról kapta a nevét."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Melyik történelmi esemény idején játszódik a Szabadság, szerelem (2006) című magyar film?",
+    "answer": "Az 1956-os forradalom idején",
+    "wrong": [
+      "Az 1848-as forradalom idején",
+      "A rendszerváltás idején",
+      "A második világháború idején"
+    ],
+    "explanation": "A film egy vízilabdázó és egy forradalmár lány szerelmét meséli el."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Milyen állatok lázadnak fel az emberek ellen a Fehér isten (2014) című magyar filmben?",
+    "answer": "Kutyák",
+    "wrong": [
+      "Macskák",
+      "Patkányok",
+      "Galambok"
+    ],
+    "explanation": "A film Cannes-ban elnyerte az Un Certain Regard szekció fődíját, a kutyát alakító ikrek pedig a Kutya Pálmát."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Melyik műsorvezető vezette a Megasztár első hét évadát 2003 és 2024 között?",
+    "answer": "Till Attila",
+    "wrong": [
+      "Sebestyén Balázs",
+      "Fábry Sándor",
+      "Istenes Bence"
+    ],
+    "explanation": "Filmrendezőként is ismert, ő forgatta a Tiszta szívvel című filmet."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Hogy hívják az Indul a bakterház rosszcsont kamasz főhősét?",
+    "answer": "Bendegúz",
+    "wrong": [
+      "Vendel",
+      "Lőrinc",
+      "Kelemen"
+    ],
+    "explanation": "Regős Bendegúzt Olvasztó Imre alakította, a film Rideg Sándor regényéből készült."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Melyik ország kultúrájáért rajong a Liza, a rókatündér (2015) címszereplője, aki egy nagykövet özvegyét ápolja?",
+    "answer": "Japán",
+    "wrong": [
+      "Kína",
+      "Dél-Korea",
+      "India"
+    ],
+    "explanation": "A címszerepet Balsai Móni játszotta, Liza egyetlen barátja egy japán rock and roll énekes, Tomy Tani szelleme."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 1,
+    "prompt": "Milyen intézményben játszódott a TV2-n 2005-ben indult Jóban Rosszban című napi sorozat?",
+    "answer": "Egy klinikán",
+    "wrong": [
+      "Egy rendőrségen",
+      "Egy gimnáziumban",
+      "Egy szállodában"
+    ],
+    "explanation": "A Csillagvirág Klinika a kitalált, Budapest közeli Csillagkúton működött."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Milyen jelmezt visel a Kontroll titokzatos lánya, Szofi a film nagy részében?",
+    "answer": "Medvejelmezt",
+    "wrong": [
+      "Nyuszijelmezt",
+      "Angyaljelmezt",
+      "Cicajelmezt"
+    ],
+    "explanation": "Nevét onnan kapta, hogy egy Szófián át közlekedő vonaton született."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Milyen állatként találkozik minden éjjel közös álmában a Testről és lélekről (2017) két főhőse?",
+    "answer": "Szarvasként",
+    "wrong": [
+      "Farkasként",
+      "Rókaként",
+      "Lóként"
+    ],
+    "explanation": "Endre és Mária egy vágóhídon dolgozik, a filmet Oscar-díjra is jelölték."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik rangos fesztiváldíjat nyerte el Enyedi Ildikó Testről és lélekről című filmje 2017-ben?",
+    "answer": "Arany Medvét",
+    "wrong": [
+      "Arany Pálmát",
+      "Arany Oroszlánt",
+      "Arany Kagylót"
+    ],
+    "explanation": "Mária szerepéért Borbély Alexandra Európai Filmdíjat kapott."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Szabó István melyik filmje hozott először Oscar-díjat magyar játékfilmnek, 1982-ben?",
+    "answer": "Mephisto",
+    "wrong": [
+      "Redl ezredes",
+      "Bizalom",
+      "Hanussen"
+    ],
+    "explanation": "A legjobb idegen nyelvű film kategóriájában nyert, a főszerepet az osztrák Klaus Maria Brandauer játszotta."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik Üvegtigris-figura jellegzetes mondása: „Ízirájder, öcsém!”?",
+    "answer": "Csoki",
+    "wrong": [
+      "Lali",
+      "Gaben",
+      "Róka"
+    ],
+    "explanation": "Csokit Csuja Imre alakította, a figura folyton arról ábrándozik, hogy lelép Amerikába."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik rockzenész Amerikából való hazatérését dolgozza fel lazán a Made in Hungaria (2009) című zenés film?",
+    "answer": "Fenyő Miklós",
+    "wrong": [
+      "Szörényi Levente",
+      "Bródy János",
+      "Presser Gábor"
+    ],
+    "explanation": "A főhőst, Mikit Szabó Kimmel Tamás alakította, a film egy azonos című musicalen alapul."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Milyen járművel közlekedett Linda, a nyolcvanas évek népszerű tévésorozatának rendőrlánya?",
+    "answer": "Babettával",
+    "wrong": [
+      "Simsonnal",
+      "Vespával",
+      "Pannóniával"
+    ],
+    "explanation": "A sárga Jawa Babetta segédmotoros kerékpár a Görbe Nóra alakította Linda jelképe lett."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik filmből vált szállóigévé a mondat: „Az élet nem egy habostorta!”?",
+    "answer": "A tanú",
+    "wrong": [
+      "Üvegtigris",
+      "Indul a bakterház",
+      "Csinibaba"
+    ],
+    "explanation": "Bacsó Péter filmjében Virág elvtárs (Őze Lajos) oktatja így a főhőst, Pelikán Józsefet."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik városban rendezett filmfesztiválon nyerte el a nagydíjat a Saul fia 2015-ben?",
+    "answer": "Cannes",
+    "wrong": [
+      "Berlin",
+      "Velence",
+      "Karlovy Vary"
+    ],
+    "explanation": "A film Golden Globe-díjat is kapott, a címszerepet Röhrig Géza játszotta."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai filmrendező-színész állandó magyar szinkronhangjaként ismert Kern András?",
+    "answer": "Woody Allen",
+    "wrong": [
+      "Clint Eastwood",
+      "Robert Redford",
+      "Kevin Costner"
+    ],
+    "explanation": "Bujtor István Ötvös Csöpi-filmjeiben Kern András alakította Kardos doktort."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "A Viszkis (2017) című film hőse, Ambrus Attila a bankrablásai idején is aktív kapus volt. Melyik sportágban?",
+    "answer": "Jégkorong",
+    "wrong": [
+      "Kézilabda",
+      "Vízilabda",
+      "Labdarúgás"
+    ],
+    "explanation": "A filmet Antal Nimród rendezte, és maga Ambrus Attila is feltűnik benne egy taxisofőr szerepében."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik évben játszódik Török Ferenc Moszkva tér (2001) című filmje, amelynek hősei az érettségire készülnek?",
+    "answer": "1989",
+    "wrong": [
+      "1987",
+      "1991",
+      "1993"
+    ],
+    "explanation": "A háttérben archív felvételeken Nagy Imre újratemetése és Kádár János temetése is feltűnik."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik évben indult a Barátok közt az RTL Klubon?",
+    "answer": "1998",
+    "wrong": [
+      "1996",
+      "2000",
+      "2002"
+    ],
+    "explanation": "Az utolsó, 10 456. részt 2021 júliusában vetítették."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Mit eszik szinte szertartásosan Latinovits Zoltán a Szindbád (1971) legendás evésjelenetében?",
+    "answer": "Velőscsontot",
+    "wrong": [
+      "Rántott csirkét",
+      "Töltött káposztát",
+      "Túrós csuszát"
+    ],
+    "explanation": "Huszárik Zoltán filmje Krúdy Gyula Szindbád-történetei alapján készült."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 2,
+    "prompt": "Melyik brit komikus állandó magyar hangja volt Gálvölgyi János?",
+    "answer": "Benny Hill",
+    "wrong": [
+      "Rowan Atkinson",
+      "Ricky Gervais",
+      "Sacha Baron Cohen"
+    ],
+    "explanation": "A Derrick első magyar szinkronjában Harry Kleint is ő szólaltatta meg."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik magyar rendező forgatta a Netflixen bemutatott Pieces of a Woman (2020) című drámát Vanessa Kirbyvel?",
+    "answer": "Mundruczó Kornél",
+    "wrong": [
+      "Nemes Jeles László",
+      "Enyedi Ildikó",
+      "Antal Nimród"
+    ],
+    "explanation": "Vanessa Kirby a Velencei Filmfesztiválon a legjobb színésznő díját kapta a szerepért."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik brit színésznő játszotta Emerencet Szabó István Az ajtó (2012) című filmjében?",
+    "answer": "Helen Mirren",
+    "wrong": [
+      "Judi Dench",
+      "Maggie Smith",
+      "Vanessa Redgrave"
+    ],
+    "explanation": "A film Szabó Magda regényéből készült, az írónőt Martina Gedeck játszotta."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik filmjével nyerte el Enyedi Ildikó 1989-ben Cannes-ban az elsőfilmeseknek járó Arany Kamerát?",
+    "answer": "Az én XX. századom",
+    "wrong": [
+      "Bűvös vadász",
+      "Simon mágus",
+      "Tamás és Juli"
+    ],
+    "explanation": "A fekete-fehér filmben az ikertestvéreket és anyjukat is ugyanaz a lengyel színésznő játssza."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Ki rendezte a Napló gyermekeimnek, a Napló szerelmeimnek és a Napló apámnak, anyámnak című önéletrajzi ihletésű filmeket?",
+    "answer": "Mészáros Márta",
+    "wrong": [
+      "Enyedi Ildikó",
+      "Gyarmathy Lívia",
+      "Szabó István"
+    ],
+    "explanation": "1975-ben az Örökbefogadással ő lett az első női rendező, aki elnyerte a berlini Arany Medvét."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Ki rendezte a Kincsem (2017) című romantikus kalandfilmet?",
+    "answer": "Herendi Gábor",
+    "wrong": [
+      "Goda Krisztina",
+      "Antal Nimród",
+      "Rudolf Péter"
+    ],
+    "explanation": "A történetet a veretlen „csodakanca”, Kincsem kora ihlette, a férfi főszerepet Nagy Ervin játszotta."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Ki rendezte a Csak szex és más semmi (2005) című romantikus vígjátékot?",
+    "answer": "Goda Krisztina",
+    "wrong": [
+      "Enyedi Ildikó",
+      "Herendi Gábor",
+      "Tímár Péter"
+    ],
+    "explanation": "Egy évvel később ő rendezte a Szabadság, szerelem című filmet is."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Mi a vezetékneve a Família Kft. című szituációs komédia központi, többgenerációs családjának?",
+    "answer": "Szép",
+    "wrong": [
+      "Kiss",
+      "Nagy",
+      "Fehér"
+    ],
+    "explanation": "A család szomszédja és üzlettársa a Kövér család volt."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik budapesti lakótelepen forgatták a Szomszédok című sorozat jeleneteinek nagy részét?",
+    "answer": "Gazdagrét",
+    "wrong": [
+      "Békásmegyer",
+      "Újpalota",
+      "Káposztásmegyer"
+    ],
+    "explanation": "A sorozatbeli Lantos utca 8. valójában a Csíki-hegyek utca 1. számú panelház."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik magyar együttes szerezte a Kontroll (2003) filmzenéjét?",
+    "answer": "Neo",
+    "wrong": [
+      "Anima Sound System",
+      "Zagar",
+      "Irie Maffia"
+    ],
+    "explanation": "Antal Nimród filmje a cannes-i fesztiválon elnyerte az Ifjúság díját."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik színész vezette Czifra Noémival a Való Világ első évadát 2002-ben?",
+    "answer": "Stohl András",
+    "wrong": [
+      "Mucsi Zoltán",
+      "Szabó Győző",
+      "Nagy Ervin"
+    ],
+    "explanation": "Az RTL Klubon futó első évadot Mészáros Szabolcs nyerte."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Honnan válogatták a gyerekszereplőket Fábri Zoltán 1969-es A Pál utcai fiúk című filmjéhez?",
+    "answer": "Egy londoni színiiskolából",
+    "wrong": [
+      "Budapesti általános iskolákból",
+      "Egy bécsi fiúkórusból",
+      "Egy New York-i színiiskolából"
+    ],
+    "explanation": "A fiúk angolul játszottak, a magyar változatban szinkronhangokon szólalnak meg."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik település határában áll az egri vár másolata, amelyet az 1968-as Egri csillagok forgatásához építettek?",
+    "answer": "Pilisborosjenő",
+    "wrong": [
+      "Visegrád",
+      "Pomáz",
+      "Solymár"
+    ],
+    "explanation": "A díszletvárat Várkonyi Zoltán filmje után még számos más forgatáson használták."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Melyik városban rendezett világifjúsági találkozóra szeretnének kijutni a Csinibaba fiataljai 1962-ben?",
+    "answer": "Helsinki",
+    "wrong": [
+      "Moszkva",
+      "Bécs",
+      "Berlin"
+    ],
+    "explanation": "Tímár Péter filmjében ehhez egy KISZ-es Ki mit tud?-ot kellene megnyerniük."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Mit csinál szinte végig a Hukkle (2002) című film öregembere?",
+    "answer": "Csuklik",
+    "wrong": [
+      "Horkol",
+      "Tüsszög",
+      "Fütyül"
+    ],
+    "explanation": "Pálfi György filmje szinte teljesen párbeszéd nélküli, a Tolna megyei Ozorán forgatták."
+  },
+  {
+    "category": "magyarfilm",
+    "difficulty": 3,
+    "prompt": "Ki alakította a baktert az Indul a bakterház című filmben?",
+    "answer": "Koltai Róbert",
+    "wrong": [
+      "Kern András",
+      "Garas Dezső",
+      "Bodrogi Gyula"
+    ],
+    "explanation": "A szerepet eredetileg Bencze Ferenc kapta volna, de betegség miatt nem vállalhatta."
   }
 ]
