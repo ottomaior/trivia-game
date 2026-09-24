@@ -2,6 +2,7 @@ import { t } from '@trivia/shared';
 import { Logo } from '../ui/Logo.tsx';
 import { OttoFace } from '../ui/Otto.tsx';
 import styles from './Tv.module.css';
+import { VoiceCredit } from './VoiceCredit.tsx';
 
 /**
  * The TV's first screen. The click is required anyway: it unlocks sound and
@@ -18,6 +19,7 @@ export function StartScreen({ onStart, disabled }: { onStart: () => void; disabl
           {t.start}
         </button>
       </div>
+      <VoiceCredit className={styles.voiceCreditCorner} />
     </div>
   );
 }

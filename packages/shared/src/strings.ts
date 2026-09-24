@@ -6,6 +6,7 @@ const fmt = (n: number) => n.toLocaleString('hu');
 
 export const t = {
   tagline: 'Az évszázad kvízműsora',
+  voiceCredit: (by: string) => `Otto hangja: ${by}`,
   startPrompt: 'Kattints a kezdéshez',
   start: 'Kezdés',
   clickToContinue: 'Kattints a műsor folytatásához',

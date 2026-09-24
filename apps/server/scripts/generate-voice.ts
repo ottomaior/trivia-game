@@ -1,41 +1,82 @@
 /**
- * Records every Otto line with Azure's Hungarian neural voice.
+ * Records every Otto line with a text-to-speech voice (steps in
+ * apps/web/public/voice/README.md). Set the keys in your own shell; never
+ * commit them or paste them anywhere.
  *
- *   1. Create an Azure "Speech" resource (the free F0 tier is plenty).
- *   2. Set AZURE_SPEECH_KEY and AZURE_SPEECH_REGION (e.g. westeurope) in your shell.
- *   3. pnpm voice:generate            (only new or changed lines are recorded)
- *   4. Commit apps/web/public/voice/ and push.
+ *   ElevenLabs: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (optional ELEVENLABS_MODEL)
+ *   Azure:      AZURE_SPEECH_KEY, AZURE_SPEECH_REGION (optional AZURE_VOICE)
  *
- * Optional: AZURE_VOICE to try another voice (default hu-HU-TamasNeural);
- * --dry-run lists what would be recorded.
+ *   pnpm voice:generate --dry-run            what would be recorded, and the cost
+ *   pnpm voice:generate                      records new or changed lines only
+ *   pnpm voice:generate --redo welcome-0     records those lines again (retakes)
+ *
+ * --provider elevenlabs|azure picks the service; by default ElevenLabs when
+ * ELEVENLABS_API_KEY is set, otherwise Azure. Then commit apps/web/public/voice/.
  */
 import { allOttoLines } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { DEFAULT_VOICE, generateVoices } from '../src/tools/generateVoice.ts';
+import {
+  AZURE_DEFAULT_VOICE,
+  azureProvider,
+  ELEVEN_DEFAULT_MODEL,
+  elevenLabsProvider,
+  estimateCredits,
+  generateVoices,
+  pendingLines,
+  type VoiceProvider,
+} from '../src/tools/generateVoice.ts';
 
-const { values } = parseArgs({ options: { 'dry-run': { type: 'boolean', default: false } } });
+const { values } = parseArgs({
+  options: {
+    'dry-run': { type: 'boolean', default: false },
+    provider: { type: 'string' },
+    redo: { type: 'string' },
+  },
+});
+const env = process.env;
 const outDir = fileURLToPath(new URL('../../web/public/voice', import.meta.url));
 const lines = allOttoLines();
-const voice = process.env.AZURE_VOICE ?? DEFAULT_VOICE;
+const redo = values.redo ? values.redo.split(',').map((s) => s.trim()).filter(Boolean) : [];
+const which = values.provider ?? (env.ELEVENLABS_API_KEY ? 'elevenlabs' : 'azure');
+const model = env.ELEVENLABS_MODEL ?? ELEVEN_DEFAULT_MODEL;
 
-if (values['dry-run']) {
-  for (const l of lines) console.log(`${l.id}: ${l.text}`);
-  console.log(`\n${lines.length} lines, ${lines.reduce((n, l) => n + l.text.length, 0)} characters, voice ${voice}.`);
-  process.exit(0);
-}
-
-const key = process.env.AZURE_SPEECH_KEY;
-const region = process.env.AZURE_SPEECH_REGION;
-if (!key || !region) {
-  console.error('Set AZURE_SPEECH_KEY and AZURE_SPEECH_REGION first (see the comment at the top of this script).');
+function fail(msg: string): never {
+  console.error(msg);
   process.exit(1);
 }
 
+function provider(): VoiceProvider {
+  if (which === 'elevenlabs') {
+    const missing = ['ELEVENLABS_API_KEY', 'ELEVENLABS_VOICE_ID'].filter((k) => !env[k]);
+    if (missing.length) fail(`Set ${missing.join(' and ')} in your shell first (see apps/web/public/voice/README.md).`);
+    return elevenLabsProvider({ key: env.ELEVENLABS_API_KEY!, voiceId: env.ELEVENLABS_VOICE_ID!, model });
+  }
+  if (which === 'azure') {
+    const missing = ['AZURE_SPEECH_KEY', 'AZURE_SPEECH_REGION'].filter((k) => !env[k]);
+    if (missing.length) fail(`Set ${missing.join(' and ')} in your shell first (see apps/web/public/voice/README.md).`);
+    return azureProvider({ key: env.AZURE_SPEECH_KEY!, region: env.AZURE_SPEECH_REGION!, voice: env.AZURE_VOICE ?? AZURE_DEFAULT_VOICE });
+  }
+  fail(`Unknown --provider ${which} (use elevenlabs or azure).`);
+}
+
+if (values['dry-run']) {
+  // Without keys we can't know the voice, so every line counts as new; with keys, only what would change.
+  const haveKeys = which === 'elevenlabs' ? env.ELEVENLABS_API_KEY && env.ELEVENLABS_VOICE_ID : env.AZURE_SPEECH_KEY && env.AZURE_SPEECH_REGION;
+  const todo = haveKeys ? await pendingLines({ lines, outDir, provider: provider(), redo }) : lines;
+  for (const l of todo) console.log(`${l.id}: ${l.text}`);
+  const chars = todo.reduce((n, l) => n + l.text.length, 0);
+  const cost = which === 'azure' && values.provider ? '' : `, about ${estimateCredits(chars, model)} ElevenLabs credits (${model})`;
+  console.log(`\n${todo.length} of ${lines.length} lines to record, ${chars} characters${cost}.`);
+  process.exit(0);
+}
+
 try {
-  const r = await generateVoices({ lines, outDir, key, region, voice, pauseMs: 150, log: console.log });
+  const r = await generateVoices({ lines, outDir, provider: provider(), redo, pauseMs: 300, log: console.log });
   console.log(`\nRecorded ${r.generated.length}, unchanged ${r.skipped.length}, removed ${r.removed.length}.`);
+  if (r.generated.length) console.log('Listen with `pnpm dev`, then commit apps/web/public/voice/ and push.');
 } catch (err) {
   console.error((err as Error).message);
+  console.error('Lines recorded before the error are kept; run the same command again to continue.');
   process.exitCode = 1;
 }

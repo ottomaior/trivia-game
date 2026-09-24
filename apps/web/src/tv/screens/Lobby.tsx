@@ -4,6 +4,7 @@ import { Blob } from '../../ui/Blob.tsx';
 import { Logo } from '../../ui/Logo.tsx';
 import { QrCode } from '../../ui/QrCode.tsx';
 import styles from '../Tv.module.css';
+import { VoiceCredit } from '../VoiceCredit.tsx';
 
 export function Lobby({ view }: { view: HostView }) {
   const joinUrl = `${window.location.origin}/${view.roomCode}`;
@@ -26,6 +27,7 @@ export function Lobby({ view }: { view: HostView }) {
           ))}
         </div>
         <QrCode value={joinUrl} className={styles.qr} />
+        <VoiceCredit />
       </section>
 
       {inStudio ? (
