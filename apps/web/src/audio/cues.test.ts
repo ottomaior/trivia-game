@@ -12,6 +12,7 @@ const player = (id: string) => ({
   connected: true,
   isVip: id === 'a',
   score: 0,
+  hasPower: false,
 });
 
 function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
@@ -47,19 +48,19 @@ describe('cuesFor', () => {
 
   it('plays the opening fanfare and the question sting', () => {
     expect(cuesFor(view({ phase: 'lobby' }), view({ phase: 'intro' }))).toEqual(['start', 'applause']);
-    const vote = view({ phase: 'vote', options: [], votes: {} });
-    expect(cuesFor(vote, view({ phase: 'question_read', question }))).toEqual(['question']);
+    const vote = view({ phase: 'vote', options: [], votes: {}, hits: [], powerVote: false });
+    expect(cuesFor(vote, view({ phase: 'question_read', question, hits: [] }))).toEqual(['question']);
   });
 
   it('blips for each vote and each locked-in answer', () => {
-    expect(cuesFor(view({ phase: 'vote', options: [], votes: {} }), view({ phase: 'vote', options: [], votes: { a: 0 } }))).toEqual(['vote']);
-    const open = (answered: string[]) => view({ phase: 'question_open', question, answered });
+    expect(cuesFor(view({ phase: 'vote', options: [], votes: {}, hits: [], powerVote: false }), view({ phase: 'vote', options: [], votes: { a: 0 }, hits: [], powerVote: false }))).toEqual(['vote']);
+    const open = (answered: string[]) => view({ phase: 'question_open', question, answered, hits: [] });
     expect(cuesFor(open([]), open(['a']))).toEqual(['lockIn']);
     expect(cuesFor(open(['a']), open(['a']))).toEqual([]);
   });
 
   it('rings and applauds a right answer, groans and "aww"s when nobody got it', () => {
-    const open = view({ phase: 'question_open', question, answered: ['a', 'b'] });
+    const open = view({ phase: 'question_open', question, answered: ['a', 'b'], hits: [] });
     const reveal = (picks: ReturnType<typeof pick>[]) => view({ phase: 'reveal', question, correct: 0, explanation: null, picks });
     expect(cuesFor(open, reveal([pick('a', true), pick('b', false)]))).toEqual(['reveal', 'applause']);
     expect(cuesFor(open, reveal([pick('a', true), pick('b', true)]))).toEqual(['reveal', 'applause', 'cheer']);
@@ -69,8 +70,19 @@ describe('cuesFor', () => {
     expect(timed.find((c) => c.cue === 'applause')!.at).toBeGreaterThan(0.75);
   });
 
+  it('splats and freezes as power plays land, and shatters when the ice is broken', () => {
+    const hit = (power: 'freeze' | 'slime', cleared = false) => ({ by: 'a', target: 'b', power, cleared });
+    const vote = (hits: ReturnType<typeof hit>[]) => view({ phase: 'vote', options: [], votes: {}, hits, powerVote: true });
+    expect(cuesFor(vote([]), vote([hit('slime')]))).toEqual(['splat']);
+    expect(cuesFor(vote([hit('slime')]), vote([hit('slime'), hit('freeze')]))).toEqual(['freeze']);
+    const open = (hits: ReturnType<typeof hit>[]) => view({ phase: 'question_open', question, answered: [], hits });
+    expect(cuesFor(open([hit('freeze')]), open([hit('freeze', true)]))).toEqual(['shatter']);
+    expect(cuesFor(open([hit('slime')]), open([hit('slime', true)]))).toEqual(['wipe']);
+    expect(cuesFor(open([hit('slime', true)]), open([hit('slime', true)]))).toEqual([]);
+  });
+
   it('lets the audience laugh at Otto\'s jokes when he says them', () => {
-    const open = view({ phase: 'question_open', question, answered: ['a', 'b'] });
+    const open = view({ phase: 'question_open', question, answered: ['a', 'b'], hits: [] });
     const reveal = view(
       { phase: 'reveal', question, correct: 0, explanation: null, picks: [pick('a', false), pick('b', false)] },
       { otto: { key: 'noneCorrect', variant: 0, focus: [] } },

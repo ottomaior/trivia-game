@@ -5,6 +5,7 @@ import {
   CHOICES_PER_QUESTION,
   FLAG_REASONS,
   NAME_MAX_LENGTH,
+  POWER_PLAYS,
   ROOM_CODE_LENGTH,
 } from './rules.ts';
 
@@ -58,6 +59,13 @@ export const flagSchema = z.object({
   reason: z.enum(FLAG_REASONS),
 });
 
+export const powerChooseSchema = z.object({
+  power: z.enum(POWER_PLAYS),
+  targetId: z.string().min(1).max(64),
+});
+
+export const powerClearSchema = z.object({ power: z.enum(POWER_PLAYS) });
+
 export const timePingSchema = z.object({
   t: z.number(),
 });
@@ -73,6 +81,8 @@ export type KickPayload = z.infer<typeof kickSchema>;
 export type VotePayload = z.infer<typeof voteSchema>;
 export type AnswerPayload = z.infer<typeof answerSchema>;
 export type FlagPayload = z.infer<typeof flagSchema>;
+export type PowerChoosePayload = z.infer<typeof powerChooseSchema>;
+export type PowerClearPayload = z.infer<typeof powerClearSchema>;
 export type TimePingPayload = z.infer<typeof timePingSchema>;
 
 // ---------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import { CATEGORY_LINES, ottoVariants, type OttoLine, type OttoLineKey } from '@trivia/shared';
+import { CATEGORY_LINES, ottoVariants, type OttoLine, type OttoLineKey, type PowerHit } from '@trivia/shared';
 import type { Rng } from '../content/select.ts';
 
 // Chooses what Otto says. Pure apart from the LinePicker's decks: the room
@@ -56,10 +56,14 @@ export function welcomeLine(players: number, pick: LinePicker): OttoLine {
   return line(players === 1 ? 'welcomeSolo' : 'welcome', pick);
 }
 
-/** For the round about to be voted on: the opener, halfway and the double-points finale get their own lines. */
-export function voteLine(round: number, totalRounds: number, pick: LinePicker): OttoLine {
+/**
+ * For the round about to be voted on: the opener, halfway, the double-points
+ * finale and rounds that hand out power plays get their own lines.
+ */
+export function voteLine(round: number, totalRounds: number, pick: LinePicker, powersGranted = false): OttoLine {
   if (round === totalRounds) return line('lastRound', pick);
   if (round === 1) return line('firstRound', pick);
+  if (powersGranted) return line('powerGranted', pick);
   if (totalRounds >= 6 && round === Math.floor(totalRounds / 2) + 1) return line('halfway', pick);
   return line('pickCategory', pick);
 }
@@ -68,6 +72,17 @@ export function voteLine(round: number, totalRounds: number, pick: LinePicker): 
 export function categoryLine(slug: string, pick: LinePicker): OttoLine {
   const key: OttoLineKey = (CATEGORY_LINES as Record<string, OttoLineKey>)[slug] ?? 'categoryPicked';
   return line(key, pick);
+}
+
+/** Otto's take on the power plays thrown this round (`hits` is never empty). */
+export function powerLine(hits: PowerHit[], pick: LinePicker): OttoLine {
+  const byTarget = new Map<string, number>();
+  for (const h of hits) byTarget.set(h.target, (byTarget.get(h.target) ?? 0) + 1);
+  const ganged = [...byTarget].filter(([, n]) => n >= 2).map(([id]) => id);
+  if (ganged.length > 0) return line('powerGangUp', pick, ganged);
+  const targets = [...byTarget.keys()];
+  if (hits.length > 1) return line('powerMany', pick, targets);
+  return line(hits[0]!.power === 'freeze' ? 'powerFreeze' : 'powerSlime', pick, targets);
 }
 
 export interface RevealFact {

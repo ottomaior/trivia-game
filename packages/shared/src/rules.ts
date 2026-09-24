@@ -52,6 +52,8 @@ export const CHOICES_PER_QUESTION = 4;
 export const TIMINGS = {
   intro: 4_000,
   vote: 8_000,
+  /** A vote where someone can still use a power play: picking a target takes a moment. */
+  votePower: 12_000,
   /** The TV spins to the winning category, and Otto reacts to it. */
   voteResult: 2_600,
   questionRead: 2_000,
@@ -85,6 +87,29 @@ export function scoreAnswer(correct: boolean, responseMs: number, openMs: number
   const used = Math.min(1, Math.max(0, responseMs / openMs));
   return Math.round(POINTS_BASE + POINTS_SPEED_BONUS * (1 - used));
 }
+
+// ---------------------------------------------------------------------------
+// Power plays: after voting, a player can throw one at another player, whose
+// answer buttons are then covered until they clear it. The clock keeps
+// running, which is the whole penalty.
+
+export const POWER_PLAYS = ['freeze', 'slime'] as const;
+export type PowerPlay = (typeof POWER_PLAYS)[number];
+
+/** Everyone gets a power play every this many rounds (holding at most one)… */
+export const POWER_PLAY_EVERY = 3;
+/** …starting from this round, so the first round is just the quiz. */
+export const POWER_PLAY_FIRST_ROUND = 2;
+
+/** True for rounds whose vote hands everyone a power play (2, 5, 8 in a 10-round game). */
+export function grantsPowerPlay(round: number): boolean {
+  return round >= POWER_PLAY_FIRST_ROUND && (round - POWER_PLAY_FIRST_ROUND) % POWER_PLAY_EVERY === 0;
+}
+
+/** Taps it takes to break the ice. */
+export const FREEZE_TAPS = 15;
+/** Share of the slime that has to be wiped off. */
+export const SLIME_CLEAR_SHARE = 0.7;
 
 /** Upper bound on the latency credit a slow phone gets (one-way, ms). */
 export const MAX_LATENCY_CREDIT_MS = 150;

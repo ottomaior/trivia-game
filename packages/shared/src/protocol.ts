@@ -7,6 +7,8 @@ import type {
   KickPayload,
   PlayerJoinPayload,
   PlayerResumePayload,
+  PowerChoosePayload,
+  PowerClearPayload,
   SetAvatarPayload,
   TimePingPayload,
   VotePayload,
@@ -57,6 +59,12 @@ export interface ClientToServerEvents {
   'vote:cast': (payload: VotePayload, ack: Ack) => void;
   'answer:submit': (payload: AnswerPayload, ack: Ack) => void;
   'question:flag': (payload: FlagPayload, ack: Ack) => void;
+  /** During the vote: throw your power play at someone… */
+  'power:choose': (payload: PowerChoosePayload, ack: Ack) => void;
+  /** …or keep it for a later round. */
+  'power:pass': (payload: object, ack: Ack) => void;
+  /** During the question: you broke the ice or wiped the slime off. */
+  'power:clear': (payload: PowerClearPayload, ack: Ack) => void;
   'time:ping': (payload: TimePingPayload, ack: (res: { t: number; serverNow: number }) => void) => void;
 }
 

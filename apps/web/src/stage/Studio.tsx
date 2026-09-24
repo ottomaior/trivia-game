@@ -28,6 +28,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
 
   useCamera(cameraRef, phase, view.round);
   useStageEffects(rootRef, shakeRef, view);
+  usePowerEffects(rootRef, view);
   usePerfGuard(onTooSlow, lite);
 
   return (
@@ -139,6 +140,33 @@ function useStageEffects(
     }
     return () => timers.forEach(clearTimeout);
   }, [key]); // once per phase and round; the view is read as it was at that moment
+}
+
+/** A projectile from thrower to target as each power play lands; sparks as its target breaks free. */
+function usePowerEffects(rootRef: React.RefObject<HTMLDivElement | null>, view: HostView) {
+  const hits = 'hits' in view.stage ? view.stage.hits : [];
+  const seen = useRef({ round: view.round, thrown: 0, cleared: new Set<number>() });
+  const thrown = hits.length;
+  const clearedKey = hits.map((h) => (h.cleared ? 1 : 0)).join('');
+  useEffect(() => {
+    const root = rootRef.current;
+    if (seen.current.round !== view.round) seen.current = { round: view.round, thrown: 0, cleared: new Set() };
+    const before = seen.current;
+    const desk = (id: string) => (root ? rectOf(root, `[data-desk="${id}"]`) : null);
+    hits.forEach((h, i) => {
+      if (i >= before.thrown) {
+        const from = desk(h.by);
+        const to = desk(h.target);
+        if (from && to) fx.fly(from, to, 10);
+      }
+      if (h.cleared && !before.cleared.has(i)) {
+        before.cleared.add(i);
+        const at = desk(h.target);
+        if (at) fx.sparks(at, 25);
+      }
+    });
+    before.thrown = thrown;
+  }, [view.round, thrown, clearedKey]); // only when a hit lands or clears; the view is read as it was then
 }
 
 function shake(el: HTMLElement | null) {

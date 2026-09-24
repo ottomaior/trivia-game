@@ -5,6 +5,7 @@ import {
   categoryLine,
   finalLine,
   LinePicker,
+  powerLine,
   revealLine,
   scoreboardLine,
   voteLine,
@@ -89,6 +90,25 @@ describe('other lines', () => {
     expect(finalLine([st('A', 5000, 1), st('B', 5000, 1)], rng)).toMatchObject({ key: 'tie', focus: ['A', 'B'] });
     expect(finalLine([st('A', 9000, 1)], rng)?.key).toBe('soloFinalHigh');
     expect(finalLine([st('A', 2000, 1)], rng)?.key).toBe('soloFinalLow');
+  });
+});
+
+describe('powerLine', () => {
+  const hit = (by: string, target: string, power: 'freeze' | 'slime' = 'freeze') => ({ by, target, power, cleared: false });
+
+  it('names the kind of a single hit', () => {
+    expect(powerLine([hit('A', 'B')], rng)).toMatchObject({ key: 'powerFreeze', focus: ['B'] });
+    expect(powerLine([hit('A', 'B', 'slime')], rng)).toMatchObject({ key: 'powerSlime', focus: ['B'] });
+  });
+
+  it('notices a gang-up before a plain free-for-all', () => {
+    expect(powerLine([hit('A', 'C'), hit('B', 'C', 'slime')], rng)).toMatchObject({ key: 'powerGangUp', focus: ['C'] });
+    expect(powerLine([hit('A', 'B'), hit('B', 'A')], rng)).toMatchObject({ key: 'powerMany', focus: ['B', 'A'] });
+  });
+
+  it('announces the rounds that hand them out, unless it is the first or last round', () => {
+    expect(voteLine(2, 10, rng, true).key).toBe('powerGranted');
+    expect(voteLine(10, 10, rng, true).key).toBe('lastRound');
   });
 });
 

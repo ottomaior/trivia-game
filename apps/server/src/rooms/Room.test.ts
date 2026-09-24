@@ -154,3 +154,131 @@ describe('answering and scoring', () => {
     expect(room.allActed()).toBe(true);
   });
 });
+
+describe('power plays', () => {
+  const option = { category: { id: 1, slug: 'x', name: 'Történelem' }, question };
+
+  /** Three players at the vote of `round` (power plays are handed out in round 2). */
+  function roomAtVote(round = 2, players = ['Anna', 'Béla', 'Cili']) {
+    const room = newRoom();
+    const joined = players.map((n) => joinOk(room, n));
+    room.enterIntro();
+    for (let r = 1; r <= round; r++) room.enterVote([option]);
+    return { room, players: joined };
+  }
+
+  function toQuestion(room: Room) {
+    room.enterVoteResult(0);
+    room.enterQuestionRead(question);
+    room.openAnswers(10_000);
+  }
+
+  it('hands everyone one in round 2, and none in round 1', () => {
+    const early = roomAtVote(1);
+    expect(early.room.powers.size).toBe(0);
+    expect(early.room.powerState(early.players[0]!.id)).toBe('none');
+    const { room, players } = roomAtVote(2);
+    expect(room.powers.size).toBe(3);
+    expect(room.powerState(players[0]!.id)).toBe('ready');
+    expect(room.otto?.key).toBe('powerGranted');
+  });
+
+  it('never hands one out in a solo game', () => {
+    const { room, players } = roomAtVote(2, ['Anna']);
+    expect(room.powers.size).toBe(0);
+    expect(room.powerState(players[0]!.id)).toBe('none');
+    expect(room.powerVote()).toBe(false);
+  });
+
+  it('cannot target yourself, a stranger or someone who is offline', () => {
+    const { room, players } = roomAtVote();
+    const [a, b, c] = players;
+    expect(room.choosePower(a!.id, 'freeze', a!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.choosePower(a!.id, 'freeze', 'nobody')).toEqual({ ok: false, error: 'NOT_FOUND' });
+    room.playerDisconnected(c!.id, 1_000);
+    expect(room.choosePower(a!.id, 'freeze', c!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.choosePower(a!.id, 'freeze', b!.id)).toEqual({ ok: true });
+    expect(room.hits).toEqual([{ by: a!.id, target: b!.id, power: 'freeze', cleared: false }]);
+  });
+
+  it('allows one per round, and only during the vote', () => {
+    const { room, players } = roomAtVote();
+    const [a, b, c] = players;
+    expect(room.choosePower(a!.id, 'freeze', b!.id)).toEqual({ ok: true });
+    expect(room.choosePower(a!.id, 'slime', c!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.powerState(a!.id)).toBe('used');
+    room.enterVoteResult(0);
+    expect(room.choosePower(b!.id, 'slime', a!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+  });
+
+  it('keeps a passed power play for a later round, without stacking a second one', () => {
+    const { room, players } = roomAtVote();
+    const [a, b] = players;
+    expect(room.passPower(a!.id)).toEqual({ ok: true });
+    expect(room.powerState(a!.id)).toBe('passed');
+    toQuestion(room);
+    expect(room.powerState(a!.id)).toBe('held');
+    room.enterVote([option]); // round 3: nothing new handed out
+    expect(room.powerState(a!.id)).toBe('ready');
+    expect(room.choosePower(a!.id, 'slime', b!.id)).toEqual({ ok: true });
+    expect(room.powers.has(a!.id)).toBe(false);
+  });
+
+  it('waits for everyone who can still throw one before ending the vote early', () => {
+    const { room, players } = roomAtVote();
+    const [a, b, c] = players;
+    expect(room.powerVote()).toBe(true);
+    for (const p of players) room.castVote(p.id, 0);
+    expect(room.allActed()).toBe(false);
+    room.choosePower(a!.id, 'freeze', b!.id);
+    room.passPower(b!.id);
+    expect(room.allActed()).toBe(false);
+    room.playerDisconnected(c!.id, 1_000); // gone players are never waited for
+    expect(room.allActed()).toBe(true);
+  });
+
+  it('blocks the target’s answer until they clear it, and the clock keeps running', () => {
+    const { room, players } = roomAtVote();
+    const [a, b, c] = players;
+    room.choosePower(a!.id, 'freeze', b!.id);
+    room.choosePower(c!.id, 'slime', b!.id);
+    expect(room.clearPower(b!.id, 'freeze')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // not before answers open
+    toQuestion(room);
+    expect(room.submitAnswer(b!.id, 'q1', 0, 11_000)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.clearPower(a!.id, 'freeze')).toEqual({ ok: false, error: 'NOT_FOUND' }); // not a's to clear
+    expect(room.clearPower(b!.id, 'freeze')).toEqual({ ok: true });
+    expect(room.blocked(b!.id)).toBe(true);
+    expect(room.clearPower(b!.id, 'slime')).toEqual({ ok: true });
+    expect(room.submitAnswer(b!.id, 'q1', 0, 14_000)).toEqual({ ok: true });
+    expect(room.answers.get(b!.id)?.responseMs).toBe(4_000);
+    expect(room.submitAnswer(a!.id, 'q1', 0, 11_000)).toEqual({ ok: true });
+  });
+
+  it('keeps a hit on a target who drops, so it is still there when they come back', () => {
+    const { room, players } = roomAtVote();
+    const [a, b] = players;
+    room.choosePower(a!.id, 'slime', b!.id);
+    room.playerDisconnected(b!.id, 1_000);
+    toQuestion(room);
+    room.resumePlayer(b!.id, b!.sessionToken);
+    expect(room.blocked(b!.id)).toBe(true);
+    expect(room.clearPower(b!.id, 'slime')).toEqual({ ok: true });
+  });
+
+  it('has Otto comment on the hits instead of the category', () => {
+    const { room, players } = roomAtVote();
+    const [a, b, c] = players;
+    room.choosePower(a!.id, 'freeze', c!.id);
+    room.choosePower(b!.id, 'slime', c!.id);
+    room.enterVoteResult(0);
+    expect(room.otto).toMatchObject({ key: 'powerGangUp', focus: [c!.id] });
+  });
+
+  it('clears everything for a new game', () => {
+    const { room, players } = roomAtVote();
+    room.choosePower(players[0]!.id, 'freeze', players[1]!.id);
+    room.enterIntro();
+    expect(room.powers.size).toBe(0);
+    expect(room.hits).toEqual([]);
+  });
+});

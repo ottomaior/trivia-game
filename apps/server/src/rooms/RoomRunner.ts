@@ -1,4 +1,12 @@
-import { difficultyForRound, TIMINGS, VOTE_OPTIONS, type ErrorCode, type FlagReason, type TimingKey } from '@trivia/shared';
+import {
+  difficultyForRound,
+  TIMINGS,
+  VOTE_OPTIONS,
+  type ErrorCode,
+  type FlagReason,
+  type PowerPlay,
+  type TimingKey,
+} from '@trivia/shared';
 import type { Clock } from '../clock.ts';
 import { shuffleChoices, type Rng } from '../content/select.ts';
 import type { Store } from '../db/store.ts';
@@ -63,6 +71,25 @@ export class RoomRunner {
   answer(playerId: string, questionId: string, choice: number): Result {
     const res = this.room.submitAnswer(playerId, questionId, choice, this.deps.clock());
     if (res.ok) this.afterAction();
+    return res;
+  }
+
+  choosePower(playerId: string, power: PowerPlay, targetId: string): Result {
+    const res = this.room.choosePower(playerId, power, targetId);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  passPower(playerId: string): Result {
+    const res = this.room.passPower(playerId);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  /** Clearing an obstacle only unlocks the buttons; it never ends the question. */
+  clearPower(playerId: string, power: PowerPlay): Result {
+    const res = this.room.clearPower(playerId, power);
+    if (res.ok) this.changed();
     return res;
   }
 
@@ -190,7 +217,7 @@ export class RoomRunner {
       return;
     }
     this.room.enterVote(options);
-    this.schedule('vote');
+    this.schedule(this.room.powerVote() ? 'votePower' : 'vote');
     this.changed();
   }
 

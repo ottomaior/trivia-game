@@ -535,3 +535,208 @@
     opacity: 1;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Power plays */
+
+.powerButton {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 88px;
+  padding: 10px 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  box-shadow: 0 5px 0 var(--burgundy-deep);
+  text-align: left;
+  cursor: pointer;
+  animation: popIn 320ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.powerButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--burgundy-deep);
+}
+
+.power_freeze {
+  background: linear-gradient(160deg, #d9f1f7, var(--ice));
+  color: var(--burgundy);
+}
+
+.power_slime {
+  background: linear-gradient(160deg, #b5e27a, var(--slime));
+  color: var(--burgundy);
+}
+
+.powerText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.powerName {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+}
+
+.powerHelp {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.targetButton {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: var(--touch-min);
+  padding: 6px 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--cream);
+  color: var(--burgundy);
+  font-size: 1.4rem;
+  font-weight: 800;
+  box-shadow: 0 5px 0 var(--burgundy-deep);
+  cursor: pointer;
+}
+
+.targetButton:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--burgundy-deep);
+}
+
+.powerNotes p {
+  margin: 4px 0;
+  font-weight: 700;
+  color: var(--ice);
+}
+
+.powerNotes svg {
+  vertical-align: -0.15em;
+}
+
+.powerNotes .powerIncoming {
+  color: var(--mustard);
+  font-size: 1.15rem;
+}
+
+/* The answer buttons, which an obstacle can cover. */
+.choices {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cover {
+  position: absolute;
+  inset: -6px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: coverIn 380ms cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+.coverBy {
+  position: relative;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(28, 9, 16, 0.75);
+  color: var(--cream);
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.coverLabel {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--burgundy);
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.ice {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.85), transparent 45%),
+    radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.5), transparent 40%),
+    linear-gradient(155deg, rgba(222, 244, 250, 0.96), rgba(159, 211, 224, 0.94) 60%, rgba(120, 180, 205, 0.96));
+  border: 3px solid #e8f7fb;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+
+.ice:active {
+  transform: rotate(calc(var(--wobble, 1) * 0.6deg)) scale(0.99);
+}
+
+.cracks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.cracks path {
+  fill: none;
+  stroke: #fff;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 2px rgba(31, 111, 107, 0.8));
+  stroke-dasharray: 200;
+  animation: crack 160ms ease-out both;
+}
+
+.slime {
+  background: transparent;
+}
+
+.slimeCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.slime .coverLabel {
+  color: var(--cream);
+  text-shadow: 0 2px 0 var(--slime-deep);
+}
+
+.coverGone {
+  pointer-events: none;
+  animation: coverOut 380ms ease-in forwards;
+}
+
+@keyframes coverIn {
+  from {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes coverOut {
+  to {
+    transform: scale(1.25) rotate(-3deg);
+    opacity: 0;
+  }
+}
+
+@keyframes crack {
+  from {
+    stroke-dashoffset: 200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

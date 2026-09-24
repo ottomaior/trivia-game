@@ -18,6 +18,11 @@ export const SOUND_CUES = [
   'scoreboard',
   'leadChange',
   'winner',
+  // power plays
+  'freeze',
+  'splat',
+  'shatter',
+  'wipe',
   // the studio audience
   'applause',
   'cheer',

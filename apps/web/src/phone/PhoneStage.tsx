@@ -7,7 +7,7 @@ import { LobbyScreen } from './screens/LobbyScreen.tsx';
 import { QuestionScreen } from './screens/QuestionScreen.tsx';
 import { RevealScreen } from './screens/RevealScreen.tsx';
 import { StandingScreen } from './screens/StandingScreen.tsx';
-import { VoteScreen } from './screens/VoteScreen.tsx';
+import { PowerNotes, VoteScreen } from './screens/VoteScreen.tsx';
 
 /** Picks the phone controller screen for the current phase. */
 export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSocket }) {
@@ -32,6 +32,7 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
             <div className={styles.column}>
               <p className={styles.hint}>{t.chosenCategory}</p>
               <h2 className={styles.rankBig}>{stage.options[stage.chosen]?.name}</h2>
+              <PowerNotes view={view} stage={stage} />
             </div>
           )}
           {(stage.phase === 'question_read' || stage.phase === 'question_open') && (

@@ -143,6 +143,7 @@ describe('RoomRunner', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     const positions = new Set<number>();
     for (let i = 0; i < 6; i++) {
+      for (const p of players) runner.passPower(p.id);
       for (const p of players) runner.vote(p.id, 0);
       await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
       positions.add(room.question!.correct);
@@ -174,6 +175,44 @@ describe('RoomRunner', () => {
     // The minute away does not count against answer time.
     runner.answer(players[0]!.id, room.question!.id, room.question!.correct);
     expect(room.answers.get(players[0]!.id)?.responseMs).toBe(5_000);
+  });
+
+  it('gives power-play votes longer, and lets a frozen player answer once the ice is broken', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    const [a, b] = players;
+    runner.start(a!.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
+    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal + TIMINGS.scoreboard);
+
+    // Round 2 hands out power plays: the vote waits for both decisions.
+    expect(room.phase).toBe('vote');
+    expect(room.phaseEndsAt).toBe(Date.now() + TIMINGS.votePower);
+    for (const p of players) runner.vote(p.id, 0);
+    expect(room.phase).toBe('vote');
+    expect(runner.choosePower(a!.id, 'freeze', b!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('vote');
+    expect(runner.passPower(b!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('vote_result');
+    expect(room.otto?.key).toBe('powerFreeze');
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
+    const q = room.question!;
+    const bView = toPlayerView(room, b!.id, Date.now());
+    expect(bView?.stage.phase === 'question_open' && bView.stage.hits).toEqual([
+      { by: a!.id, target: b!.id, power: 'freeze', cleared: false },
+    ]);
+    expect(runner.answer(b!.id, q.id, q.correct)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    await vi.advanceTimersByTimeAsync(3_000);
+    expect(runner.clearPower(b!.id, 'freeze')).toEqual({ ok: true });
+    expect(runner.answer(b!.id, q.id, q.correct)).toEqual({ ok: true });
+    runner.answer(a!.id, q.id, q.correct);
+    expect(room.phase).toBe('reveal');
+    // Instant in round 1; in round 2 the ice cost three seconds of speed bonus.
+    expect(room.picks.find((p) => p.playerId === b!.id)?.points).toBe(925);
+    expect(toPlayerView(room, b!.id, Date.now())?.mine.power).toBe('held');
   });
 
   it('finishes early with what it has when questions run out', async () => {

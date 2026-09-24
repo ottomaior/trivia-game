@@ -13,7 +13,7 @@ test('every synthesized sound makes noise and none of them clips', async ({ brow
   expect(reports.map((r) => r.name).sort()).toEqual(
     [
       'applause', 'cheer', 'join', 'start', 'vote', 'spinTick', 'spinLand', 'question', 'lockIn', 'tick', 'timeUp',
-      'reveal', 'wrong', 'scoreboard', 'leadChange', 'winner', 'lobby', 'thinking',
+      'reveal', 'wrong', 'scoreboard', 'leadChange', 'winner', 'lobby', 'thinking', 'freeze', 'splat', 'shatter', 'wipe',
     ].sort(),
   );
   for (const r of reports) {

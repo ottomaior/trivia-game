@@ -6,6 +6,8 @@ import {
   kickSchema,
   playerJoinSchema,
   playerResumeSchema,
+  powerChooseSchema,
+  powerClearSchema,
   setAvatarSchema,
   timePingSchema,
   voteSchema,
@@ -228,6 +230,18 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       playerCommand(flagSchema, (runner, playerId, { questionId, reason }) =>
         runner.flag(playerId, questionId, reason),
       ),
+    );
+
+    socket.on(
+      'power:choose',
+      playerCommand(powerChooseSchema, (runner, playerId, { power, targetId }) =>
+        runner.choosePower(playerId, power, targetId),
+      ),
+    );
+    socket.on('power:pass', playerCommand(emptyPayload, (runner, playerId) => runner.passPower(playerId)));
+    socket.on(
+      'power:clear',
+      playerCommand(powerClearSchema, (runner, playerId, { power }) => runner.clearPower(playerId, power)),
     );
 
     socket.on('time:ping', (payload, ack) => {

@@ -1,4 +1,4 @@
-import type { Avatar, Difficulty } from './rules.ts';
+import type { Avatar, Difficulty, PowerPlay } from './rules.ts';
 
 // Views are complete, role-specific snapshots. The server sends a fresh one on
 // every change, so a reconnecting client resyncs just by receiving the next one.
@@ -22,6 +22,8 @@ export interface PlayerSummary {
   connected: boolean;
   isVip: boolean;
   score: number;
+  /** Holds an unused power play. */
+  hasPower: boolean;
 }
 
 export interface CategoryOption {
@@ -39,6 +41,21 @@ export interface PublicQuestion {
   /** Name of the recorded read-aloud of the prompt (public/voice/q/), if one was made. */
   voice: string;
 }
+
+/** A power play thrown this round: `target` has to clear it before answering. */
+export interface PowerHit {
+  by: string;
+  target: string;
+  power: PowerPlay;
+  cleared: boolean;
+}
+
+/**
+ * This player's power play: `ready` while they can throw it now (in the vote,
+ * with someone to target), `passed` when they are keeping it for later,
+ * `held` outside the vote, `used` once thrown this round.
+ */
+export type PowerState = 'none' | 'held' | 'ready' | 'passed' | 'used';
 
 export interface Pick {
   playerId: string;
@@ -61,11 +78,12 @@ export interface Standing {
 export type Stage =
   | { phase: 'lobby' }
   | { phase: 'intro' }
-  | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number> }
+  /** `powerVote`: someone can throw a power play, so the vote runs longer (TIMINGS.votePower). */
+  | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number>; hits: PowerHit[]; powerVote: boolean }
   /** The vote is decided; the TV spins to `chosen` before the question. */
-  | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number }
-  | { phase: 'question_read'; question: PublicQuestion }
-  | { phase: 'question_open'; question: PublicQuestion; answered: string[] }
+  | { phase: 'vote_result'; options: CategoryOption[]; votes: Record<string, number>; chosen: number; hits: PowerHit[] }
+  | { phase: 'question_read'; question: PublicQuestion; hits: PowerHit[] }
+  | { phase: 'question_open'; question: PublicQuestion; answered: string[]; hits: PowerHit[] }
   | {
       phase: 'reveal';
       question: PublicQuestion;
@@ -109,6 +127,11 @@ export type OttoLineKey =
   | 'halfway'
   | 'lastRound'
   | 'categoryPicked'
+  | 'powerGranted'
+  | 'powerFreeze'
+  | 'powerSlime'
+  | 'powerMany'
+  | 'powerGangUp'
   | CategoryLineKey
   | 'allCorrect'
   | 'noneCorrect'
@@ -159,5 +182,6 @@ export interface PlayerView extends BaseView {
     vote: number | null;
     choice: number | null;
     flagged: boolean;
+    power: PowerState;
   };
 }
