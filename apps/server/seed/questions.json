@@ -6198,5 +6198,905 @@
       "Ámen"
     ],
     "explanation": "A kántálást a játék hangtervezője, Chris Rippy egy családi videó hangjának torzításával készítette."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik ország rendezte a 2022-es labdarúgó-világbajnokságot?",
+    "answer": "Katar",
+    "wrong": [
+      "Szaúd-Arábia",
+      "Kuvait",
+      "Bahrein"
+    ],
+    "explanation": "Ez volt az első vb, amelyet a nyári hőség miatt novemberben és decemberben rendeztek."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik válogatott ellen szerezte Diego Maradona az „Isten keze” néven elhíresült gólt 1986-ban?",
+    "answer": "Anglia",
+    "wrong": [
+      "NSZK",
+      "Belgium",
+      "Olaszország"
+    ],
+    "explanation": "Négy perccel később ugyanezen a meccsen a saját térfeléről indulva lőtte az évszázad gólját."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik csapatot verte Németország 7:1-re a 2014-es világbajnokság elődöntőjében?",
+    "answer": "Brazília",
+    "wrong": [
+      "Argentína",
+      "Hollandia",
+      "Franciaország"
+    ],
+    "explanation": "A Belo Horizonte-i meccsen a németek már a 29. percben 5:0-ra vezettek."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik csapattól kapott ki az Aranycsapat az 1954-es világbajnokság döntőjében?",
+    "answer": "NSZK",
+    "wrong": [
+      "Uruguay",
+      "Ausztria",
+      "Brazília"
+    ],
+    "explanation": "A magyarok a 8. percben már 2:0-ra vezettek, mégis 3:2-re kikaptak Bernben."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Kiről nevezték el a 2019-ben átadott budapesti nemzeti stadiont?",
+    "answer": "Puskás Ferenc",
+    "wrong": [
+      "Albert Flórián",
+      "Kocsis Sándor",
+      "Grosics Gyula"
+    ],
+    "explanation": "Az aréna a régi Népstadion helyén épült, amely 2002-től szintén az ő nevét viselte."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik angol klub otthona az Old Trafford stadion?",
+    "answer": "Manchester United",
+    "wrong": [
+      "Manchester City",
+      "Liverpool",
+      "Arsenal"
+    ],
+    "explanation": "Az „Álmok Színháza” becenevet a klub legendájától, Sir Bobby Charltontól kapta."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik angol klub szurkolóinak himnusza a You'll Never Walk Alone?",
+    "answer": "Liverpool",
+    "wrong": [
+      "Chelsea",
+      "Everton",
+      "Leeds United"
+    ],
+    "explanation": "A liverpooli Gerry and the Pacemakers 1963-as feldolgozása tette az Anfield himnuszává."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik amerikai klubhoz igazolt Lionel Messi 2023-ban?",
+    "answer": "Inter Miami",
+    "wrong": [
+      "LA Galaxy",
+      "New York City FC",
+      "Los Angeles FC"
+    ],
+    "explanation": "A klub egyik tulajdonosa David Beckham."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Milyen állat volt Paul, aki a 2010-es vb-n sorra eltalálta a németek meccseinek győztesét?",
+    "answer": "Polip",
+    "wrong": [
+      "Teknős",
+      "Papagáj",
+      "Tengerimalac"
+    ],
+    "explanation": "Az oberhauseni akváriumban élt, és a döntővel együtt mind a nyolc tippje bejött."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik ruhadarabjáról lett világhírű Király Gábor, a magyar válogatott kapusa?",
+    "answer": "Szürke melegítőnadrág",
+    "wrong": [
+      "Piros baseballsapka",
+      "Csíkos térdzokni",
+      "Kockás rövidnadrág"
+    ],
+    "explanation": "A 2016-os Eb-n 40 évesen ő lett a tornák addigi legidősebb játékosa."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Hányadik helyen végzett Magyarország a csoportjában a 2016-os Európa-bajnokságon?",
+    "answer": "Első",
+    "wrong": [
+      "Második",
+      "Harmadik",
+      "Negyedik"
+    ],
+    "explanation": "A csoportban a később Európa-bajnok Portugáliát is megelőzték."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik ország szurkolói tették világhírűvé a „Huh!” kiáltással kísért ütemes tapsot a 2016-os Eb-n?",
+    "answer": "Izland",
+    "wrong": [
+      "Norvégia",
+      "Wales",
+      "Írország"
+    ],
+    "explanation": "Az első nagy tornáján szereplő Izland a nyolcaddöntőben Angliát is kiejtette."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik londoni klub beceneve az „Ágyúsok”?",
+    "answer": "Arsenal",
+    "wrong": [
+      "Chelsea",
+      "Fulham",
+      "Tottenham"
+    ],
+    "explanation": "A klubot 1886-ban a woolwichi királyi fegyvergyár munkásai alapították."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik klub a Real Madrid ellenfele az El Clásicónak nevezett rangadón?",
+    "answer": "FC Barcelona",
+    "wrong": [
+      "Atlético Madrid",
+      "Valencia",
+      "Sevilla"
+    ],
+    "explanation": "A két klub először 1902-ben találkozott, akkor a Barcelona nyert."
+  },
+  {
+    "category": "foci",
+    "difficulty": 1,
+    "prompt": "Melyik ország nyerte a 2024-es, németországi Európa-bajnokságot?",
+    "answer": "Spanyolország",
+    "wrong": [
+      "Anglia",
+      "Franciaország",
+      "Hollandia"
+    ],
+    "explanation": "A berlini döntőben Angliát győzték le 2:1-re."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik ország rendezte az első labdarúgó-világbajnokságot 1930-ban?",
+    "answer": "Uruguay",
+    "wrong": [
+      "Argentína",
+      "Brazília",
+      "Olaszország"
+    ],
+    "explanation": "A tornát a házigazda nyerte meg, a döntőben 4:2-re legyőzve Argentínát."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Hány világbajnoki címet nyert Pelé a brazil válogatottal?",
+    "answer": "3",
+    "wrong": [
+      "2",
+      "4",
+      "5"
+    ],
+    "explanation": "Az elsőt 1958-ban, mindössze 17 évesen nyerte."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik olasz védőt fejelte mellbe Zinédine Zidane a 2006-os vb döntőjében?",
+    "answer": "Marco Materazzi",
+    "wrong": [
+      "Fabio Cannavaro",
+      "Alessandro Nesta",
+      "Gianluca Zambrotta"
+    ],
+    "explanation": "Zidane-t kiállították, és ez volt pályafutása utolsó mérkőzése."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Ki lőtte Spanyolország győztes gólját a 2010-es világbajnokság döntőjében?",
+    "answer": "Andrés Iniesta",
+    "wrong": [
+      "David Villa",
+      "Fernando Torres",
+      "Xavi Hernández"
+    ],
+    "explanation": "A Hollandia elleni gól a hosszabbítás 116. percében esett, és a spanyolok első vb-címét hozta."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Ki lőtt mesterhármast a 2022-es vb döntőjében, és mégis elveszítette a meccset?",
+    "answer": "Kylian Mbappé",
+    "wrong": [
+      "Olivier Giroud",
+      "Antoine Griezmann",
+      "Ousmane Dembélé"
+    ],
+    "explanation": "Rajta kívül csak az angol Geoff Hurst lőtt mesterhármast vb-döntőben, 1966-ban."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Japán melyik országgal közösen rendezte a 2002-es labdarúgó-világbajnokságot?",
+    "answer": "Dél-Korea",
+    "wrong": [
+      "Kína",
+      "Ausztrália",
+      "Thaiföld"
+    ],
+    "explanation": "Ez volt az első vb Ázsiában, és az első, amelyet két ország közösen rendezett."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik világbajnokságon alkalmazták először a videóbírót (VAR)?",
+    "answer": "2018, Oroszország",
+    "wrong": [
+      "2014, Brazília",
+      "2022, Katar",
+      "2010, Dél-Afrika"
+    ],
+    "explanation": "A torna első VAR-os tizenegyesét Franciaország kapta Ausztrália ellen."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Hány aranylabdát nyert Lionel Messi 2024 végéig?",
+    "answer": "8",
+    "wrong": [
+      "6",
+      "7",
+      "9"
+    ],
+    "explanation": "Az utolsót 2023-ban vehette át, a katari vb-győzelem után."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik szigeten született Cristiano Ronaldo?",
+    "answer": "Madeira",
+    "wrong": [
+      "Tenerife",
+      "Korzika",
+      "Szardínia"
+    ],
+    "explanation": "A sziget fővárosa, Funchal repülőtere ma az ő nevét viseli."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik csapat ellen egyenlített 0:3-ról a Liverpool a 2005-ös isztambuli BL-döntőben, mielőtt tizenegyesekkel nyert?",
+    "answer": "AC Milan",
+    "wrong": [
+      "Juventus",
+      "Bayern München",
+      "Real Madrid"
+    ],
+    "explanation": "A három liverpooli gól hat perc alatt született a második félidőben."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik edző irányításával nyert a Real Madrid sorozatban három Bajnokok Ligáját 2016 és 2018 között?",
+    "answer": "Zinédine Zidane",
+    "wrong": [
+      "Carlo Ancelotti",
+      "José Mourinho",
+      "Rafael Benítez"
+    ],
+    "explanation": "A 2017-es győzelem volt az első címvédés a Bajnokok Ligája korszakában."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Melyik olasz klub beceneve az „Öreg Hölgy”?",
+    "answer": "Juventus",
+    "wrong": [
+      "AC Milan",
+      "Internazionale",
+      "AS Roma"
+    ],
+    "explanation": "Mulatságos, hogy a juventus szó latinul ifjúságot jelent."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Az Aranycsapat melyik csatára kapta kiváló fejjátéka miatt az „Aranyfejű” becenevet?",
+    "answer": "Kocsis Sándor",
+    "wrong": [
+      "Puskás Ferenc",
+      "Hidegkuti Nándor",
+      "Czibor Zoltán"
+    ],
+    "explanation": "Az 1954-es vb-n 11 góllal gólkirály lett."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Ki lőtt két gólt a magyar válogatottban a Portugália elleni 3:3-as mérkőzésen a 2016-os Eb-n?",
+    "answer": "Dzsudzsák Balázs",
+    "wrong": [
+      "Szalai Ádám",
+      "Stieber Zoltán",
+      "Nagy Ádám"
+    ],
+    "explanation": "A lyoni meccsen Cristiano Ronaldo is kétszer volt eredményes."
+  },
+  {
+    "category": "foci",
+    "difficulty": 2,
+    "prompt": "Ki lőtte Izland ellen 2020 novemberében azt a győztes gólt, amellyel Magyarország kijutott az Eb-re?",
+    "answer": "Szoboszlai Dominik",
+    "wrong": [
+      "Szalai Ádám",
+      "Sallai Roland",
+      "Kleinheisler László"
+    ],
+    "explanation": "A gól a 92. percben esett, két perccel Nego Loïc egyenlítése után."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Ki szerzett mesterhármast az angolok elleni 6:3-os magyar győzelem során 1953-ban?",
+    "answer": "Hidegkuti Nándor",
+    "wrong": [
+      "Puskás Ferenc",
+      "Kocsis Sándor",
+      "Czibor Zoltán"
+    ],
+    "explanation": "Az első gólját már a meccs első percében lőtte."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Milyen eredménnyel győzte le Magyarország az NSZK-t az 1954-es vb csoportkörében?",
+    "answer": "8:3",
+    "wrong": [
+      "6:3",
+      "7:2",
+      "5:1"
+    ],
+    "explanation": "A két csapat a döntőben újra találkozott, akkor a németek nyertek."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik csapattól kapott ki Magyarország az 1938-as világbajnokság döntőjében?",
+    "answer": "Olaszország",
+    "wrong": [
+      "Brazília",
+      "Csehszlovákia",
+      "Svédország"
+    ],
+    "explanation": "A párizsi döntőt az olaszok 4:2-re nyerték, így megvédték a címüket."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Hány olimpiai aranyérmet nyert a magyar labdarúgó-válogatott 2024 végéig?",
+    "answer": "3",
+    "wrong": [
+      "1",
+      "2",
+      "4"
+    ],
+    "explanation": "Az Aranycsapat 1952-ben nyert, a későbbi csapatok 1964-ben és 1968-ban."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik klub adta az Aranycsapat játékosainak többségét az 1950-es évek elején?",
+    "answer": "Budapesti Honvéd",
+    "wrong": [
+      "Ferencváros",
+      "MTK",
+      "Újpest"
+    ],
+    "explanation": "Puskás Ferenc és Bozsik József gyerekkorukban szomszédok voltak Kispesten."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "2016 előtt melyik évben szerepelt utoljára Európa-bajnokságon a magyar válogatott?",
+    "answer": "1972",
+    "wrong": [
+      "1968",
+      "1976",
+      "1980"
+    ],
+    "explanation": "Akkor még csak négy csapat vett részt a tornán."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik magyar játékos nyerte el 2019-ben a FIFA Puskás-díjat egy ollózós gólért?",
+    "answer": "Zsóri Dániel",
+    "wrong": [
+      "Szoboszlai Dominik",
+      "Sallai Roland",
+      "Nagy Ádám"
+    ],
+    "explanation": "A gólt 18 évesen, a Debrecen színeiben lőtte a Ferencváros ellen."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik csapat nyerte az Európa-liga Budapesten rendezett 2023-as döntőjét?",
+    "answer": "Sevilla",
+    "wrong": [
+      "AS Roma",
+      "Bayer Leverkusen",
+      "Juventus"
+    ],
+    "explanation": "A spanyolok tizenegyesekkel győzték le a José Mourinho vezette Romát."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik csapatot győzte le a Manchester United az 1999-es BL-döntőben két, a 90. perc után lőtt góllal?",
+    "answer": "Bayern München",
+    "wrong": [
+      "Juventus",
+      "Borussia Dortmund",
+      "FC Barcelona"
+    ],
+    "explanation": "A két gólt Teddy Sheringham és Ole Gunnar Solskjær szerezte a ráadásban."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik csapat nyerte a 2012-es BL-döntőt Münchenben, a hazai pályán játszó Bayern ellen?",
+    "answer": "Chelsea",
+    "wrong": [
+      "Borussia Dortmund",
+      "Real Madrid",
+      "FC Barcelona"
+    ],
+    "explanation": "Didier Drogba a 88. percben egyenlített, majd a döntő tizenegyest is ő lőtte be."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Ki döntötte el aranygóllal az 1996-os Európa-bajnokság döntőjét?",
+    "answer": "Oliver Bierhoff",
+    "wrong": [
+      "Jürgen Klinsmann",
+      "Andreas Möller",
+      "Matthias Sammer"
+    ],
+    "explanation": "Németország 2:1-re verte Csehországot, és mindkét német gólt ő szerezte."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik argentin játékos megrúgásáért állították ki David Beckhamet az 1998-as vb-n?",
+    "answer": "Diego Simeone",
+    "wrong": [
+      "Juan Sebastián Verón",
+      "Gabriel Batistuta",
+      "Ariel Ortega"
+    ],
+    "explanation": "Az angolok végül tizenegyesekkel estek ki a nyolcaddöntőben."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik francia klubtól igazolt Ronaldinho 2003-ban az FC Barcelonához?",
+    "answer": "Paris Saint-Germain",
+    "wrong": [
+      "Olympique Marseille",
+      "AS Monaco",
+      "Olympique Lyon"
+    ],
+    "explanation": "Barcelonában 2005-ben aranylabdát is nyert."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik argentin klub utánpótlásában futballozott Lionel Messi, mielőtt Barcelonába költözött?",
+    "answer": "Newell's Old Boys",
+    "wrong": [
+      "River Plate",
+      "Boca Juniors",
+      "Rosario Central"
+    ],
+    "explanation": "A Barcelonával kötött első megállapodását 2000-ben egy papírszalvétára írták."
+  },
+  {
+    "category": "foci",
+    "difficulty": 3,
+    "prompt": "Melyik stadionban győzte le Uruguay Brazíliát 1950-ben, eldöntve a világbajnoki címet?",
+    "answer": "Maracanã",
+    "wrong": [
+      "Estadio Centenario",
+      "Morumbi",
+      "Mineirão"
+    ],
+    "explanation": "Azon a tornán nem volt klasszikus döntő, ez a négyes döntő csoport utolsó meccse volt."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik együttes logója a nyelvét kiöltő piros száj?",
+    "answer": "The Rolling Stones",
+    "wrong": [
+      "Aerosmith",
+      "The Who",
+      "Kiss"
+    ],
+    "explanation": "A logót 1970-ben egy londoni művészeti egyetemista, John Pasche tervezte."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik Queen-dalban hangzik el a „Galileo” és a „Scaramouche” név?",
+    "answer": "Bohemian Rhapsody",
+    "wrong": [
+      "Don't Stop Me Now",
+      "We Will Rock You",
+      "Somebody to Love"
+    ],
+    "explanation": "Nincs benne hagyományos refrén: balladával indul, operarésszel folytatódik, majd hard rockba vált."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik Michael Jackson-dal klipjében táncolnak zombik?",
+    "answer": "Thriller",
+    "wrong": [
+      "Billie Jean",
+      "Beat It",
+      "Smooth Criminal"
+    ],
+    "explanation": "A csaknem 14 perces kisfilmet John Landis, az Egy amerikai farkasember Londonban rendezője forgatta."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik angol városban alakult meg a Beatles?",
+    "answer": "Liverpool",
+    "wrong": [
+      "Manchester",
+      "Birmingham",
+      "Leeds"
+    ],
+    "explanation": "A zenekar a liverpooli Cavern Clubban futott be, ahol közel háromszázszor léptek fel."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik ország popzenéjére utal a K-pop elnevezés?",
+    "answer": "Dél-Korea",
+    "wrong": [
+      "Japán",
+      "Kína",
+      "Thaiföld"
+    ],
+    "explanation": "Az előadók jellemzően évekig tartó gyakornoki képzés után mutatkozhatnak be a nagyközönségnek."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik karibi országból indult hódító útjára a reggae?",
+    "answer": "Jamaica",
+    "wrong": [
+      "Kuba",
+      "Puerto Rico",
+      "Haiti"
+    ],
+    "explanation": "A műfajt Bob Marley tette ismertté az egész világon."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Hány húrja van a hegedűnek?",
+    "answer": "4",
+    "wrong": [
+      "3",
+      "5",
+      "6"
+    ],
+    "explanation": "A húrokat kvinthangközönként hangolják: G, D, A és E."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Mit jelent, ha egy dalt a cappella adnak elő?",
+    "answer": "Hangszeres kíséret nélkül",
+    "wrong": [
+      "Csak zongorakísérettel",
+      "Teljes zenekari kísérettel",
+      "Csak ütőhangszeres kísérettel"
+    ],
+    "explanation": "Olaszul azt jelenti: „kápolna módjára”; a Tökéletes hang című filmek énekkarai is így versenyeznek."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Kit neveznek a rock and roll királyának?",
+    "answer": "Elvis Presley",
+    "wrong": [
+      "Chuck Berry",
+      "Little Richard",
+      "Buddy Holly"
+    ],
+    "explanation": "Első nagy slágere, a Heartbreak Hotel 1956-ban jelent meg."
+  },
+  {
+    "category": "zene",
+    "difficulty": 1,
+    "prompt": "Melyik együttes énekese Bono?",
+    "answer": "U2",
+    "wrong": [
+      "INXS",
+      "R.E.M.",
+      "Coldplay"
+    ],
+    "explanation": "Az együttes 1976-ban alakult Dublinban, a tagok akkor még középiskolások voltak."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Hány billentyűje van egy szabványos modern zongorának?",
+    "answer": "88",
+    "wrong": [
+      "76",
+      "84",
+      "96"
+    ],
+    "explanation": "Ebből 52 fehér és 36 fekete billentyű."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai várost tartják a jazz szülőhelyének?",
+    "answer": "New Orleans",
+    "wrong": [
+      "Chicago",
+      "New York",
+      "Nashville"
+    ],
+    "explanation": "A város repülőtere a legendás trombitásról, Louis Armstrongról kapta a nevét."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik évben rendezték meg a legendás woodstocki fesztivált?",
+    "answer": "1969",
+    "wrong": [
+      "1967",
+      "1971",
+      "1973"
+    ],
+    "explanation": "Valójában nem Woodstockban, hanem a közeli Bethel egyik tejfarmján tartották."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik magyar népdalt énekelte el Freddie Mercury a Queen 1986-os budapesti koncertjén?",
+    "answer": "Tavaszi szél vizet áraszt",
+    "wrong": [
+      "Csillagok, csillagok",
+      "Érik a szőlő, hajlik a vessző",
+      "Az a szép, az a szép"
+    ],
+    "explanation": "A Népstadionban tartott koncert a vasfüggöny mögötti első nagy nyugati stadionkoncertek egyike volt."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik országban alakult meg az AC/DC?",
+    "answer": "Ausztrália",
+    "wrong": [
+      "Egyesült Királyság",
+      "Kanada",
+      "Új-Zéland"
+    ],
+    "explanation": "Az alapító Young fivérek Skóciában születtek, és gyerekként költöztek a családjukkal Sydney-be."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik együttes gitárosaként lett világhírű a cilinderes Slash?",
+    "answer": "Guns N' Roses",
+    "wrong": [
+      "Aerosmith",
+      "Bon Jovi",
+      "Mötley Crüe"
+    ],
+    "explanation": "Slash valódi neve Saul Hudson, és Londonban született."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik zenész kapott irodalmi Nobel-díjat 2016-ban?",
+    "answer": "Bob Dylan",
+    "wrong": [
+      "Leonard Cohen",
+      "Paul Simon",
+      "Bruce Springsteen"
+    ],
+    "explanation": "A stockholmi díjátadón nem jelent meg, ott Patti Smith énekelte el az egyik dalát."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik országban született Frédéric Chopin?",
+    "answer": "Lengyelország",
+    "wrong": [
+      "Franciaország",
+      "Ausztria",
+      "Csehország"
+    ],
+    "explanation": "Húszévesen hagyta el hazáját, és élete hátralévő részét főleg Párizsban töltötte."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Melyik magyar zeneszerzőről kapta a nevét a világszerte ismert zenepedagógiai módszer?",
+    "answer": "Kodály Zoltán",
+    "wrong": [
+      "Bartók Béla",
+      "Liszt Ferenc",
+      "Dohnányi Ernő"
+    ],
+    "explanation": "A módszer a népdalokra és a relatív szolmizációra (dó, ré, mi…) épül."
+  },
+  {
+    "category": "zene",
+    "difficulty": 2,
+    "prompt": "Mit jelent a kottában az allegro tempójelzés?",
+    "answer": "Élénk, gyors tempóban",
+    "wrong": [
+      "Lassú, méltóságteljes tempóban",
+      "Mérsékelt tempóban",
+      "Fokozatosan lassulva"
+    ],
+    "explanation": "Az olasz szó eredeti jelentése „vidám”."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik német városban töltötte Johann Sebastian Bach élete utolsó 27 évét?",
+    "answer": "Lipcse",
+    "wrong": [
+      "Drezda",
+      "Berlin",
+      "Hamburg"
+    ],
+    "explanation": "A Tamás-templom kántora volt, és ma is ebben a templomban nyugszik."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik városban hunyt el Bartók Béla 1945-ben?",
+    "answer": "New York",
+    "wrong": [
+      "Bécs",
+      "London",
+      "Párizs"
+    ],
+    "explanation": "Hamvait 1988-ban hozták haza, és a budapesti Farkasréti temetőben helyezték örök nyugalomra."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Ki szerezte a Szózat zenéjét?",
+    "answer": "Egressy Béni",
+    "wrong": [
+      "Erkel Ferenc",
+      "Liszt Ferenc",
+      "Mosonyi Mihály"
+    ],
+    "explanation": "A dallammal 1843-ban pályázatot nyert; a verset Vörösmarty Mihály írta."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik Puccini-operában hangzik el a Nessun dorma című ária?",
+    "answer": "Turandot",
+    "wrong": [
+      "Tosca",
+      "Bohémélet",
+      "Pillangókisasszony"
+    ],
+    "explanation": "Luciano Pavarotti előadásában az 1990-es olaszországi futball-vb idején vált világslágerré."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik hangszercsaládba sorolják a szaxofont, noha fémből készül?",
+    "answer": "Fafúvós hangszerek",
+    "wrong": [
+      "Rézfúvós hangszerek",
+      "Ütőhangszerek",
+      "Billentyűs hangszerek"
+    ],
+    "explanation": "A hangját a klarinétéhoz hasonlóan egy rezgő nádnyelv adja; feltalálója a belga Adolphe Sax volt."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik hangszer olasz nevének szó szerinti jelentése „halk-hangos”?",
+    "answer": "Zongora",
+    "wrong": [
+      "Csembaló",
+      "Harmónium",
+      "Orgona"
+    ],
+    "explanation": "A pianoforte a csembalóval szemben a billentyű leütésének erejétől függően halkan és hangosan is szól."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Ki írta és énekelte fel elsőként az I Will Always Love You című dalt, amelyet Whitney Houston tett világslágerré?",
+    "answer": "Dolly Parton",
+    "wrong": [
+      "Tina Turner",
+      "Barbra Streisand",
+      "Diana Ross"
+    ],
+    "explanation": "Whitney Houston a Testőr című 1992-es film betétdalaként énekelte fel."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik amerikai városban áll Elvis Presley egykori otthona, a Graceland?",
+    "answer": "Memphis",
+    "wrong": [
+      "Nashville",
+      "Las Vegas",
+      "Atlanta"
+    ],
+    "explanation": "Elvis a Mississippi állambeli Tupelóban született, és 13 évesen költözött Memphisbe."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik énekesnő játszotta a címszerepet az 1996-os Evita című filmben?",
+    "answer": "Madonna",
+    "wrong": [
+      "Cher",
+      "Celine Dion",
+      "Gloria Estefan"
+    ],
+    "explanation": "A film több jelenetét Budapesten forgatták."
+  },
+  {
+    "category": "zene",
+    "difficulty": 3,
+    "prompt": "Melyik előadó színpadi alteregója volt Ziggy Stardust?",
+    "answer": "David Bowie",
+    "wrong": [
+      "Elton John",
+      "Marc Bolan",
+      "Freddie Mercury"
+    ],
+    "explanation": "A figura az 1972-es The Rise and Fall of Ziggy Stardust and the Spiders from Mars című albumon mutatkozott be."
   }
 ]
