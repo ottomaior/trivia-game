@@ -6,7 +6,7 @@ This is a couch party trivia game for 2–6 friends in the same room, inspired b
 
 The game is **Hungarian only**: all UI text, Otto's lines, and questions are in Hungarian.
 
-**Status:** Phase 0 and Phase 1 are built and tested locally (see §6). What's left for Phase 1 is deploying to Railway and a real game night.
+**Status:** Phase 0 and Phase 1 are built and tested, and the game is deployed on Railway at https://triviaserver-production-d945.up.railway.app (see README, "Deploying to Railway"). What's left for Phase 1 is a real game night.
 
 **Decisions already made in Q&A:**
 | Topic | Decision |
@@ -72,7 +72,7 @@ trivia-game/
 - **The shared protocol types are the main benefit.** Drift between the TV, phone, and server is the most common bug source in games like this, and one `shared` package makes drift a compile error.
 - **One Railway service** serves both the static web build and the socket server. That means the same origin, no CORS, one deploy, and one URL for the QR code.
 - **TV and phone as two routes of one Vite app** share the design system. Route-level code splitting keeps the phone bundle small.
-- **Railway:** one service (Dockerfile, pre-deploy `pnpm db:migrate`, health check `/healthz`) plus the Postgres plugin (`DATABASE_URL` reference variable). **It must be a single instance**, because live state is in memory.
+- **Railway:** one service (Dockerfile, pre-deploy `node apps/server/dist/release.js` for migrations and seed, health check `/healthz`, all set in the Railway dashboard) plus the Postgres plugin (`DATABASE_URL` reference variable). **It must be a single instance**, because live state is in memory.
 
 ## 3. Game state machine
 
@@ -208,7 +208,7 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 
 ## 6. Phases and milestones
 
-### Phase 0 — Skeleton and deploy (goal: the pipeline works end-to-end) — built; Railway deploy pending
+### Phase 0 — Skeleton and deploy (goal: the pipeline works end-to-end) — built; deployed to Railway 2026-09-24
 - Monorepo scaffold, shared package, Fastify + Socket.IO, Vite app with `/tv` and `/:code` routes.
 - Drizzle schema and first migration. Railway service + Postgres, Dockerfile, health check.
 - Design tokens (palette, Shrikhand + Archivo **with the `latin-ext` subset** for ő/ű), marquee border component.

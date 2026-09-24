@@ -9,6 +9,14 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 - `pnpm questions:check` validates the question file.
 - Schema change: edit `apps/server/src/db/schema.ts`, run `pnpm db:generate`, and commit the new migration. Railway applies it on deploy.
 
+## Production
+
+- Live at https://triviaserver-production-d945.up.railway.app (TV: `/tv`, health: `/healthz`).
+- Railway project `efficient-perception`: one app service `@trivia/server` plus `Postgres`, region US East. Details are in `README.md` under "Deploying to Railway".
+- **Railway deploys the `main` branch.** Every push to `main` redeploys and ends any game in progress; pushing to other branches deploys nothing. To ship work from a branch, merge it into `main`.
+- Railway does **not** read `railway.json` for this service (Railway stopped letting new services opt into config-as-code). Build, pre-deploy, and health check settings live in the Railway dashboard, so editing `railway.json` changes nothing.
+- A cloud session can't reach Railway. Deploy settings, logs, and variables need the owner's Railway dashboard or the `railway` CLI on their machine.
+
 ## Adding questions
 
 Questions live in `apps/server/seed/questions.json`. Every deploy loads any new ones into the database and skips ones already there, so adding questions means editing this file, checking it, committing, and pushing. **Do not use `pnpm gen`** (it spends Anthropic API credits); write the questions yourself in the session.

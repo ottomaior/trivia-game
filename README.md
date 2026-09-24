@@ -2,7 +2,7 @@
 
 A Hungarian couch party trivia game in the style of a retro TV quiz show. The TV runs a browser tab, and 1–6 players join on their phones with a QR code or a 4-letter room code. Playing alone works too, which is handy for testing. [PLAN.md](PLAN.md) has the full design and roadmap.
 
-**Status:** Phase 1, the playable game, is built and tested locally. It has a lobby with a VIP, a category vote, timed questions with speed scoring, a reveal, a scoreboard, and final results. Reconnecting works for both phones and the TV, and players can flag questions. Next step: deploy to Railway.
+**Status:** Phase 1, the playable game, is built and tested locally. It has a lobby with a VIP, a category vote, timed questions with speed scoring, a reveal, a scoreboard, and final results. Reconnecting works for both phones and the TV, and players can flag questions. It is deployed on Railway at https://triviaserver-production-d945.up.railway.app/tv (see [Deploying to Railway](#deploying-to-railway)). Next step: a real game night.
 
 ## Layout
 
@@ -47,11 +47,39 @@ After changing `apps/server/src/db/schema.ts`, run `pnpm db:generate` and commit
 
 ## Deploying to Railway
 
-1. Create a Railway project and add a **PostgreSQL** database.
-2. Add a service from this GitHub repo and pick the branch to deploy. It builds from the `Dockerfile` using `railway.json`.
-3. In the service's **Variables**, add `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (a reference variable).
-4. Under **Settings → Networking**, click **Generate Domain**. Railway sets `PORT` itself.
-5. Deploy. The pre-deploy step (`node apps/server/dist/release.js`) applies migrations and loads the starter questions. The deploy log should show `Migrations applied` and `Seed: 8 categories, 120 new questions`.
-6. Check `https://<domain>/healthz`: it should return `{"ok":true,…,"db":true}`. Then open `https://<domain>/tv` on the TV and scan the QR code.
+### Current deployment
 
-Keep the service at **one replica**, because live games live in server memory. A redeploy ends any game in progress, so don't deploy during game night.
+Deployed on 2026-09-24 and live at **https://triviaserver-production-d945.up.railway.app** (TV at `/tv`, phones at the root URL or by scanning the QR code).
+
+| What | Value |
+|---|---|
+| Railway project | `efficient-perception` (ID `0bf55b2d-571f-4572-b0a4-0cd0302ffd4e`), environment `production` |
+| App service | `@trivia/server` (ID `a3f8ebee-7df7-4c9f-900f-72bfce8e6550`), one replica, region US East |
+| Database | `Postgres` service with a volume, same project |
+| Source | GitHub `ottomaior/trivia-game`, branch **`main`**, auto-deploys on every push |
+| Builder | Dockerfile (`/Dockerfile`) |
+| Pre-deploy command | `node apps/server/dist/release.js` (migrations + seed) |
+| Health check | `/healthz` |
+| Variables | `DATABASE_URL` = `${{Postgres.DATABASE_URL}}`; Railway sets `PORT` (the server listens on 8080) |
+| Domain | `triviaserver-production-d945.up.railway.app` (Railway-generated) |
+
+The first deploy logged `Migrations applied` and `Seed: 8 categories, 120 new questions`, and `/healthz` returned `{"ok":true,"rooms":0,"db":true}`.
+
+**`railway.json` is not used.** Railway deprecated config-as-code, and services created after 2026-08-28 can't opt into it, so the settings in the table were entered by hand in the service's dashboard settings. Changing `railway.json` has no effect; change the dashboard instead. (Railway's replacement is Infrastructure as Code in `.railway/railway.ts`; migrating to it is optional.)
+
+**Things to know:**
+- Railway's GitHub import detects the pnpm workspace and offers one service per package (`@trivia/web`, `@trivia/server`) with `pnpm … dev` start commands. That's wrong for this app: it runs as one service built from the root Dockerfile. The `@trivia/web` service was discarded, and the build/start/watch overrides on `@trivia/server` were removed.
+- The owner's machine has the `railway` CLI logged in. From the repo folder, `railway link --project 0bf55b2d-571f-4572-b0a4-0cd0302ffd4e` then `railway logs --service a3f8ebee-7df7-4c9f-900f-72bfce8e6550` shows logs, and `railway deployment list --service …` shows deploy status.
+- Possible follow-ups: move both services to EU West for lower latency from Hungary (US East adds about 100 ms per round trip, which latency compensation absorbs), rename the project/service, add a short custom domain for the QR code.
+
+### Setting it up from scratch
+
+1. Create a Railway project and add a **PostgreSQL** database.
+2. Add a service from this GitHub repo. If Railway offers one service per workspace package, keep only one and remove its build command, start command, and watch path overrides.
+3. In the service's **Settings**: branch `main`, builder **Dockerfile**, pre-deploy command `node apps/server/dist/release.js`, health check path `/healthz`.
+4. In the service's **Variables**, add `DATABASE_URL` = `${{Postgres.DATABASE_URL}}` (a reference variable).
+5. Under **Settings → Networking**, click **Generate Domain**. Railway sets `PORT` itself.
+6. Deploy. The pre-deploy step applies migrations and loads the starter questions. The deploy log should show `Migrations applied` and `Seed: 8 categories, N new questions`.
+7. Check `https://<domain>/healthz`: it should return `{"ok":true,…,"db":true}`. Then open `https://<domain>/tv` on the TV and scan the QR code.
+
+Keep the service at **one replica**, because live games live in server memory. A redeploy ends any game in progress, so don't push to `main` during game night.
