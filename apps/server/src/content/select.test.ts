@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { seededRng } from '../testing.ts';
 import { loadSeedFile } from './seed.ts';
 import { chooseCategories, shuffleChoices } from './select.ts';
-import { normalizeText, questionHash } from './normalize.ts';
+import { normalizeText, questionHash, similarity } from './normalize.ts';
 
 const stat = (id: number, total: number, unseen: number) => ({ id, slug: `c${id}`, name: `C${id}`, total, unseen });
 
@@ -34,6 +34,11 @@ describe('normalization', () => {
   it('ignores case, accents and punctuation', () => {
     expect(normalizeText('  Hány  ország? ')).toBe('hany orszag');
     expect(questionHash('Mi a fővárosa?', 'Budapest')).toBe(questionHash('mi a FOVAROSA', 'budapest!'));
+  });
+
+  it('scores near-identical prompts as similar and unrelated ones as not', () => {
+    expect(similarity('Ki írta a Himnusz szövegét?', 'Ki írta a magyar Himnusz szövegét?')).toBeGreaterThan(0.6);
+    expect(similarity('Ki írta a Himnusz szövegét?', 'Melyik a legmélyebb tó?')).toBeLessThan(0.2);
   });
 });
 

@@ -41,14 +41,8 @@ After changing `apps/server/src/db/schema.ts`, run `pnpm db:generate` and commit
 ## Questions
 
 - **Starter set:** `apps/server/seed/questions.json` has 120 hand-written questions. Every deploy loads any new ones and skips ones already in the database.
-- **Generate more with Claude (Haiku):** each question is generated, then answered *blind* by a second call. Only questions where the blind answer matches with high confidence are kept, and near-duplicates are skipped.
-  ```sh
-  export ANTHROPIC_API_KEY=…
-  export DATABASE_URL=…   # for Railway, the Postgres service's DATABASE_PUBLIC_URL
-  pnpm gen --category all --difficulty all --count 8 --dry-run   # look first; nothing is saved
-  pnpm gen --category all --difficulty all --count 8             # 8 categories × 3 levels × up to 8
-  ```
-  Categories: `tortenelem, foldrajz, tudomany, film, zene, sport, gasztro, magyarorszag`. Add `--verify-model <id>` to use a stronger model for the check.
+- **Adding more:** open Claude Code in the repo and ask for them (for example "generate 40 new questions for zene and sport"). `CLAUDE.md` tells it the rules, the format, how to run `pnpm questions:check`, and how to do a blind check with a sub-agent before you commit and push. This runs on your Claude subscription, not API credits.
+- `pnpm gen` (optional, uses Anthropic **API credits**): automated bulk generation with Claude Haiku plus blind verification, writing straight to the database. Needs `ANTHROPIC_API_KEY` and `DATABASE_URL`.
 - **Flags from players:** a question flagged in 2 different games is retired automatically. `pnpm flagged` lists flagged questions, `pnpm flagged --retired` lists retired ones, and `pnpm flagged --retire <id>` or `--restore <id>` changes one by hand.
 
 ## Deploying to Railway

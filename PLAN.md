@@ -194,7 +194,9 @@ generation_batches    (id uuid pk, model, prompt_version, category_id, difficult
 
 **Selection query:** `status='active' AND category=$1 AND kind='mc'`, ordered unseen-by-this-household first, then closest difficulty, then least recently seen (random among ties), skipping questions already asked this game. **Flags:** a question retires automatically when flags come from **2 different matches** (the threshold is a constant). The `flagged.ts` script lists flagged and retired questions and can retire or restore one by hand.
 
-**Content pipeline** (`pnpm gen --category tortenelem --difficulty 2 --count 10`):
+**Content workflow (chosen):** questions are written in Claude Code sessions on the owner's subscription (not API credits), appended to `apps/server/seed/questions.json`, checked with `pnpm questions:check` plus a blind check by a sub-agent that never sees the answer key, then committed and deployed. `CLAUDE.md` has the rules and steps.
+
+**Optional API pipeline** (`pnpm gen --category tortenelem --difficulty 2 --count 10`, uses API credits):
 1. **Generate:** Haiku writes the questions natively in Hungarian, mixing Hungarian and international topics. Output is structured JSON validated by zod, and each call includes existing prompts from that category to steer away from duplicates.
 2. **Verify:** a separate call answers each question *blind* (without seeing the answer key) and rates ambiguity and confidence. The question is kept only if the blind answer matches and confidence is at or above a threshold.
 3. **Dedupe:** exact `norm_hash` matches, then `pg_trgm` similarity above 0.6 within the same category.

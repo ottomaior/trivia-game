@@ -1,0 +1,54 @@
+# Otto's Quiz Show
+
+Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm monorepo: `packages/shared` (protocol, rules, all UI text), `apps/server` (Fastify + Socket.IO, in-memory game engine, Postgres via Drizzle), `apps/web` (React + Vite). Design and roadmap are in `PLAN.md`; setup and deploy steps are in `README.md`.
+
+## Commands
+
+- `pnpm dev` runs the server on :3000 and Vite on :5173 (TV at http://localhost:5173/tv).
+- `pnpm typecheck`, `pnpm test`, `pnpm build && pnpm e2e`
+- `pnpm questions:check` validates the question file.
+- Schema change: edit `apps/server/src/db/schema.ts`, run `pnpm db:generate`, and commit the new migration. Railway applies it on deploy.
+
+## Adding questions
+
+Questions live in `apps/server/seed/questions.json`. Every deploy loads any new ones into the database and skips ones already there, so adding questions means editing this file, checking it, committing, and pushing. **Do not use `pnpm gen`** (it spends Anthropic API credits); write the questions yourself in the session.
+
+### Format
+
+Append objects to the array:
+
+```json
+{
+  "category": "zene",
+  "difficulty": 2,
+  "prompt": "Melyik országból származik az ABBA?",
+  "answer": "Svédország",
+  "wrong": ["Norvégia", "Dánia", "Finnország"],
+  "explanation": "A négy tag Stockholmban alakította meg az együttest 1972-ben."
+}
+```
+
+- `category` is one of the slugs in `apps/server/seed/categories.json`: `tortenelem`, `foldrajz`, `tudomany`, `film`, `zene`, `sport`, `gasztro`, `magyarorszag`.
+- `difficulty`: 1 = most adults know it; 2 = an informed, curious adult knows it; 3 = only people interested in the topic know it.
+- `answer` is the correct answer. `wrong` has exactly 3 wrong answers. The game shuffles the order.
+- `explanation` is optional: one short sentence shown on the TV at the reveal.
+
+### Content rules
+
+- Natural Hungarian that doesn't read like a translation, with correct spelling (ő, ű).
+- Exactly one correct answer, which must be an undisputed, easily checkable fact.
+- No facts that change over time: records, current office holders, populations, "the latest" anything. If unavoidable, pin a date ("2024 végéig").
+- No estimates, opinions, or "melyik NEM…" questions.
+- Wrong answers are plausible, the same kind of thing as the answer, similar in length, and none of them is partly right.
+- The question is at most 200 characters and each answer at most 60. The answer never appears in the question.
+- Mix Hungarian and international topics, and eras and question styles. Family-friendly.
+- Don't repeat a fact already in the file (search it first).
+
+### Workflow
+
+1. Write the new questions and append them to `apps/server/seed/questions.json`.
+2. Run `pnpm questions:check` and fix every error and warning.
+3. **Blind check:** start a sub-agent (Agent tool) that sees only the prompts and the four choices in shuffled order, labelled A–D, never the answer key. Ask it to answer each one, with a confidence from 0 to 1 and a note on anything ambiguous, outdated, or misspelled. Remove or fix every question where its choice differs from the key, its confidence is below 0.85, or it raised a concern. Report what was dropped and why.
+4. Run `pnpm test` (the seed file has its own test), then commit the questions on their own with a message like `Add 40 questions (zene, sport)` and push.
+
+The game prefers questions a TV (household) hasn't seen, so a steady supply of new questions per category keeps repeat games fresh. Players can flag bad questions; `pnpm flagged` (needs `DATABASE_URL`) lists them, and `pnpm flagged --retire <id>` removes one. Fix or delete a flagged question in the JSON as well, or it will stay retired in the database but come back on a fresh database.

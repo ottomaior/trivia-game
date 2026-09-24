@@ -11,7 +11,8 @@
     "db:migrate": "tsx src/release.ts --no-seed",
     "db:seed": "tsx src/release.ts",
     "gen": "tsx scripts/gen-questions.ts",
-    "flagged": "tsx scripts/flagged.ts"
+    "flagged": "tsx scripts/flagged.ts",
+    "questions:check": "tsx scripts/check-questions.ts"
   },
   "dependencies": {
     "@fastify/static": "^10.1.4",
