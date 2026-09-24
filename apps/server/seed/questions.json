@@ -7998,5 +7998,4145 @@
       "Limpopo"
     ],
     "explanation": "Zambia és Zimbabwe határán fekszik, helyi neve azt jelenti: „mennydörgő füst”."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik a Naprendszer legnagyobb bolygója?",
+    "answer": "Jupiter",
+    "wrong": [
+      "Szaturnusz",
+      "Neptunusz",
+      "Uránusz"
+    ],
+    "explanation": "A Jupiter belsejébe több mint ezer Föld méretű bolygó férne bele."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Ki volt az első ember a világűrben?",
+    "answer": "Jurij Gagarin",
+    "wrong": [
+      "Alekszej Leonov",
+      "Neil Armstrong",
+      "John Glenn"
+    ],
+    "explanation": "A Vosztok–1 1961. április 12-én egyetlen kört tett meg a Föld körül, a repülés 108 percig tartott."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Ki volt az első magyar űrhajós?",
+    "answer": "Farkas Bertalan",
+    "wrong": [
+      "Magyari Béla",
+      "Kapu Tibor",
+      "Simonyi Károly"
+    ],
+    "explanation": "1980-ban egy szovjet Szojuz űrhajóval repült, és közel nyolc napot töltött a világűrben."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik égitest veszítette el 2006-ban a bolygóstátuszát, és lett belőle törpebolygó?",
+    "answer": "Plútó",
+    "wrong": [
+      "Merkúr",
+      "Neptunusz",
+      "Uránusz"
+    ],
+    "explanation": "A döntést a Nemzetközi Csillagászati Unió prágai közgyűlésén hozták meg."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Ki mondta: „Kis lépés egy embernek, de hatalmas ugrás az emberiségnek”?",
+    "answer": "Neil Armstrong",
+    "wrong": [
+      "Buzz Aldrin",
+      "Jurij Gagarin",
+      "John Glenn"
+    ],
+    "explanation": "A holdséta kezdetét világszerte több mint félmilliárd ember nézte élőben a televízióban."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Mit okoz a Földön elsősorban a Hold vonzása?",
+    "answer": "Az árapályt",
+    "wrong": [
+      "A szeleket",
+      "Az évszakokat",
+      "A földrengéseket"
+    ],
+    "explanation": "A Nap is kelt árapályt, de a Hold hatása nagyjából kétszer erősebb."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Mit mér a fényév?",
+    "answer": "Távolságot",
+    "wrong": [
+      "Időt",
+      "Sebességet",
+      "Fényerősséget"
+    ],
+    "explanation": "Egy fényév az a táv, amelyet a fény egy év alatt megtesz: nagyjából 9,5 billió kilométer."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik bolygót hívja a magyar népnyelv Esthajnalcsillagnak?",
+    "answer": "Vénusz",
+    "wrong": [
+      "Mars",
+      "Jupiter",
+      "Merkúr"
+    ],
+    "explanation": "Hajnalban és alkonyatkor ragyog: a Nap és a Hold után ez az égbolt legfényesebb égiteste."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik a Naprendszer második legnagyobb bolygója, amely látványos gyűrűiről híres?",
+    "answer": "Szaturnusz",
+    "wrong": [
+      "Uránusz",
+      "Neptunusz",
+      "Mars"
+    ],
+    "explanation": "Átlagos sűrűsége kisebb a vízénél, így egy elég nagy kádban elméletben úszna."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Mi történik napfogyatkozáskor?",
+    "answer": "A Hold a Nap és a Föld közé kerül",
+    "wrong": [
+      "A Föld a Nap és a Hold közé kerül",
+      "A Vénusz a Nap és a Föld közé kerül",
+      "A Nap felszínét napfoltok borítják be"
+    ],
+    "explanation": "Magyarországon 1999. augusztus 11-én volt teljes napfogyatkozás, a Balatonnál is sokan figyelték."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Nagyjából mennyi idő alatt ér el a Nap fénye a Földre?",
+    "answer": "8 perc",
+    "wrong": [
+      "8 másodperc",
+      "8 óra",
+      "8 nap"
+    ],
+    "explanation": "A Hold fénye ezzel szemben alig több mint egy másodperc alatt ér ide."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik elem teszi ki a Nap tömegének legnagyobb részét?",
+    "answer": "Hidrogén",
+    "wrong": [
+      "Hélium",
+      "Oxigén",
+      "Nitrogén"
+    ],
+    "explanation": "A Nap magjában másodpercenként több százmillió tonna hidrogén alakul át héliummá."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Melyik híres űrtávcsövet állította Föld körüli pályára 1990-ben a Discovery űrrepülőgép?",
+    "answer": "Hubble",
+    "wrong": [
+      "James Webb",
+      "Kepler",
+      "Spitzer"
+    ],
+    "explanation": "Pályára állítása után kiderült, hogy a főtükre hibás, ezt 1993-ban űrhajósok javították ki."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Hogy hívták a szovjet kutyát, amely első élőlényként keringett a Föld körül?",
+    "answer": "Lajka",
+    "wrong": [
+      "Belka",
+      "Sztrelka",
+      "Muska"
+    ],
+    "explanation": "Az első kutyák, amelyek élve tértek vissza a Föld körüli pályáról, Belka és Sztrelka voltak 1960-ban."
+  },
+  {
+    "category": "ur",
+    "difficulty": 1,
+    "prompt": "Hány fényes csillag rajzolja ki az égen a Göncölszekér jól ismert alakját?",
+    "answer": "7",
+    "wrong": [
+      "5",
+      "6",
+      "9"
+    ],
+    "explanation": "A Göncölszekér nem önálló csillagkép, hanem a Nagy Medve csillagkép legfeltűnőbb része."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik bolygó felszínén a legmagasabb az átlaghőmérséklet a Naprendszerben?",
+    "answer": "Vénusz",
+    "wrong": [
+      "Merkúr",
+      "Mars",
+      "Föld"
+    ],
+    "explanation": "Sűrű szén-dioxid-légköre miatt felszínén 460 °C körül van, pedig a Merkúr közelebb kering a Naphoz."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik bolygón található a Nagy Vörös Folt nevű óriási vihar?",
+    "answer": "Jupiter",
+    "wrong": [
+      "Szaturnusz",
+      "Neptunusz",
+      "Mars"
+    ],
+    "explanation": "A vihart a csillagászok legalább az 1830-as évek óta folyamatosan megfigyelik."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik égitesten magasodik az Olympus Mons, a Naprendszer egyik legmagasabb vulkánja?",
+    "answer": "Mars",
+    "wrong": [
+      "Vénusz",
+      "Merkúr",
+      "Hold"
+    ],
+    "explanation": "A kialudt pajzsvulkán több mint kétszer olyan magas, mint a Mount Everest."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "A Naprendszer nyolc bolygója közül melyik kering a legtávolabb a Naptól?",
+    "answer": "Neptunusz",
+    "wrong": [
+      "Uránusz",
+      "Szaturnusz",
+      "Jupiter"
+    ],
+    "explanation": "A helyét matematikai számítások jelezték előre, és ezek alapján találták meg távcsővel 1846-ban."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik az éjszakai égbolt legfényesebb csillaga?",
+    "answer": "Szíriusz",
+    "wrong": [
+      "Sarkcsillag",
+      "Vega",
+      "Betelgeuze"
+    ],
+    "explanation": "A Nagy Kutya csillagkép tagja, ezért Kutyacsillagnak is nevezik."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik csillagkép legfényesebb csillaga a Sarkcsillag?",
+    "answer": "Kis Medve",
+    "wrong": [
+      "Nagy Medve",
+      "Kassziopeia",
+      "Sárkány"
+    ],
+    "explanation": "Azért látszik szinte mozdulatlannak, mert majdnem pontosan az északi égi pólus irányában áll."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik csillagkép közepén látható a három fényes csillagból álló sor, amelyet a csillagkép „övének” hívnak?",
+    "answer": "Orion",
+    "wrong": [
+      "Skorpió",
+      "Bika",
+      "Ikrek"
+    ],
+    "explanation": "A csillagkép két legfényesebb csillaga a vöröses Betelgeuze és a kékesfehér Rigel."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Mi a Tejút régi magyar népi neve, amelyhez Csaba királyfi legendája kapcsolódik?",
+    "answer": "Hadak útja",
+    "wrong": [
+      "Fiastyúk",
+      "Göncölszekér",
+      "Kaszáscsillag"
+    ],
+    "explanation": "A monda szerint Csaba királyfi és serege ezen a csillagúton vágtatott vissza a bajba jutott székelyek megsegítésére."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Mi az oka annak, hogy a Földről mindig a Hold ugyanazon oldalát látjuk?",
+    "answer": "Tengelyforgása és keringése ugyanannyi ideig tart",
+    "wrong": [
+      "Egyáltalán nem forog a tengelye körül",
+      "A túlsó oldalát a Föld árnyéka takarja",
+      "A túlsó oldalát sosem éri napfény"
+    ],
+    "explanation": "A túlsó oldalát először 1959-ben a szovjet Luna–3 szonda fényképezte le."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Nagyjából mennyi idő alatt kerüli meg a Földet a Nemzetközi Űrállomás?",
+    "answer": "Másfél óra",
+    "wrong": [
+      "Fél óra",
+      "Hat óra",
+      "Egy nap"
+    ],
+    "explanation": "Emiatt az űrhajósok egy nap alatt nagyjából tizenhat napfelkeltét és napnyugtát láthatnak."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Mit küldött a világűrbe tesztrakományként a SpaceX 2018-ban, a Falcon Heavy rakéta első repülésén?",
+    "answer": "Egy Tesla sportautót",
+    "wrong": [
+      "Egy betontömböt",
+      "Egy víztartályt",
+      "Egy acélkonténert"
+    ],
+    "explanation": "A piros Roadster volánjánál egy űrruhás bábu, Starman ült, a rendszer pedig David Bowie Space Oddity című dalát játszotta."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Ki volt az első nő a világűrben?",
+    "answer": "Valentyina Tyereskova",
+    "wrong": [
+      "Szvetlana Szavickaja",
+      "Sally Ride",
+      "Eileen Collins"
+    ],
+    "explanation": "1963-ban a Vosztok–6 fedélzetén közel három napot töltött a Föld körül."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Nagyjából hány évente tér vissza a Nap közelébe a Halley-üstökös?",
+    "answer": "76 évente",
+    "wrong": [
+      "33 évente",
+      "52 évente",
+      "112 évente"
+    ],
+    "explanation": "Legutóbb 1986-ban járt a Nap közelében, legközelebb 2061-ben tér vissza."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik a hozzánk legközelebbi nagy spirálgalaxis a Tejútrendszeren kívül?",
+    "answer": "Androméda-galaxis",
+    "wrong": [
+      "Háromszög-galaxis",
+      "Örvény-galaxis",
+      "Sombrero-galaxis"
+    ],
+    "explanation": "Sötét, tiszta égbolt alatt szabad szemmel is látható, pedig mintegy 2,5 millió fényévre van."
+  },
+  {
+    "category": "ur",
+    "difficulty": 2,
+    "prompt": "Melyik küldetés során hangzott el a rádióban a később szállóigévé vált „Houston, we've had a problem” mondat?",
+    "answer": "Apollo–13",
+    "wrong": [
+      "Apollo–11",
+      "Apollo–12",
+      "Apollo–8"
+    ],
+    "explanation": "Az 1995-ös filmben „Houston, we have a problem” formában hangzik el, így lett világhírű."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a Mars két holdját?",
+    "answer": "Phobosz és Deimosz",
+    "wrong": [
+      "Io és Európa",
+      "Titán és Rhea",
+      "Triton és Nereida"
+    ],
+    "explanation": "A nevek jelentése görögül félelem és rettegés: így hívták Arész hadisten két fiát."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Az Apollo–11 melyik űrhajósa maradt a Hold körüli pályán, amíg társai leszálltak a felszínre?",
+    "answer": "Michael Collins",
+    "wrong": [
+      "Buzz Aldrin",
+      "Jim Lovell",
+      "Pete Conrad"
+    ],
+    "explanation": "Amikor a Hold túlsó oldala mögött járt, rádiókapcsolat nélkül, teljesen egyedül keringett."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik szovjet űrhajós volt Farkas Bertalan parancsnoka az 1980-as űrrepülésen?",
+    "answer": "Valerij Kubaszov",
+    "wrong": [
+      "Alekszej Leonov",
+      "Vlagyimir Dzsanibekov",
+      "Jurij Romanenko"
+    ],
+    "explanation": "Kubaszov korábban az 1975-ös szovjet–amerikai Szojuz–Apollo közös repülésen is részt vett."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik magyar csillagász alapított 1871-ben csillagvizsgálót a saját ógyallai birtokán?",
+    "answer": "Konkoly-Thege Miklós",
+    "wrong": [
+      "Hell Miksa",
+      "Zach János Ferenc",
+      "Fényi Gyula"
+    ],
+    "explanation": "Az ógyallai obszervatóriumot 1899-ben az államnak adományozta."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik magyar fizikus csapata fogta 1946-ban a Holdról visszavert radarjelet?",
+    "answer": "Bay Zoltán",
+    "wrong": [
+      "Kármán Tódor",
+      "Szilárd Leó",
+      "Bródy Imre"
+    ],
+    "explanation": "Szinte egy időben, tőle függetlenül az amerikai hadsereg is fogott visszavert radarjelet a Holdról."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik csillaghalmazt hívja a magyar népnyelv Fiastyúknak?",
+    "answer": "Plejádok",
+    "wrong": [
+      "Hüadok",
+      "Jászol-halmaz",
+      "Kettős halmaz"
+    ],
+    "explanation": "Szabad szemmel hat-hét csillaga látszik, de valójában ezernél is több csillagból áll."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Elsősorban milyen tartományban figyeli az eget a James Webb-űrtávcső?",
+    "answer": "Infravörös",
+    "wrong": [
+      "Röntgen",
+      "Ultraibolya",
+      "Gamma"
+    ],
+    "explanation": "A 2021 karácsonyán felbocsátott távcső mintegy 1,5 millió kilométerre dolgozik a Földtől."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a NASA autó méretű marsjáróját, amely 2012-ben szállt le a Gale-kráterben?",
+    "answer": "Curiosity",
+    "wrong": [
+      "Perseverance",
+      "Opportunity",
+      "Spirit"
+    ],
+    "explanation": "A nevet egy kansasi hatodikos kislány, Clara Ma javasolta egy iskolásoknak kiírt névadó pályázaton."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik űrszonda lett 2012-ben az első ember alkotta tárgy, amely kijutott a csillagközi térbe?",
+    "answer": "Voyager–1",
+    "wrong": [
+      "Voyager–2",
+      "Pioneer–10",
+      "New Horizons"
+    ],
+    "explanation": "Fedélzetén egy aranyozott hanglemez viszi a Föld hangjait, zenéit és 55 nyelvű üdvözletet."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik európai űrszonda vitte magával a Philae leszállóegységet, amely 2014-ben elsőként ért le egy üstökösre?",
+    "answer": "Rosetta",
+    "wrong": [
+      "Giotto",
+      "Mars Express",
+      "Venus Express"
+    ],
+    "explanation": "A Philae fejlesztésében magyar kutatók és mérnökök is részt vettek."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik a Naprendszer legnagyobb holdja?",
+    "answer": "Ganümédész",
+    "wrong": [
+      "Titán",
+      "Kallisztó",
+      "Io"
+    ],
+    "explanation": "A Jupiter holdja nagyobb átmérőjű a Merkúr bolygónál, tömege viszont kevesebb mint fele annak."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik bolygó tengelye dől meg annyira, hogy szinte az oldalán fekve kering a Nap körül?",
+    "answer": "Uránusz",
+    "wrong": [
+      "Neptunusz",
+      "Szaturnusz",
+      "Vénusz"
+    ],
+    "explanation": "Emiatt mindkét pólusán nagyjából 42 évig tart a nappal, majd ugyanennyi ideig az éjszaka."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Ki hajtotta végre 1965-ben a történelem első űrsétáját?",
+    "answer": "Alekszej Leonov",
+    "wrong": [
+      "Jurij Gagarin",
+      "Ed White",
+      "German Tyitov"
+    ],
+    "explanation": "Szkafandere annyira felfúvódott, hogy csak a benne lévő nyomás csökkentésével tudott visszajutni a zsilipbe."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Hány ember sétált a Hold felszínén az Apollo-program során?",
+    "answer": "12",
+    "wrong": [
+      "8",
+      "10",
+      "16"
+    ],
+    "explanation": "Hat sikeres holdra szállás volt, mindegyiken két űrhajós lépett a felszínre, a harmadik a pályán várt."
+  },
+  {
+    "category": "ur",
+    "difficulty": 3,
+    "prompt": "Melyik évben kezdték el a Föld körüli pályán összeszerelni a Nemzetközi Űrállomást?",
+    "answer": "1998",
+    "wrong": [
+      "1992",
+      "1995",
+      "2001"
+    ],
+    "explanation": "Az első modul az orosz Zarja volt, az első állandó legénység 2000 novemberében költözött be."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Ki tervezte a barcelonai Sagrada Famíliát?",
+    "answer": "Antoni Gaudí",
+    "wrong": [
+      "Santiago Calatrava",
+      "Le Corbusier",
+      "Ricardo Bofill"
+    ],
+    "explanation": "Gaudí 1926-ban egy villamosbaleset után hunyt el, és a templom kriptájában nyugszik."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Milyen színű a San Franciscó-i Golden Gate híd?",
+    "answer": "Narancsvörös",
+    "wrong": [
+      "Aranysárga",
+      "Ezüstszürke",
+      "Sötétkék"
+    ],
+    "explanation": "A festék neve „nemzetközi narancs”, az „arany kapu” név pedig a tengerszorosé, amely fölött a híd átível."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik országban található Machu Picchu, az inkák hegyek közé épült városa?",
+    "answer": "Peru",
+    "wrong": [
+      "Bolívia",
+      "Chile",
+      "Ecuador"
+    ],
+    "explanation": "A romokat 1911-ben Hiram Bingham amerikai kutató tette világhírűvé."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik római nevezetességbe dobnak a turisták pénzérmét, hogy egyszer biztosan visszatérjenek a városba?",
+    "answer": "Trevi-kút",
+    "wrong": [
+      "Négy folyó kútja",
+      "Tritón-kút",
+      "Barcaccia-kút"
+    ],
+    "explanation": "Az összegyűlt érméket rendszeresen kiemelik, és jótékony célra fordítják."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik New York-i téren ereszkedik le szilveszter éjjel a híres kivilágított gömb?",
+    "answer": "Times Square",
+    "wrong": [
+      "Union Square",
+      "Washington Square",
+      "Madison Square"
+    ],
+    "explanation": "A tér a New York Times napilapról kapta a nevét, amelynek egykor itt állt a székháza."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Milyen formájú az az üvegépület, amely a párizsi Louvre főbejáratául szolgál?",
+    "answer": "Piramis",
+    "wrong": [
+      "Kupola",
+      "Kocka",
+      "Gömb"
+    ],
+    "explanation": "Az üvegpiramist a kínai származású amerikai építész, I. M. Pei tervezte, és 1989-ben adták át."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik görög sziget híres a fehér házairól, a kék kupolás templomairól és a vulkáni kalderára néző naplementéiről?",
+    "answer": "Szantorini",
+    "wrong": [
+      "Mükonosz",
+      "Kréta",
+      "Rodosz"
+    ],
+    "explanation": "A sziget mai félhold alakját nagyrészt egy bronzkori vulkánkitörés formálta."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik horvát város óvárosát öleli körbe egy közel kétkilométeres, végig bejárható középkori városfal?",
+    "answer": "Dubrovnik",
+    "wrong": [
+      "Split",
+      "Zadar",
+      "Pula"
+    ],
+    "explanation": "Az óváros 1979 óta az UNESCO világörökség része."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik ország ajándékozta a Szabadság-szobrot az Egyesült Államoknak?",
+    "answer": "Franciaország",
+    "wrong": [
+      "Egyesült Királyság",
+      "Hollandia",
+      "Spanyolország"
+    ],
+    "explanation": "A szobor belső vasvázát Gustave Eiffel, az Eiffel-torony tervezője alkotta meg."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Hány amerikai elnök arcát faragták ki a dél-dakotai Mount Rushmore sziklafalából?",
+    "answer": "4",
+    "wrong": [
+      "3",
+      "5",
+      "6"
+    ],
+    "explanation": "Washington, Jefferson, Theodore Roosevelt és Lincoln arca egyenként mintegy 18 méter magas."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik városban áll a Manneken Pis, a pisilő kisfiú apró bronzszobra?",
+    "answer": "Brüsszel",
+    "wrong": [
+      "Amszterdam",
+      "Antwerpen",
+      "Brugge"
+    ],
+    "explanation": "A szobornak több mint ezer jelmeze van, ünnepnapokon ezekbe öltöztetik be."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik város kikötőjében ül egy sziklán a híres Kis hableány-szobor?",
+    "answer": "Koppenhága",
+    "wrong": [
+      "Oslo",
+      "Stockholm",
+      "Helsinki"
+    ],
+    "explanation": "A szobrot Hans Christian Andersen meséje ihlette, és 1913 óta áll a helyén."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Kinek a nevét viseli 2011 óta a budapesti Ferihegyi repülőtér?",
+    "answer": "Liszt Ferenc",
+    "wrong": [
+      "Bartók Béla",
+      "Kodály Zoltán",
+      "Puskás Ferenc"
+    ],
+    "explanation": "Az átnevezéssel a zeneszerző születésének 200. évfordulójára emlékeztek."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik ország pénzneme a zloty?",
+    "answer": "Lengyelország",
+    "wrong": [
+      "Csehország",
+      "Bulgária",
+      "Románia"
+    ],
+    "explanation": "A név a lengyel „arany” szóból ered."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 1,
+    "prompt": "Melyik városban áll a vitorlákra emlékeztető tetejű, világhírű operaház?",
+    "answer": "Sydney",
+    "wrong": [
+      "Melbourne",
+      "Auckland",
+      "Fokváros"
+    ],
+    "explanation": "Tervezője, a dán Jørn Utzon sosem látta a kész épületet."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik római nevezetesség eredeti, ókori neve Amphitheatrum Flavium?",
+    "answer": "Colosseum",
+    "wrong": [
+      "Pantheon",
+      "Circus Maximus",
+      "Angyalvár"
+    ],
+    "explanation": "Mai nevét valószínűleg a mellette állt óriási Néró-szoborról, a Colossusról kapta."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik országban található Petra, a rózsaszínes sziklába vájt ókori város?",
+    "answer": "Jordánia",
+    "wrong": [
+      "Egyiptom",
+      "Izrael",
+      "Libanon"
+    ],
+    "explanation": "Kincsesháznak nevezett homlokzata az Indiana Jones és az utolsó kereszteslovag fináléjában is feltűnik."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik indiai városban áll a Tádzs Mahal?",
+    "answer": "Agra",
+    "wrong": [
+      "Delhi",
+      "Mumbai",
+      "Dzsaipur"
+    ],
+    "explanation": "Sáh Dzsahán mogul uralkodó építtette elhunyt felesége, Mumtáz Mahal síremlékéül."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik barcelonai sétány vezet a Katalónia tértől egészen a kikötőig, a Kolumbusz-emlékműig?",
+    "answer": "La Rambla",
+    "wrong": [
+      "Passeig de Gràcia",
+      "Avinguda Diagonal",
+      "Via Laietana"
+    ],
+    "explanation": "Félúton nyílik belőle a Boqueria, a város híres fedett piaca."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik országban áll Neuschwanstein mesebeli kastélya, amely a Disneyland Csipkerózsika-kastélyát is ihlette?",
+    "answer": "Németország",
+    "wrong": [
+      "Ausztria",
+      "Svájc",
+      "Csehország"
+    ],
+    "explanation": "II. Lajos bajor király építtette, de a kastély elkészültét már nem érte meg."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik az athéni Akropolisz legnagyobb temploma, amelyet Athéné istennő tiszteletére emeltek?",
+    "answer": "Parthenón",
+    "wrong": [
+      "Pantheon",
+      "Zeusz-templom",
+      "Artemisz-templom"
+    ],
+    "explanation": "Egykor egy mintegy 12 méteres, arannyal és elefántcsonttal borított Athéné-szobor állt benne."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Az év melyik napján kel fel a nap Stonehenge fő tengelyének irányában?",
+    "answer": "A nyári napfordulón",
+    "wrong": [
+      "A téli napfordulón",
+      "A tavaszi napéjegyenlőségen",
+      "Az őszi napéjegyenlőségen"
+    ],
+    "explanation": "Ilyenkor ezrek gyűlnek össze a kövek között, hogy együtt nézzék a napfelkeltét."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Mi volt Horvátország pénzneme, mielőtt 2023-ban bevezette az eurót?",
+    "answer": "Kuna",
+    "wrong": [
+      "Tolár",
+      "Lek",
+      "Leu"
+    ],
+    "explanation": "A kuna horvátul nyestet jelent: a középkorban nyestprémmel is fizettek."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik pénznem hivatalos rövidítése a CHF?",
+    "answer": "Svájci frank",
+    "wrong": [
+      "Chilei peso",
+      "Kínai jüan",
+      "Cseh korona"
+    ],
+    "explanation": "A CH a Svájci Államszövetség latin nevéből, a Confoederatio Helveticából ered."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik ország apró falujáról kapta a nevét a schengeni övezet?",
+    "answer": "Luxemburg",
+    "wrong": [
+      "Belgium",
+      "Hollandia",
+      "Svájc"
+    ],
+    "explanation": "Az egyezményt 1985-ben egy hajón írták alá a Mosel folyón, ahol Luxemburg, Németország és Franciaország határa találkozik."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik ázsiai országban közlekednek az autók az út bal oldalán, akárcsak Nagy-Britanniában?",
+    "answer": "Japán",
+    "wrong": [
+      "Dél-Korea",
+      "Vietnám",
+      "Fülöp-szigetek"
+    ],
+    "explanation": "Japán mellett például Thaiföld, India és Ausztrália is a bal oldali közlekedést követi."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik város repülőterének hárombetűs kódja a VIE?",
+    "answer": "Bécs",
+    "wrong": [
+      "Vilnius",
+      "Velence",
+      "Verona"
+    ],
+    "explanation": "A kód a város angol nevéből, a Viennából származik."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Mi 2012 óta a hivatalos neve annak a londoni óratoronynak, amelyet mindenki csak Big Benként emleget?",
+    "answer": "Erzsébet-torony",
+    "wrong": [
+      "Viktória-torony",
+      "Windsor-torony",
+      "Westminster-torony"
+    ],
+    "explanation": "A Big Ben valójában a toronyban lógó legnagyobb harang beceneve."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik folyó fölött ível át a prágai Károly híd?",
+    "answer": "Moldva",
+    "wrong": [
+      "Elba",
+      "Morva",
+      "Odera"
+    ],
+    "explanation": "Építését 1357-ben kezdték IV. Károly császár idején, róla kapta a nevét is."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 2,
+    "prompt": "Melyik római császár palotája köré nőtt ki Split óvárosa?",
+    "answer": "Diocletianus",
+    "wrong": [
+      "Hadrianus",
+      "Traianus",
+      "Nero"
+    ],
+    "explanation": "A palota pincéiben forgatták a Trónok harca sárkányos jeleneteit is."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik ország zászlaján látható Angkor Vat templomának sziluettje?",
+    "answer": "Kambodzsa",
+    "wrong": [
+      "Thaiföld",
+      "Laosz",
+      "Mianmar"
+    ],
+    "explanation": "A 12. századi templomegyüttest eredetileg Visnu isten tiszteletére emelték."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik osztrák tóparti falucskának építették fel a pontos másolatát Kínában?",
+    "answer": "Hallstatt",
+    "wrong": [
+      "Zell am See",
+      "St. Wolfgang",
+      "Gmunden"
+    ],
+    "explanation": "A kínai másolatot 2012-ben adták át Kuangtung tartományban."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Eredetileg hány évre szólt az Eiffel-torony engedélye, mielőtt le kellett volna bontani?",
+    "answer": "20 évre",
+    "wrong": [
+      "5 évre",
+      "10 évre",
+      "50 évre"
+    ],
+    "explanation": "A bontástól végül az mentette meg, hogy rádióantennaként hasznosnak bizonyult."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik szó állt eredetileg a Hollywood-felirat végén, amíg 1949-ben el nem távolították?",
+    "answer": "LAND",
+    "wrong": [
+      "CITY",
+      "HILLS",
+      "PARK"
+    ],
+    "explanation": "A felirat 1923-ban egy lakópark, a Hollywoodland reklámjaként készült."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Mit jelent magyarul a Brazília zászlaján olvasható jelmondat?",
+    "answer": "Rend és haladás",
+    "wrong": [
+      "Isten és haza",
+      "Egység és erő",
+      "Béke és munka"
+    ],
+    "explanation": "Az „Ordem e Progresso” felirat Auguste Comte francia filozófus gondolataiból ered."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik népszerű mediterrán úti célon kell az út bal oldalán vezetni?",
+    "answer": "Málta",
+    "wrong": [
+      "Mallorca",
+      "Kréta",
+      "Szardínia"
+    ],
+    "explanation": "Málta 1964-ig brit fennhatóság alatt állt, a bal oldali közlekedés is ebből az időből maradt."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik horvát város tengerpartján szól a hullámok által megszólaltatott tengeri orgona?",
+    "answer": "Zadar",
+    "wrong": [
+      "Split",
+      "Šibenik",
+      "Pula"
+    ],
+    "explanation": "Mellette egy napelemes üvegkör, az Üdvözlet a Napnak ad esténként fényjátékot."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik görög szigeten építtette fel Erzsébet királyné, Sisi az Akhilleion nevű palotáját?",
+    "answer": "Korfu",
+    "wrong": [
+      "Kréta",
+      "Rodosz",
+      "Zakünthosz"
+    ],
+    "explanation": "A palotát kedvenc mitológiai hőséről, Akhilleuszról nevezte el."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik thaiföldi szigeten található a Maya-öböl, A part című Leonardo DiCaprio-film híres strandja?",
+    "answer": "Ko Phi Phi Leh",
+    "wrong": [
+      "Ko Samui",
+      "Ko Phangan",
+      "Ko Tao"
+    ],
+    "explanation": "Az öblöt 2018-ban a tömegturizmus miatt évekre lezárták, hogy a természet helyreálljon."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik bécsi templom tetején rajzolják ki a színes cserepek a Habsburgok kétfejű sasát?",
+    "answer": "Szent István-dóm",
+    "wrong": [
+      "Károly-templom",
+      "Fogadalmi templom",
+      "Szent Péter-templom"
+    ],
+    "explanation": "A bécsiek a templomot és déli tornyát egyszerűen csak „Steffl”-nek becézik."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik spanyol városban áll az Alhambra, a mór uralkodók palota- és erődegyüttese?",
+    "answer": "Granada",
+    "wrong": [
+      "Sevilla",
+      "Córdoba",
+      "Toledo"
+    ],
+    "explanation": "Neve arabul „a vörös” jelentésű, falainak vöröses színe miatt."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik bécsi kastély parkjában működik a világ legrégebbi, ma is nyitva tartó állatkertje?",
+    "answer": "Schönbrunn",
+    "wrong": [
+      "Belvedere",
+      "Hofburg",
+      "Laxenburg"
+    ],
+    "explanation": "Az állatkertet 1752-ben alapították, Mária Terézia férje, Lotaringiai Ferenc István idején."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik ország zászlaja nem téglalap alakú, hanem két egymásra helyezett háromszögből áll?",
+    "answer": "Nepál",
+    "wrong": [
+      "Bhután",
+      "Srí Lanka",
+      "Mongólia"
+    ],
+    "explanation": "A két háromszögben egy fehér hold és egy fehér nap látható."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik szlengszóval emlegetik a britek a fontot?",
+    "answer": "Quid",
+    "wrong": [
+      "Buck",
+      "Bob",
+      "Loonie"
+    ],
+    "explanation": "A szó többes számban sem változik: öt font angolul „five quid”."
+  },
+  {
+    "category": "utazas",
+    "difficulty": 3,
+    "prompt": "Melyik hegy csúcsán áll Rio de Janeiróban a Megváltó Krisztus-szobor?",
+    "answer": "Corcovado",
+    "wrong": [
+      "Cukorsüveg-hegy",
+      "Gávea-kő",
+      "Két Testvér-hegy"
+    ],
+    "explanation": "A szobrot 1931-ben avatták fel, és 2007-ben a világ új hét csodája közé választották."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik fűszernövény friss leveleit törik össze a mojitóban a lime-mal és a cukorral?",
+    "answer": "Menta",
+    "wrong": [
+      "Bazsalikom",
+      "Citromfű",
+      "Koriander"
+    ],
+    "explanation": "A kubai eredetű koktél alapja fehér rum, a tetejét szódavízzel töltik fel."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik gyümölcs leve kerül a piña coladába a rum és a kókuszkrém mellé?",
+    "answer": "Ananász",
+    "wrong": [
+      "Mangó",
+      "Maracuja",
+      "Banán"
+    ],
+    "explanation": "A piña colada spanyolul „szűrt ananászt” jelent, és 1978 óta Puerto Rico nemzeti itala."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik tömény ital a margarita koktél alapja?",
+    "answer": "Tequila",
+    "wrong": [
+      "Vodka",
+      "Fehér rum",
+      "Gin"
+    ],
+    "explanation": "Lime és narancslikőr kerül még bele, a pohár peremét pedig hagyományosan sóval díszítik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Milyen üdítővel töltik fel a Cuba librét a rum és a lime mellé?",
+    "answer": "Kólával",
+    "wrong": [
+      "Tonikkal",
+      "Gyömbérsörrel",
+      "Szódavízzel"
+    ],
+    "explanation": "A név jelentése „szabad Kuba”, ez volt a kubai függetlenségi harc jelmondata."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Milyen lé adja a vodka mellett a Bloody Mary koktél alapját?",
+    "answer": "Paradicsomlé",
+    "wrong": [
+      "Céklalé",
+      "Vérnarancslé",
+      "Meggylé"
+    ],
+    "explanation": "Tabascóval és borssal fűszerezik, és gyakran egy szál zellerrel díszítik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik fröccs készül 2 dl borból és 1 dl szódából?",
+    "answer": "Nagyfröccs",
+    "wrong": [
+      "Kisfröccs",
+      "Hosszúlépés",
+      "Házmester"
+    ],
+    "explanation": "A kisfröccsben egy-egy deci bor és szóda van, a hosszúlépésben egy deci bor és két deci szóda."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik városban rendezik minden évben az Oktoberfestet?",
+    "answer": "München",
+    "wrong": [
+      "Berlin",
+      "Hamburg",
+      "Köln"
+    ],
+    "explanation": "Az első Oktoberfest 1810-ben egy királyi esküvőt ünnepelt, és nevével ellentétben nagyrészt szeptemberben tartják."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik növény tobozszerű virágzata adja a sör kesernyés ízét és illatát?",
+    "answer": "Komló",
+    "wrong": [
+      "Árpa",
+      "Üröm",
+      "Csalán"
+    ],
+    "explanation": "A komló a kender közeli rokona, mindkettő a kenderfélék családjába tartozik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Mivel keverik a sört a klasszikus radlerben?",
+    "answer": "Citromos üdítővel",
+    "wrong": [
+      "Kólával",
+      "Tonikkal",
+      "Szódavízzel"
+    ],
+    "explanation": "A radler németül kerékpárost jelent: a legenda szerint egy bajor kocsmáros találta ki biciklis vendégeinek."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Mit jelent olaszul a latte szó?",
+    "answer": "Tej",
+    "wrong": [
+      "Kávé",
+      "Hab",
+      "Csésze"
+    ],
+    "explanation": "Olaszországban ha csak „latte”-t kérünk, könnyen egy pohár tejet kapunk."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik kávéital a címe Sabrina Carpenter 2024-es világslágerének?",
+    "answer": "Espresso",
+    "wrong": [
+      "Cappuccino",
+      "Latte",
+      "Macchiato"
+    ],
+    "explanation": "A dal a Short n' Sweet című albumra is felkerült."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Milyen gyümölcs ízét idézi a Traubi szóda?",
+    "answer": "Szőlő",
+    "wrong": [
+      "Alma",
+      "Körte",
+      "Meggy"
+    ],
+    "explanation": "A név a német Traube, azaz szőlő szóból ered."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Melyik növényből készül a rum?",
+    "answer": "Cukornád",
+    "wrong": [
+      "Burgonya",
+      "Árpa",
+      "Kukorica"
+    ],
+    "explanation": "A legtöbb rum melaszból, a cukorgyártás sötét, sűrű melléktermékéből készül."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a kávékészítésre szakosodott pultost?",
+    "answer": "Barista",
+    "wrong": [
+      "Sommelier",
+      "Mixer",
+      "Konditor"
+    ],
+    "explanation": "Olaszul a barista eredetileg egyszerűen a bárpult mögött dolgozó pultost jelenti."
+  },
+  {
+    "category": "italok",
+    "difficulty": 1,
+    "prompt": "Mit jelent a „virgin” jelző egy koktél nevében, például a virgin mojitónál?",
+    "answer": "Alkoholmentes",
+    "wrong": [
+      "Jég nélküli",
+      "Cukormentes",
+      "Dupla adagos"
+    ],
+    "explanation": "Az alkoholmentes koktélokat angolul mocktailnek is nevezik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik növényből készül a tequila?",
+    "answer": "Kék agávé",
+    "wrong": [
+      "Kaktuszfüge",
+      "Cukornád",
+      "Kukorica"
+    ],
+    "explanation": "Nevét Tequila városáról kapta, amely a mexikói Jalisco államban fekszik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik növény bogyója adja a gin jellegzetes ízét?",
+    "answer": "Boróka",
+    "wrong": [
+      "Bodza",
+      "Áfonya",
+      "Galagonya"
+    ],
+    "explanation": "A gin neve a holland jenever szóból rövidült, ami borókát jelent."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "A vodka neve egy szláv szó kicsinyítő alakja. Mit jelent ez a szó?",
+    "answer": "Víz",
+    "wrong": [
+      "Kenyér",
+      "Tűz",
+      "Gabona"
+    ],
+    "explanation": "A voda vizet jelent, így a vodka szó szerint „vizecske”."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik olasz habzóbor kerül az Aperol spritzbe az Aperol és a szódavíz mellé?",
+    "answer": "Prosecco",
+    "wrong": [
+      "Lambrusco",
+      "Asti",
+      "Franciacorta"
+    ],
+    "explanation": "Az Aperolt 1919-ben mutatták be először Padovában."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik koktélt rendeli előszeretettel Carrie és a barátnői a Szex és New York című sorozatban?",
+    "answer": "Cosmopolitan",
+    "wrong": [
+      "Mojito",
+      "Margarita",
+      "Manhattan"
+    ],
+    "explanation": "A rózsaszín koktél citromos vodkából, narancslikőrből, lime-ból és áfonyaléből készül."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Mi adja a Long Island Iced Tea teára emlékeztető színét, holott tea nincs benne?",
+    "answer": "Kóla",
+    "wrong": [
+      "Karamellszirup",
+      "Hideg kávé",
+      "Gyömbérsör"
+    ],
+    "explanation": "Vodka, gin, fehér rum, tequila és narancslikőr is kerül bele."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik ország egyik városáról kapta a nevét a pilseni típusú sör?",
+    "answer": "Csehország",
+    "wrong": [
+      "Németország",
+      "Ausztria",
+      "Lengyelország"
+    ],
+    "explanation": "Az első pilseni sört 1842-ben főzték Plzeňben, egy bajor sörfőzőmester, Josef Groll irányításával."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik sört főzik 1759 óta Dublinban, a St. James's Gate sörfőzdében?",
+    "answer": "Guinness",
+    "wrong": [
+      "Kilkenny",
+      "Murphy's",
+      "Beamish"
+    ],
+    "explanation": "Arthur Guinness 9000 évre bérelte ki a főzde telkét, évi 45 fontért."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Kikről kapta a nevét a cappuccino?",
+    "answer": "Kapucinus szerzetesekről",
+    "wrong": [
+      "Velencei gondolásokról",
+      "Bécsi cukrászokról",
+      "Nápolyi halászokról"
+    ],
+    "explanation": "A kávé színét a szerzetesek barna csuhájához hasonlították."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "A legenda szerint melyik állatok élénk viselkedése vezette rá egy etióp pásztort a kávéra?",
+    "answer": "Kecskék",
+    "wrong": [
+      "Juhok",
+      "Tevék",
+      "Szamarak"
+    ],
+    "explanation": "A történet szerint Kaldi kecskéi a kávécserje piros bogyóitól egész éjjel ugrándoztak."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik országból indult hódító útjára a tápiókagyöngyös bubble tea?",
+    "answer": "Tajvan",
+    "wrong": [
+      "Japán",
+      "Dél-Korea",
+      "Thaiföld"
+    ],
+    "explanation": "A tápiókagyöngyöket a manióka gyökeréből nyert keményítőből főzik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai városban kínálták először a Coca-Colát 1886-ban?",
+    "answer": "Atlanta",
+    "wrong": [
+      "Chicago",
+      "Nashville",
+      "New Orleans"
+    ],
+    "explanation": "Kitalálója, John Pemberton gyógyszerész volt, az italt eleinte egy patika szódapultjánál árulták."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik gyümölcsből készül a népszerű Vilmos pálinka?",
+    "answer": "Körte",
+    "wrong": [
+      "Szilva",
+      "Alma",
+      "Birs"
+    ],
+    "explanation": "A fajta angol neve Williams, innen ered a magyar Vilmos név."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "A magyar pálinkatörvény szerint hol kell teremnie a gyümölcsnek, amelyből pálinka készül?",
+    "answer": "Magyarországon",
+    "wrong": [
+      "Bármely EU-tagállamban",
+      "Közép-Európában",
+      "Bárhol a világon"
+    ],
+    "explanation": "A cefrét is Magyarországon kell lepárolni, és a pálinka legalább 37,5 százalékos."
+  },
+  {
+    "category": "italok",
+    "difficulty": 2,
+    "prompt": "Melyik borvidék szőlővesszeit említi a magyar Himnusz?",
+    "answer": "Tokaj",
+    "wrong": [
+      "Eger",
+      "Villány",
+      "Badacsony"
+    ],
+    "explanation": "A tokaji borvidék kultúrtája 2002 óta az UNESCO világörökség része."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik tömény ital kerül a Negroniba a Campari és a vörös vermut mellé, egyenlő arányban?",
+    "answer": "Gin",
+    "wrong": [
+      "Vodka",
+      "Fehér rum",
+      "Whisky"
+    ],
+    "explanation": "A legenda szerint Camillo Negroni gróf kérte Firenzében, hogy az Americano koktél szódavizét cseréljék ginre."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik koktélt issza szinte végig a Dude A nagy Lebowski című filmben?",
+    "answer": "White Russian",
+    "wrong": [
+      "Old Fashioned",
+      "Manhattan",
+      "Tom Collins"
+    ],
+    "explanation": "A koktél vodkából, kávélikőrből és tejszínből készül."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik ország párlatának nevét írják hagyományosan e betűvel, whiskey alakban?",
+    "answer": "Írország",
+    "wrong": [
+      "Skócia",
+      "Kanada",
+      "Japán"
+    ],
+    "explanation": "Skóciában, Kanadában és Japánban e nélkül, whiskyként írják."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik gabonának kell kitennie az amerikai bourbon alapanyagának legalább 51 százalékát?",
+    "answer": "Kukorica",
+    "wrong": [
+      "Árpa",
+      "Rozs",
+      "Búza"
+    ],
+    "explanation": "A bourbont új, belülről kiégetett tölgyfahordóban kell érlelni."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik évben hirdették ki a bajor sörtisztasági törvényt, a Reinheitsgebotot?",
+    "answer": "1516",
+    "wrong": [
+      "1492",
+      "1526",
+      "1618"
+    ],
+    "explanation": "Eszerint sörbe csak víz, árpa és komló kerülhetett, az élesztő szerepét akkor még nem ismerték."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik cseh városról kapta a nevét a Budweiser sör?",
+    "answer": "České Budějovice",
+    "wrong": [
+      "Plzeň",
+      "Brno",
+      "Olomouc"
+    ],
+    "explanation": "A név miatt az amerikai gyártó és a cseh Budvar sörgyár több mint egy évszázadon át pereskedett."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Milyen erjesztéssel készül a láger típusú sör?",
+    "answer": "Alsóerjesztéssel",
+    "wrong": [
+      "Felsőerjesztéssel",
+      "Spontán erjesztéssel",
+      "Tejsavas erjesztéssel"
+    ],
+    "explanation": "A láger név a német lagern, azaz tárolni, érlelni igéből ered."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik olasz cég nevéhez fűződik a nyolcszögletű kotyogós kávéfőző, a Moka Express?",
+    "answer": "Bialetti",
+    "wrong": [
+      "Lavazza",
+      "Illy",
+      "De'Longhi"
+    ],
+    "explanation": "Az alumínium kávéfőzőt 1933-ban mutatták be, és azóta is szinte változatlan formában gyártják."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik ország a vörös teaként is ismert rooibos hazája?",
+    "answer": "Dél-Afrika",
+    "wrong": [
+      "Kenya",
+      "Marokkó",
+      "Madagaszkár"
+    ],
+    "explanation": "A rooibos valójában nem teacserje, hanem egy koffeinmentes hüvelyes növény."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik országban dobták piacra a Fantát a második világháború idején?",
+    "answer": "Németország",
+    "wrong": [
+      "Olaszország",
+      "Egyesült Államok",
+      "Svájc"
+    ],
+    "explanation": "A Coca-Cola szirupja nem jutott el oda, ezért helyi alapanyagokból kevertek új üdítőt, nevét a Fantasie szóból kapta."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják azt a fröccsöt, amelyhez háromdecinyi bort és kétdecinyi szódát kevernek?",
+    "answer": "Házmester",
+    "wrong": [
+      "Viceházmester",
+      "Polgármester",
+      "Hosszúlépés"
+    ],
+    "explanation": "A viceházmesterben fordított az arány: 2 dl bor és 3 dl szóda."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "A hagyomány szerint melyik költő alkotta meg a „fröccs” szót a német Spritzer helyett?",
+    "answer": "Vörösmarty Mihály",
+    "wrong": [
+      "Petőfi Sándor",
+      "Kazinczy Ferenc",
+      "Arany János"
+    ],
+    "explanation": "A szó a nyelvújítás korában született, és a bor közé fröccsenő szódavízre utal."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "A magyar mellett melyik ország négy tartományának barackpárlata viselheti az uniós szabályok szerint a pálinka nevet?",
+    "answer": "Ausztria",
+    "wrong": [
+      "Szlovákia",
+      "Románia",
+      "Szlovénia"
+    ],
+    "explanation": "A kivétel Alsó-Ausztriára, Burgenlandra, Stájerországra és Bécsre vonatkozik."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Melyik uralkodónak tulajdonítják a tokajiról mondott „királyok bora, borok királya” mondást?",
+    "answer": "XIV. Lajos",
+    "wrong": [
+      "Nagy Péter",
+      "Mária Terézia",
+      "Napóleon"
+    ],
+    "explanation": "A hagyomány szerint II. Rákóczi Ferenc küldött tokajit ajándékba a francia királynak."
+  },
+  {
+    "category": "italok",
+    "difficulty": 3,
+    "prompt": "Hány borvidéke van Magyarországnak a bortörvény szerint (2024-ben)?",
+    "answer": "22",
+    "wrong": [
+      "18",
+      "20",
+      "24"
+    ],
+    "explanation": "A borvidékeket hat nagyobb borrégióba sorolják."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik magyar orvos ismerte fel, hogy a gyermekágyi láz alapos kézfertőtlenítéssel megelőzhető?",
+    "answer": "Semmelweis Ignác",
+    "wrong": [
+      "Korányi Frigyes",
+      "Balassa János",
+      "Markusovszky Lajos"
+    ],
+    "explanation": "Bécsi szülészeti osztályán klórmeszes kézmosást vezetett be, ezért nevezik az anyák megmentőjének."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Milyen típusú oltóanyagok kifejlesztését tették lehetővé Karikó Katalin Nobel-díjjal jutalmazott felfedezései?",
+    "answer": "mRNS-vakcinák",
+    "wrong": [
+      "Vektorvakcinák",
+      "Inaktivált vakcinák",
+      "Fehérjealapú vakcinák"
+    ],
+    "explanation": "A 2023-as orvosi Nobel-díjon amerikai kollégájával, Drew Weissmannal osztozott."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik természettudós nevéhez fűződik a természetes kiválasztódáson alapuló evolúcióelmélet?",
+    "answer": "Charles Darwin",
+    "wrong": [
+      "Jean-Baptiste Lamarck",
+      "Carl Linné",
+      "Louis Pasteur"
+    ],
+    "explanation": "Elméletét 1859-ben, A fajok eredete című könyvében tette közzé."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Milyen szerkezetű a DNS-molekula, amelyet James Watson és Francis Crick írt le 1953-ban?",
+    "answer": "Kettős spirál",
+    "wrong": [
+      "Hármas spirál",
+      "Zárt gyűrű",
+      "Egyenes lánc"
+    ],
+    "explanation": "Linus Pauling néhány hónappal korábban tévesen hármas spirált javasolt."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik fém folyékony szobahőmérsékleten?",
+    "answer": "Higany",
+    "wrong": [
+      "Ólom",
+      "Ón",
+      "Cink"
+    ],
+    "explanation": "Vegyjele, a Hg a latinosított görög hydrargyrum, azaz „vízezüst” szóból ered."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik gáz belélegzésétől lesz vicces, rajzfilmfigurás a hangunk?",
+    "answer": "Hélium",
+    "wrong": [
+      "Argon",
+      "Nitrogén",
+      "Szén-dioxid"
+    ],
+    "explanation": "A hang a könnyű héliumban sokkal gyorsabban terjed, ettől változik meg a hangszínünk."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik mértékegységben adjuk meg az elektromos feszültséget?",
+    "answer": "Volt",
+    "wrong": [
+      "Amper",
+      "Watt",
+      "Ohm"
+    ],
+    "explanation": "Alessandro Volta olasz fizikusról kapta a nevét, aki megépítette az első elektromos elemet."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Melyik az emberi test legnagyobb szerve?",
+    "answer": "Bőr",
+    "wrong": [
+      "Máj",
+      "Tüdő",
+      "Agy"
+    ],
+    "explanation": "Egy felnőtt bőrének felülete nagyjából 1,5–2 négyzetméter."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Miért úszik a jég a víz tetején?",
+    "answer": "Kisebb a sűrűsége, mint a folyékony vízé",
+    "wrong": [
+      "Levegőbuborékok vannak a belsejében",
+      "A felületi feszültség tartja fenn",
+      "Hidegebb a körülötte lévő víznél"
+    ],
+    "explanation": "A víz fagyáskor kitágul, ezért repedhet szét a fagyasztóban felejtett üveg."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 1,
+    "prompt": "Mi a neve annak a zöld színanyagnak, amelynek segítségével a növények a fotoszintézis során megkötik a fény energiáját?",
+    "answer": "Klorofill",
+    "wrong": [
+      "Hemoglobin",
+      "Melanin",
+      "Antocián"
+    ],
+    "explanation": "A klorofill a vörös és a kék fényt nyeli el, a zöldet visszaveri, ezért zöldek a levelek."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Miért forr alacsonyabb hőmérsékleten a víz egy magas hegy tetején?",
+    "answer": "Kisebb a légnyomás",
+    "wrong": [
+      "Hidegebb a levegő",
+      "Kevesebb az oxigén",
+      "Erősebb a napsugárzás"
+    ],
+    "explanation": "A Mount Everest csúcsán a víz már nagyjából 70 °C-on felforr."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Miért látjuk kéknek a nappali égboltot?",
+    "answer": "A levegő a kék fényt jobban szórja a vörösnél",
+    "wrong": [
+      "Az óceánok kék színe tükröződik vissza",
+      "A légkör elnyeli a vörös fényt",
+      "A napfény nagyrészt kék színű"
+    ],
+    "explanation": "A jelenség neve Rayleigh-szórás; napnyugtakor a hosszabb úton a kék kiszóródik, ezért vöröses az ég."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Melyik vércsoportú véradót nevezik általános (univerzális) donornak?",
+    "answer": "0 Rh-negatív",
+    "wrong": [
+      "AB Rh-pozitív",
+      "A Rh-negatív",
+      "B Rh-negatív"
+    ],
+    "explanation": "Vörösvérsejtjeit elvileg bárki megkaphatja, ezért vészhelyzetben gyakran ezt használják."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Ki fektette le borsóval végzett kísérletei alapján az öröklődés alapszabályait?",
+    "answer": "Gregor Mendel",
+    "wrong": [
+      "Charles Darwin",
+      "Louis Pasteur",
+      "Thomas Hunt Morgan"
+    ],
+    "explanation": "Mendel ágostonrendi szerzetes volt, kísérleteit a brünni kolostor kertjében végezte."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Melyik sejtalkotót szokás a sejt „erőművének” nevezni?",
+    "answer": "Mitokondrium",
+    "wrong": [
+      "Riboszóma",
+      "Sejtmag",
+      "Golgi-készülék"
+    ],
+    "explanation": "Itt termelődik a sejt energiahordozójának, az ATP-nek a nagy része, és saját DNS-e is van."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Melyik gáz teszi ki a Föld légkörének legnagyobb részét?",
+    "answer": "Nitrogén",
+    "wrong": [
+      "Oxigén",
+      "Szén-dioxid",
+      "Argon"
+    ],
+    "explanation": "A levegő nagyjából 78%-a nitrogén, és csak mintegy 21%-a oxigén."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Mi a neve az emberi test legkisebb csontjának?",
+    "answer": "Kengyel",
+    "wrong": [
+      "Kalapács",
+      "Üllő",
+      "Könnycsont"
+    ],
+    "explanation": "A középfülben található, és mindössze néhány milliméteres."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Karikó Katalin mellett melyik magyar származású tudós kapott Nobel-díjat 2023-ban?",
+    "answer": "Krausz Ferenc",
+    "wrong": [
+      "Barabási Albert-László",
+      "Lovász László",
+      "Freund Tamás"
+    ],
+    "explanation": "A fizikai Nobel-díjat az attoszekundumos fényimpulzusok előállításáért kapta."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Melyik növényből vont ki Szent-Györgyi Albert Szegeden nagy mennyiségű C-vitamint?",
+    "answer": "Paprika",
+    "wrong": [
+      "Paradicsom",
+      "Csipkebogyó",
+      "Petrezselyem"
+    ],
+    "explanation": "A paprikából annyi vitamint nyert, hogy a szerkezete megfejtéséhez külföldi kollégáinak is jutott belőle."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 2,
+    "prompt": "Mi a neve annak a jelenségnek, amely miatt a közeledő mentőautó szirénája magasabbnak, a távolodóé mélyebbnek hallatszik?",
+    "answer": "Doppler-hatás",
+    "wrong": [
+      "Tyndall-hatás",
+      "Coriolis-hatás",
+      "Compton-hatás"
+    ],
+    "explanation": "Az Agymenők Sheldonja egy jelmezbulira a Doppler-hatásnak öltözött be."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik elem vegyjele a Pb?",
+    "answer": "Ólom",
+    "wrong": [
+      "Platina",
+      "Palládium",
+      "Polónium"
+    ],
+    "explanation": "A latin plumbum szóból ered, amelyből az angol plumber, azaz vízvezeték-szerelő is származik."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Mivel oldotta fel Hevesy György 1940-ben Koppenhágában két német kollégája Nobel-érmét, hogy a nácik ne találják meg őket?",
+    "answer": "Királyvíz",
+    "wrong": [
+      "Kénsav",
+      "Folysav",
+      "Nátronlúg"
+    ],
+    "explanation": "A háború után az aranyat kicsapták az oldatból, és a Nobel-alapítvány újraöntötte belőle az érmeket."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Ki fedezte fel 1901-ben az emberi vércsoportokat?",
+    "answer": "Karl Landsteiner",
+    "wrong": [
+      "Robert Koch",
+      "Paul Ehrlich",
+      "Emil von Behring"
+    ],
+    "explanation": "Munkájáért 1930-ban Nobel-díjat kapott, és később társaival az Rh-faktort is leírta."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Ki kapta a legelső fizikai Nobel-díjat egy általa felfedezett sugárzásért?",
+    "answer": "Wilhelm Conrad Röntgen",
+    "wrong": [
+      "Henri Becquerel",
+      "Marie Curie",
+      "Ernest Rutherford"
+    ],
+    "explanation": "Felfedezését nem szabadalmaztatta, a díjjal járó pénzt pedig a würzburgi egyetemnek adományozta."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik magyar származású fizikus kapott Nobel-díjat a holográfia feltalálásáért?",
+    "answer": "Gábor Dénes",
+    "wrong": [
+      "Wigner Jenő",
+      "Lénárd Fülöp",
+      "Szilárd Leó"
+    ],
+    "explanation": "A holográfiát 1947-ben találta fel, a Nobel-díjat 1971-ben kapta meg érte."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik magyar fizikus nevét viseli az a torziós inga, amellyel később kőolajat is kerestek?",
+    "answer": "Eötvös Loránd",
+    "wrong": [
+      "Jedlik Ányos",
+      "Bródy Imre",
+      "Zemplén Győző"
+    ],
+    "explanation": "Ingájával nagy pontossággal igazolta, hogy a tehetetlen és a súlyos tömeg egyenlő."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Anders Celsius eredeti, 1742-es hőmérsékleti skáláján mit jelölt a 100 fok?",
+    "answer": "A víz fagyáspontját",
+    "wrong": [
+      "A víz forráspontját",
+      "Az emberi test hőmérsékletét",
+      "A higany fagyáspontját"
+    ],
+    "explanation": "A skálát halála után fordították meg, így lett a 0 a fagyás-, a 100 pedig a forráspont."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik kémiai elem adja az emberi test tömegének legnagyobb részét?",
+    "answer": "Oxigén",
+    "wrong": [
+      "Szén",
+      "Nitrogén",
+      "Kalcium"
+    ],
+    "explanation": "Ez főleg a víznek köszönhető, amely testtömegünk nagyjából 60%-át teszi ki."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Melyik betegség ellen dolgozta ki Edward Jenner 1796-ban az első védőoltást?",
+    "answer": "Himlő",
+    "wrong": [
+      "Veszettség",
+      "Kolera",
+      "Tuberkulózis"
+    ],
+    "explanation": "Tehénhimlővel oltott, ezért ered a vakcina szó a latin vacca, azaz „tehén” szóból."
+  },
+  {
+    "category": "tudomany",
+    "difficulty": 3,
+    "prompt": "Milyen nevet kapott az a mintegy 3,2 millió éves Australopithecus-csontváz, amelyet 1974-ben Etiópiában találtak?",
+    "answer": "Lucy",
+    "wrong": [
+      "Ardi",
+      "Ötzi",
+      "Selam"
+    ],
+    "explanation": "A nevet a Beatles Lucy in the Sky with Diamonds című dala adta, amely a kutatók táborában szólt."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Milyen pályán rendezik a wimbledoni teniszbajnokságot?",
+    "answer": "Füves pályán",
+    "wrong": [
+      "Salakpályán",
+      "Kemény pályán",
+      "Szőnyegpályán"
+    ],
+    "explanation": "Wimbledon az egyetlen Grand Slam-torna, amelyet füvön játszanak."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik országot képviselte Usain Bolt, a 100 és a 200 méteres síkfutás többszörös olimpiai bajnoka?",
+    "answer": "Jamaica",
+    "wrong": [
+      "Kuba",
+      "Barbados",
+      "Bahama-szigetek"
+    ],
+    "explanation": "2009-ben Berlinben 9,58 másodperces világcsúcsot futott 100 méteren."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Ki volt a világ első ökölvívója, aki három olimpián is aranyérmet nyert?",
+    "answer": "Papp László",
+    "wrong": [
+      "Kovács István",
+      "Erdei Zsolt",
+      "Muhammad Ali"
+    ],
+    "explanation": "1948-ban, 1952-ben és 1956-ban nyert, később profiként is veretlen maradt."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik szellemi sportágban lett világhírű Polgár Judit?",
+    "answer": "Sakk",
+    "wrong": [
+      "Bridzs",
+      "Go",
+      "Dáma"
+    ],
+    "explanation": "1991-ben 15 évesen minden idők legfiatalabb nagymestere lett, megelőzve Bobby Fischert."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Milyen angol becenéven ismeri a világ Hosszú Katinkát?",
+    "answer": "Iron Lady",
+    "wrong": [
+      "Golden Girl",
+      "Swim Queen",
+      "Silver Bullet"
+    ],
+    "explanation": "2016-ban Rióban három olimpiai aranyérmet nyert."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Hogyan nevezik a kosárlabdában, amikor a játékos felugorva, felülről a gyűrűbe nyomja a labdát?",
+    "answer": "Zsákolás",
+    "wrong": [
+      "Tempódobás",
+      "Horogdobás",
+      "Hárompontos"
+    ],
+    "explanation": "Angolul slam dunknak hívják, és az NBA All-Star-hétvégéjén külön zsákolóversenyt is rendeznek."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik amerikai sportesemény félidei show-jában lépett fel többek között Beyoncé, Rihanna és Kendrick Lamar?",
+    "answer": "Super Bowl",
+    "wrong": [
+      "NBA-döntő",
+      "World Series",
+      "Stanley-kupa-döntő"
+    ],
+    "explanation": "A Super Bowl az amerikaifutball-bajnokság, az NFL döntője."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Hogyan nevezik a teniszben azt a szabályos adogatást, amelyhez a fogadó játékos hozzá sem tud érni?",
+    "answer": "Ász",
+    "wrong": [
+      "Brék",
+      "Volé",
+      "Let"
+    ],
+    "explanation": "Ha a fogadó hozzáér a labdához, de nem tudja visszaütni, az már nem ász, hanem nyerő adogatás."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik téli sportágban csúsztatnak gránitköveket a jégen, miközben a csapattársak seprűvel söprik előttük a jeget?",
+    "answer": "Curling",
+    "wrong": [
+      "Bob",
+      "Szánkó",
+      "Jégkorong"
+    ],
+    "explanation": "A söpréstől a jég felszíne felmelegszik, így a kő messzebbre és egyenesebben csúszik."
+  },
+  {
+    "category": "sport",
+    "difficulty": 1,
+    "prompt": "Melyik város adott otthont a 2024-es nyári olimpiának, amelynek megnyitóján a csapatok hajókon vonultak fel?",
+    "answer": "Párizs",
+    "wrong": [
+      "Los Angeles",
+      "Tokió",
+      "Madrid"
+    ],
+    "explanation": "A megnyitón a csapatok hajókon vonultak fel a Szajnán."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Kinek a tízéves világcsúcsát döntötte meg Milák Kristóf 2019-ben 200 méter pillangón?",
+    "answer": "Michael Phelps",
+    "wrong": [
+      "Ryan Lochte",
+      "Chad le Clos",
+      "Cseh László"
+    ],
+    "explanation": "Milák a 2019-es kvangdzsui világbajnokságon, 19 évesen úszta a világcsúcsot."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik úszásnemben lett olimpiai bajnok Gyurta Dániel 2012-ben Londonban?",
+    "answer": "Mellúszás",
+    "wrong": [
+      "Hátúszás",
+      "Pillangóúszás",
+      "Gyorsúszás"
+    ],
+    "explanation": "Gyurta 15 évesen már olimpiai ezüstérmes volt Athénban."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Ki volt Magyarország első olimpiai bajnoka?",
+    "answer": "Hajós Alfréd",
+    "wrong": [
+      "Gerevich Aladár",
+      "Kárpáti Rudolf",
+      "Csík Ferenc"
+    ],
+    "explanation": "Építészként ő tervezte a margitszigeti uszodát, amely ma az ő nevét viseli."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik városban rendezték azt az 1956-os olimpiát, ahol a magyar–szovjet vízilabda-mérkőzés „vérfürdőként” vált legendássá?",
+    "answer": "Melbourne",
+    "wrong": [
+      "Helsinki",
+      "Róma",
+      "Sydney"
+    ],
+    "explanation": "A magyarok 4:0-ra nyertek, majd az olimpiai tornát is megnyerték."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik sportágban szerezte Magyarország az első téli olimpiai aranyérmét 2018-ban, Phjongcshangban?",
+    "answer": "Rövidpályás gyorskorcsolya",
+    "wrong": [
+      "Műkorcsolya",
+      "Biatlon",
+      "Alpesi sí"
+    ],
+    "explanation": "A győztes férfi váltóban a Liu testvérek, Liu Shaolin Sándor és Liu Shaoang is korcsolyázott."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik hajóban evez a versenyző térdelve, egytollú lapáttal a síkvízi versenyeken?",
+    "answer": "Kenu",
+    "wrong": [
+      "Kajak",
+      "Sárkányhajó",
+      "Szkiff"
+    ],
+    "explanation": "A kajakban ülve, kéttollú lapáttal haladnak."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Hány méterről végzik el a büntetődobást a kézilabdában?",
+    "answer": "7 méter",
+    "wrong": [
+      "6 méter",
+      "9 méter",
+      "11 méter"
+    ],
+    "explanation": "A kapuelőtér vonala 6, a szabaddobási vonal pedig 9 méterre van a kaputól."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Legfeljebb hány pontot dobhat egy játékos dartsban egy körben, a három nyilával?",
+    "answer": "180",
+    "wrong": [
+      "150",
+      "170",
+      "200"
+    ],
+    "explanation": "Ehhez mindhárom nyílnak a 20-as szektor tripla mezőjébe kell csapódnia."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Milyen néven született Muhammad Ali?",
+    "answer": "Cassius Clay",
+    "wrong": [
+      "Walker Smith",
+      "Joseph Barrow",
+      "Charles Liston"
+    ],
+    "explanation": "Új nevét 1964-ben, első nehézsúlyú világbajnoki címe után vette fel."
+  },
+  {
+    "category": "sport",
+    "difficulty": 2,
+    "prompt": "Melyik ország rögbiválogatottjának beceneve az „All Blacks”?",
+    "answer": "Új-Zéland",
+    "wrong": [
+      "Ausztrália",
+      "Dél-Afrika",
+      "Anglia"
+    ],
+    "explanation": "A csapat a mérkőzések előtt a maorik hagyományos harci táncát, a hakát adja elő."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Ki volt a szövetségi kapitánya a 2000-ben, 2004-ben és 2008-ban is olimpiai bajnok magyar férfi vízilabda-válogatottnak?",
+    "answer": "Kemény Dénes",
+    "wrong": [
+      "Gyarmati Dezső",
+      "Märcz Tamás",
+      "Rajki Béla"
+    ],
+    "explanation": "Kemény Dénes 1997 és 2012 között irányította a válogatottat."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik magyar kardvívó nyert aranyérmet hat különböző olimpián 1932 és 1960 között?",
+    "answer": "Gerevich Aladár",
+    "wrong": [
+      "Kárpáti Rudolf",
+      "Kovács Pál",
+      "Piller György"
+    ],
+    "explanation": "Összesen hét olimpiai aranyat szerzett, az utolsót 50 évesen, Rómában."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik magyar teniszezőnő nyert több Grand Slam-tornát párosban a francia Kristina Mladenovic oldalán?",
+    "answer": "Babos Tímea",
+    "wrong": [
+      "Szávay Ágnes",
+      "Stollár Fanny",
+      "Udvardy Panna"
+    ],
+    "explanation": "Kettesben az Australian Opent és a Roland Garrost is megnyerték."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik ország színeiben lett 2021-ben és 2024-ben is olimpiai bajnok a rúdugró Armand „Mondo” Duplantis?",
+    "answer": "Svédország",
+    "wrong": [
+      "Norvégia",
+      "Finnország",
+      "Kanada"
+    ],
+    "explanation": "Az Egyesült Államokban született, de édesanyja hazáját, Svédországot képviseli."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Hogyan nevezik a golfban, ha a játékos eggyel kevesebb ütésből juttatja a lyukba a labdát, mint az előírt ütésszám (par)?",
+    "answer": "Birdie",
+    "wrong": [
+      "Eagle",
+      "Bogey",
+      "Albatross"
+    ],
+    "explanation": "A kettővel kevesebb ütés neve eagle, azaz sas."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Miből készül túlnyomórészt a mai olimpiai aranyérem?",
+    "answer": "Ezüst",
+    "wrong": [
+      "Arany",
+      "Bronz",
+      "Réz"
+    ],
+    "explanation": "Az előírás szerint legalább 6 gramm aranyat kell tartalmaznia, ezzel vonják be az ezüstöt."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Hány pontot ér a snookerben a legértékesebb színes golyó, a fekete?",
+    "answer": "7",
+    "wrong": [
+      "5",
+      "6",
+      "10"
+    ],
+    "explanation": "A klasszikus maximális break 147 pont: minden piros után a feketét, végül az összes színest kell lökni."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Milyen magasan van a kosárlabdagyűrű a padlótól?",
+    "answer": "3,05 méter",
+    "wrong": [
+      "2,95 méter",
+      "3,15 méter",
+      "3,25 méter"
+    ],
+    "explanation": "Ez pontosan 10 láb: James Naismith 1891-ben ilyen magasra akasztotta az első kosarakat."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Hány pontot kell legalább szereznie a győztesnek egy asztalitenisz-játszmában a 2001-es szabálymódosítás óta?",
+    "answer": "11",
+    "wrong": [
+      "15",
+      "21",
+      "25"
+    ],
+    "explanation": "Korábban 21 pontig tartottak a játszmák, és ma is legalább két pont különbséggel kell nyerni."
+  },
+  {
+    "category": "sport",
+    "difficulty": 3,
+    "prompt": "Melyik két ország ad otthont a minden év fordulóján rendezett síugró Négysáncversenynek?",
+    "answer": "Németország és Ausztria",
+    "wrong": [
+      "Norvégia és Finnország",
+      "Svájc és Olaszország",
+      "Szlovénia és Lengyelország"
+    ],
+    "explanation": "A négy helyszín Oberstdorf, Garmisch-Partenkirchen, Innsbruck és Bischofshofen."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik legendás játék volt gyárilag telepítve a Nokia 3310-es mobiltelefonra?",
+    "answer": "Snake",
+    "wrong": [
+      "Tetris",
+      "Pac-Man",
+      "Frogger"
+    ],
+    "explanation": "A játék először az 1997-es Nokia 6110-en jelent meg, a 3310-esen már a folytatása, a Snake II futott."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik céget alapította meg Bill Gates 1975-ben iskolatársával, Paul Allennel?",
+    "answer": "Microsoft",
+    "wrong": [
+      "Apple",
+      "Oracle",
+      "Intel"
+    ],
+    "explanation": "A név a microcomputer és a software szavakból született, és eleinte kötőjellel írták: Micro-Soft."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Milyen hanghordozót játszott le az 1979-ben piacra dobott első Sony Walkman?",
+    "answer": "Magnókazettát",
+    "wrong": [
+      "CD-lemezt",
+      "Bakelitlemezt",
+      "MiniDiscet"
+    ],
+    "explanation": "Az első modellen két fejhallgató-csatlakozó volt, hogy ketten is hallgathassák egyszerre."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik számítógép-alkatrészt nevezik CPU-nak?",
+    "answer": "A processzort",
+    "wrong": [
+      "A memóriát",
+      "A merevlemezt",
+      "A videokártyát"
+    ],
+    "explanation": "A rövidítés a Central Processing Unit, azaz központi feldolgozóegység kifejezésből ered."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Mit jelent a GPS rövidítés?",
+    "answer": "Global Positioning System",
+    "wrong": [
+      "General Position Service",
+      "Global Pointing Satellite",
+      "Geographic Position Signal"
+    ],
+    "explanation": "Az Egyesült Államok 2000-ig szándékosan pontatlanabb jelet adott a polgári felhasználóknak."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik két betű helye van felcserélve a magyar billentyűzeten az angolhoz képest?",
+    "answer": "Az Y és a Z",
+    "wrong": [
+      "A Q és a W",
+      "Az A és a Q",
+      "Az M és az N"
+    ],
+    "explanation": "Ezért hívják a magyar kiosztást a felső betűsor eleje alapján QWERTZ-nek."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik adathordozót ábrázolja sok programban a Mentés gomb ikonja?",
+    "answer": "A floppylemezt",
+    "wrong": [
+      "A CD-lemezt",
+      "A pendrive-ot",
+      "A merevlemezt"
+    ],
+    "explanation": "Egy hagyományos, 3,5 hüvelykes floppyra mindössze 1,44 MB adat fért."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik magyar származású tudósról kapták a nevüket azok az elvek, amelyekre a mai számítógépek működése épül?",
+    "answer": "Neumann János",
+    "wrong": [
+      "Teller Ede",
+      "Szilárd Leó",
+      "Kármán Tódor"
+    ],
+    "explanation": "Az egyik legfontosabb Neumann-elv szerint a program és az adatok ugyanabban a memóriában tárolódnak."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik billentyűkombinációval lehet Windowson beilleszteni a vágólapra másolt szöveget?",
+    "answer": "Ctrl+V",
+    "wrong": [
+      "Ctrl+C",
+      "Ctrl+X",
+      "Ctrl+Z"
+    ],
+    "explanation": "A kivágás, a másolás és a beillesztés ötlete Larry Tesler nevéhez fűződik, aki a hetvenes években a Xerox kutatóközpontjában dolgozta ki."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik mobil operációs rendszer verzióit nevezték el sokáig édességekről, például Cupcake, KitKat vagy Oreo néven?",
+    "answer": "Android",
+    "wrong": [
+      "iOS",
+      "Windows Phone",
+      "Symbian"
+    ],
+    "explanation": "A nevek ábécésorrendben követték egymást, a sorozat a 2018-as Pie verzióval ért véget."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik amerikai államban található a Szilícium-völgy?",
+    "answer": "Kalifornia",
+    "wrong": [
+      "Washington",
+      "Texas",
+      "Massachusetts"
+    ],
+    "explanation": "A nevét a számítógépchipek fő alapanyagáról, a szilíciumról kapta."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Hány bitből áll egy bájt?",
+    "answer": "8",
+    "wrong": [
+      "4",
+      "10",
+      "16"
+    ],
+    "explanation": "Az angol byte szó a harapást jelentő bite szándékos elírása, hogy ne keverjék össze a bittel."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Melyik országban született Elon Musk?",
+    "answer": "Dél-Afrika",
+    "wrong": [
+      "Kanada",
+      "Ausztrália",
+      "Új-Zéland"
+    ],
+    "explanation": "Tizenkét évesen eladta egy számítógépes magazinnak saját fejlesztésű videójátékát, a Blastart."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Kiről kapta a nevét az a teszt, amely azt vizsgálja, képes-e egy gép beszélgetésben embernek tűnni?",
+    "answer": "Alan Turing",
+    "wrong": [
+      "Charles Babbage",
+      "Ada Lovelace",
+      "Isaac Asimov"
+    ],
+    "explanation": "Életét a 2014-es Kódjátszma című film dolgozta fel, Benedict Cumberbatch főszereplésével."
+  },
+  {
+    "category": "tech",
+    "difficulty": 1,
+    "prompt": "Milyen színű volt a Windows klasszikus „halálképernyője”, amely súlyos rendszerhibánál jelent meg?",
+    "answer": "Kék",
+    "wrong": [
+      "Sárga",
+      "Lila",
+      "Narancssárga"
+    ],
+    "explanation": "Egy ilyen képernyő a Windows 98 élő bemutatóján is felvillant, Bill Gates szeme láttára."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik évben mutatta be Steve Jobs az első iPhone-t?",
+    "answer": "2007",
+    "wrong": [
+      "2005",
+      "2009",
+      "2011"
+    ],
+    "explanation": "Jobs úgy konferálta fel, mint egy iPodot, egy telefont és egy internetes kommunikátort egyetlen készülékben."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Mit jelent az USB rövidítés?",
+    "answer": "Universal Serial Bus",
+    "wrong": [
+      "Unified System Bus",
+      "Universal Storage Box",
+      "United Serial Board"
+    ],
+    "explanation": "Az első USB-szabvány 1996-ban jelent meg, és fokozatosan kiszorította a régi soros és párhuzamos portokat."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Mi volt a szövege a világ első SMS-ének, amelyet 1992-ben küldtek el?",
+    "answer": "Merry Christmas",
+    "wrong": [
+      "Hello World",
+      "Happy New Year",
+      "Can you hear me?"
+    ],
+    "explanation": "Neil Papworth mérnök számítógépről küldte, a címzett pedig nem válaszolhatott, mert a telefonokon akkor még nem lehetett üzenetet írni."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik brit tudós alkotta meg a világhálót, vagyis a World Wide Webet?",
+    "answer": "Tim Berners-Lee",
+    "wrong": [
+      "Alan Turing",
+      "Stephen Hawking",
+      "Clive Sinclair"
+    ],
+    "explanation": "Az első weboldal a genfi CERN kutatóközpontban készült, és egy helyreállított változata ma is megnézhető az info.cern.ch címen."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik technológiát nevezték el egy 10. századi dán királyról, Harald Gormssonról?",
+    "answer": "Bluetooth",
+    "wrong": [
+      "Wi-Fi",
+      "Ethernet",
+      "USB"
+    ],
+    "explanation": "Harald ragadványneve Kékfogú volt, a Bluetooth logója pedig monogramjának két rúnájából áll."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Kinek a 2005-ös stanfordi diplomaosztó beszédét zárta a híres „Stay hungry, stay foolish” mondat?",
+    "answer": "Steve Jobs",
+    "wrong": [
+      "Bill Gates",
+      "Mark Zuckerberg",
+      "Elon Musk"
+    ],
+    "explanation": "Jobs a mondatot a Whole Earth Catalog című kiadvány utolsó számának hátsó borítójáról idézte."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik ország cége fejlesztette ki a BlackBerry okostelefonokat?",
+    "answer": "Kanada",
+    "wrong": [
+      "Finnország",
+      "Svédország",
+      "Egyesült Államok"
+    ],
+    "explanation": "A cég eredeti neve Research In Motion volt, és csak 2013-ban vette fel a BlackBerry nevet."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik közismert Microsoft-program fejlesztését vezette a budapesti születésű Simonyi Károly?",
+    "answer": "Word",
+    "wrong": [
+      "PowerPoint",
+      "Outlook",
+      "Paint"
+    ],
+    "explanation": "Róla kapta a nevét a programozók „magyar jelölésnek” nevezett változóelnevezési szokása is."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik legendás autó tervezésében játszott kulcsszerepet a makói születésű Galamb József?",
+    "answer": "Ford T-modell",
+    "wrong": [
+      "Volkswagen Bogár",
+      "Citroën 2CV",
+      "Austin Mini"
+    ],
+    "explanation": "A „Tin Lizzie” becenevű autóból 1927-ig több mint 15 millió darab készült."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik találmány fűződik Puskás Tivadar nevéhez, aki Edison munkatársaként is dolgozott?",
+    "answer": "A telefonközpont",
+    "wrong": [
+      "A gramofon",
+      "A távíró",
+      "A rádió"
+    ],
+    "explanation": "1893-ban Budapesten ő indította el a Telefonhírmondót, amely telefonvonalon közvetített híreket és zenét."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik gép működési elvét ismerte fel Jedlik Ányos évekkel Werner von Siemens előtt?",
+    "answer": "Dinamó",
+    "wrong": [
+      "Transzformátor",
+      "Gőzturbina",
+      "Robbanómotor"
+    ],
+    "explanation": "Jedlik nevéhez fűződik a szódavíz tömeges gyártásának módszere is."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Milyen néven vált világhírűvé Kempelen Farkas 1770-ben bemutatott sakkozógépe?",
+    "answer": "A Török",
+    "wrong": [
+      "A Mór",
+      "A Szultán",
+      "A Varázsló"
+    ],
+    "explanation": "A gép belsejében egy elrejtőzött sakkmester irányította a bábut, és róla kapta a nevét az Amazon Mechanical Turk szolgáltatása is."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Mit jelent a weboldalak leírására használt HTML rövidítés?",
+    "answer": "HyperText Markup Language",
+    "wrong": [
+      "High Tech Modern Language",
+      "HyperText Machine Language",
+      "Hyperlink Text Media Language"
+    ],
+    "explanation": "A HTML nem programozási nyelv, hanem jelölőnyelv: a tartalom szerkezetét írja le."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Melyik cég fejlesztette ki a PDF fájlformátumot?",
+    "answer": "Adobe",
+    "wrong": [
+      "Microsoft",
+      "Apple",
+      "IBM"
+    ],
+    "explanation": "A rövidítés a Portable Document Format, azaz hordozható dokumentumformátum kifejezésből ered."
+  },
+  {
+    "category": "tech",
+    "difficulty": 2,
+    "prompt": "Mi volt a neve annak a számítógépnek, amely 1997-ben párosmérkőzésen legyőzte Garri Kaszparov sakkvilágbajnokot?",
+    "answer": "Deep Blue",
+    "wrong": [
+      "Deep Thought",
+      "Watson",
+      "AlphaZero"
+    ],
+    "explanation": "Egy évvel korábban még Kaszparov nyert az IBM gépe ellen."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Mit szabadalmaztatott 1893-ban Bánki Donát és Csonka János?",
+    "answer": "A porlasztót",
+    "wrong": [
+      "A gyújtógyertyát",
+      "Az önindítót",
+      "A sebességváltót"
+    ],
+    "explanation": "Csonka János később a magyar posta számára is gyártott autókat."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik programozási nyelvet alkotta meg 1964-ben a budapesti születésű Kemény János és amerikai kollégája, Thomas Kurtz?",
+    "answer": "BASIC",
+    "wrong": [
+      "Pascal",
+      "Fortran",
+      "COBOL"
+    ],
+    "explanation": "A név a Beginner's All-purpose Symbolic Instruction Code rövidítése, vagyis kezdőknek szánt nyelvet jelöl."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Milyen márkájú számítógépen futott a világ első webszervere a CERN-ben?",
+    "answer": "NeXT",
+    "wrong": [
+      "IBM",
+      "Commodore",
+      "Hewlett-Packard"
+    ],
+    "explanation": "A gépre ragasztott matricán kézzel írt figyelmeztetés állt: ez egy szerver, ne kapcsold ki!"
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Milyen anyagból készült Douglas Engelbart első számítógépes egerének háza a hatvanas években?",
+    "answer": "Fából",
+    "wrong": [
+      "Bakelitből",
+      "Alumíniumból",
+      "Kerámiából"
+    ],
+    "explanation": "Az egér a nevét a farokra emlékeztető zsinórja miatt kapta."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Milyen élőlényt ragasztottak 1947-ben a Harvard Mark II számítógép naplójába azzal a megjegyzéssel, hogy ez az első valódi „bug”?",
+    "answer": "Egy éjjeli lepkét",
+    "wrong": [
+      "Egy csótányt",
+      "Egy legyet",
+      "Egy szúnyogot"
+    ],
+    "explanation": "A bug szót a mérnökök már Edison idején is használták a hibákra, a lepke csak mulatságos, szó szerinti példa volt rá."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik hollywoodi filmcsillag szabadalmaztatta a frekvenciaugrásos eljárást, amelyre ma a Bluetooth is épül?",
+    "answer": "Hedy Lamarr",
+    "wrong": [
+      "Greta Garbo",
+      "Marlene Dietrich",
+      "Grace Kelly"
+    ],
+    "explanation": "A találmányt a második világháborúban dolgozta ki George Antheil zeneszerzővel, rádióvezérelt torpedókhoz."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Mi duplázódik meg nagyjából kétévente a Moore-törvény szerint?",
+    "answer": "A chipek tranzisztorainak száma",
+    "wrong": [
+      "A processzorok órajele",
+      "A merevlemezek kapacitása",
+      "Az internetezők száma"
+    ],
+    "explanation": "Gordon Moore az Intel egyik alapítója volt, a megfigyelést 1965-ben tette közzé, és tíz évvel később pontosította."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik ország cége fejlesztette ki a QR-kódot eredetileg autóalkatrészek nyomon követésére?",
+    "answer": "Japán",
+    "wrong": [
+      "Dél-Korea",
+      "Németország",
+      "Kína"
+    ],
+    "explanation": "A QR a Quick Response, azaz gyors válasz rövidítése."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik zeneszerző gitárdarabjából származik a legendás Nokia-csengőhang dallama?",
+    "answer": "Francisco Tárrega",
+    "wrong": [
+      "Isaac Albéniz",
+      "Manuel de Falla",
+      "Joaquín Rodrigo"
+    ],
+    "explanation": "A dallam Tárrega 1902-es Gran Vals című darabjának egy rövid részlete."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik cég mérnöke építette meg 1975-ben az első digitális fényképezőgépet?",
+    "answer": "Kodak",
+    "wrong": [
+      "Canon",
+      "Nikon",
+      "Sony"
+    ],
+    "explanation": "A kenyérpirító méretű gép 23 másodperc alatt rögzített egyetlen fekete-fehér képet egy magnókazettára."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Hány dalt ígért „a zsebedben” az Apple, amikor 2001-ben bemutatta az első iPodot?",
+    "answer": "1000",
+    "wrong": [
+      "100",
+      "500",
+      "10 000"
+    ],
+    "explanation": "Az első iPodban 5 GB-os merevlemez volt, és eleinte csak Mac számítógépekkel működött."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik cég 1981-es személyi számítógépéhez készítette a Microsoft a DOS operációs rendszert?",
+    "answer": "IBM",
+    "wrong": [
+      "Apple",
+      "Commodore",
+      "Atari"
+    ],
+    "explanation": "Az alapját a Microsoft egy seattle-i cégtől vásárolta meg, ahol eredetileg QDOS néven fejlesztették."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik két cég fejlesztette ki közösen a CD-t?",
+    "answer": "Philips és Sony",
+    "wrong": [
+      "Panasonic és Toshiba",
+      "Samsung és LG",
+      "Pioneer és JVC"
+    ],
+    "explanation": "A legenda szerint a lemez hosszát azért szabták 74 percre, hogy ráférjen Beethoven IX. szimfóniája."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik szabványszám jelöli a Wi-Fi-hálózatok technikai szabványcsaládját?",
+    "answer": "IEEE 802.11",
+    "wrong": [
+      "IEEE 802.3",
+      "IEEE 802.15",
+      "IEEE 802.16"
+    ],
+    "explanation": "A Wi-Fi nevet egy márkaügynökség találta ki, és valójában nem rövidítés, bár sokan „wireless fidelity”-ként ismerik."
+  },
+  {
+    "category": "tech",
+    "difficulty": 3,
+    "prompt": "Melyik háztartási gépre kapott közös szabadalmat Szilárd Leó és Albert Einstein?",
+    "answer": "Hűtőszekrény",
+    "wrong": [
+      "Mosógép",
+      "Porszívó",
+      "Villanytűzhely"
+    ],
+    "explanation": "A mozgó alkatrészek nélküli hűtőt egy mérgező hűtőgáz-szivárgásról szóló újsághír ihlette."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "A hagyomány szerint melyik fejedelem vezetésével foglalták el a magyarok a Kárpát-medencét?",
+    "answer": "Árpád",
+    "wrong": [
+      "Géza",
+      "Taksony",
+      "Fajsz"
+    ],
+    "explanation": "A Hősök terén a hét vezér lovas szoborcsoportjának élén is az ő alakja áll."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik somogyi vezér szállt szembe a trónért Szent Istvánnal, ahogy azt az István, a király című rockopera is elmeséli?",
+    "answer": "Koppány",
+    "wrong": [
+      "Lehel",
+      "Bulcsú",
+      "Botond"
+    ],
+    "explanation": "Az 1983-as ősbemutatón Koppányt Vikidál Gyula, Istvánt Varga Miklós énekelte."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Milyen madár látható Mátyás király címerén, csőrében aranygyűrűvel?",
+    "answer": "Holló",
+    "wrong": [
+      "Sas",
+      "Turul",
+      "Sólyom"
+    ],
+    "explanation": "Innen ered a Corvinus név is: a latin corvus hollót jelent."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Kit nevezett Kossuth Lajos „a legnagyobb magyarnak”?",
+    "answer": "Széchenyi István",
+    "wrong": [
+      "Deák Ferenc",
+      "Wesselényi Miklós",
+      "Batthyány Lajos"
+    ],
+    "explanation": "Az ő egyéves jövedelmének felajánlásával indult 1825-ben a Magyar Tudományos Akadémia."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik évben írták alá a trianoni békeszerződést?",
+    "answer": "1920",
+    "wrong": [
+      "1918",
+      "1919",
+      "1921"
+    ],
+    "explanation": "Az aláírás napja, június 4. 2010 óta a nemzeti összetartozás napja."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik hónapot nevezték el arról a római hadvezérről, akit Kr. e. 44-ben a szenátus ülésén gyilkoltak meg?",
+    "answer": "Július",
+    "wrong": [
+      "Március",
+      "Augusztus",
+      "Június"
+    ],
+    "explanation": "A merénylet március idusán, azaz 15-én történt."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik görög városállam királya volt Leónidasz, aki 300 harcosával a thermopülai szorost védte?",
+    "answer": "Spárta",
+    "wrong": [
+      "Athén",
+      "Korinthosz",
+      "Théba"
+    ],
+    "explanation": "A csata Kr. e. 480-ban zajlott, és ez ihlette a 300 című filmet is."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik fáraó szinte érintetlen sírját tárta fel Howard Carter 1922-ben a Királyok völgyében?",
+    "answer": "Tutanhamon",
+    "wrong": [
+      "II. Ramszesz",
+      "Kheopsz",
+      "Ehnaton"
+    ],
+    "explanation": "A sírban több mint ötezer tárgyat találtak, köztük a híres arany halotti maszkot."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik városban lőtték le 1914-ben Ferenc Ferdinánd trónörököst, ami az első világháború kitöréséhez vezetett?",
+    "answer": "Szarajevó",
+    "wrong": [
+      "Belgrád",
+      "Zágráb",
+      "Bécs"
+    ],
+    "explanation": "A merényletet a boszniai szerb Gavrilo Princip követte el."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 1,
+    "prompt": "Melyik országot támadta meg Németország 1939. szeptember 1-jén, kirobbantva a második világháborút?",
+    "answer": "Lengyelország",
+    "wrong": [
+      "Csehszlovákia",
+      "Franciaország",
+      "Ausztria"
+    ],
+    "explanation": "Szeptember 17-én keletről a Szovjetunió is megtámadta az országot."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik királyunk törvényéből ered a mondás: „Boszorkányok pedig nincsenek”?",
+    "answer": "Könyves Kálmán",
+    "wrong": [
+      "Szent László",
+      "II. Géza",
+      "III. Béla"
+    ],
+    "explanation": "A „Könyves” melléknevet műveltségéről és könyvszeretetéről kapta."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Hol szenvedett súlyos vereséget IV. Béla serege a tatároktól 1241-ben?",
+    "answer": "Muhinál",
+    "wrong": [
+      "Mohácsnál",
+      "Augsburgnál",
+      "Pozsonynál"
+    ],
+    "explanation": "A csata a Sajó partján zajlott, a király pedig egészen az Adriáig menekült a tatárok elől."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik Habsburg uralkodót nevezték „kalapos királynak”, mert nem koronáztatta meg magát magyar királlyá?",
+    "answer": "II. József",
+    "wrong": [
+      "I. Ferenc",
+      "II. Lipót",
+      "III. Károly"
+    ],
+    "explanation": "A Szent Koronát Bécsbe vitette, és csak a halála előtt rendelte el a hazaszállítását."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik pesti kávéházban gyülekeztek a márciusi ifjak 1848. március 15-én reggel?",
+    "answer": "Pilvax",
+    "wrong": [
+      "Centrál",
+      "Gerbeaud",
+      "Abbázia"
+    ],
+    "explanation": "Petőfiék innen indultak el, hogy a pesti egyetemistákat is maguk mellé állítsák."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik magyar város mellett rendezték 1989 augusztusában a Páneurópai pikniket, ahol több száz keletnémet menekült át Ausztriába?",
+    "answer": "Sopron",
+    "wrong": [
+      "Kőszeg",
+      "Szombathely",
+      "Mosonmagyaróvár"
+    ],
+    "explanation": "A határon egy kaput csak jelképesen, néhány órára nyitottak meg, de a hír bejárta a világot."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Hogy hívták Kolumbusz Kristóf zászlóshajóját az 1492-es első útján?",
+    "answer": "Santa María",
+    "wrong": [
+      "Pinta",
+      "Niña",
+      "Victoria"
+    ],
+    "explanation": "A hajó 1492 karácsonyán zátonyra futott Hispaniola szigeténél, a roncsaiból erődöt építettek."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik firenzei bankárcsalád volt Michelangelo és Botticelli egyik legfontosabb pártfogója?",
+    "answer": "Medici",
+    "wrong": [
+      "Borgia",
+      "Sforza",
+      "Gonzaga"
+    ],
+    "explanation": "A család két francia királynét is adott: Medici Katalint és Medici Máriát."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Hányszor mondta ki a boldogító igent VIII. Henrik angol király?",
+    "answer": "6",
+    "wrong": [
+      "4",
+      "5",
+      "8"
+    ],
+    "explanation": "Mivel a pápa nem engedélyezte első házassága felbontását, szakított Rómával, és létrehozta az anglikán egyházat."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik amerikai elnök mondta 1963-ban Nyugat-Berlinben: „Ich bin ein Berliner”?",
+    "answer": "John F. Kennedy",
+    "wrong": [
+      "Ronald Reagan",
+      "Richard Nixon",
+      "Dwight D. Eisenhower"
+    ],
+    "explanation": "A beszédet a schönebergi városháza előtt több százezres tömeg hallgatta."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 2,
+    "prompt": "Melyik holland városban írták alá 1992-ben az Európai Uniót létrehozó szerződést?",
+    "answer": "Maastricht",
+    "wrong": [
+      "Rotterdam",
+      "Hága",
+      "Utrecht"
+    ],
+    "explanation": "Ez a szerződés készítette elő a közös valuta, az euró bevezetését is."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Ki volt az Árpád-ház utolsó királya, akinek 1301-es halálával kihalt a dinasztia férfiága?",
+    "answer": "III. András",
+    "wrong": [
+      "IV. László",
+      "V. István",
+      "II. András"
+    ],
+    "explanation": "Utána több trónkövetelő harcolt a koronáért, végül az Anjou-házi Károly Róbert győzött."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik törökországi városban élte le utolsó éveit száműzetésben II. Rákóczi Ferenc?",
+    "answer": "Rodostó",
+    "wrong": [
+      "Isztambul",
+      "Drinápoly",
+      "Szmirna"
+    ],
+    "explanation": "Titkára, Mikes Kelemen innen írta híres Törökországi leveleit."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Mit követelt a márciusi ifjak 12 pontjának legelső pontja?",
+    "answer": "A sajtó szabadságát",
+    "wrong": [
+      "Felelős minisztériumot",
+      "Közös teherviselést",
+      "Nemzeti őrsereget"
+    ],
+    "explanation": "Ezért nyomtatták ki március 15-én a 12 pontot és a Nemzeti dalt cenzori engedély nélkül, Landerer nyomdájában."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik amerikai katonai támaszponton őrizték a Szent Koronát, mielőtt 1978-ban hazatért Magyarországra?",
+    "answer": "Fort Knox",
+    "wrong": [
+      "West Point",
+      "Fort Bragg",
+      "Pearl Harbor"
+    ],
+    "explanation": "A koronát Cyrus Vance amerikai külügyminiszter adta át Budapesten 1978. január 6-án."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik két ország csatlakozott Magyarországgal együtt a NATO-hoz 1999-ben?",
+    "answer": "Csehország és Lengyelország",
+    "wrong": [
+      "Szlovákia és Szlovénia",
+      "Románia és Bulgária",
+      "Horvátország és Albánia"
+    ],
+    "explanation": "A csatlakozási okmányokat 1999. március 12-én helyezték letétbe az amerikai Independence városában."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik magyar feltaláló nevéhez fűződik a Telefon Hírmondó, amely 1893-tól telefonvonalon sugárzott híreket és zenét Budapesten?",
+    "answer": "Puskás Tivadar",
+    "wrong": [
+      "Jedlik Ányos",
+      "Bláthy Ottó",
+      "Kandó Kálmán"
+    ],
+    "explanation": "Puskás Tivadar korábban Thomas Edison munkatársa volt."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik északkelet-angliai kolostor 793-as kifosztását tartják hagyományosan a viking kor kezdetének?",
+    "answer": "Lindisfarne",
+    "wrong": [
+      "Canterbury",
+      "Whitby",
+      "Glastonbury"
+    ],
+    "explanation": "A kolostor egy apálykor gyalog is megközelíthető szigeten állt."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Melyik ókori uralkodó törvényeit vésték arra a kőoszlopra, amely a „szemet szemért, fogat fogért” elvéről híres?",
+    "answer": "Hammurapi",
+    "wrong": [
+      "Nebukadnezár",
+      "Assurbanipal",
+      "I. Dareiosz"
+    ],
+    "explanation": "A törvényoszlop ma a párizsi Louvre-ban látható."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "Mi volt a fedőneve a szövetségesek 1944-es normandiai inváziójának, amely a D-nappal kezdődött?",
+    "answer": "Overlord",
+    "wrong": [
+      "Barbarossa",
+      "Market Garden",
+      "Seelöwe"
+    ],
+    "explanation": "A partraszállás június 6-án öt normandiai partszakaszon, köztük az Omaha Beachen zajlott."
+  },
+  {
+    "category": "tortenelem",
+    "difficulty": 3,
+    "prompt": "A 2004-ben az Európai Unióhoz csatlakozott országok közül melyik vezette be elsőként az eurót?",
+    "answer": "Szlovénia",
+    "wrong": [
+      "Szlovákia",
+      "Észtország",
+      "Málta"
+    ],
+    "explanation": "A szlovén 2 eurós érmén France Prešeren, a szlovén himnusz szövegének költője látható."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Ki alakította Jack Dawsont, a fiatal rajzolót a Titanic című filmben?",
+    "answer": "Leonardo DiCaprio",
+    "wrong": [
+      "Matt Damon",
+      "Brad Pitt",
+      "Ewan McGregor"
+    ],
+    "explanation": "DiCaprio első Oscar-díját csak 2016-ban kapta meg, A visszatérő főszerepéért."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Mihez hasonlítja az életet Forrest Gump édesanyja a film leghíresebb mondásában?",
+    "answer": "Egy doboz bonbonhoz",
+    "wrong": [
+      "Egy pakli kártyához",
+      "Egy hosszú futáshoz",
+      "Egy hullámvasúthoz"
+    ],
+    "explanation": "Tom Hanks a címszerepért zsinórban második évben nyerte el a legjobb férfi főszereplőnek járó Oscar-díjat."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a kisfiút, akit a családja véletlenül otthon felejt karácsonykor a Reszkessetek, betörők! című filmben?",
+    "answer": "Kevin",
+    "wrong": [
+      "Tommy",
+      "Danny",
+      "Charlie"
+    ],
+    "explanation": "A népes család Párizsba repül az ünnepekre, és az anyja csak a gépen döbben rá, hogy a fia otthon maradt."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Mi a hívóneve Tom Cruise vadászpilótájának a Top Gun című filmben?",
+    "answer": "Maverick",
+    "wrong": [
+      "Iceman",
+      "Goose",
+      "Viper"
+    ],
+    "explanation": "A folytatás, a Top Gun: Maverick 36 évvel az első rész után, 2022-ben került a mozikba."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik városban tartják a legénybúcsút az első Másnaposok-filmben?",
+    "answer": "Las Vegas",
+    "wrong": [
+      "Atlantic City",
+      "Miami",
+      "New Orleans"
+    ],
+    "explanation": "A lakosztály fürdőszobájában talált tigris a film szerint Mike Tyson háziállata."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Ki alakítja Kent a 2023-as Barbie-filmben?",
+    "answer": "Ryan Gosling",
+    "wrong": [
+      "Zac Efron",
+      "Chris Hemsworth",
+      "Channing Tatum"
+    ],
+    "explanation": "Gosling a film I'm Just Ken című dalát a 2024-es Oscar-gálán élőben is elénekelte."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Ki rendezte a 2023-as Oppenheimer című filmet?",
+    "answer": "Christopher Nolan",
+    "wrong": [
+      "Denis Villeneuve",
+      "Ridley Scott",
+      "David Fincher"
+    ],
+    "explanation": "A film hét Oscar-díjat nyert, köztük a legjobb rendezőnek járót, amely Nolan első ilyen díja volt."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik film zenéjéből ismert a két, egymást váltogató mély hangból álló, egyre gyorsuló, vészjósló dallam?",
+    "answer": "A cápa",
+    "wrong": [
+      "Psycho",
+      "Halloween",
+      "Az ördögűző"
+    ],
+    "explanation": "A zenét John Williams szerezte, és Oscar-díjat is kapott érte."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Melyik filmben hangzik el: „Olyan ajánlatot teszek neki, amit nem utasíthat vissza”?",
+    "answer": "A Keresztapa",
+    "wrong": [
+      "A sebhelyesarcú",
+      "Nagymenők",
+      "Aki legyőzte Al Caponét"
+    ],
+    "explanation": "A mondatot először a Marlon Brando alakította Don Vito Corleone mondja ki."
+  },
+  {
+    "category": "film",
+    "difficulty": 1,
+    "prompt": "Hogy hívják azt a holdat, amelyen James Cameron Avatar című filmje játszódik?",
+    "answer": "Pandora",
+    "wrong": [
+      "Endor",
+      "Arrakis",
+      "Solaris"
+    ],
+    "explanation": "Pandorát a kék bőrű, nagyjából háromméteres na'vik lakják."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik film lett 2020-ban az első nem angol nyelvű alkotás, amely elnyerte a legjobb filmnek járó Oscar-díjat?",
+    "answer": "Élősködők",
+    "wrong": [
+      "Roma",
+      "Oldboy",
+      "Tigris és sárkány"
+    ],
+    "explanation": "A dél-koreai film összesen négy Oscar-díjat nyert, köztük a legjobb rendezésért járót."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik filmet hirdették ki tévesen győztesként a 2017-es Oscar-gálán, mielőtt kiderült, hogy valójában a Holdfény a legjobb film?",
+    "answer": "Kaliforniai álom",
+    "wrong": [
+      "Érkezés",
+      "Oroszlán",
+      "A számolás joga"
+    ],
+    "explanation": "A bakit az okozta, hogy a díjátadók a legjobb női főszereplő borítékját kapták meg."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Mivel ellenőrzi Cobb az Eredet című filmben, hogy álomban van-e?",
+    "answer": "Egy pörgettyűvel",
+    "wrong": [
+      "Egy dobókockával",
+      "Egy zsebórával",
+      "Egy pénzérmével"
+    ],
+    "explanation": "Ha a pörgettyű nem dől el, Cobb tudja, hogy még álmodik; eredetileg a feleségéé, Malé volt."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Mekkora sebességnél ugrik át az időben a DeLorean a Vissza a jövőbe című filmben?",
+    "answer": "88 mérföld/óra",
+    "wrong": [
+      "55 mérföld/óra",
+      "100 mérföld/óra",
+      "120 mérföld/óra"
+    ],
+    "explanation": "Ez nagyjából 142 km/h, és az ugráshoz ráadásul 1,21 gigawatt energia is kell."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Hogy hívják a Terminátor-filmekben azt a mesterséges intelligenciát, amely háborút indít az emberiség ellen?",
+    "answer": "Skynet",
+    "wrong": [
+      "Ultron",
+      "Cortana",
+      "VIKI"
+    ],
+    "explanation": "A Terminátor 2. szerint a Skynet 1997. augusztus 29-én, az ítélet napján indítja el az atomháborút."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Ki alakította Commodus császárt a 2000-ben bemutatott Gladiátorban?",
+    "answer": "Joaquin Phoenix",
+    "wrong": [
+      "Jared Leto",
+      "Christian Bale",
+      "Jake Gyllenhaal"
+    ],
+    "explanation": "Phoenix később, 2020-ban a Joker címszerepéért Oscar-díjat nyert."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Ki szerezte az Eredet, a Csillagok között és a Dűne filmzenéjét?",
+    "answer": "Hans Zimmer",
+    "wrong": [
+      "Ludwig Göransson",
+      "Howard Shore",
+      "Alexandre Desplat"
+    ],
+    "explanation": "Zimmer első Oscar-díját Az oroszlánkirályért kapta 1995-ben, a másodikat a Dűnéért 2022-ben."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik filmben töri be Jack Nicholson baltával az ajtót, majd bekiált a résen: „Here's Johnny!”?",
+    "answer": "Ragyogás",
+    "wrong": [
+      "Száll a kakukk fészkére",
+      "Tortúra",
+      "Az ördögűző"
+    ],
+    "explanation": "A filmet Stanley Kubrick rendezte, a mondat pedig egy amerikai esti tévéshow felkonferálását parodizálja."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik hangszeren játszik a fiatal főhős a Whiplash című filmben?",
+    "answer": "Dobon",
+    "wrong": [
+      "Zongorán",
+      "Trombitán",
+      "Szaxofonon"
+    ],
+    "explanation": "J. K. Simmons a kíméletlen zenetanár szerepéért 2015-ben Oscar-díjat kapott."
+  },
+  {
+    "category": "film",
+    "difficulty": 2,
+    "prompt": "Melyik rendezőnő nevéhez fűződik a Lady Bird, a Kisasszonyok és a Barbie?",
+    "answer": "Greta Gerwig",
+    "wrong": [
+      "Sofia Coppola",
+      "Olivia Wilde",
+      "Chloé Zhao"
+    ],
+    "explanation": "A Barbie lett 2023-ban a világ legtöbb bevételt hozó filmje."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "A Csillagok között című filmben hány földi évnek felel meg egyetlen óra a Miller-bolygón?",
+    "answer": "7 év",
+    "wrong": [
+      "3 év",
+      "10 év",
+      "12 év"
+    ],
+    "explanation": "Mire Cooper visszatér a bolygóról az űrhajóra, a Földön már több mint 23 év telt el."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik olasz zeneszerző kapta meg 2016-ban az Oscar-díjat Tarantino Aljas nyolcas című westernjének zenéjéért?",
+    "answer": "Ennio Morricone",
+    "wrong": [
+      "Nino Rota",
+      "Nicola Piovani",
+      "Dario Marianelli"
+    ],
+    "explanation": "Morricone az 1960-as évek spagettiwesternjeivel, például A Jó, a Rossz és a Csúffal lett világhírű."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik filmjéért kapta meg Martin Scorsese 2007-ben a legjobb rendezőnek járó Oscar-díjat?",
+    "answer": "A tégla",
+    "wrong": [
+      "Nagymenők",
+      "Taxisofőr",
+      "Aviátor"
+    ],
+    "explanation": "A tégla egy hongkongi krimi, a Szigorúan piszkos ügyek amerikai feldolgozása."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik író kisregénye alapján készült A remény rabjai?",
+    "answer": "Stephen King",
+    "wrong": [
+      "John Grisham",
+      "Dean Koontz",
+      "Michael Connelly"
+    ],
+    "explanation": "A kisregény eredeti címében Rita Hayworth, a negyvenes évek filmcsillaga is szerepel."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik párizsi negyedben dolgozik pincérnőként a címszereplő az Amélie csodálatos élete című filmben?",
+    "answer": "Montmartre",
+    "wrong": [
+      "Marais",
+      "Montparnasse",
+      "Belleville"
+    ],
+    "explanation": "Amélie titokban világkörüli útra küldi apja kerti törpéjét, egy légiutas-kísérő barátnője fotóival."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik Tarantino-filmben alakítja Christoph Waltz a hírhedt SS-tisztet, Hans Landa ezredest?",
+    "answer": "Becstelen brigantyk",
+    "wrong": [
+      "Django elszabadul",
+      "Aljas nyolcas",
+      "Volt egyszer egy Hollywood"
+    ],
+    "explanation": "Waltz ezért a szerepért, majd a Django elszabadulért is Oscar-díjat kapott."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik filmet rendezte a Budapesten született Kertész Mihály, aki Hollywoodban Michael Curtiz néven lett híres?",
+    "answer": "Casablanca",
+    "wrong": [
+      "Elfújta a szél",
+      "Aranypolgár",
+      "Óz, a csodák csodája"
+    ],
+    "explanation": "A film 1944-ben a legjobb filmnek és a legjobb rendezőnek járó Oscar-díjat is elnyerte."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Melyik Spielberg-film operatőri munkájáért kapott Oscar-díjat a magyar Zsigmond Vilmos?",
+    "answer": "Harmadik típusú találkozások",
+    "wrong": [
+      "E.T., a földönkívüli",
+      "Az elveszett frigyláda fosztogatói",
+      "Ryan közlegény megmentése"
+    ],
+    "explanation": "Zsigmond 1956-ban a forradalomról forgatott felvételeivel a csomagjában hagyta el Magyarországot."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Ki lett 2023-ban az első ázsiai színésznő, aki elnyerte a legjobb női főszereplőnek járó Oscar-díjat?",
+    "answer": "Michelle Yeoh",
+    "wrong": [
+      "Lucy Liu",
+      "Zhang Ziyi",
+      "Gong Li"
+    ],
+    "explanation": "A díjat a Minden, mindenhol, mindenkor című filmért kapta, amely összesen hét Oscart nyert."
+  },
+  {
+    "category": "film",
+    "difficulty": 3,
+    "prompt": "Milyen színű kabátot visel a kislány, aki szinte az egyetlen színes folt a fekete-fehér Schindler listájában?",
+    "answer": "Piros",
+    "wrong": [
+      "Sárga",
+      "Kék",
+      "Zöld"
+    ],
+    "explanation": "Spielberg ezért a filmért kapta meg első rendezői Oscar-díját 1994-ben."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Milyen színűek hagyományosan a Ferrari Forma–1-es versenyautói?",
+    "answer": "Pirosak",
+    "wrong": [
+      "Ezüstszínűek",
+      "Narancssárgák",
+      "Sötétkékek"
+    ],
+    "explanation": "Az olasz autóversenyzés hagyományos színe a rosso corsa, azaz versenypiros."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Ki volt az első magyar pilóta, aki Forma–1-es világbajnoki futamon rajthoz állt?",
+    "answer": "Baumgartner Zsolt",
+    "wrong": [
+      "Michelisz Norbert",
+      "Kiss Norbert",
+      "Talmácsi Gábor"
+    ],
+    "explanation": "2003-ban a Magyar Nagydíjon mutatkozott be, a Jordan csapat színeiben."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik európai törpeállam utcáin rendeznek Forma–1-es nagydíjat?",
+    "answer": "Monaco",
+    "wrong": [
+      "Liechtenstein",
+      "Andorra",
+      "Málta"
+    ],
+    "explanation": "A pálya egyik legismertebb része egy alagút, ahonnan az autók a kikötő mellé érkeznek ki."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Milyen zászlóval intik le a célba érkező autókat a futam végén?",
+    "answer": "Kockás zászlóval",
+    "wrong": [
+      "Zöld zászlóval",
+      "Fehér zászlóval",
+      "Sárga zászlóval"
+    ],
+    "explanation": "A kockás zászlót elsőként mindig a futam győztese látja meg."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Mit jelent, ha egy pilóta pole pozícióból rajtol?",
+    "answer": "Az első rajthelyről indul",
+    "wrong": [
+      "A boxutcából indul",
+      "Az utolsó rajthelyről indul",
+      "Büntetésből hátrébb indul"
+    ],
+    "explanation": "A pole pozíciót az időmérő edzés leggyorsabb köre szerzi meg."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Mit kell tenniük a pilótáknak, amikor kijön a pályára a biztonsági autó (safety car)?",
+    "answer": "Előzés nélkül beállni mögé",
+    "wrong": [
+      "Azonnal kiállni a boxba",
+      "Megállni a rajtrácson",
+      "Félreállni a pálya szélére"
+    ],
+    "explanation": "Baleset után a biztonsági autó lassan vezeti a mezőnyt, amíg a pályát megtisztítják."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik streamingszolgáltatón indult 2019-ben a Forma–1 kulisszái mögé kalauzoló Drive to Survive sorozat?",
+    "answer": "Netflix",
+    "wrong": [
+      "HBO",
+      "Amazon Prime Video",
+      "Apple TV+"
+    ],
+    "explanation": "Az első évad a 2018-as idény kulisszái mögé vitte a nézőket."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Hány világbajnoki címet nyert Michael Schumacher?",
+    "answer": "7",
+    "wrong": [
+      "5",
+      "6",
+      "8"
+    ],
+    "explanation": "Lewis Hamilton 2020-ban érte utol ezt a csúcsot."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik csapathoz igazolt Lewis Hamilton a 2025-ös idényre, a Mercedesnél töltött 12 év után?",
+    "answer": "Ferrari",
+    "wrong": [
+      "Red Bull",
+      "McLaren",
+      "Aston Martin"
+    ],
+    "explanation": "Pályafutását 2007-ben a McLarennél kezdte, és ott lett először világbajnok 2008-ban."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik pilóta lett világbajnok 2021-ben, 2022-ben, 2023-ban és 2024-ben is?",
+    "answer": "Max Verstappen",
+    "wrong": [
+      "Lewis Hamilton",
+      "Charles Leclerc",
+      "Lando Norris"
+    ],
+    "explanation": "Édesapja, Jos Verstappen szintén Forma–1-es pilóta volt."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik ország pilótája volt a legendás Ayrton Senna?",
+    "answer": "Brazília",
+    "wrong": [
+      "Argentína",
+      "Portugália",
+      "Spanyolország"
+    ],
+    "explanation": "Sárga bukósisakját zöld és kék csík díszítette, a brazil zászló színei."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Ki játssza a főszerepet a 2025-ös, F1 című hollywoodi versenyautós filmben?",
+    "answer": "Brad Pitt",
+    "wrong": [
+      "Tom Cruise",
+      "Ryan Gosling",
+      "Keanu Reeves"
+    ],
+    "explanation": "A film egyik producere Lewis Hamilton volt, és valódi nagydíjhétvégéken is forgattak."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik ország pilótája Fernando Alonso, a 2005-ös és 2006-os világbajnok?",
+    "answer": "Spanyolország",
+    "wrong": [
+      "Olaszország",
+      "Portugália",
+      "Mexikó"
+    ],
+    "explanation": "Mindkét világbajnoki címét a Renault csapattal nyerte."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Mit fröcskölnek hagyományosan egymásra a dobogósok a díjátadó után?",
+    "answer": "Pezsgőt",
+    "wrong": [
+      "Sört",
+      "Ásványvizet",
+      "Energiaitalt"
+    ],
+    "explanation": "A szokást Dan Gurney indította el, aki 1967-ben Le Mans-i győzelme után szétspriccelte a pezsgőt."
+  },
+  {
+    "category": "f1",
+    "difficulty": 1,
+    "prompt": "Melyik csapattal nyert Sebastian Vettel sorozatban négy világbajnoki címet 2010 és 2013 között?",
+    "answer": "Red Bull",
+    "wrong": [
+      "Ferrari",
+      "Mercedes",
+      "McLaren"
+    ],
+    "explanation": "2010-ben 23 évesen a sportág akkori legfiatalabb világbajnoka lett."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik évben rendezték az első Forma–1-es Magyar Nagydíjat a Hungaroringen?",
+    "answer": "1986",
+    "wrong": [
+      "1984",
+      "1988",
+      "1990"
+    ],
+    "explanation": "Ez volt az első Forma–1-es futam a vasfüggöny mögött."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Ki nyerte a legtöbb Magyar Nagydíjat 2024 végéig?",
+    "answer": "Lewis Hamilton",
+    "wrong": [
+      "Michael Schumacher",
+      "Ayrton Senna",
+      "Max Verstappen"
+    ],
+    "explanation": "Nyolcszor győzött a Hungaroringen, először 2007-ben, utoljára 2020-ban."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Milyen színű zászlót lengetnek annak a pilótának, akinek utat kell engednie az őt lekörözni készülő, gyorsabb autónak?",
+    "answer": "Kék",
+    "wrong": [
+      "Sárga",
+      "Fehér",
+      "Zöld"
+    ],
+    "explanation": "Aki többször figyelmen kívül hagyja, büntetést kaphat."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Mit nyitott ki a pilóta a 2011-ben bevezetett DRS gombjával előzés közben?",
+    "answer": "A hátsó szárny egyik lapját",
+    "wrong": [
+      "Az első szárny egyik lapját",
+      "A motorburkolat szellőzőit",
+      "A diffúzor terelőlapjait"
+    ],
+    "explanation": "A kisebb légellenállás miatt egyenesben nagyobb lett az autó végsebessége."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Mi a neve a pilóta feje fölött ívelő, 2018 óta kötelező titán védőkeretnek?",
+    "answer": "Halo",
+    "wrong": [
+      "HANS",
+      "Aeroscreen",
+      "Monocoque"
+    ],
+    "explanation": "Romain Grosjean 2020-as bahreini, lángba borult balesetét részben neki köszönhetően élte túl."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik pilóta szólt rá 2012-ben a csapatára a rádióban: „Hagyjatok békén, tudom, mit csinálok!”?",
+    "answer": "Kimi Räikkönen",
+    "wrong": [
+      "Fernando Alonso",
+      "Sebastian Vettel",
+      "Lewis Hamilton"
+    ],
+    "explanation": "A 2007-es világbajnok azt az abu-dzabi futamot a Lotusszal meg is nyerte."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Ki volt a Haas csapatfőnöke a Drive to Survive első évadaiban?",
+    "answer": "Günther Steiner",
+    "wrong": [
+      "Toto Wolff",
+      "Christian Horner",
+      "Mattia Binotto"
+    ],
+    "explanation": "Steiner az olaszországi Dél-Tirolban, Meranóban született."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Mi volt Daniel Ricciardo híres dobogós ünneplése?",
+    "answer": "A cipőjéből itta a pezsgőt",
+    "wrong": [
+      "Hátraszaltót ugrott a dobogóról",
+      "Felmászott a kerítésre",
+      "A közönség közé dobta a serleget"
+    ],
+    "explanation": "Az ausztrál eredetű szokást angolul „shoey”-nak hívják."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik olasz versenypályát becézik „a sebesség templomának”?",
+    "answer": "Monza",
+    "wrong": [
+      "Imola",
+      "Mugello",
+      "Misano"
+    ],
+    "explanation": "A futam után a szurkolók hagyományosan elözönlik a célegyenest a dobogó alatt."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Hol rendezték 1950-ben a Forma–1 világbajnokság legelső futamát?",
+    "answer": "Silverstone",
+    "wrong": [
+      "Monza",
+      "Monaco",
+      "Spa-Francorchamps"
+    ],
+    "explanation": "A pálya egy második világháborús katonai repülőtér helyén épült."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik japán pálya különlegessége, hogy nyolcas alakú, és egy felüljárón keresztezi önmagát?",
+    "answer": "Suzuka",
+    "wrong": [
+      "Fuji Speedway",
+      "Motegi",
+      "Okayama"
+    ],
+    "explanation": "A pályát a Honda építtette 1962-ben saját tesztpályának."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik pályán dőlt el az utolsó körben Max Verstappen és Lewis Hamilton 2021-es bajnoki csatája?",
+    "answer": "Yas Marina (Abu-Dzabi)",
+    "wrong": [
+      "Interlagos (Brazília)",
+      "Loszail (Katar)",
+      "Dzsidda (Szaúd-Arábia)"
+    ],
+    "explanation": "A két pilóta azonos pontszámmal érkezett az idény utolsó futamára."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik csapattal lett Jenson Button világbajnok 2009-ben?",
+    "answer": "Brawn GP",
+    "wrong": [
+      "Williams",
+      "Toyota",
+      "BMW Sauber"
+    ],
+    "explanation": "Egyetlen idénye után a csapatot a Mercedes vásárolta meg."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik világbajnokot becézték „Professzornak” kiszámított, taktikus versenyzése miatt?",
+    "answer": "Alain Prost",
+    "wrong": [
+      "Niki Lauda",
+      "Nelson Piquet",
+      "Jackie Stewart"
+    ],
+    "explanation": "Négy címéből hármat a McLarennel, egyet a Williamsszel nyert."
+  },
+  {
+    "category": "f1",
+    "difficulty": 2,
+    "prompt": "Melyik csapattal szerezte Michael Schumacher első két világbajnoki címét 1994-ben és 1995-ben?",
+    "answer": "Benetton",
+    "wrong": [
+      "Ferrari",
+      "Jordan",
+      "Williams"
+    ],
+    "explanation": "A csapat az azonos nevű olasz divatcég tulajdonában volt."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik autógyár versenyautójával nyerte meg a magyar Szisz Ferenc 1906-ban a történelem első Grand Prix-futamát?",
+    "answer": "Renault",
+    "wrong": [
+      "Fiat",
+      "Peugeot",
+      "Mercedes"
+    ],
+    "explanation": "A kétnapos verseny Le Mans környékén zajlott, összesen több mint 1200 kilométeren."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik budapesti parkban rendezték 1936-ban az első Magyar Nagydíjat?",
+    "answer": "Népliget",
+    "wrong": [
+      "Városliget",
+      "Margitsziget",
+      "Hajógyári-sziget"
+    ],
+    "explanation": "A versenyt az olasz Tazio Nuvolari nyerte egy Alfa Romeóval."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik nagydíjon szerezte Baumgartner Zsolt 2004-ben a Minardival az első magyar Forma–1-es világbajnoki pontot?",
+    "answer": "Amerikai Nagydíj",
+    "wrong": [
+      "Kanadai Nagydíj",
+      "Monacói Nagydíj",
+      "Magyar Nagydíj"
+    ],
+    "explanation": "Az indianapolisi futamon nyolcadikként ért célba."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Ki nyerte meg a Hungaroring legelső Forma–1-es futamát?",
+    "answer": "Nelson Piquet",
+    "wrong": [
+      "Ayrton Senna",
+      "Alain Prost",
+      "Nigel Mansell"
+    ],
+    "explanation": "A Williams pilótája egy látványos, keresztbe csúszó előzéssel ment el honfitársa, Ayrton Senna mellett."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik brit pilóta biztosította be 1992-ben a világbajnoki címét a Hungaroringen?",
+    "answer": "Nigel Mansell",
+    "wrong": [
+      "Damon Hill",
+      "David Coulthard",
+      "Johnny Herbert"
+    ],
+    "explanation": "A Williams pilótája a 16 futamos idény 11. versenyén lett bajnok."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik csapat színeiben aratta Sebastian Vettel első futamgyőzelmét 2008-ban, az esős Monzában?",
+    "answer": "Toro Rosso",
+    "wrong": [
+      "Red Bull",
+      "Williams",
+      "Renault"
+    ],
+    "explanation": "A Toro Rosso a Minardi utódja volt, annak a csapatnak, amelyben Baumgartner Zsolt is versenyzett."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik pályán mutatkozott be Michael Schumacher 1991-ben, és aratta első futamgyőzelmét egy évvel később?",
+    "answer": "Spa-Francorchamps",
+    "wrong": [
+      "Monza",
+      "Hockenheim",
+      "Nürburgring"
+    ],
+    "explanation": "Bemutatkozásakor a Jordan csapat autóját vezette."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Hányszor nyerte meg Ayrton Senna a Monacói Nagydíjat?",
+    "answer": "6",
+    "wrong": [
+      "3",
+      "4",
+      "5"
+    ],
+    "explanation": "Ezzel 2024 végéig ő a legtöbbször győztes pilóta Monacóban."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Ki az egyetlen pilóta, aki 2024 végéig megnyerte a Monacói Nagydíjat, az Indy 500-at és a Le Mans-i 24 órás versenyt is?",
+    "answer": "Graham Hill",
+    "wrong": [
+      "Jim Clark",
+      "Jackie Stewart",
+      "Mario Andretti"
+    ],
+    "explanation": "Monacóban ötször győzött, ezért „Mr. Monaco” becenéven is emlegették."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik amerikai médiavállalat lett 2017-ben a Forma–1 tulajdonosa?",
+    "answer": "Liberty Media",
+    "wrong": [
+      "Comcast",
+      "Time Warner",
+      "Viacom"
+    ],
+    "explanation": "Az üzlettel véget ért Bernie Ecclestone évtizedes irányítása."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Milyen becenéven szólította Lewis Hamilton a csapatrádióban mercedeses versenymérnökét, Peter Bonningtont?",
+    "answer": "Bono",
+    "wrong": [
+      "Pete",
+      "Bonzo",
+      "GP"
+    ],
+    "explanation": "Bonnington Hamilton mind a hat mercedeses világbajnoki címénél a versenymérnöke volt."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Mi a neve annak a boxstratégiának, amikor a pilóta a riválisa előtt cserél gumit, hogy a friss abroncsokkal elé kerüljön?",
+    "answer": "Undercut",
+    "wrong": [
+      "Overcut",
+      "Double stack",
+      "Lift and coast"
+    ],
+    "explanation": "Az ellentéte az overcut, amikor a pilóta tovább marad kint a régi gumikon."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik angliai városban van a McLaren csapat székhelye?",
+    "answer": "Woking",
+    "wrong": [
+      "Milton Keynes",
+      "Brackley",
+      "Grove"
+    ],
+    "explanation": "A futurisztikus főhadiszállást, a McLaren Technology Centre-t Norman Foster tervezte."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Melyik pilóta fakadt ki 2015-ben Suzukában a csapatrádióban: „GP2-es motor, GP2!”?",
+    "answer": "Fernando Alonso",
+    "wrong": [
+      "Jenson Button",
+      "Kimi Räikkönen",
+      "Sebastian Vettel"
+    ],
+    "explanation": "A McLaren Honda-motorját szidta, ráadásul a Honda saját pályáján."
+  },
+  {
+    "category": "f1",
+    "difficulty": 3,
+    "prompt": "Hány évesen állt rajthoz Max Verstappen az első Forma–1-es futamán 2015-ben?",
+    "answer": "17",
+    "wrong": [
+      "16",
+      "18",
+      "19"
+    ],
+    "explanation": "Ezután az FIA 18 évben szabta meg a szuperlicenc alsó korhatárát."
   }
 ]
