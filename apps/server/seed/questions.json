@@ -12138,5 +12138,905 @@
       "19"
     ],
     "explanation": "Ezután az FIA 18 évben szabta meg a szuperlicenc alsó korhatárát."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik bő olajban sült tésztát kínálják a strandbüfékben klasszikusan fokhagymával, tejföllel és reszelt sajttal?",
+    "answer": "Lángos",
+    "wrong": [
+      "Fánk",
+      "Pogácsa",
+      "Palacsinta"
+    ],
+    "explanation": "Régen kenyérsütéskor sütötték ki a kenyértésztából, a kemence szájánál, a láng mellett."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Mitől lesz a csirkepörköltből csirkepaprikás?",
+    "answer": "Tejföltől",
+    "wrong": [
+      "Paradicsomtól",
+      "Vörösbortól",
+      "Zöldpaprikától"
+    ],
+    "explanation": "A tejfölt liszttel elkeverve, habarásként adják a szafthoz, hogy ne csapódjon ki."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik három zöldség adja a klasszikus magyar lecsó alapját?",
+    "answer": "Paprika, paradicsom, hagyma",
+    "wrong": [
+      "Paprika, cukkini, padlizsán",
+      "Paradicsom, uborka, hagyma",
+      "Paprika, krumpli, sárgarépa"
+    ],
+    "explanation": "A Pixar francia zöldségételről elnevezett Ratatouille című filmje nálunk L'ecsó címen futott."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Mi borítja a Dobos torta tetejét?",
+    "answer": "Karamellréteg",
+    "wrong": [
+      "Csokoládémáz",
+      "Marcipánlap",
+      "Tejszínhab"
+    ],
+    "explanation": "Dobos C. József 1885-ben, a budapesti Országos Általános Kiállításon mutatta be a nagyközönségnek."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik fűszernövénytől kapja jellegzetes ízét a menzák klasszikusa, a tökfőzelék?",
+    "answer": "Kapor",
+    "wrong": [
+      "Tárkony",
+      "Majoránna",
+      "Rozmaring"
+    ],
+    "explanation": "A legyalult főzőtököt rendszerint tejfölös habarással sűrítik."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "A Margherita pizzán a paradicsom és a mozzarella mellett mi adja az olasz zászló zöldjét?",
+    "answer": "Bazsalikom",
+    "wrong": [
+      "Rukkola",
+      "Oregánó",
+      "Petrezselyem"
+    ],
+    "explanation": "A legenda szerint 1889-ben Nápolyban sütötték először, Margit királyné tiszteletére."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a sushi mellé kínált, orrfacsaróan csípős zöld pasztát?",
+    "answer": "Wasabi",
+    "wrong": [
+      "Gari",
+      "Miso",
+      "Nori"
+    ],
+    "explanation": "Japánon kívül a legtöbb helyen valójában zöldre színezett torma és mustár keverékét kapjuk."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a vékony, kerek kukorica- vagy búzalepényt, amelybe a mexikói tacót töltik?",
+    "answer": "Tortilla",
+    "wrong": [
+      "Pita",
+      "Naan",
+      "Chapati"
+    ],
+    "explanation": "A szó spanyolul kis lepényt jelent, Spanyolországban viszont egy krumplis omlett neve."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik McDonald's-hamburgerben van egy harmadik, középső zsemleszelet a két húspogácsa között?",
+    "answer": "Big Mac",
+    "wrong": [
+      "McRoyal",
+      "Big Tasty",
+      "Dupla sajtburger"
+    ],
+    "explanation": "Egy Pittsburgh környéki franchise-tulajdonos, Jim Delligatti találta ki 1967-ben."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 1,
+    "prompt": "Melyik gyorsétteremlánc logóján látható Sanders ezredes arcképe?",
+    "answer": "KFC",
+    "wrong": [
+      "Burger King",
+      "Wendy's",
+      "Popeyes"
+    ],
+    "explanation": "Harland Sanders ezredesi rangja nem katonai volt: Kentucky állam tiszteletbeli címeként kapta."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik tájegység hagyományos süteménye a kürtőskalács?",
+    "answer": "Székelyföld",
+    "wrong": [
+      "Felvidék",
+      "Vajdaság",
+      "Őrség"
+    ],
+    "explanation": "A tésztát fahengerre tekerik, és parázs fölött forgatva, cukorral karamellizálva sütik."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik budapesti étteremben született meg a somlói galuska?",
+    "answer": "A Gundelben",
+    "wrong": [
+      "A Kárpátiában",
+      "A Mátyás Pincében",
+      "A Százéves étteremben"
+    ],
+    "explanation": "Az étterem legendás főpincére, Szőcs Béla alkotta meg az 1950-es években."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik alföldi város nevét viseli az uniós eredetvédelmet kapott híres vöröshagyma?",
+    "answer": "Makó",
+    "wrong": [
+      "Szentes",
+      "Kalocsa",
+      "Szeged"
+    ],
+    "explanation": "A város Makovecz Imre tervezte gyógyfürdője a hagyma tiszteletére a Hagymatikum nevet kapta."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Mivel töltik a hortobágyi palacsintát?",
+    "answer": "Darált pörkölthússal",
+    "wrong": [
+      "Kapros túróval",
+      "Rumos dióval",
+      "Sajtos spenóttal"
+    ],
+    "explanation": "A feltekert palacsintákat tejfölös, paprikás pörköltszafttal leöntve tálalják."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik ország konyhájából származik a pho, a fűszeres, rizstésztás húsleves?",
+    "answer": "Vietnám",
+    "wrong": [
+      "Thaiföld",
+      "Kambodzsa",
+      "Laosz"
+    ],
+    "explanation": "Vietnámban hagyományosan reggelire is eszik."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Ki tette világméretű lánccá a McDonald's-ot, miután 1961-ben kivásárolta az alapító McDonald fivéreket?",
+    "answer": "Ray Kroc",
+    "wrong": [
+      "Dave Thomas",
+      "Glen Bell",
+      "Fred DeLuca"
+    ],
+    "explanation": "Történetét Az alapító című film dolgozta fel, Krocot Michael Keaton alakította."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Melyik országban találták ki az ananászos-sonkás hawaii pizzát?",
+    "answer": "Kanada",
+    "wrong": [
+      "Egyesült Államok",
+      "Ausztrália",
+      "Olaszország"
+    ],
+    "explanation": "Egy görög származású étteremtulajdonos, Sam Panopoulos alkotta meg 1962-ben Ontarióban."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Milyen lekvár rejtőzik a bécsi Sacher-torta csokoládébevonata alatt?",
+    "answer": "Sárgabaracklekvár",
+    "wrong": [
+      "Meggylekvár",
+      "Málnalekvár",
+      "Szilvalekvár"
+    ],
+    "explanation": "Franz Sacher 16 évesen, inasként készítette el először 1832-ben, Metternich herceg konyháján."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Hogyan készül az étel sous-vide technikával?",
+    "answer": "Vákuumozva, alacsony hőfokú vízfürdőben",
+    "wrong": [
+      "Nyílt lángon, magas hőfokon sütve",
+      "Forró kövön, zsiradék nélkül sütve",
+      "Hideg füstön, hosszan érlelve"
+    ],
+    "explanation": "A francia kifejezés jelentése: vákuum alatt."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 2,
+    "prompt": "Mit csinál a szakács, amikor flambírozza az ételt?",
+    "answer": "Tömény itallal leönti és meggyújtja",
+    "wrong": [
+      "Jeges vízben hirtelen lehűti",
+      "Forró olajban aranybarnára süti",
+      "Lassú tűzön puhára párolja"
+    ],
+    "explanation": "A klasszikus francia Crêpes Suzette palacsintát is narancslikőrrel flambírozzák."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Kiről kapta a nevét a habrácsos, baracklekváros Rákóczi túrós?",
+    "answer": "Rákóczi János cukrászról",
+    "wrong": [
+      "II. Rákóczi Ferenc fejedelemről",
+      "I. Rákóczi György fejedelemről",
+      "Rákóczi Zsigmond fejedelemről"
+    ],
+    "explanation": "A fejedelmi hangzású név ellenére a sütemény csak a 20. században született."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Hogy hívják azt a zsidó hagyományú süteményt, amelyben mákos, diós, almás és szilvalekváros rétegek váltakoznak?",
+    "answer": "Flódni",
+    "wrong": [
+      "Zserbó",
+      "Pite",
+      "Bejgli"
+    ],
+    "explanation": "A négyféle tölteléket vékony tésztalapok választják el egymástól."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Miből főzik a japán tonkotsu ramen krémes, tejfehér levét?",
+    "answer": "Sertéscsontból",
+    "wrong": [
+      "Marhacsontból",
+      "Csirkeszárnyból",
+      "Szárított halból"
+    ],
+    "explanation": "A csontokat órákig lobogva főzik, ettől lesz a leve sűrű és fehér."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik francia tájegységről származik a camembert sajt?",
+    "answer": "Normandia",
+    "wrong": [
+      "Bretagne",
+      "Provence",
+      "Elzász"
+    ],
+    "explanation": "Nevét egy aprócska normandiai faluról kapta."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik növénycsaládba tartozik a vanília?",
+    "answer": "Orchideák",
+    "wrong": [
+      "Pillangósvirágúak",
+      "Pálmák",
+      "Liliomfélék"
+    ],
+    "explanation": "Őshazáján, Mexikón kívül a virágait többnyire kézzel porozzák be."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "A fekete és a fehér bors ugyanannak a növénynek a termése. Hogyan készül a fehér bors?",
+    "answer": "Az érett termés héját lehántják",
+    "wrong": [
+      "Éretlenül szedik és szárítják",
+      "Árnyékban, lassan szárítják",
+      "Gőzzel kiszívják a színét"
+    ],
+    "explanation": "A fekete borshoz az éretlen termést héjastul szárítják, ettől lesz ráncos és sötét."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Melyik országban született a Caesar-saláta, amelyet nem Julius Caesarról, hanem egy olasz származású éttermesről neveztek el?",
+    "answer": "Mexikóban",
+    "wrong": [
+      "Olaszországban",
+      "Az Egyesült Államokban",
+      "Spanyolországban"
+    ],
+    "explanation": "A legenda szerint Caesar Cardini 1924-ben tijuanai éttermében rögtönözte, amikor fogytán volt a készlet."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Legalább hány hónapig kell érlelni az eredetvédett Parmigiano Reggiano sajtot?",
+    "answer": "12",
+    "wrong": [
+      "6",
+      "18",
+      "24"
+    ],
+    "explanation": "Az érlelés végén szakértők kalapáccsal kopogtatják végig a sajtkorongokat."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Mit jelent a konyhában a blansírozás?",
+    "answer": "Rövid forrázás, majd gyors lehűtés",
+    "wrong": [
+      "Lassú párolás fedő alatt",
+      "Pácolás ecetes lében",
+      "Sütés bő, forró olajban"
+    ],
+    "explanation": "Így a zöldség megőrzi élénk színét és roppanósságát."
+  },
+  {
+    "category": "gasztro",
+    "difficulty": 3,
+    "prompt": "Az osztrák élelmiszer-előírások szerint milyen húsból készül az igazi Wiener Schnitzel?",
+    "answer": "Borjúhúsból",
+    "wrong": [
+      "Sertéshúsból",
+      "Pulykahúsból",
+      "Csirkehúsból"
+    ],
+    "explanation": "Ha sertésből készül, Ausztriában ezt a nevében külön fel kell tüntetni."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik a leggyorsabb szárazföldi állat?",
+    "answer": "Gepárd",
+    "wrong": [
+      "Leopárd",
+      "Oroszlán",
+      "Jaguár"
+    ],
+    "explanation": "Nagyjából 100 km/h-s csúcssebességét csak néhány száz méteren át tudja tartani."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik állat nő a legmagasabbra a ma élő fajok közül?",
+    "answer": "Zsiráf",
+    "wrong": [
+      "Elefánt",
+      "Jávorszarvas",
+      "Teve"
+    ],
+    "explanation": "Hosszú nyakában is csak hét csigolya van, ugyanannyi, mint az emberében."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik madárfaj testesebb és nehezebb minden más ma élő madárnál?",
+    "answer": "Strucc",
+    "wrong": [
+      "Emu",
+      "Kazuár",
+      "Andoki kondor"
+    ],
+    "explanation": "A szemgolyója nagyobb, mint az agya."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Hány szíve van a polipnak?",
+    "answer": "3",
+    "wrong": [
+      "1",
+      "2",
+      "4"
+    ],
+    "explanation": "A vére kék, mert benne nem vas, hanem réz szállítja az oxigént."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Szinte kizárólag melyik növény leveleivel táplálkozik a koala?",
+    "answer": "Eukaliptusz",
+    "wrong": [
+      "Bambusz",
+      "Akác",
+      "Mangó"
+    ],
+    "explanation": "Ez a táplálék olyan kevés energiát ad, hogy a koala napi 18–20 órát is alszik."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik ausztrál emlős rak tojást, és a hímjének mérges sarkantyú nő a hátsó lábán?",
+    "answer": "Kacsacsőrű emlős",
+    "wrong": [
+      "Vombat",
+      "Erszényes ördög",
+      "Dingó"
+    ],
+    "explanation": "Amikor az első kitömött példány Európába került, a tudósok egy része hamisítványnak hitte."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik tengeri állatnál a hím hordja ki és hozza világra az utódokat?",
+    "answer": "Csikóhal",
+    "wrong": [
+      "Rája",
+      "Delfin",
+      "Tengeri teknős"
+    ],
+    "explanation": "A nőstény a hím hasán lévő költőtáskába rakja a petéit, onnan bújnak elő a kicsinyek."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik emlősök képesek egyedüliként valódi, szárnycsapásos repülésre?",
+    "answer": "Denevérek",
+    "wrong": [
+      "Repülőmókusok",
+      "Kolugók",
+      "Erszényes siklók"
+    ],
+    "explanation": "A repülőmókusok csak siklanak, a denevér szárnya viszont a megnyúlt ujjai közt kifeszülő bőrhártya."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Mit raktároz a teve a púpjában?",
+    "answer": "Zsírt",
+    "wrong": [
+      "Vizet",
+      "Levegőt",
+      "Sót"
+    ],
+    "explanation": "Ha sokáig nem jut táplálékhoz, a púpja összezsugorodik és oldalra dől."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Milyen állat volt Dolly, az első emlős, amelyet egy felnőtt egyed testi sejtjéből klónoztak?",
+    "answer": "Juh",
+    "wrong": [
+      "Kecske",
+      "Tehén",
+      "Egér"
+    ],
+    "explanation": "1996-ban született Skóciában, és Dolly Parton countryénekesnőről kapta a nevét."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Hogy hívják a béka lárváját?",
+    "answer": "Ebihal",
+    "wrong": [
+      "Hernyó",
+      "Pondró",
+      "Nimfa"
+    ],
+    "explanation": "Eleinte kopoltyúval lélegzik, és az átalakulás során előbb a hátsó, majd a mellső lába nő ki."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Hogyan nevezzük a szamár jellegzetes hangadását?",
+    "answer": "Iázás",
+    "wrong": [
+      "Nyerítés",
+      "Bégetés",
+      "Mekegés"
+    ],
+    "explanation": "A szamárcsődör és a lókanca utóda az öszvér."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik sertésfajtát borítja göndör, gyapjas szőr, akárcsak egy birkát?",
+    "answer": "Mangalica",
+    "wrong": [
+      "Duroc",
+      "Pietrain",
+      "Berkshire"
+    ],
+    "explanation": "Ma három színváltozata él: a szőke, a fecskehasú és a vörös mangalica."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik nagy testű magyar kutyafajta hófehér bundája nemezes zsinórokba áll össze?",
+    "answer": "Komondor",
+    "wrong": [
+      "Kuvasz",
+      "Mudi",
+      "Pumi"
+    ],
+    "explanation": "A zsinórokat nem fonják: a szőr magától csomósodik össze, ahogy a kutya felnő."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 1,
+    "prompt": "Melyik magyar vadászkutya-fajta híres rövid, zsemleszínű szőréről?",
+    "answer": "Magyar vizsla",
+    "wrong": [
+      "Erdélyi kopó",
+      "Magyar agár",
+      "Weimari vizsla"
+    ],
+    "explanation": "Drótszőrű változatát külön fajtaként tartják nyilván."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik madár éri el a legnagyobb sebességet, amikor zuhanórepülésben csap le a zsákmányára?",
+    "answer": "Vándorsólyom",
+    "wrong": [
+      "Szirti sas",
+      "Karvaly",
+      "Vörös vércse"
+    ],
+    "explanation": "Zuhanás közben 300 km/h fölé is gyorsulhat, ezzel a leggyorsabb állat a Földön."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik a világ legkisebb madara?",
+    "answer": "Méhkolibri",
+    "wrong": [
+      "Sárgafejű királyka",
+      "Ökörszem",
+      "Zebrapinty"
+    ],
+    "explanation": "Kubában él, és a tömege mindössze két gramm körül van."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik ország szigetein él vadon a komodói varánusz?",
+    "answer": "Indonézia",
+    "wrong": [
+      "Fülöp-szigetek",
+      "Malajzia",
+      "Thaiföld"
+    ],
+    "explanation": "Ez a legnagyobb ma élő gyík, a hossza a három métert is elérheti."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik angol szóval nevezik a varjak csapatát?",
+    "answer": "Murder",
+    "wrong": [
+      "Pride",
+      "Gaggle",
+      "Pod"
+    ],
+    "explanation": "A szó jelentése gyilkosság, a baglyok csapata pedig „parliament”, azaz parlament."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Milyen élőlények telepednek meg a lajhár bundájában, zöldes árnyalatot adva neki?",
+    "answer": "Algák",
+    "wrong": [
+      "Mohák",
+      "Zuzmók",
+      "Páfrányok"
+    ],
+    "explanation": "A bundájában gombák és kifejezetten lajhárokon élő molyok is laknak."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik állat alszik úgy, hogy egyszerre csak az egyik agyféltekéje pihen, a másik ébren marad?",
+    "answer": "Delfin",
+    "wrong": [
+      "Koala",
+      "Orrszarvú",
+      "Tapír"
+    ],
+    "explanation": "Így alvás közben is fel tud úszni a felszínre levegőt venni."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik állatcsoportba tartoznak a skorpiók és a kullancsok?",
+    "answer": "Pókszabásúak",
+    "wrong": [
+      "Rovarok",
+      "Rákok",
+      "Százlábúak"
+    ],
+    "explanation": "A rovarokkal ellentétben nyolc lábuk van, akárcsak rokonaiknak, a pókoknak."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik állatcsoportba tartozik a hazánkban is honos foltos szalamandra?",
+    "answer": "Kétéltűek",
+    "wrong": [
+      "Hüllők",
+      "Gyíkok",
+      "Halak"
+    ],
+    "explanation": "Bőre mérgező váladékot termel, az élénk sárga-fekete színe erre figyelmeztet."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik szigeten élt a 17. században kihalt röpképtelen madár, a dodó?",
+    "answer": "Mauritius",
+    "wrong": [
+      "Madagaszkár",
+      "Srí Lanka",
+      "Zanzibár"
+    ],
+    "explanation": "A galambfélék közé tartozott, és alig egy évszázaddal a felfedezése után kipusztult."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik ragadozó madár látható az 50 forintos érmén?",
+    "answer": "Kerecsensólyom",
+    "wrong": [
+      "Rétisas",
+      "Parlagi sas",
+      "Héja"
+    ],
+    "explanation": "Fokozottan védett madár, és sokan a mondabeli turulmadár élő megfelelőjét látják benne."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik fokozottan védett madarunk a világ egyik legnehezebb röpképes madara?",
+    "answer": "Túzok",
+    "wrong": [
+      "Szürke daru",
+      "Fekete gólya",
+      "Nagy kócsag"
+    ],
+    "explanation": "Védelmére Dévaványán külön túzokvédelmi központ működik."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Milyen élőlény valójában a tiszavirág?",
+    "answer": "Egy kérészfaj",
+    "wrong": [
+      "Egy szitakötőfaj",
+      "Egy lepkefaj",
+      "Egy tündérrózsafaj"
+    ],
+    "explanation": "Lárvái három évig élnek a folyómederben, a kifejlett rovar viszont csak néhány órát."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Mitől rózsaszínű a flamingók tolla?",
+    "answer": "A táplálékuk festékanyagaitól",
+    "wrong": [
+      "A sós víz ásványaitól",
+      "Az erős napsütéstől",
+      "Egy öröklött pigmenttől"
+    ],
+    "explanation": "Az állatkertekben ezért karotinnal dúsított eledelt kapnak, különben kifakulnának."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Milyen színű a jegesmedve bőre a bundája alatt?",
+    "answer": "Fekete",
+    "wrong": [
+      "Fehér",
+      "Rózsaszín",
+      "Sárgás"
+    ],
+    "explanation": "Szőrszálai valójában színtelenek és áttetszők, csak a szórt fénytől látszanak fehérnek."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 2,
+    "prompt": "Melyik állatcsaládba tartozik a bambuszevő nagy panda?",
+    "answer": "Medvefélék",
+    "wrong": [
+      "Mosómedvefélék",
+      "Macskafélék",
+      "Menyétfélék"
+    ],
+    "explanation": "A vörös panda viszont nem közeli rokona: saját, önálló családot alkot."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik fokozottan védett kígyó a Kárpát-medence bennszülött állata?",
+    "answer": "Rákosi vipera",
+    "wrong": [
+      "Keresztes vipera",
+      "Haragos sikló",
+      "Erdei sikló"
+    ],
+    "explanation": "Nevét a pesti Rákos-mezőről kapta, ahonnan a 19. század végén leírták."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik lófajta tenyésztéséről híres a szilvásváradi ménesgazdaság?",
+    "answer": "Lipicai",
+    "wrong": [
+      "Nóniusz",
+      "Gidrán",
+      "Shagya-arab"
+    ],
+    "explanation": "Nevét a mai Szlovéniában fekvő Lipica ménesről kapta, a bécsi Spanyol Lovasiskola is ilyen lovakkal dolgozik."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Hogy nevezik a vadásznyelvben a gímszarvas kicsinyét?",
+    "answer": "Borjú",
+    "wrong": [
+      "Gida",
+      "Süldő",
+      "Csikó"
+    ],
+    "explanation": "Az őz kicsinye viszont gida, a vaddisznóé pedig malac."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik ma élő állat a gyapjas mamut legközelebbi rokona?",
+    "answer": "Ázsiai elefánt",
+    "wrong": [
+      "Afrikai szavannai elefánt",
+      "Afrikai erdei elefánt",
+      "Dugong"
+    ],
+    "explanation": "Az utolsó mamutok a Vrangel-szigeten éltek, még akkor is, amikor Egyiptomban már álltak a piramisok."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik Nobel-díjas osztrák kutató fejtette meg a mézelő méhek „táncnyelvét”?",
+    "answer": "Karl von Frisch",
+    "wrong": [
+      "Konrad Lorenz",
+      "Nikolaas Tinbergen",
+      "Gregor Mendel"
+    ],
+    "explanation": "A billegőtáncból a társak kiolvassák, milyen irányban és milyen messze van a táplálék."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik mikroszkopikus, nyolclábú állatcsoport tagjai élték túl a világűr vákuumát egy 2007-es kísérletben?",
+    "answer": "Medveállatkák",
+    "wrong": [
+      "Atkák",
+      "Kerekesférgek",
+      "Fonálférgek"
+    ],
+    "explanation": "Kiszáradva szinte teljesen leállítják az anyagcseréjüket, így évekig kibírják víz nélkül."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik ausztrál madár képes szinte tökéletesen utánozni a fényképezőgép kattanását és a láncfűrész zaját?",
+    "answer": "Lantfarkú madár",
+    "wrong": [
+      "Kacagó jégmadár",
+      "Emu",
+      "Fekete hattyú"
+    ],
+    "explanation": "Udvarláskor a hím a feje fölé borítja hatalmas, lant alakú farktollait."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Milyen színű váladékot termel a víziló bőre, amely napvédőként is szolgál?",
+    "answer": "Vöröses",
+    "wrong": [
+      "Fehéres",
+      "Zöldes",
+      "Kékes"
+    ],
+    "explanation": "Emiatt régen azt hitték, hogy a víziló vért izzad."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik tengerbe vándorol ívni az európai angolna, akár több ezer kilométert úszva?",
+    "answer": "Sargasso-tenger",
+    "wrong": [
+      "Földközi-tenger",
+      "Északi-tenger",
+      "Balti-tenger"
+    ],
+    "explanation": "Az ott kikelt lárvákat a Golf-áramlat sodorja vissza Európa partjai felé."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik a világ leghosszabb kígyófaja?",
+    "answer": "Kockás piton",
+    "wrong": [
+      "Zöld anakonda",
+      "Királykobra",
+      "Tigrispiton"
+    ],
+    "explanation": "A zöld anakonda rövidebb, viszont nehezebb: ő a legnagyobb tömegű kígyó."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják a szarvasmarha négyrészes gyomrának legnagyobb részét?",
+    "answer": "Bendő",
+    "wrong": [
+      "Oltógyomor",
+      "Százrétű",
+      "Recésgyomor"
+    ],
+    "explanation": "A benne élő mikrobák bontják le a növényi rostokat, amelyeket a tehén kérődzéskor újra megrág."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik az egyetlen pingvinfaj, amely természetes módon az északi féltekén is előfordul?",
+    "answer": "Galápagosi pingvin",
+    "wrong": [
+      "Humboldt-pingvin",
+      "Magellán-pingvin",
+      "Pápaszemes pingvin"
+    ],
+    "explanation": "Az Egyenlítő mentén a hideg tengeráramlatok teszik számára élhetővé a vizet."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Hogy hívják angolul a kenguru kölykét?",
+    "answer": "Joey",
+    "wrong": [
+      "Kit",
+      "Cub",
+      "Pup"
+    ],
+    "explanation": "Születéskor alig babszemnyi, és hónapokig az anyja erszényében fejlődik tovább."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik emlősnek a leghosszabb a vemhességi ideje?",
+    "answer": "Elefánt",
+    "wrong": [
+      "Kék bálna",
+      "Zsiráf",
+      "Orrszarvú"
+    ],
+    "explanation": "Az afrikai elefánt borja közel 22 hónapig fejlődik, és születésekor 100 kiló körül nyom."
+  },
+  {
+    "category": "allatok",
+    "difficulty": 3,
+    "prompt": "Melyik magyar juhfajta kosainak és anyáinak is hosszú, dugóhúzószerűen csavarodó szarva van?",
+    "answer": "Racka",
+    "wrong": [
+      "Cigája",
+      "Cikta",
+      "Magyar merinó"
+    ],
+    "explanation": "Fehér és fekete változata is van, a hortobágyi pásztorok jellegzetes, ősi fajtája."
   }
 ]
