@@ -1,0 +1,213 @@
+/* TV layouts size everything from the viewport height so they read the same
+   on any screen: 1em = 1/54 of the height (20px at 1080p). */
+.tv {
+  height: 100vh;
+  font-size: calc(100vh / 54);
+  overflow: hidden;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  margin: 0;
+  font-size: 2.4em;
+  font-weight: 600;
+}
+
+.banner {
+  position: absolute;
+  top: 1.2em;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5em 1.4em;
+  background: var(--rust);
+  border-radius: 999px;
+  font-size: 1.6em;
+  font-weight: 800;
+}
+
+/* Language picker */
+.picker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5em;
+  height: 100%;
+  font-size: 1.4em;
+}
+
+.tagline {
+  margin: 0;
+  font-size: 1.6em;
+  font-weight: 600;
+  color: var(--ice);
+}
+
+.langButtons {
+  display: flex;
+  gap: 2em;
+}
+
+.langButton {
+  min-width: 9em;
+  padding: 0.6em 1.2em;
+  border: 0.18em solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--mustard);
+  color: var(--burgundy);
+  font-family: var(--font-display);
+  font-size: 2.6em;
+  box-shadow: 0 0.16em 0 var(--burgundy-deep);
+  cursor: pointer;
+}
+
+.langButton:nth-child(2) {
+  background: var(--teal);
+  color: var(--cream);
+}
+
+.langButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* Lobby */
+.lobby {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 3em;
+  height: 100%;
+  padding: 3em 4em;
+}
+
+.joinPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4em;
+}
+
+.joinAt {
+  margin: 0;
+  font-size: 2em;
+  font-weight: 600;
+}
+
+.joinAt strong {
+  color: var(--ice);
+}
+
+.code {
+  display: flex;
+  gap: 0.35em;
+}
+
+.codeLetter {
+  display: grid;
+  place-items: center;
+  width: 1.25em;
+  height: 1.4em;
+  background: var(--cream);
+  color: var(--burgundy);
+  border-radius: 0.14em;
+  border-bottom: 0.1em solid var(--rust);
+  font-family: var(--font-display);
+  font-size: 5.5em;
+  line-height: 1;
+}
+
+.qr {
+  width: 16em;
+  height: 16em;
+  padding: 0.6em;
+  background: var(--cream);
+  border-radius: var(--radius);
+}
+
+.qr svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.seatsPanel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.6em;
+}
+
+.seatsTitle {
+  margin: 0;
+  font-size: 2.2em;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--mustard);
+}
+
+.seats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.seat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  height: 11em;
+  background: var(--burgundy-deep);
+  border: 0.2em solid var(--teal);
+  border-radius: var(--radius);
+}
+
+.seatEmpty {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--cream) 25%, transparent);
+  background: transparent;
+}
+
+.seatPlaceholder {
+  font-family: var(--font-display);
+  font-size: 4em;
+  color: color-mix(in srgb, var(--cream) 25%, transparent);
+}
+
+.seatName {
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.8em;
+  font-weight: 800;
+}
+
+.vip {
+  position: absolute;
+  top: -0.7em;
+  right: -0.5em;
+  padding: 0.15em 0.6em;
+  background: var(--mustard);
+  color: var(--burgundy);
+  border-radius: 999px;
+  font-size: 1.2em;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.status {
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: var(--ice);
+}

@@ -1,0 +1,55 @@
+:root {
+  /* Palette from the mockups. */
+  --burgundy: #2a0e18;
+  --burgundy-deep: #1c0910;
+  --mustard: #e8b23a;
+  --teal: #1f6f6b;
+  --cream: #f4e9d4;
+  --ice: #9fd3e0;
+  --rust: #b8462a;
+  --plum: #6a3d7a;
+
+  /* Answer tiles A–D. */
+  --answer-a: var(--rust);
+  --answer-b: var(--teal);
+  --answer-c: var(--plum);
+  --answer-d: var(--mustard);
+
+  --font-display: 'Shrikhand', 'Georgia', serif;
+  --font-ui: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+
+  --radius: 14px;
+  --touch-min: 64px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--burgundy);
+  color: var(--cream);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 4px solid var(--ice);
+  outline-offset: 3px;
+}

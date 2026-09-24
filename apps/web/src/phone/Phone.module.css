@@ -1,0 +1,131 @@
+.phone {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+  color: var(--ice);
+}
+
+.input {
+  min-height: var(--touch-min);
+  padding: 0 16px;
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--cream);
+  color: var(--burgundy);
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.codeInput {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.primary {
+  min-height: var(--touch-min);
+  border: 3px solid var(--burgundy-deep);
+  border-radius: var(--radius);
+  background: var(--mustard);
+  color: var(--burgundy);
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  box-shadow: 0 5px 0 var(--burgundy-deep);
+  cursor: pointer;
+}
+
+.primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 var(--burgundy-deep);
+}
+
+.primary:disabled {
+  opacity: 0.5;
+}
+
+.error {
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--rust);
+  border-radius: var(--radius);
+  font-weight: 600;
+}
+
+.message {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.vip {
+  padding: 4px 14px;
+  background: var(--mustard);
+  color: var(--burgundy);
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.youreIn {
+  margin: 12px 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.4rem;
+  color: var(--mustard);
+}
+
+.hint {
+  margin: 0;
+  color: var(--ice);
+  font-size: 1.1rem;
+}
+
+.banner {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 18px;
+  background: var(--rust);
+  border-radius: 999px;
+  font-weight: 800;
+}
