@@ -1,1 +1,742 @@
-{}
+{
+  "allCorrect-0": {
+    "file": "allCorrect-0.mp3",
+    "hash": "35e79a38a0e08736"
+  },
+  "allCorrect-1": {
+    "file": "allCorrect-1.mp3",
+    "hash": "bebc0a346f4bcade"
+  },
+  "allCorrect-2": {
+    "file": "allCorrect-2.mp3",
+    "hash": "cfdd039a1c1cc924"
+  },
+  "allCorrect-3": {
+    "file": "allCorrect-3.mp3",
+    "hash": "b96da391dc48dcc4"
+  },
+  "allCorrect-4": {
+    "file": "allCorrect-4.mp3",
+    "hash": "a7c8e619c33dcb7d"
+  },
+  "allCorrect-5": {
+    "file": "allCorrect-5.mp3",
+    "hash": "b5cc682056c31947"
+  },
+  "allCorrect-6": {
+    "file": "allCorrect-6.mp3",
+    "hash": "b576f7ea9bcad350"
+  },
+  "allCorrect-7": {
+    "file": "allCorrect-7.mp3",
+    "hash": "8a8cae621af86f10"
+  },
+  "blowout-0": {
+    "file": "blowout-0.mp3",
+    "hash": "7110afd1363abc8d"
+  },
+  "blowout-1": {
+    "file": "blowout-1.mp3",
+    "hash": "e1d0d71a0946f22e"
+  },
+  "blowout-2": {
+    "file": "blowout-2.mp3",
+    "hash": "294f43d6a22d2b56"
+  },
+  "blowout-3": {
+    "file": "blowout-3.mp3",
+    "hash": "b2403538231c62fa"
+  },
+  "blowout-4": {
+    "file": "blowout-4.mp3",
+    "hash": "ea0ffd2b6cf24261"
+  },
+  "categoryPicked-0": {
+    "file": "categoryPicked-0.mp3",
+    "hash": "ab5fa6122506414d"
+  },
+  "categoryPicked-1": {
+    "file": "categoryPicked-1.mp3",
+    "hash": "9f7dbd773c74ca4e"
+  },
+  "categoryPicked-2": {
+    "file": "categoryPicked-2.mp3",
+    "hash": "6dfadc712660e7c8"
+  },
+  "catFilm-0": {
+    "file": "catFilm-0.mp3",
+    "hash": "4e2fe7100e871de2"
+  },
+  "catFilm-1": {
+    "file": "catFilm-1.mp3",
+    "hash": "0039ceffc8440814"
+  },
+  "catFilm-2": {
+    "file": "catFilm-2.mp3",
+    "hash": "374dbd71013de7f5"
+  },
+  "catFoldrajz-0": {
+    "file": "catFoldrajz-0.mp3",
+    "hash": "ecd65fe45eb67d39"
+  },
+  "catFoldrajz-1": {
+    "file": "catFoldrajz-1.mp3",
+    "hash": "ee7587410fa468c7"
+  },
+  "catFoldrajz-2": {
+    "file": "catFoldrajz-2.mp3",
+    "hash": "d31c5904b9a8be02"
+  },
+  "catGasztro-0": {
+    "file": "catGasztro-0.mp3",
+    "hash": "26fe3d16f91c7fd3"
+  },
+  "catGasztro-1": {
+    "file": "catGasztro-1.mp3",
+    "hash": "aa610f1edfbbc908"
+  },
+  "catGasztro-2": {
+    "file": "catGasztro-2.mp3",
+    "hash": "ebb45de249b794c3"
+  },
+  "catMagyarorszag-0": {
+    "file": "catMagyarorszag-0.mp3",
+    "hash": "f0dfa1ece13f645e"
+  },
+  "catMagyarorszag-1": {
+    "file": "catMagyarorszag-1.mp3",
+    "hash": "3b886f390658839d"
+  },
+  "catMagyarorszag-2": {
+    "file": "catMagyarorszag-2.mp3",
+    "hash": "0eb7e703d0419e89"
+  },
+  "catSport-0": {
+    "file": "catSport-0.mp3",
+    "hash": "19033d326df4f07c"
+  },
+  "catSport-1": {
+    "file": "catSport-1.mp3",
+    "hash": "19e5ccceccc8d3af"
+  },
+  "catSport-2": {
+    "file": "catSport-2.mp3",
+    "hash": "2a0ec203edf6c5dc"
+  },
+  "catTortenelem-0": {
+    "file": "catTortenelem-0.mp3",
+    "hash": "1e6d0737c746edae"
+  },
+  "catTortenelem-1": {
+    "file": "catTortenelem-1.mp3",
+    "hash": "c28d1049c468199e"
+  },
+  "catTortenelem-2": {
+    "file": "catTortenelem-2.mp3",
+    "hash": "53c0db546978b033"
+  },
+  "catTudomany-0": {
+    "file": "catTudomany-0.mp3",
+    "hash": "3c86a3afa918fe25"
+  },
+  "catTudomany-1": {
+    "file": "catTudomany-1.mp3",
+    "hash": "17ec55050af6fa3a"
+  },
+  "catTudomany-2": {
+    "file": "catTudomany-2.mp3",
+    "hash": "49a977f6391b3749"
+  },
+  "catZene-0": {
+    "file": "catZene-0.mp3",
+    "hash": "e560c5e2b4560f8e"
+  },
+  "catZene-1": {
+    "file": "catZene-1.mp3",
+    "hash": "abb35de7852c5ba1"
+  },
+  "catZene-2": {
+    "file": "catZene-2.mp3",
+    "hash": "84377bc099184288"
+  },
+  "closeRace-0": {
+    "file": "closeRace-0.mp3",
+    "hash": "e3273586488e92f5"
+  },
+  "closeRace-1": {
+    "file": "closeRace-1.mp3",
+    "hash": "d1be6c203a05bf0d"
+  },
+  "closeRace-2": {
+    "file": "closeRace-2.mp3",
+    "hash": "c37270ce1b6546d3"
+  },
+  "closeRace-3": {
+    "file": "closeRace-3.mp3",
+    "hash": "badcd61998e9aff2"
+  },
+  "closeRace-4": {
+    "file": "closeRace-4.mp3",
+    "hash": "192a27ffd115792a"
+  },
+  "closeRace-5": {
+    "file": "closeRace-5.mp3",
+    "hash": "b0233f1f1b23f447"
+  },
+  "comeback-0": {
+    "file": "comeback-0.mp3",
+    "hash": "b56702986f61e320"
+  },
+  "comeback-1": {
+    "file": "comeback-1.mp3",
+    "hash": "c1c18ee3c4b81169"
+  },
+  "comeback-2": {
+    "file": "comeback-2.mp3",
+    "hash": "764c5904c11a7763"
+  },
+  "comeback-3": {
+    "file": "comeback-3.mp3",
+    "hash": "56a61ea63617c570"
+  },
+  "comeback-4": {
+    "file": "comeback-4.mp3",
+    "hash": "243f7c56eef11a7d"
+  },
+  "fastest-0": {
+    "file": "fastest-0.mp3",
+    "hash": "b72ea3d41cfe0e33"
+  },
+  "fastest-1": {
+    "file": "fastest-1.mp3",
+    "hash": "2b6e0ccb8ff3c20e"
+  },
+  "fastest-2": {
+    "file": "fastest-2.mp3",
+    "hash": "1c4479bd88859b5a"
+  },
+  "fastest-3": {
+    "file": "fastest-3.mp3",
+    "hash": "6f88c5eff2ef7ca5"
+  },
+  "fastest-4": {
+    "file": "fastest-4.mp3",
+    "hash": "cdc0efbf5e0cd321"
+  },
+  "fastest-5": {
+    "file": "fastest-5.mp3",
+    "hash": "6b7ac6a7bf9948f6"
+  },
+  "firstRound-0": {
+    "file": "firstRound-0.mp3",
+    "hash": "72863660130748fc"
+  },
+  "firstRound-1": {
+    "file": "firstRound-1.mp3",
+    "hash": "b5668640f21123d2"
+  },
+  "firstRound-2": {
+    "file": "firstRound-2.mp3",
+    "hash": "1769dfebde2996b2"
+  },
+  "firstRound-3": {
+    "file": "firstRound-3.mp3",
+    "hash": "549a768176576548"
+  },
+  "firstRound-4": {
+    "file": "firstRound-4.mp3",
+    "hash": "c82c5ecdcf603d20"
+  },
+  "halfway-0": {
+    "file": "halfway-0.mp3",
+    "hash": "d37973edaa29f6c8"
+  },
+  "halfway-1": {
+    "file": "halfway-1.mp3",
+    "hash": "42a26cea7a6f5a9f"
+  },
+  "halfway-2": {
+    "file": "halfway-2.mp3",
+    "hash": "10bd26d92e7e7fff"
+  },
+  "halfway-3": {
+    "file": "halfway-3.mp3",
+    "hash": "4b180afe114efb29"
+  },
+  "lastRound-0": {
+    "file": "lastRound-0.mp3",
+    "hash": "e649ed6090cc2732"
+  },
+  "lastRound-1": {
+    "file": "lastRound-1.mp3",
+    "hash": "36eb1d1c58e016c3"
+  },
+  "lastRound-2": {
+    "file": "lastRound-2.mp3",
+    "hash": "8828924e5a7037b4"
+  },
+  "lastRound-3": {
+    "file": "lastRound-3.mp3",
+    "hash": "d7945c6bec93e1bb"
+  },
+  "lastRound-4": {
+    "file": "lastRound-4.mp3",
+    "hash": "006d66cc50a11ced"
+  },
+  "lightning-0": {
+    "file": "lightning-0.mp3",
+    "hash": "595a1df289135a76"
+  },
+  "lightning-1": {
+    "file": "lightning-1.mp3",
+    "hash": "5a73a7d12b41d3f2"
+  },
+  "lightning-2": {
+    "file": "lightning-2.mp3",
+    "hash": "75168eadd12e3bcd"
+  },
+  "lightning-3": {
+    "file": "lightning-3.mp3",
+    "hash": "d3d176bd22b89bce"
+  },
+  "lightning-4": {
+    "file": "lightning-4.mp3",
+    "hash": "0385408059019759"
+  },
+  "lightning-5": {
+    "file": "lightning-5.mp3",
+    "hash": "9d41a24bb23c3192"
+  },
+  "newLeader-0": {
+    "file": "newLeader-0.mp3",
+    "hash": "a72f42ae34ce4d5a"
+  },
+  "newLeader-1": {
+    "file": "newLeader-1.mp3",
+    "hash": "3c0a0ce36880af8b"
+  },
+  "newLeader-2": {
+    "file": "newLeader-2.mp3",
+    "hash": "4b7b2b23962ccc6c"
+  },
+  "newLeader-3": {
+    "file": "newLeader-3.mp3",
+    "hash": "5d27a7077673de72"
+  },
+  "newLeader-4": {
+    "file": "newLeader-4.mp3",
+    "hash": "acfd2937aea11f6f"
+  },
+  "newLeader-5": {
+    "file": "newLeader-5.mp3",
+    "hash": "f4149dbbec527524"
+  },
+  "noneCorrect-0": {
+    "file": "noneCorrect-0.mp3",
+    "hash": "255d54ee1dcefa08"
+  },
+  "noneCorrect-1": {
+    "file": "noneCorrect-1.mp3",
+    "hash": "3befd7946bb279aa"
+  },
+  "noneCorrect-2": {
+    "file": "noneCorrect-2.mp3",
+    "hash": "3e8faa425df923d3"
+  },
+  "noneCorrect-3": {
+    "file": "noneCorrect-3.mp3",
+    "hash": "d788801f84c754eb"
+  },
+  "noneCorrect-4": {
+    "file": "noneCorrect-4.mp3",
+    "hash": "4cb06df17f9043fb"
+  },
+  "noneCorrect-5": {
+    "file": "noneCorrect-5.mp3",
+    "hash": "529e51a1d93e16ff"
+  },
+  "noneCorrect-6": {
+    "file": "noneCorrect-6.mp3",
+    "hash": "b0926fbc73a3bdf8"
+  },
+  "noneCorrect-7": {
+    "file": "noneCorrect-7.mp3",
+    "hash": "997bb62b57955067"
+  },
+  "noneCorrectAgain-0": {
+    "file": "noneCorrectAgain-0.mp3",
+    "hash": "ed5be10a73f9815e"
+  },
+  "noneCorrectAgain-1": {
+    "file": "noneCorrectAgain-1.mp3",
+    "hash": "cb48fd58a260fe82"
+  },
+  "noneCorrectAgain-2": {
+    "file": "noneCorrectAgain-2.mp3",
+    "hash": "971cf4a760591d63"
+  },
+  "noneCorrectAgain-3": {
+    "file": "noneCorrectAgain-3.mp3",
+    "hash": "8cbcefd16123d969"
+  },
+  "noneCorrectAgain-4": {
+    "file": "noneCorrectAgain-4.mp3",
+    "hash": "d426dd901e017b75"
+  },
+  "onlyOne-0": {
+    "file": "onlyOne-0.mp3",
+    "hash": "caf841e300297ae8"
+  },
+  "onlyOne-1": {
+    "file": "onlyOne-1.mp3",
+    "hash": "d5c9cfbbe407f3f2"
+  },
+  "onlyOne-2": {
+    "file": "onlyOne-2.mp3",
+    "hash": "f6b0ff8f26ec755f"
+  },
+  "onlyOne-3": {
+    "file": "onlyOne-3.mp3",
+    "hash": "9db157098d2ef726"
+  },
+  "onlyOne-4": {
+    "file": "onlyOne-4.mp3",
+    "hash": "31cbd99bc5794c01"
+  },
+  "paused-0": {
+    "file": "paused-0.mp3",
+    "hash": "14d92a89706f3b96"
+  },
+  "paused-1": {
+    "file": "paused-1.mp3",
+    "hash": "9cd5cb80970160d9"
+  },
+  "paused-2": {
+    "file": "paused-2.mp3",
+    "hash": "fa83c2d2c8e916e9"
+  },
+  "pickCategory-0": {
+    "file": "pickCategory-0.mp3",
+    "hash": "98d46a6718f20339"
+  },
+  "pickCategory-1": {
+    "file": "pickCategory-1.mp3",
+    "hash": "2e3d69cb8234bfec"
+  },
+  "pickCategory-2": {
+    "file": "pickCategory-2.mp3",
+    "hash": "63116076f0e9d155"
+  },
+  "pickCategory-3": {
+    "file": "pickCategory-3.mp3",
+    "hash": "2772de94d00e50ab"
+  },
+  "pickCategory-4": {
+    "file": "pickCategory-4.mp3",
+    "hash": "904974581786de58"
+  },
+  "pickCategory-5": {
+    "file": "pickCategory-5.mp3",
+    "hash": "d46bc43a9fdf9f53"
+  },
+  "pickCategory-6": {
+    "file": "pickCategory-6.mp3",
+    "hash": "4c74dab75e5d8f0a"
+  },
+  "pickCategory-7": {
+    "file": "pickCategory-7.mp3",
+    "hash": "ac57d34e4de40fca"
+  },
+  "pickCategory-8": {
+    "file": "pickCategory-8.mp3",
+    "hash": "d8c3d17730998c70"
+  },
+  "soloCorrect-0": {
+    "file": "soloCorrect-0.mp3",
+    "hash": "908ec7041de4f8c6"
+  },
+  "soloCorrect-1": {
+    "file": "soloCorrect-1.mp3",
+    "hash": "3b6e22ad851e20ea"
+  },
+  "soloCorrect-2": {
+    "file": "soloCorrect-2.mp3",
+    "hash": "00572d1fe61cb107"
+  },
+  "soloCorrect-3": {
+    "file": "soloCorrect-3.mp3",
+    "hash": "0886edd29740a9c0"
+  },
+  "soloCorrect-4": {
+    "file": "soloCorrect-4.mp3",
+    "hash": "aada2b4b783b3344"
+  },
+  "soloCorrect-5": {
+    "file": "soloCorrect-5.mp3",
+    "hash": "25ab0c596a6af0e6"
+  },
+  "soloCorrect-6": {
+    "file": "soloCorrect-6.mp3",
+    "hash": "cb2bcdb4bbf0d080"
+  },
+  "soloCorrect-7": {
+    "file": "soloCorrect-7.mp3",
+    "hash": "93b1fd2b523ae011"
+  },
+  "soloFinalHigh-0": {
+    "file": "soloFinalHigh-0.mp3",
+    "hash": "ebeb4c5b9e3342af"
+  },
+  "soloFinalHigh-1": {
+    "file": "soloFinalHigh-1.mp3",
+    "hash": "e214edcc9c738e14"
+  },
+  "soloFinalHigh-2": {
+    "file": "soloFinalHigh-2.mp3",
+    "hash": "b6f31b1cf36398fa"
+  },
+  "soloFinalHigh-3": {
+    "file": "soloFinalHigh-3.mp3",
+    "hash": "740c2f0d3fcbab68"
+  },
+  "soloFinalLow-0": {
+    "file": "soloFinalLow-0.mp3",
+    "hash": "bff77b1bbf6e62e4"
+  },
+  "soloFinalLow-1": {
+    "file": "soloFinalLow-1.mp3",
+    "hash": "7ee0d8825caaabc3"
+  },
+  "soloFinalLow-2": {
+    "file": "soloFinalLow-2.mp3",
+    "hash": "c173efe96793217a"
+  },
+  "soloFinalLow-3": {
+    "file": "soloFinalLow-3.mp3",
+    "hash": "f8ad3ea5bd8e56d8"
+  },
+  "soloScore-0": {
+    "file": "soloScore-0.mp3",
+    "hash": "b8833d939fb5012d"
+  },
+  "soloScore-1": {
+    "file": "soloScore-1.mp3",
+    "hash": "5a7efa065c67d054"
+  },
+  "soloScore-2": {
+    "file": "soloScore-2.mp3",
+    "hash": "7bf4eb28c1bd3b5b"
+  },
+  "soloScore-3": {
+    "file": "soloScore-3.mp3",
+    "hash": "5353f942958370ee"
+  },
+  "soloScore-4": {
+    "file": "soloScore-4.mp3",
+    "hash": "3459fec622791217"
+  },
+  "soloScore-5": {
+    "file": "soloScore-5.mp3",
+    "hash": "99eb17a6c1680913"
+  },
+  "soloWrong-0": {
+    "file": "soloWrong-0.mp3",
+    "hash": "ea8f5f6d28374d89"
+  },
+  "soloWrong-1": {
+    "file": "soloWrong-1.mp3",
+    "hash": "7b0e16433eb4ce0c"
+  },
+  "soloWrong-2": {
+    "file": "soloWrong-2.mp3",
+    "hash": "68880db68a85aaaa"
+  },
+  "soloWrong-3": {
+    "file": "soloWrong-3.mp3",
+    "hash": "4bea2f419a52b9c1"
+  },
+  "soloWrong-4": {
+    "file": "soloWrong-4.mp3",
+    "hash": "39cf922426856362"
+  },
+  "soloWrong-5": {
+    "file": "soloWrong-5.mp3",
+    "hash": "e2eb1836a46e2518"
+  },
+  "soloWrong-6": {
+    "file": "soloWrong-6.mp3",
+    "hash": "49900b9ae56efd2a"
+  },
+  "soloWrong-7": {
+    "file": "soloWrong-7.mp3",
+    "hash": "5245b34febdcf680"
+  },
+  "someCorrect-0": {
+    "file": "someCorrect-0.mp3",
+    "hash": "488b18cf292a4ffb"
+  },
+  "someCorrect-1": {
+    "file": "someCorrect-1.mp3",
+    "hash": "5f7e71d125f41662"
+  },
+  "someCorrect-2": {
+    "file": "someCorrect-2.mp3",
+    "hash": "6ee24cc14bf66b7c"
+  },
+  "someCorrect-3": {
+    "file": "someCorrect-3.mp3",
+    "hash": "3d497e9ffac29aac"
+  },
+  "someCorrect-4": {
+    "file": "someCorrect-4.mp3",
+    "hash": "d204538f5cae4015"
+  },
+  "someCorrect-5": {
+    "file": "someCorrect-5.mp3",
+    "hash": "b52ee7de6dfa8288"
+  },
+  "someCorrect-6": {
+    "file": "someCorrect-6.mp3",
+    "hash": "ebc0421eccf61371"
+  },
+  "someCorrect-7": {
+    "file": "someCorrect-7.mp3",
+    "hash": "2e27b1d15b4b3f8f"
+  },
+  "standings-0": {
+    "file": "standings-0.mp3",
+    "hash": "60c5d47b4b3c48cf"
+  },
+  "standings-1": {
+    "file": "standings-1.mp3",
+    "hash": "22fce5b2ec324742"
+  },
+  "standings-2": {
+    "file": "standings-2.mp3",
+    "hash": "c4c7d9152fefe342"
+  },
+  "standings-3": {
+    "file": "standings-3.mp3",
+    "hash": "df9699dcc43021f1"
+  },
+  "standings-4": {
+    "file": "standings-4.mp3",
+    "hash": "7107a8db3b6a377b"
+  },
+  "standings-5": {
+    "file": "standings-5.mp3",
+    "hash": "9ba7a137a42a8981"
+  },
+  "standings-6": {
+    "file": "standings-6.mp3",
+    "hash": "af21fd0335500416"
+  },
+  "standings-7": {
+    "file": "standings-7.mp3",
+    "hash": "3567664c9a2fd752"
+  },
+  "streak-0": {
+    "file": "streak-0.mp3",
+    "hash": "36620dd6eea5d423"
+  },
+  "streak-1": {
+    "file": "streak-1.mp3",
+    "hash": "3ca1795495de4bd7"
+  },
+  "streak-2": {
+    "file": "streak-2.mp3",
+    "hash": "71b927ea8e4338c3"
+  },
+  "streak-3": {
+    "file": "streak-3.mp3",
+    "hash": "28d2dd77c3e15c07"
+  },
+  "streak-4": {
+    "file": "streak-4.mp3",
+    "hash": "2b3d5ccb6986fe2a"
+  },
+  "streak-5": {
+    "file": "streak-5.mp3",
+    "hash": "c312b7bd81ab5655"
+  },
+  "tie-0": {
+    "file": "tie-0.mp3",
+    "hash": "cc620a7b0cfe3b62"
+  },
+  "tie-1": {
+    "file": "tie-1.mp3",
+    "hash": "6e0ea7d272d7fb9c"
+  },
+  "tie-2": {
+    "file": "tie-2.mp3",
+    "hash": "eb5ecda60e350ee2"
+  },
+  "tie-3": {
+    "file": "tie-3.mp3",
+    "hash": "9eff6e35df56c850"
+  },
+  "welcome-0": {
+    "file": "welcome-0.mp3",
+    "hash": "4848ffac3ca05987"
+  },
+  "welcome-1": {
+    "file": "welcome-1.mp3",
+    "hash": "8e23a0f55b2a9b96"
+  },
+  "welcome-2": {
+    "file": "welcome-2.mp3",
+    "hash": "66a5a47c97f6239b"
+  },
+  "welcome-3": {
+    "file": "welcome-3.mp3",
+    "hash": "89443c7597fa8618"
+  },
+  "welcome-4": {
+    "file": "welcome-4.mp3",
+    "hash": "bfcbb4c8049299ee"
+  },
+  "welcome-5": {
+    "file": "welcome-5.mp3",
+    "hash": "cb8aa36af075a7c2"
+  },
+  "welcomeSolo-0": {
+    "file": "welcomeSolo-0.mp3",
+    "hash": "4cb5bafb80648ded"
+  },
+  "welcomeSolo-1": {
+    "file": "welcomeSolo-1.mp3",
+    "hash": "0bfab2d4778096ee"
+  },
+  "welcomeSolo-2": {
+    "file": "welcomeSolo-2.mp3",
+    "hash": "6dd793b3465b0405"
+  },
+  "welcomeSolo-3": {
+    "file": "welcomeSolo-3.mp3",
+    "hash": "238b663553da29b3"
+  },
+  "welcomeSolo-4": {
+    "file": "welcomeSolo-4.mp3",
+    "hash": "4cc8ab6d50ca5508"
+  },
+  "winner-0": {
+    "file": "winner-0.mp3",
+    "hash": "a41d28b6d3efc40b"
+  },
+  "winner-1": {
+    "file": "winner-1.mp3",
+    "hash": "9af770bf69a70ede"
+  },
+  "winner-2": {
+    "file": "winner-2.mp3",
+    "hash": "843d8b8c9d82094c"
+  },
+  "winner-3": {
+    "file": "winner-3.mp3",
+    "hash": "924705bf72480d58"
+  },
+  "winner-4": {
+    "file": "winner-4.mp3",
+    "hash": "809d33f6c92918f4"
+  }
+}
