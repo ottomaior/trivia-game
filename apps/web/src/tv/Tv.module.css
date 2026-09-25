@@ -1419,6 +1419,18 @@
   }
 }
 
+/* The show open: full-screen inside the bulb frame, over the studio (under the mute button). */
+.showOpen {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--burgundy);
+  animation: fadeIn 300ms both;
+}
+
 /* Intro on the studio board: the title card. */
 .titleCard {
   position: relative;
