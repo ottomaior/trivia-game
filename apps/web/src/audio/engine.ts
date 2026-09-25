@@ -99,6 +99,12 @@ class AudioEngine {
   unlock(): void {
     if (typeof AudioContext === 'undefined') return;
     if (!this.ctx) {
+      // Safari on iPhone and iPad treats Web Audio as "ambient" sound, which
+      // the silent switch mutes; a TV that is really an iPad mirrored to the
+      // screen would then play the whole show without a sound. 'playback'
+      // is the category of a music player (Safari 17+; elsewhere a no-op).
+      const session = (navigator as { audioSession?: { type: string } }).audioSession;
+      if (session) session.type = 'playback';
       // Nothing here needs a tight buffer (cues are scheduled ahead on the audio
       // clock, and lip sync only reads a level), so ask for the roomier
       // 'playback' one: a TV whose main thread stalls for a frame or two then

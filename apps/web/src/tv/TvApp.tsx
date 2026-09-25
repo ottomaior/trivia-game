@@ -8,6 +8,7 @@ import { ACK_TIMEOUT_MS } from '../net/socket.ts';
 import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
 import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
+import { useWakeLock } from '../net/useWakeLock.ts';
 import { initialFxMode, LowFxContext, rememberFxMode, stepDown, type FxMode } from '../ui/lowfx.ts';
 import { Marquee, type MarqueeMode } from '../ui/Marquee.tsx';
 import { Studio } from '../stage/Studio.tsx';
@@ -54,6 +55,7 @@ export function TvApp() {
   const [clipFailed, setClipFailed] = useState(false);
   const showOpen = showOpenPlayable(fxMode) && !clipFailed;
   useAudioCues(liveView, { showOpen });
+  useWakeLock(screen.kind === 'live');
   const phase = liveView?.stage.phase;
   useEffect(() => {
     if (showOpen && phase === 'lobby') preloadShowOpen();

@@ -1,8 +1,14 @@
-/* TV layouts size everything from the viewport height so they read the same
-   on any screen: 1em = 1/54 of the height (20px at 1080p). */
+/* TV layouts are drawn on a 96em x 54em (16:9) canvas and size everything
+   in em, so they read the same on any screen: 1em = 1/54 of the height (20px
+   at 1080p). A squarer screen (an iPad mirrored to the TV) sizes 1em from
+   the width instead, so the canvas still fits side to side. dvh leaves out
+   Safari's toolbar; older TV browsers without it keep the vh lines. Keep
+   em() in stage/Studio.tsx in step. */
 .tv {
   height: 100vh;
-  font-size: calc(100vh / 54);
+  height: 100dvh;
+  font-size: calc(min(100vh, 100vw * 9 / 16) / 54);
+  font-size: calc(min(100dvh, 100vw * 9 / 16) / 54);
   overflow: hidden;
 }
 

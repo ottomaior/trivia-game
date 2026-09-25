@@ -10,8 +10,8 @@ import { measureFps, tooSlow, type FpsSample, type SampleKind } from './perfGuar
 import { StudioContext } from './StudioContext.ts';
 import styles from './Studio.module.css';
 
-/** 1em in px on the TV (the TV sizes everything from the screen height). */
-const em = () => window.innerHeight / 54;
+/** 1em in px on the TV: 1/54 of the height, or of a 16:9 box as wide as a squarer screen (see .tv). */
+const em = () => Math.min(window.innerHeight, (window.innerWidth * 9) / 16) / 54;
 
 /** The WebGL layer, with Pixi inside: only the full studio pays for the download. */
 const FxLayer = lazy(() => import('./FxLayer.tsx').then((m) => ({ default: m.FxLayer })));
