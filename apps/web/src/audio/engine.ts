@@ -1,6 +1,6 @@
 import { ottoVoiceId, type AudioManifest, type OttoLine, type VoiceManifest } from '@trivia/shared';
 import { KEYS, readJson, writeJson } from '../net/storage.ts';
-import { MusicPlayer, type Track } from './music.ts';
+import { canSynthesize, renderLoop, synthesizedTracks, type Track } from './music.ts';
 import { SFX, type Cue } from './sfx.ts';
 
 // The TV's sound. One AudioContext, created on the first user gesture
@@ -86,6 +86,8 @@ class AudioEngine {
   /** Read-alouds of the questions, by PublicQuestion.voice. */
   private questionManifest: VoiceManifest = {};
   private voices = new Map<string, Promise<AudioBuffer | null>>();
+  /** The synthesized music loops, rendered once each (see renderLoop). */
+  private loops = new Map<Track, Promise<AudioBuffer | null>>();
   private voicePlaying: { src: AudioBufferSourceNode; gain: GainNode } | null = null;
   private voiceKey = '';
   /** Context time the current voice clip ends, so a question can wait for Otto to finish. */
@@ -123,6 +125,7 @@ class AudioEngine {
       this.voiceBus.connect(this.analyser);
       void this.loadFiles();
       void this.loadVoiceManifests();
+      for (const track of synthesizedTracks()) void this.synthLoop(track);
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
     if (this.wanted && !this.current) this.music(this.wanted);
@@ -164,38 +167,50 @@ class AudioEngine {
     }
     if (!track) return;
     const file = this.pickFile(track);
-    if (!file && !MusicPlayer.canSynthesize(track)) return;
+    if (!file && !canSynthesize(track)) return;
 
     const fader = ctx.createGain();
     fader.gain.setValueAtTime(0.0001, ctx.currentTime);
     fader.gain.exponentialRampToValueAtTime(1, ctx.currentTime + FADE_S);
     fader.connect(musicBus);
 
-    let stopSource: () => void;
-    if (file) {
-      const src = ctx.createBufferSource();
-      src.buffer = file;
+    // A recording, or the synthesized loop once it has rendered (usually long before it's needed).
+    let src: AudioBufferSourceNode | null = null;
+    let cancelled = false;
+    const loop = (buffer: AudioBuffer) => {
+      src = ctx.createBufferSource();
+      src.buffer = buffer;
       src.loop = true;
       src.connect(fader);
       src.start();
-      stopSource = () => src.stop(ctx.currentTime + FADE_S);
-    } else {
-      const player = new MusicPlayer(ctx, fader, track);
-      player.start();
-      stopSource = () => player.stop();
-    }
+    };
+    if (file) loop(file);
+    else
+      void this.synthLoop(track).then((buffer) => {
+        if (buffer && !cancelled) loop(buffer);
+      });
     this.current = {
       track,
       stop: () => {
+        cancelled = true;
         fader.gain.cancelScheduledValues(ctx.currentTime);
         fader.gain.setValueAtTime(fader.gain.value, ctx.currentTime);
         fader.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + FADE_S);
         setTimeout(() => {
-          stopSource();
+          src?.stop();
           fader.disconnect();
         }, FADE_S * 1000 + 50);
       },
     };
+  }
+
+  private synthLoop(track: Track): Promise<AudioBuffer | null> {
+    let loop = this.loops.get(track);
+    if (!loop) {
+      loop = this.ctx ? renderLoop(track, this.ctx.sampleRate).catch(() => null) : Promise.resolve(null);
+      this.loops.set(track, loop);
+    }
+    return loop;
   }
 
   /** Whether a pre-recorded voice clip exists for this line. */

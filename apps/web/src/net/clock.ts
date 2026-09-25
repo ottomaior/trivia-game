@@ -34,7 +34,12 @@ export async function syncClock(socket: GameSocket, samples = 5): Promise<void> 
   }
 }
 
-/** Milliseconds left until a server timestamp, re-rendering ~10x a second. */
+/**
+ * Milliseconds left until a server timestamp. It re-renders once per whole
+ * second, just after the displayed number (`Math.ceil(left / 1000)`)
+ * changes: every re-render repaints the screen, which a TV can't afford ten
+ * times a second. Anything smoother (the timer bar) animates on its own.
+ */
 export function useCountdown(endsAt: number | null): number | null {
   const [left, setLeft] = useState(() => (endsAt === null ? null : Math.max(0, endsAt - serverNow())));
   useEffect(() => {
@@ -42,10 +47,15 @@ export function useCountdown(endsAt: number | null): number | null {
       setLeft(null);
       return;
     }
-    const tick = () => setLeft(Math.max(0, endsAt - serverNow()));
+    let id: ReturnType<typeof setTimeout> | undefined;
+    const tick = () => {
+      const now = Math.max(0, endsAt - serverNow());
+      setLeft(now);
+      // Wake just past the next whole second.
+      if (now > 0) id = setTimeout(tick, (now % 1000 || 1000) + 5);
+    };
     tick();
-    const id = setInterval(tick, 100);
-    return () => clearInterval(id);
+    return () => clearTimeout(id);
   }, [endsAt]);
   return left;
 }

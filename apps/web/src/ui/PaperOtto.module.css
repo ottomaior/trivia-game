@@ -194,21 +194,22 @@
 }
 
 /* Boiling edges: three cuts of the same piece, each shown a third of the
-   time, like hand-cut stop motion. Without it only the first is shown. */
+   time, like hand-cut stop motion, while Ottó talks. Otherwise only the
+   first is shown: each flick repaints him, which a TV can't do all game. */
 .boil > img:not(:first-child) {
   display: none;
 }
 
-.otto[data-lively='true'] .boil > img {
+.otto[data-lively='true'][data-talking='true'] .boil > img {
   display: block;
   animation: boil 450ms step-end infinite;
 }
 
-.otto[data-lively='true'] .boil > img:nth-child(2) {
+.otto[data-lively='true'][data-talking='true'] .boil > img:nth-child(2) {
   animation-delay: -150ms;
 }
 
-.otto[data-lively='true'] .boil > img:nth-child(3) {
+.otto[data-lively='true'][data-talking='true'] .boil > img:nth-child(3) {
   animation-delay: -300ms;
 }
 

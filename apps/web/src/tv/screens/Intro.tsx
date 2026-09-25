@@ -6,8 +6,10 @@ import { Character } from '../../ui/Character.tsx';
 import { Logo } from '../../ui/Logo.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
+import { BACK_OUT, staggerIn } from '../../ui/staggerIn.ts';
 import styles from '../Tv.module.css';
 
+// GSAP only splits the logo into letters here; they animate on the compositor (staggerIn).
 gsap.registerPlugin(SplitText);
 
 export function Intro({ view }: { view: HostView }) {
@@ -37,18 +39,13 @@ function TitleCard({ view }: { view: HostView }) {
     const el = ref.current?.querySelector('h1');
     if (!el) return;
     const split = SplitText.create(el.querySelectorAll('span'), { type: 'chars' });
-    const tween = gsap.from(split.chars, {
-      y: '-1.2em',
-      scale: 0.2,
-      rotation: () => gsap.utils.random(-40, 40),
-      opacity: 0,
-      duration: 0.55,
-      stagger: 0.045,
-      delay: 0.3,
-      ease: 'back.out(2.2)',
-    });
+    const stop = staggerIn(
+      split.chars,
+      () => ({ transform: `translateY(-1.2em) scale(0.2) rotate(${Math.round(Math.random() * 80 - 40)}deg)`, opacity: 0 }),
+      { duration: 0.55, stagger: 0.045, delay: 0.3, easing: BACK_OUT },
+    );
     return () => {
-      tween.kill();
+      stop();
       split.revert();
     };
   }, []);

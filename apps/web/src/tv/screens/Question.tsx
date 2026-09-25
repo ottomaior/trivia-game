@@ -7,12 +7,14 @@ import { Character } from '../../ui/Character.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { PowerIcon } from '../../ui/PowerIcon.tsx';
+import { BACK_OUT, staggerIn } from '../../ui/staggerIn.ts';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import { TILE, tileStyle } from '../../ui/answers.ts';
 import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
+// GSAP only splits the prompt into words here; the words animate on the compositor (staggerIn).
 gsap.registerPlugin(SplitText);
 
 /** Seconds into the read when the round card flips away (matches .roundCard in Tv.module.css)… */
@@ -32,17 +34,14 @@ export function usePromptWordsIn(ref: RefObject<HTMLElement | null>, questionId:
     const el = ref.current;
     if (!inStudio || !el || !reading) return;
     const split = SplitText.create(el, { type: 'words' });
-    const tween = gsap.from(split.words, {
-      y: '0.7em',
-      rotationX: -70,
-      opacity: 0,
+    const stop = staggerIn(split.words, () => ({ transform: 'translateY(0.7em) rotateX(-70deg)', opacity: 0 }), {
       duration: 0.45,
       stagger: 0.04,
       delay: WORDS_IN,
-      ease: 'back.out(2)',
+      easing: BACK_OUT,
     });
     return () => {
-      tween.kill();
+      stop();
       split.revert();
     };
   }, [inStudio, questionId]); // once per question: the prompt stays when answers open

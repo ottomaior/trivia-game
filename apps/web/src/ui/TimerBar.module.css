@@ -19,7 +19,6 @@
   background: var(--mustard);
   border-radius: 999px;
   transform-origin: left center;
-  transition: transform 100ms linear;
 }
 
 .seconds {
