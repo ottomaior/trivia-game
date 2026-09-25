@@ -1,7 +1,6 @@
 import { timingSafeEqual } from 'node:crypto';
 import {
-  AVATAR_COLORS,
-  AVATAR_FACES,
+  CHARACTERS,
   grantsPowerPlay,
   isInputPhase,
   MAX_LATENCY_CREDIT_MS,
@@ -203,7 +202,7 @@ export class Room {
     if (!player) return { ok: false, error: 'NOT_FOUND' };
     if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
     for (const p of this.players.values()) {
-      if (p.id !== playerId && p.avatar.color === avatar.color) return { ok: false, error: 'COLOR_TAKEN' };
+      if (p.id !== playerId && p.avatar.character === avatar.character) return { ok: false, error: 'CHARACTER_TAKEN' };
     }
     player.avatar = avatar;
     return { ok: true };
@@ -936,10 +935,8 @@ export class Room {
   }
 
   private pickAvatar(): Avatar {
-    const used = new Set([...this.players.values()].map((p) => p.avatar.color));
-    const color = AVATAR_COLORS.find((c) => !used.has(c)) ?? AVATAR_COLORS[0];
-    const face = AVATAR_FACES[this.players.size % AVATAR_FACES.length]!;
-    return { color, face };
+    const used = new Set([...this.players.values()].map((p) => p.avatar.character));
+    return { character: CHARACTERS.find((c) => !used.has(c)) ?? CHARACTERS[0] };
   }
 }
 

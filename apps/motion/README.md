@@ -2,7 +2,7 @@
 
 The art for the redesign and the pre-rendered broadcast clips. The look is an old-school TV quiz show built from cut paper: every piece has paper grain, a slightly torn outline, a cream cut-out border and a soft shadow. The mockups live on the design canvas ("Otto's Quiz Show visual direction", a claude.ai Design artifact).
 
-Nothing here is used by the game yet. The plan is for the web app to use the same drawings (as React components) and for the TV to play the rendered clips on cue.
+The game uses the drawings directly: `apps/web`'s `dev` and `build` scripts run `node ../motion/art/build.mjs --web --out public/art`, which writes only the SVGs (no contact sheet, no audio) into `apps/web/public/art/`, and the screens show them as images. The generator is plain Node with no dependencies, so it also runs in the Docker build. The Remotion clips are rendered here and committed to the web app when they are used.
 
 ## Commands
 
@@ -37,6 +37,6 @@ Remotion is free for individuals and companies of up to three people.
 | `art/party.mjs` | Party-mode props: the bluffer's mask and truth rosette, clothesline and pegs, measuring tape, pins and chips, the ladder and lifeline badges, phone cards |
 | `src/ShowOpen.tsx` | The 10-second show open: the studio lights up, the logo slams in, Ottó hops on and says his welcome line (mouth driven by the clip's loudness), and the cast pops up |
 
-## Before merging into `main`
+## Deploying
 
-If Railway's install step installs the whole workspace, this package's Remotion dependencies (including its rendering binaries) will be installed on every deploy even though the server never uses them. The build settings live only in the Railway dashboard, so check the service's install command before merging. If it installs everything, either make it skip this package (for example `pnpm install --frozen-lockfile --filter '!@trivia/motion'`), or keep only the rendered clips in the deployed workspace.
+This package's dependencies (Remotion and its rendering binaries) are all `devDependencies`, and the root `Dockerfile` installs with `--filter '!@trivia/motion'`, so none of them reach the server image. Only `art/` is used at build time.

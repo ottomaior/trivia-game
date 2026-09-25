@@ -5,7 +5,7 @@ import { Application, Container, Sprite, Texture } from 'pixi.js';
 // bursts, and points flying to the desks. Positions come from DOM rects, so
 // callers point effects at real elements on the stage.
 
-const PALETTE = [0xe8b23a, 0x1f6f6b, 0xf4e9d4, 0x9fd3e0, 0xb8462a, 0x6a3d7a];
+const PALETTE = [0xd9a13b, 0x3f7d74, 0xefe3c8, 0x9fc7cc, 0xb8553a, 0x6e4b72];
 
 interface Particle {
   sprite: Sprite;

@@ -1,7 +1,7 @@
 import { actedIds, t, TIMINGS, type HostView, type PublicQuestion, type Stage, type TimingKey } from '@trivia/shared';
 import { useRef, type CSSProperties } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
@@ -78,7 +78,7 @@ export function PartyBoard({ view, stage }: { view: HostView; stage: PartyStage 
           <ul className={styles.answerRow}>
             {waitingFor.map((p) => (
               <li key={p.id} className={`${styles.answerRowItem} ${acted.has(p.id) ? styles.lockedIn : ''}`}>
-                <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
+                <Character id={p.avatar.character} size="3.6em" dimmed={!p.connected} />
                 <span>{p.name}</span>
               </li>
             ))}
@@ -148,7 +148,7 @@ function GuessLine({ view, guesses, unit }: { view: HostView; guesses: { playerI
         const p = byId.get(g.playerId);
         return (
           <li key={g.playerId} className={`${styles.tile} ${styles.guessCard}`} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
-            {p && <Blob avatar={p.avatar} size="3em" />}
+            {p && <Character id={p.avatar.character} size="3em" />}
             <span className={styles.guessValue}>{withUnit(g.value, unit)}</span>
             <span className={styles.guessName}>{p?.name}</span>
           </li>

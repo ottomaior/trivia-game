@@ -1,4 +1,4 @@
-import type { GameMode, Lifeline } from './rules.ts';
+import type { CharacterId, GameMode, Lifeline } from './rules.ts';
 import type { OttoLine, OttoLineKey } from './views.ts';
 
 // All player-facing text. The game is Hungarian only.
@@ -58,8 +58,17 @@ export const t = {
   enabledQuestions: (n: number) => `${fmt(n)} kérdés van bekapcsolva`,
   vipPicking: 'A VIP válogatja a kategóriákat…',
   waitingForMore: (n: number) => `Még ${n} versenyzőre várunk…`,
-  yourColor: 'A színed',
-  newFace: 'Új arc',
+  yourCharacter: 'A szereplőd',
+  characters: {
+    gomboc: 'Gombóc',
+    kocka: 'Kocka',
+    bab: 'Bab',
+    csepp: 'Csepp',
+    csillag: 'Csillag',
+    felho: 'Felhő',
+    szellem: 'Szellem',
+    bogyo: 'Bogyó',
+  } satisfies Record<CharacterId, string>,
   remove: 'Kiküld',
   voteTitle: 'Válaszd ki a következő kategóriát',
   chosenCategory: 'A következő kategória',
@@ -195,7 +204,7 @@ export const t = {
     TOO_FEW_PLAYERS: 'Nincs elég csatlakozott játékos.',
     NO_QUESTIONS: 'Most nincs elérhető kérdés.',
     TOO_FEW_QUESTIONS: 'Így túl kevés kérdés maradna.',
-    COLOR_TAKEN: 'Ezt a színt már más választotta.',
+    CHARACTER_TAKEN: 'Ezt a szereplőt már más választotta.',
     TOO_CLOSE: 'Ez túl közel van az igazsághoz. Írj mást!',
   },
   /**

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useRef, type CSSProperties, type RefObject } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { PowerIcon } from '../../ui/PowerIcon.tsx';
@@ -101,7 +101,7 @@ export function Question({ view, stage }: { view: HostView; stage: McQuestionSta
           <ul className={styles.answerRow}>
             {view.players.map((p) => (
               <li key={p.id} className={`${styles.answerRowItem} ${answered.has(p.id) ? styles.lockedIn : ''}`}>
-                <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
+                <Character id={p.avatar.character} size="3.6em" dimmed={!p.connected} />
                 <span>{p.name}</span>
                 <span className={styles.rowHits}>
                   {stage.hits

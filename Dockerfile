@@ -7,11 +7,14 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/
 COPY apps/server/package.json apps/server/
 COPY apps/web/package.json apps/web/
-RUN pnpm install --frozen-lockfile
+COPY apps/motion/package.json apps/motion/
+# apps/motion is design tooling (Remotion); only its plain-Node art generator
+# runs here, from apps/web's build, so its dependencies are never installed.
+RUN pnpm install --frozen-lockfile --filter '!@trivia/motion'
 COPY . .
 RUN pnpm build
 # Drop dev dependencies (Vite, TypeScript, Playwright…) before copying out.
-RUN CI=true pnpm install --frozen-lockfile --prod
+RUN CI=true pnpm install --frozen-lockfile --prod --filter '!@trivia/motion'
 
 FROM node:22-slim
 WORKDIR /app

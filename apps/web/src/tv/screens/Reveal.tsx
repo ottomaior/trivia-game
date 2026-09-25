@@ -1,6 +1,6 @@
 import { BLUFF_BLANK, t, type HostView, type Pick, type PlayerSummary, type RevealResult, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import { LETTERS, letterOf, optionTile, TILE } from '../../ui/answers.ts';
@@ -57,7 +57,7 @@ function PickerBlob({ player, index, points }: { player: PlayerSummary | undefin
   if (!player) return null;
   return (
     <span className={styles.picker} style={{ '--j': index } as CSSProperties}>
-      <Blob avatar={player.avatar} size="2.8em" />
+      <Character id={player.avatar.character} size="2.8em" />
       {points !== undefined && points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(points)}</span>}
     </span>
   );
@@ -151,7 +151,7 @@ function OrderReveal({ items, result, picks, byId }: { items: string[]; result: 
           const order = result.orders[p.playerId] ?? null;
           return (
             <li key={p.playerId} className={styles.orderRow} style={{ '--j': j } as CSSProperties}>
-              {player && <Blob avatar={player.avatar} size="2.4em" />}
+              {player && <Character id={player.avatar.character} size="2.4em" />}
               <span className={styles.orderName}>{player?.name}</span>
               {order ? (
                 order.map((shown, k) => (
@@ -188,14 +188,14 @@ function GuessReveal({ result, picks, byId }: { result: ResultOf<'number'>; pick
           const closest = result.closest.includes(g.playerId);
           return (
             <li key={g.playerId} className={`${styles.guessRow} ${closest ? styles.guessRowBest : ''}`} style={{ '--j': j } as CSSProperties}>
-              {player && <Blob avatar={player.avatar} size="2.6em" />}
+              {player && <Character id={player.avatar.character} size="2.6em" />}
               <span className={styles.orderName}>{player?.name}</span>
               <span className={styles.guessValue}>{withUnit(g.value, result.unit)}</span>
               <span className={styles.guessOff}>{g.distance === 0 ? '✓' : t.guessOff(t.number(g.distance))}</span>
               <span className={styles.chips}>
                 {backers(g.index).map((id, k) => {
                   const b = byId.get(id);
-                  return b ? <Blob key={`${id}-${k}`} avatar={b.avatar} size="1.6em" /> : null;
+                  return b ? <Character key={`${id}-${k}`} id={b.avatar.character} size="1.6em" /> : null;
                 })}
               </span>
               {(points.get(g.playerId) ?? 0) > 0 && <span className={styles.pickerPoints}>{t.plusPoints(points.get(g.playerId)!)}</span>}

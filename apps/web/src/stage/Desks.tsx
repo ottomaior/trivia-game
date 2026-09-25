@@ -1,6 +1,6 @@
-import { actedIds, MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type PowerHit } from '@trivia/shared';
+import { actedIds, MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type Expression, type PowerHit } from '@trivia/shared';
 import { useEffect, useState, type CSSProperties } from 'react';
-import { Blob, type Expression } from '../ui/Blob.tsx';
+import { Character } from '../ui/Character.tsx';
 import { useCountUp } from '../ui/countUp.ts';
 import { PowerIcon } from '../ui/PowerIcon.tsx';
 import { REVEAL_BEATS } from './director.ts';
@@ -120,7 +120,7 @@ function Desk({
 }) {
   // Faces change on the reveal beat when the camera reaches the desks.
   const [expression, setExpression] = useState<Expression | undefined>();
-  const verdict = pick ? (pick.correct ? 'happy' : 'sad') : null;
+  const verdict: Expression | null = pick ? (pick.correct ? 'correct' : 'wrong') : null;
   useEffect(() => {
     setExpression(undefined);
     if (!verdict) return;
@@ -146,7 +146,7 @@ function Desk({
             <path d="M2 22 L6 4 L14 14 L20 2 L26 14 L34 4 L38 22 Z" fill="var(--mustard)" stroke="var(--burgundy-deep)" strokeWidth="2.5" strokeLinejoin="round" />
           </svg>
         )}
-        <Blob avatar={player.avatar} size="6em" dimmed={!player.connected || off} expression={expression} />
+        <Character id={player.avatar.character} size="6em" dimmed={!player.connected || off} expression={expression} />
         {(['freeze', 'slime'] as const).map((power) => {
           const mine = hits.filter((h) => h.power === power);
           if (mine.length === 0) return null;

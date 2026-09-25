@@ -1,8 +1,12 @@
 // Builds the paper-studio art (Ottó, the cast and their expressions, the
 // studio set, party-mode props) as standalone SVG files in ../public/art,
 // plus an index.html contact sheet, and copies the audio the clips use.
+//
+// `--out <dir>` writes the SVGs somewhere else (relative to the working
+// directory); `--web` writes only the SVGs, for the game (apps/web runs
+// `node ../motion/art/build.mjs --web --out public/art`).
 import { copyFileSync, mkdirSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { C, paper } from './paperlib.mjs';
 import { ottoReal } from './otto-real.mjs';
@@ -11,11 +15,13 @@ import { buildParty } from './party.mjs';
 import { buildExpressions, EXPRESSIONS } from './expr.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const OUT = join(HERE, '..', 'public', 'art');
+const args = process.argv.slice(2);
+const outArg = args.indexOf('--out');
+const WEB_ONLY = args.includes('--web');
+const OUT = outArg >= 0 && args[outArg + 1] ? resolve(args[outArg + 1]) : join(HERE, '..', 'public', 'art');
 const AUDIO = join(HERE, '..', 'public', 'audio');
 const WEB = join(HERE, '..', '..', 'web', 'public');
 mkdirSync(OUT, { recursive: true });
-mkdirSync(AUDIO, { recursive: true });
 
 function svg(name, w, h, defs, body) {
   const s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
@@ -164,14 +170,17 @@ ${glows}
 buildCast6(C, paper, svg);
 buildParty(C, paper, svg);
 const chars = buildExpressions(C, paper, svg);
-{
+if (!WEB_ONLY) {
   const cols = ['', ...EXPRESSIONS];
   const head = cols.map((c) => '<div class=h>' + (c || 'idle') + '</div>').join('');
   const rows = chars.map((n) => cols.map((c) => '<img src="' + n + (c ? '-' + c : '') + '.svg">').join('')).join('');
   writeFileSync(join(OUT, 'index.html'), '<!doctype html><meta charset=utf-8><style>body{margin:0;background:#2c121a;padding:10px;display:grid;grid-template-columns:repeat(8,150px);gap:4px;font:700 14px Arial;color:#f6eedb}.h{text-align:center}img{width:150px;height:150px}</style>' + head + rows);
 }
 // Audio for the clips, taken from the game's own recordings.
-for (const [from, to] of [['voice/welcome-1.mp3', 'welcome-1.mp3'], ['audio/start.mp3', 'start.mp3'], ['audio/applause.mp3', 'applause.mp3']]) {
-  copyFileSync(join(WEB, from), join(AUDIO, to));
+if (!WEB_ONLY) {
+  mkdirSync(AUDIO, { recursive: true });
+  for (const [from, to] of [['voice/welcome-1.mp3', 'welcome-1.mp3'], ['audio/start.mp3', 'start.mp3'], ['audio/applause.mp3', 'applause.mp3']]) {
+    copyFileSync(join(WEB, from), join(AUDIO, to));
+  }
 }
 console.log('art built in', OUT);

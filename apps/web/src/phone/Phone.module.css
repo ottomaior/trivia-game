@@ -341,35 +341,42 @@
   color: var(--ice);
 }
 
-.blobButton {
+.myCharacter {
+  display: grid;
+  place-items: center;
+}
+
+/* The cast to pick from: eight paper cards, four to a row. */
+.cast {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.castPick {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: var(--touch-min);
   padding: 0;
-  border: 0;
-  background: none;
+  border: 3px solid transparent;
+  border-radius: var(--radius);
+  background: #ffffff10;
   cursor: pointer;
 }
 
-.swatches {
-  display: flex;
-  gap: 10px;
-}
-
-.swatch {
-  width: 44px;
-  height: 44px;
-  border: 3px solid var(--burgundy-deep);
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.swatch:disabled {
+.castPick:disabled {
   opacity: 0.25;
   border-style: dashed;
+  border-color: var(--cream);
   cursor: default;
 }
 
-.swatchOn {
-  outline: 3px solid var(--cream);
-  outline-offset: 3px;
+.castPickOn {
+  border-color: var(--mustard);
+  background: #ffffff1c;
 }
 
 .kickList {

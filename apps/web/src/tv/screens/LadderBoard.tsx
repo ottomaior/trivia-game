@@ -1,7 +1,7 @@
 import { LADDER_RUNGS, LADDER_SAFE_RUNGS, t, TIMINGS, type HostView, type LadderSeat, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { Otto } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import styles from '../Tv.module.css';
@@ -45,7 +45,7 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
               <span className={styles.stepPlayers}>
                 {here.map((s) => {
                   const p = byId.get(s.playerId);
-                  return p ? <Blob key={s.playerId} avatar={p.avatar} size="2.6em" dimmed={s.status === 'out' || s.status === 'walked'} /> : null;
+                  return p ? <Character key={s.playerId} id={p.avatar.character} size="2.6em" dimmed={s.status === 'out' || s.status === 'walked'} /> : null;
                 })}
               </span>
               <span className={styles.stepFace}>
@@ -63,7 +63,7 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
           if (!p) return null;
           return (
             <li key={s.playerId} className={`${styles.answerRowItem} ${styles.climber}`} data-status={s.status}>
-              <Blob avatar={p.avatar} size="3.2em" dimmed={!p.connected} />
+              <Character id={p.avatar.character} size="3.2em" dimmed={!p.connected} />
               <span>{p.name}</span>
               <span className={styles.climberState}>{climberState(s, stage)}</span>
             </li>

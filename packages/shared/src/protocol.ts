@@ -37,7 +37,7 @@ export type ErrorCode =
   | 'TOO_FEW_PLAYERS'
   | 'NO_QUESTIONS'
   | 'TOO_FEW_QUESTIONS'
-  | 'COLOR_TAKEN'
+  | 'CHARACTER_TAKEN'
   /** Blöffölő: the lie is (nearly) the truth itself. */
   | 'TOO_CLOSE';
 

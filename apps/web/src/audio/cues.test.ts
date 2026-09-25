@@ -8,7 +8,7 @@ const cuesFor = (...args: Parameters<typeof timedCues>) => timedCues(...args).ma
 const player = (id: string) => ({
   id,
   name: id,
-  avatar: { color: 'teal' as const, face: 'grin' as const },
+  avatar: { character: 'bab' as const },
   connected: true,
   isVip: id === 'a',
   score: 0,

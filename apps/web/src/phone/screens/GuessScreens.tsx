@@ -2,7 +2,7 @@ import { GUESS_CHIPS, t, type PlayerView, type Stage } from '@trivia/shared';
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { optionTile } from '../../ui/answers.ts';
 import { withUnit } from '../../ui/format.ts';
 import { parseGuess } from '../guess.ts';
@@ -130,7 +130,7 @@ export function BetScreen({ view, stage, socket }: { view: PlayerView; stage: Be
               onClick={() => void place(i)}
               data-testid={`bet-${i}`}
             >
-              {p && <Blob avatar={p.avatar} size="2.6rem" />}
+              {p && <Character id={p.avatar.character} size="2.6rem" />}
               <span className={styles.choiceText}>
                 {withUnit(g.value, unit)}
                 <span className={styles.betOwner}>{g.playerId === view.me.id ? t.mineTag(p?.name ?? '') : p?.name}</span>

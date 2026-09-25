@@ -2,7 +2,7 @@ import { POWER_PLAYS, t, type PlayerView, type PowerHit, type PowerPlay, type St
 import { useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { PowerIcon } from '../../ui/PowerIcon.tsx';
 import { TILE } from '../../ui/answers.ts';
 import styles from '../Phone.module.css';
@@ -72,7 +72,7 @@ function PowerPicker({ view, socket }: { view: PlayerView; socket: GameSocket })
             void send(socket, 'power:choose', { power, targetId: p.id });
           }}
         >
-          <Blob avatar={p.avatar} size="3rem" />
+          <Character id={p.avatar.character} size="3rem" />
           <span>{p.name}</span>
         </button>
       ))}

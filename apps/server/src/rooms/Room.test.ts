@@ -24,12 +24,12 @@ const question = {
 };
 
 describe('lobby', () => {
-  it('makes the first player VIP and gives each player a distinct color and seat', () => {
+  it('makes the first player VIP and gives each player a distinct character and seat', () => {
     const room = newRoom();
     const a = joinOk(room, 'Anna');
     const b = joinOk(room, 'Béla');
     expect(room.vipId).toBe(a.id);
-    expect(a.avatar.color).not.toBe(b.avatar.color);
+    expect(a.avatar.character).not.toBe(b.avatar.character);
     expect([a.seat, b.seat]).toEqual([0, 1]);
   });
 
@@ -55,12 +55,12 @@ describe('lobby', () => {
     expect(joinOk(room, 'Cili').seat).toBe(1);
   });
 
-  it('refuses a color someone else already has', () => {
+  it('refuses a character someone else already has', () => {
     const room = newRoom();
     const a = joinOk(room, 'Anna');
     const b = joinOk(room, 'Béla');
-    expect(room.setAvatar(b.id, { color: a.avatar.color, face: 'wink' })).toEqual({ ok: false, error: 'COLOR_TAKEN' });
-    expect(room.setAvatar(b.id, { color: 'plum', face: 'wink' })).toEqual({ ok: true });
+    expect(room.setAvatar(b.id, { character: a.avatar.character })).toEqual({ ok: false, error: 'CHARACTER_TAKEN' });
+    expect(room.setAvatar(b.id, { character: 'szellem' })).toEqual({ ok: true });
   });
 });
 

@@ -2,7 +2,7 @@ import { roundText, type HostView } from '@trivia/shared';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useLayoutEffect, useRef } from 'react';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { Logo } from '../../ui/Logo.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
@@ -20,7 +20,7 @@ export function Intro({ view }: { view: HostView }) {
       <ul className={styles.blobRow}>
         {view.players.map((p) => (
           <li key={p.id} className={styles.blobRowItem}>
-            <Blob avatar={p.avatar} size="4.5em" dimmed={!p.connected} />
+            <Character id={p.avatar.character} size="4.5em" dimmed={!p.connected} />
             <span>{p.name}</span>
           </li>
         ))}

@@ -1,6 +1,6 @@
 import { t, type HostView, type PlayerSummary, type Standing } from '@trivia/shared';
 import type { CSSProperties } from 'react';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { useCountUp } from '../../ui/countUp.ts';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
@@ -45,7 +45,7 @@ function Row({ standing: s, player: p, top, from }: { standing: Standing; player
   return (
     <li className={styles.standingRow} style={style}>
       <span className={styles.rank}>{s.rank}.</span>
-      <Blob avatar={p.avatar} size="3.6em" dimmed={!p.connected} />
+      <Character id={p.avatar.character} size="3.6em" dimmed={!p.connected} />
       <span className={styles.standingName}>{p.name}</span>
       <span className={styles.bar}>
         <span className={styles.barFill} />

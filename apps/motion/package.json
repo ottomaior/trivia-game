@@ -8,16 +8,14 @@
     "render": "node art/build.mjs && remotion render src/index.ts ShowOpen out/show-open.mp4 --codec=h264",
     "typecheck": "tsc -p ."
   },
-  "dependencies": {
+  "devDependencies": {
     "@remotion/cli": "4.0.529",
     "@remotion/google-fonts": "4.0.529",
     "@remotion/media-utils": "4.0.529",
+    "@types/react": "^19.2.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "remotion": "4.0.529",
     "zod": "4.5.4"
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.0"
   }
 }

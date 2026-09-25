@@ -10,7 +10,7 @@ export function QrCode({ value, className }: { value: string; className?: string
       type: 'svg',
       margin: 1,
       errorCorrectionLevel: 'M',
-      color: { dark: '#2A0E18', light: '#F4E9D4' },
+      color: { dark: '#2C121A', light: '#EFE3C8' },
     }).then((s) => {
       if (!cancelled) setSvg(s);
     });

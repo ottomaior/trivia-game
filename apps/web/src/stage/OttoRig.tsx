@@ -1,7 +1,7 @@
 import { ottoText, type OttoLine, type OttoLineKey, type PlayerSummary } from '@trivia/shared';
 import { useEffect, useRef, useState } from 'react';
 import { audio } from '../audio/engine.ts';
-import { Blob } from '../ui/Blob.tsx';
+import { Character } from '../ui/Character.tsx';
 import { moodFor, OttoHead } from '../ui/Otto.tsx';
 import styles from './OttoRig.module.css';
 
@@ -149,7 +149,7 @@ export function OttoRig({
             <span className={styles.focus}>
               {focus.map((p) => (
                 <span key={p.id} className={styles.chip}>
-                  <Blob avatar={p.avatar} size="1.4em" />
+                  <Character id={p.avatar.character} size="1.4em" />
                   {p.name}
                 </span>
               ))}

@@ -1,5 +1,5 @@
 import { t, type PlayerSummary, type PowerHit } from '@trivia/shared';
-import { Blob } from '../ui/Blob.tsx';
+import { Character } from '../ui/Character.tsx';
 import { PowerIcon } from '../ui/PowerIcon.tsx';
 import styles from './Tv.module.css';
 
@@ -21,12 +21,12 @@ export function PowerHits({ hits, players, waiting }: { hits: PowerHit[]; player
         if (!by || !target) return null;
         return (
           <li key={i} className={`${styles.powerHit} ${styles[`hit_${h.power}`]}`}>
-            <Blob avatar={by.avatar} size="2.4em" />
+            <Character id={by.avatar.character} size="2.4em" />
             <span>{by.name}</span>
             <span className={styles.powerArrow}>
               <PowerIcon power={h.power} size="1.6em" />
             </span>
-            <Blob avatar={target.avatar} size="2.4em" expression="sad" />
+            <Character id={target.avatar.character} size="2.4em" expression="wrong" />
             <span>{target.name}</span>
           </li>
         );

@@ -1,5 +1,5 @@
 import { ottoText, type OttoLine, type OttoLineKey, type PlayerSummary } from '@trivia/shared';
-import { Blob } from './Blob.tsx';
+import { Character } from './Character.tsx';
 import { useEffect, useState } from 'react';
 import styles from './Otto.module.css';
 
@@ -148,7 +148,7 @@ export function Otto({
             <span className={styles.focus}>
               {focus.map((p) => (
                 <span key={p.id} className={styles.chip}>
-                  <Blob avatar={p.avatar} size="1.4em" />
+                  <Character id={p.avatar.character} size="1.4em" />
                   {p.name}
                 </span>
               ))}
