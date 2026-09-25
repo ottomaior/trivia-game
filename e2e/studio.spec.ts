@@ -52,6 +52,31 @@ test('a slow TV steps down from the full studio to lite, then to flat', async ({
   expect(await tv.evaluate(() => localStorage.getItem('otto.fxmode'))).toContain('flat');
 });
 
+test('a TV that idles fine but stutters in the reveal steps down to lite', async ({ browser }) => {
+  test.setTimeout(150_000);
+  const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+  await context.addInitScript(() => {
+    // Smooth while idle in every mode; the full studio's reveal is too much.
+    (window as unknown as { __fakeFps: (kind: string, mode: string) => number }).__fakeFps = (kind, mode) =>
+      kind === 'reveal' && mode === 'full' ? 10 : 60;
+    localStorage.removeItem('otto.fxmode');
+  });
+  const tv = await context.newPage();
+  await tv.goto('/tv');
+  await tv.getByRole('button', { name: 'Kezdés' }).click();
+  await expect(tv.locator('[data-fx="full"]')).toBeVisible();
+  const code = (await tv.getByTestId('room-code').textContent())!;
+  const solo = await joinByLink(browser, code, 'Otto');
+  await startShow(solo);
+  await expect(tv.getByTestId('prompt')).toBeVisible({ timeout: 15_000 });
+  await expect(tv.locator('[data-fx="full"]')).toBeVisible(); // the idle sample passed
+  const game = autoplay(solo, 0);
+  await expect(tv.locator('[data-fx="lite"]')).toBeVisible({ timeout: 60_000 }); // the first reveal
+  expect(await tv.evaluate(() => localStorage.getItem('otto.fxmode'))).toContain('lite');
+  await game;
+  await expect(tv.locator('[data-fx="lite"]')).toBeVisible(); // lite keeps up, so it stays
+});
+
 test('the intro plays the show open, or the title card when the clip is missing', async ({ browser }) => {
   // With the clip: it plays over the studio through the intro (in a browser with H.264).
   const { tv, code, errors } = await openTv(browser);

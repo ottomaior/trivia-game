@@ -8,7 +8,7 @@ import { fx } from './fx.ts';
 import { FxLayer } from './FxLayer.tsx';
 import { OttoRig } from './OttoRig.tsx';
 import { fxForcedByUrl } from '../ui/lowfx.ts';
-import { measureFps, MIN_FPS } from './perfGuard.ts';
+import { measureFps, tooSlow, type FpsSample, type SampleKind } from './perfGuard.ts';
 import { StudioContext } from './StudioContext.ts';
 import styles from './Studio.module.css';
 
@@ -29,7 +29,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
   useCamera(cameraRef, phase, view.round);
   useStageEffects(rootRef, shakeRef, view);
   usePowerEffects(rootRef, view);
-  usePerfGuard(onTooSlow, lite);
+  usePerfGuard(onTooSlow, lite, phase);
 
   return (
     <div className={styles.studio} ref={rootRef} data-phase={phase} data-lite={lite}>
@@ -194,30 +194,60 @@ function shake(el: HTMLElement | null) {
  * Measures the frame rate once per mode per session. Too slow: step down
  * (full → lite → flat); the next mode measures itself again.
  */
-function usePerfGuard(onTooSlow: () => void, lite: boolean) {
+/** Phases with a lot going on, where an idle sample would be unfair. */
+const BUSY_PHASES: ReadonlySet<HostView['stage']['phase']> = new Set(['intro', 'reveal', 'scoreboard', 'final']);
+
+/**
+ * Measures the frame rate twice per mode per session: once while the studio
+ * idles (also the browser's own ceiling), and once in the first reveal, the
+ * busiest moment. Too slow: step down (full → lite → flat); the next mode
+ * measures itself again.
+ */
+function usePerfGuard(onTooSlow: () => void, lite: boolean, phase: HostView['stage']['phase']) {
+  const mode = lite ? 'lite' : 'full';
+  const calm = !BUSY_PHASES.has(phase);
+  const busy = phase === 'reveal';
+
   useEffect(() => {
-    const flag = `otto.fpsChecked.${lite ? 'lite' : 'full'}`;
-    if (fxForcedByUrl() || sessionStorageFlag(flag)) return;
-    const m = measureFps();
-    m.result.then((fps) => {
-      markSessionFlag(flag);
-      if (fps < MIN_FPS) onTooSlow();
+    if (!calm || fxForcedByUrl() || sessionSample(mode, 'idle')) return;
+    const m = measureFps('idle', mode);
+    m.result.then((sample) => {
+      rememberSample(mode, 'idle', sample);
+      if (tooSlow(sample)) onTooSlow();
     });
     return () => m.cancel();
-  }, [onTooSlow, lite]);
+  }, [onTooSlow, mode, calm]);
+
+  useEffect(() => {
+    if (!busy || fxForcedByUrl() || sessionSample(mode, 'reveal')) return;
+    let m: ReturnType<typeof measureFps> | null = null;
+    // From the correct tile's flash on: the sparks, the flying points and the faces.
+    const timer = setTimeout(() => {
+      m = measureFps('reveal', mode);
+      m.result.then((sample) => {
+        rememberSample(mode, 'reveal', sample);
+        if (tooSlow(sample, sessionSample(mode, 'idle') ?? undefined)) onTooSlow();
+      });
+    }, REVEAL_BEATS.correctFlash * 1000);
+    return () => {
+      clearTimeout(timer);
+      m?.cancel();
+    };
+  }, [onTooSlow, mode, busy]);
 }
 
-function sessionStorageFlag(key: string): boolean {
+function sessionSample(mode: string, kind: SampleKind): FpsSample | null {
   try {
-    return sessionStorage.getItem(key) === '1';
+    const raw = sessionStorage.getItem(`otto.fps.${mode}.${kind}`);
+    return raw ? (JSON.parse(raw) as FpsSample) : null;
   } catch {
-    return false;
+    return null;
   }
 }
 
-function markSessionFlag(key: string): void {
+function rememberSample(mode: string, kind: SampleKind, sample: FpsSample): void {
   try {
-    sessionStorage.setItem(key, '1');
+    sessionStorage.setItem(`otto.fps.${mode}.${kind}`, JSON.stringify(sample));
   } catch {
     // ignore
   }
