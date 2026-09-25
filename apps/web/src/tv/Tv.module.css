@@ -1853,10 +1853,12 @@
     url('/art/tape-plain.svg') center / 100% 100% no-repeat;
 }
 
+/* Centred on its spot (a real width: tests and screen readers need a box). */
 .tapeAnswer {
   position: absolute;
   top: 19.2em;
-  width: 0;
+  width: 16em;
+  margin-left: -8em;
   display: flex;
   flex-direction: column;
   align-items: center;
