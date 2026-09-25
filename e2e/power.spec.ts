@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { FREEZE_TAPS } from '../packages/shared/src/rules.ts';
 import { SLOW_BASE_URL } from '../playwright.config.ts';
 import { joinByLink, openTv, startShow } from './helpers.ts';
 
@@ -11,7 +12,9 @@ async function playAlong(phone: Page) {
     await phone.getByRole('button').first().click({ timeout: 1_000 }).catch(() => {});
   }
   const answer = phone.getByTestId('choice-0');
-  if ((await answer.isVisible()) && (await answer.isEnabled())) await answer.click({ timeout: 500 }).catch(() => {});
+  if ((await answer.isVisible()) && (await answer.isEnabled({ timeout: 500 }).catch(() => false))) {
+    await answer.click({ timeout: 500 }).catch(() => {});
+  }
 }
 
 test('a power play freezes a phone until its player breaks the ice', async ({ browser }) => {
@@ -39,17 +42,25 @@ test('a power play freezes a phone until its player breaks the ice', async ({ br
     await expect(ice).toBeVisible({ timeout: 50 });
   }).toPass({ timeout: 120_000, intervals: [50] });
 
-  // The TV puts the ice on Béla's desk. (Its "who hit whom" strip is gone too fast to check at E2E speed.)
-  await expect(tv.locator('[data-desk] [data-testid="desk-freeze"]')).toHaveCount(1);
+  // Béla must break the ice and answer within one question, open for only ~8s at this speed.
+  // So the TV check runs alongside (the desk keeps its cracked ice for the rest of the round),
+  // and the fifteen taps go in one burst: one round trip instead of fifteen, each slow under load.
+  const tvShowsIce = expect(tv.locator('[data-desk] [data-testid="desk-freeze"]')).toHaveCount(1);
+  tvShowsIce.catch(() => {}); // awaited below; don't report it twice if the phone fails first
 
-  // The ice covers Béla's answers until he taps through it.
+  // The ice covers Béla's answers until he taps through it; taps count once answers open.
   await expect(ice).toContainText('Koppints!');
   await expect(bela.getByTestId('choice-0')).toBeDisabled();
-  for (let i = 0; i < 15; i++) await ice.dispatchEvent('pointerdown');
+  await ice.evaluate((el, taps) => {
+    for (let i = 0; i < taps; i++) el.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true, composed: true }));
+  }, FREEZE_TAPS);
   await expect(ice).toBeHidden();
 
-  // Free again: Béla answers in time.
+  // Free again: Béla answers in time, so the reveal counts his answer (right or wrong, not
+  // "Lejárt az idő"). Not "Beküldve!": as the last to answer he ends the question, and that
+  // screen can be gone before a check sees it. The reveal comes once the question ends (≤8s).
   await bela.getByTestId('choice-0').click();
-  await expect(bela.getByRole('heading', { name: 'Beküldve!' })).toBeVisible();
+  await expect(bela.getByTestId('verdict')).toContainText(/Helyes!|Nem egészen/, { timeout: 15_000 });
+  await tvShowsIce;
   expect(errors).toEqual([]);
 });

@@ -1,16 +1,17 @@
 import { expect, test } from '@playwright/test';
-import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
+import { autoplay, joinByLink, openTv, startShow, watchForText } from './helpers.ts';
 
 test('Milliomos-létra: the staircase, a lifeline, walking away, and a final in rungs', async ({ browser }) => {
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
   await bela.getByRole('button', { name: /^Milliomos-létra/ }).click();
+  // Rung 1: the TV shows the staircase; nobody can walk away yet. (The phones say so for
+  // about a second at test speed, so Anna's is watched from before the show starts.)
+  const firstRung = await watchForText(anna, 'Indul a létra!');
   await startShow(anna, 'Milliomos-létra');
-
-  // Rung 1: the TV shows the staircase; nobody can walk away yet.
   await expect(tv.getByTestId('ladder-board')).toBeVisible({ timeout: 15_000 });
-  await expect(anna.getByText('Indul a létra!', { exact: false })).toBeVisible();
+  await expect.poll(firstRung, { timeout: 15_000 }).toBe(true);
 
   // 50:50 takes two choices away, and can't be used twice.
   const fifty = anna.getByRole('button', { name: 'Felezés' });

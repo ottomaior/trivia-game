@@ -2,6 +2,9 @@ import { expect, test } from '@playwright/test';
 import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('the full studio plays a solo game with lights and particles, without errors', async ({ browser }) => {
+  // A whole 10-round game: about a minute at test speed, whatever the machine; setting up the TV
+  // and phone takes longer when other specs run alongside.
+  test.setTimeout(150_000);
   const { tv, code, errors } = await openTv(browser, '/tv?fx=full');
   await expect(tv.locator('[data-fx="full"]')).toBeVisible();
   await expect(tv.getByTestId('fx-canvas')).toHaveCount(1);
