@@ -1,4 +1,4 @@
-import { isInputPhase, t, type HostSession, type HostView } from '@trivia/shared';
+import { t, type HostSession, type HostView } from '@trivia/shared';
 import { useCallback, useEffect, useState } from 'react';
 import { audio } from '../audio/engine.ts';
 import { useAudioCues } from '../audio/useAudioCues.ts';
@@ -10,7 +10,7 @@ import { useConnected } from '../net/useConnected.ts';
 import { useSocket } from '../net/useSocket.ts';
 import { useWakeLock } from '../net/useWakeLock.ts';
 import { initialFxMode, LowFxContext, rememberFxMode, stepDown, type FxMode } from '../ui/lowfx.ts';
-import { Marquee, type MarqueeMode } from '../ui/Marquee.tsx';
+import { Marquee } from '../ui/Marquee.tsx';
 import { Studio } from '../stage/Studio.tsx';
 import { MuteButton } from './MuteButton.tsx';
 import { ShowOpenClip } from './ShowOpenClip.tsx';
@@ -159,7 +159,7 @@ export function TvApp() {
   return (
     <LowFxContext.Provider value={lowFx}>
       <div className={styles.tv} data-lowfx={lowFx} data-fx={fxMode}>
-        <Marquee mode={marqueeMode(liveView, fxMode !== 'full')}>
+        <Marquee>
           {screen.kind === 'start' && <StartScreen onStart={createRoom} disabled={creating || !connected} />}
           {screen.kind === 'live' &&
             screen.view &&
@@ -195,17 +195,4 @@ export function TvApp() {
       </div>
     </LowFxContext.Provider>
   );
-}
-
-/** Bulbs chase faster while the clock runs and flash at the reveal. */
-function marqueeMode(view: HostView | null, still: boolean): MarqueeMode {
-  if (still) return 'still';
-  if (view && isInputPhase(view.stage.phase)) return 'fast';
-  switch (view?.stage.phase) {
-    case 'reveal':
-    case 'final':
-      return 'flash';
-    default:
-      return 'idle';
-  }
 }
