@@ -257,9 +257,11 @@
 
 /* The pack's name sits above the round counter in game. */
 .packTag {
-  display: block;
-  margin-bottom: 0.2em;
-  color: var(--mustard);
+  padding: 0.3em 1.5em 0.5em;
+  background: url('/art/ribbon.svg') center / 100% 100% no-repeat;
+  color: var(--paper);
+  white-space: nowrap;
+  transform: rotate(-2deg);
 }
 
 /* Shared */
@@ -376,12 +378,23 @@
   justify-self: end;
 }
 
+/* The board's header: the pack on a ribbon, the round on a dark paper tag. */
 .roundLabel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4em 0.6em;
   font-size: 1.6em;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ice);
+  color: var(--paper);
+}
+
+.roundTag {
+  padding: 0.3em 0.9em 0.45em;
+  background: url('/art/tag-dark.svg') center / 100% 100% no-repeat;
+  white-space: nowrap;
 }
 
 /* The last round scores double. */
@@ -443,12 +456,14 @@
 }
 
 .categoryChip {
-  padding: 0.35em 1.1em 0.5em;
-  background: url('/art/pcard-result.svg') center / 100% 100% no-repeat;
-  color: var(--ink);
-  font-size: 1.7em;
+  padding: 0.35em 1.2em 0.55em;
+  background: url('/art/tag-plum.svg') center / 100% 100% no-repeat;
+  color: var(--paper);
+  font-size: 1.5em;
   font-weight: 800;
-  transform: rotate(-1.5deg);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transform: rotate(1.5deg);
 }
 
 .gameFooter {
@@ -710,25 +725,27 @@
   gap: 0.2em;
   width: 100%;
   height: calc(1.6em + var(--h) * 1.25em);
-  padding-top: 0.35em;
-  background: var(--teal);
-  border: 0.18em solid var(--burgundy-deep);
-  border-bottom: 0;
-  border-radius: 0.5em 0.5em 0 0;
-  transition: background 300ms;
+  padding-top: 0.45em;
+  /* Paper steps: climbed ones teal, the next one mustard, the rest cream. */
+  background: url('/art/panel-1.svg') center / 100% 100% no-repeat;
+  color: var(--paper);
 }
 
 .stepAhead .stepFace {
-  background: color-mix(in srgb, var(--cream) 12%, var(--burgundy-deep));
+  background-image: url('/art/panel-5.svg');
+  color: var(--ink);
+  opacity: 0.55;
 }
 
 .stepSafe .stepFace {
-  box-shadow: inset 0 0.35em 0 var(--ice);
+  outline: 0.25em dashed var(--mustard);
+  outline-offset: -0.55em;
 }
 
 .stepNext .stepFace {
-  background: var(--mustard);
-  color: var(--burgundy);
+  background-image: url('/art/panel-3.svg');
+  color: var(--ink);
+  opacity: 1;
   animation: stepPulse 0.9s ease-in-out infinite alternate;
 }
 
@@ -744,16 +761,11 @@
   letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
-  color: var(--ice);
-}
-
-.stepNext .stepSafeTag {
-  color: var(--burgundy);
 }
 
 @keyframes stepPulse {
   to {
-    box-shadow: 0 0 1.4em color-mix(in srgb, var(--mustard) 70%, transparent);
+    transform: translateY(-0.3em);
   }
 }
 
@@ -761,9 +773,17 @@
   opacity: 1;
 }
 
-.climber[data-status='out'],
 .climber[data-status='walked'] {
   opacity: 0.55;
+}
+
+.lifeBadges {
+  display: flex;
+  gap: 0.15em;
+}
+
+.lifeBadge {
+  width: 1.9em;
 }
 
 .climberState {
@@ -1399,6 +1419,18 @@
   }
 }
 
+/* The show open: full-screen inside the bulb frame, over the studio (under the mute button). */
+.showOpen {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--burgundy);
+  animation: fadeIn 300ms both;
+}
+
 /* Intro on the studio board: the title card. */
 .titleCard {
   position: relative;
@@ -1585,79 +1617,115 @@
   font-size: 1.9em;
 }
 
-.optionBody {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2em;
-  min-width: 0;
-}
-
-.optionTag {
-  font-size: 1.3em;
-  font-weight: 700;
-  opacity: 0.85;
-}
-
-/* A lie at the reveal: dimmed, but whose it was and who fell for it stay readable. */
-.tileLie::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--burgundy) 45%, transparent);
-  -webkit-mask: var(--tile-art) center / 100% 100% no-repeat;
-  mask: var(--tile-art) center / 100% 100% no-repeat;
-  pointer-events: none;
-}
-
-.tileLie .pickers,
-.tileLie .optionBody {
+/* Időrend: cards pegged on a clothesline that sags in the middle
+   (PartyProps.tsx hangs each card at the rope's height, --drop). */
+.clothesline {
   position: relative;
-  z-index: 1;
+  padding-top: 0.5em;
+  background: url('/art/rope.svg') top center / 100% auto no-repeat;
 }
 
-/* Időrend: five cards in a row, a timeline. */
-.timelineRow {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1em;
+.lineCards {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 1.2em;
   margin: 0;
-  padding: 0;
+  padding: 0 1.5em;
   list-style: none;
 }
 
-.timelineCard {
+.hangCard {
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 0.5em;
-  min-height: 11em;
-  padding: 1.1em 1em 1.8em;
+  align-items: center;
+  flex: 1;
+  max-width: 15em;
+  margin-top: calc(var(--drop) - 1.4em);
+}
+
+.hangPaper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  width: 100%;
+  min-height: 9em;
+  padding: 2em 0.8em 1.3em;
+  background: url('/art/pcard-hang.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   text-align: center;
+  transform: rotate(var(--tilt));
+  transform-origin: 50% 0;
+}
+
+.peg {
+  position: absolute;
+  top: -1.4em;
+  left: calc(50% - 0.7em);
+  width: 1.4em;
+}
+
+.hangLetter {
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 1.5em;
+  line-height: 1;
 }
 
 .timelineText {
-  font-size: 1.9em;
+  max-width: 100%;
+  font-size: 1.7em;
   font-weight: 800;
   line-height: 1.15;
   text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
-.timelineYear {
+.clotheslineRevealed .hangPaper {
+  min-height: 7.5em;
+  padding-top: 1.6em;
+}
+
+.clotheslineRevealed .hangLetter {
+  display: none;
+}
+
+.yearTag {
+  margin-top: 0.5em;
+  padding: 0.05em 0.7em 0.35em;
+  background: url('/art/pcard-year.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   font-family: var(--font-display);
-  font-size: 2.6em;
-  line-height: 1;
-  color: inherit;
+  font-size: 2.2em;
+  line-height: 1.1;
+  transform: rotate(calc(var(--tilt) * -1));
+}
+
+.timelineArrow {
+  display: block;
+  width: 100%;
+  height: 2.6em;
+  margin-top: 0.8em;
 }
 
 .orderReveal {
   display: flex;
   flex-direction: column;
-  gap: 1.2em;
+  gap: 0.6em;
 }
 
 .orderRows {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 0.8em 2.4em;
+  gap: 0.8em 2em;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1665,150 +1733,310 @@
 
 .orderRow {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.4em;
-  font-size: 1.3em;
-  font-weight: 800;
+}
+
+.orderCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -0.4em;
+  padding: 0.3em 1.1em 0.6em;
+  background: url('/art/pcard-result.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
+  line-height: 1.15;
 }
 
 .orderName {
-  margin-right: 0.3em;
+  font-size: 1.6em;
   font-weight: 800;
 }
 
-.orderChip {
+.orderScore {
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+.orderPerfect {
+  color: var(--rust);
+  font-weight: 800;
+}
+
+.orderCard .pickerPoints {
+  position: absolute;
+  right: -1.2em;
+  top: -1em;
+}
+
+/* Tippelj!: the guesses pinned on a paper measuring tape, evenly spaced,
+   the exact answer marked underneath at the reveal. */
+.tape {
+  position: relative;
+  height: 27em;
+  margin: 0 2em;
+}
+
+.tapeGuesses {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 16em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Zero-width, so everything in the column centres on its spot on the tape. */
+.tapeGuess {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.tapeName {
+  font-size: 1.5em;
+  font-weight: 800;
+  white-space: nowrap;
+  color: var(--paper);
+}
+
+.valueTag {
+  padding: 0.1em 0.7em 0.35em;
+  background: url('/art/pcard-value.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
+  font-size: 2.3em;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.tapeBest .valueTag {
+  background-image: url('/art/pcard-year.svg');
+}
+
+.pin {
+  width: 1.5em;
+  margin-top: -0.2em;
+}
+
+.spotOn {
+  font-family: var(--font-display);
+  font-size: 2em;
+  white-space: nowrap;
+  color: var(--mustard);
+  transform: rotate(-4deg);
+  text-shadow:
+    0.05em 0 0 var(--paper),
+    -0.05em 0 0 var(--paper),
+    0 0.05em 0 var(--paper),
+    0 -0.05em 0 var(--paper);
+}
+
+/* Chips stacked beside the guess they backed, each with its owner's face. */
+.chipStack {
+  position: absolute;
+  left: 3.6em;
+  bottom: 3.8em;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.chip {
   display: grid;
   place-items: center;
-  width: 1.7em;
-  height: 1.7em;
-  border-radius: 0.35em;
-  font-family: var(--font-display);
+  width: 2.8em;
+  height: 2.8em;
+  margin-top: -1.7em;
+  background: url('/art/chip-teal.svg') center / contain no-repeat;
 }
 
-.orderChipGood {
-  background: var(--teal);
-  color: var(--cream);
+.tapeStrip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 16em;
+  height: 3.2em;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 calc(2% - 2px), #3a2a14 calc(2% - 2px) 2%) 0 0.25em / 100% 35% no-repeat,
+    url('/art/tape-plain.svg') center / 100% 100% no-repeat;
 }
 
-.orderChipBad {
-  background: var(--rust);
-  color: var(--cream);
-  opacity: 0.75;
-}
-
-.orderNone {
-  color: var(--ice);
-}
-
-/* Tippelj!: the guesses on a number line, then by distance at the reveal. */
-.guessLine {
+/* Centred on its spot (a real width: tests and screen readers need a box). */
+.tapeAnswer {
+  position: absolute;
+  top: 19.2em;
+  width: 16em;
+  margin-left: -8em;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.2em;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tapeArrow {
+  border: 0.7em solid transparent;
+  border-top: 0;
+  border-bottom: 1em solid var(--paper);
+}
+
+.tapeAnswerLabel {
+  margin-top: 0.2em;
+  font-size: 1.1em;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--paper);
+}
+
+.tapeAnswerValue {
+  font-family: var(--font-display);
+  font-size: 2.8em;
+  white-space: nowrap;
+  color: var(--mustard);
+  text-shadow:
+    0.05em 0 0 var(--paper),
+    -0.05em 0 0 var(--paper),
+    0 0.05em 0 var(--paper),
+    0 -0.05em 0 var(--paper),
+    0.04em 0.08em 0.08em #12050880;
+}
+
+/* Blöffölő's reveal: every option on a paper card; the truth in gold. */
+.bluffCards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2em 1.6em;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.guessCard {
-  flex-direction: column;
-  gap: 0.3em;
-  min-width: 11em;
-  padding: 0.9em 1.4em 1.6em;
+.bluffCardsMany {
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.guessValue {
-  font-family: var(--font-display);
-  font-size: 2.4em;
+.bluffCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+  min-height: 8.5em;
+  padding: 0.8em 1.4em 1.4em;
+  background: url('/art/pcard-opt.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
+}
+
+.bluffTruth {
+  background-image: url('/art/pcard-opt-truth.svg');
+  z-index: 1;
+}
+
+.bluffText {
+  padding-right: 2.2em;
+  font-size: 2.1em;
+  font-weight: 800;
   line-height: 1.1;
 }
 
-.guessName {
-  font-size: 1.4em;
+.bluffTag {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 1.2em;
   font-weight: 800;
 }
 
-.guessReveal {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: start;
-  gap: 2em;
+.bluffTruth .bluffTag {
+  color: var(--rust);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.answerCard {
-  margin: 0;
-  padding: 0.5em 0.9em;
-  background: var(--mustard);
-  color: var(--burgundy);
-  border: 0.08em solid var(--burgundy-deep);
-  border-radius: 0.3em;
-  box-shadow: 0 0.1em 0 var(--burgundy-deep);
-  font-family: var(--font-display);
-  font-size: 4em;
-  line-height: 1.1;
+.bluffMask {
+  width: 2em;
 }
 
-.guessList {
+.bluffPeople {
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
   gap: 0.6em;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  margin-top: auto;
 }
 
-.guessRow {
+.bluffPickers {
   display: flex;
-  align-items: center;
-  gap: 0.8em;
-  padding: 0.4em 0.9em;
-  background: var(--burgundy-deep);
-  border-radius: 0.8em;
-  font-size: 1.2em;
-}
-
-.guessRow .guessValue {
-  font-size: 1.8em;
-}
-
-.guessRowBest {
-  outline: 0.25em dotted var(--mustard);
-  outline-offset: 0.15em;
-  background: var(--teal);
-}
-
-.guessOff {
-  font-size: 1.2em;
-  font-weight: 700;
-  color: var(--ice);
-}
-
-.chips {
-  display: flex;
-  gap: 0.2em;
+  align-items: flex-end;
+  gap: 0.3em;
   margin-left: auto;
 }
 
+.bluffPickersLabel {
+  align-self: center;
+  font-size: 1.1em;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+.rosette {
+  position: absolute;
+  right: -0.4em;
+  top: -1.4em;
+  width: 3.8em;
+}
+
 /* Party-mode animation (starting states only, like the rest). */
-.timelineRow.tilesOpen .tile,
-.guessLine.tilesOpen .tile {
-  animation: pop 320ms calc(var(--i, 0) * 90ms) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+.tilesOpen .hangPaper,
+.clotheslineRevealed .hangPaper {
+  animation: hangIn 520ms calc(0.1s + var(--i, 0) * 0.14s) cubic-bezier(0.3, 1.5, 0.5, 1) both;
 }
 
-.tileLie::after {
-  animation: fadeIn 250ms calc(var(--i, 0) * 150ms) both;
+.yearTag {
+  animation: pop 320ms calc(0.9s + var(--i, 0) * 0.14s) cubic-bezier(0.3, 1.6, 0.5, 1) both;
 }
 
-.orderReveal .timelineCard {
-  animation: dropIn 450ms calc(0.2s + var(--i, 0) * 0.18s) cubic-bezier(0.3, 1.4, 0.5, 1) both;
+.timelineArrow {
+  animation: slideUp 500ms 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
 }
 
-.orderRow,
-.guessRow {
+.tapeGuess {
+  animation: dropIn 400ms calc(var(--i, 0) * 0.12s) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.chip {
+  animation: dropIn 300ms calc(1.2s + var(--k, 0) * 0.12s) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.tapeAnswer {
+  animation: dropIn 450ms 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
+}
+
+.spotOn {
+  animation: pop 400ms 1s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.bluffCard {
+  animation: pop 320ms calc(var(--i, 0) * 0.1s) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.bluffTruth {
+  animation: correctFlash 700ms 750ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.rosette {
+  animation: pop 400ms 1s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.orderRow {
   animation: slideUp 400ms calc(1.3s + var(--j, 0) * 120ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
 }
 
-.answerCard {
-  animation: correctFlash 700ms 750ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+@keyframes hangIn {
+  from {
+    transform: translateY(-2.5em) rotate(-12deg);
+    opacity: 0;
+  }
 }

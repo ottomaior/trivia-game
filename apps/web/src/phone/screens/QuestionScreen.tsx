@@ -2,7 +2,7 @@ import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type McQ
 import { useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { TILE } from '../../ui/answers.ts';
+import { phoneAnswerStyle, phoneCardStyle, TILE } from '../../ui/answers.ts';
 import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import { FreezeCover, SlimeCover } from '../Obstacles.tsx';
 import styles from '../Phone.module.css';
@@ -48,7 +48,7 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
   if (mine !== null) {
     return (
       <div className={styles.column}>
-        <div className={styles.lockedCard} style={{ background: TILE[mine]!.bg, color: TILE[mine]!.fg }}>
+        <div className={styles.lockedCard} style={phoneCardStyle(TILE[mine]!)}>
           <span className={styles.lockedLetter}>
             <AnswerShape index={mine} />
           </span>
@@ -77,13 +77,13 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
           <button
             key={i}
             className={`${styles.choice} ${gone ? styles.choiceGone : ''}`}
-            style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
+            style={phoneAnswerStyle(i)}
             disabled={!open || cover !== undefined || gone}
             onClick={() => answer(i)}
             data-testid={`choice-${i}`}
           >
             <span className={styles.choiceLetter}>
-              <AnswerShape index={i} color={TILE[i]!.bg} />
+              <AnswerShape index={i} />
             </span>
             <span className={styles.choiceText}>{c}</span>
             {votes !== null && (
@@ -153,6 +153,7 @@ function LifelineBar({ view, seat, socket }: { view: PlayerView; seat: LadderSea
             title={kind === 'audience' && !hasAudience ? t.noAudienceYet : undefined}
             onClick={() => (kind === 'phone' ? setChoosingFriend(true) : void use(kind))}
           >
+            <img src={`/art/life-${kind}${used ? '-used' : ''}.svg`} alt="" className={styles.lifelineArt} draggable={false} />
             {t.lifelines[kind]}
           </button>
         );

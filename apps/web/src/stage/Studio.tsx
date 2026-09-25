@@ -53,7 +53,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
               line={view.otto}
               players={view.players}
               bubbleDelayMs={phase === 'reveal' ? REVEAL_BEATS.otto * 1000 : 0}
-              bubbleHideMs={phase === 'question_read' || isInputPhase(phase) ? 1_800 : phase === 'scoreboard' ? 2_600 : undefined}
+              bubbleHideMs={phase === 'question_read' || isInputPhase(phase) ? 1_800 : phase === 'scoreboard' ? 2_600 : phase === 'reveal' ? 4_500 : phase === 'ladder_step' ? 3_000 : undefined}
               lively={!lite}
             />
           </div>
