@@ -1,6 +1,8 @@
-// Expressions for the eight contestants: each body is drawn without a face,
+// Expressions for the twelve contestants: each body is drawn without a face,
 // and each expression is a face recipe placed on the body's anchors
 // (eye centres L and R, mouth M, eye size e), plus an optional overlay.
+import { cast4Parts } from './cast4.mjs';
+
 export const EXPRESSIONS = ['correct', 'wrong', 'fooled', 'sneaky', 'out', 'frozen', 'slimed'];
 
 export function buildExpressions(C, paper, svg) {
@@ -92,6 +94,10 @@ export function buildExpressions(C, paper, svg) {
       L: [82, 140], R: [120, 140], M: [101, 168], e: 12, top: 32, cx: 100, w: 64, box: [30, -2, 140, 200],
     },
   };
+  // The animals share their bodies with the idle drawings in cast4.mjs.
+  for (const [name, c] of Object.entries(cast4Parts(C))) {
+    CH[name] = { ...c, behind: c.behind?.('xa'), after: c.after?.('xb') };
+  }
 
   const f = (n) => n.toFixed(1);
   // Eye whites, unless the character's eyes sit in its glasses (the lenses are the whites).

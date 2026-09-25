@@ -18,7 +18,7 @@ export const LOBBY_DISCONNECT_GRACE_MS = 60_000;
 export const HOST_ABSENT_ROOM_TTL_MS = 10 * 60_000;
 
 /** The paper cast players pick from (drawn in apps/motion/art); one per player. */
-export const CHARACTERS = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo'] as const;
+export const CHARACTERS = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo', 'tacsko', 'majmi', 'suni', 'uborka'] as const;
 export type CharacterId = (typeof CHARACTERS)[number];
 
 /** How a character reacts; each has its own drawing (no expression = its idle face). */
