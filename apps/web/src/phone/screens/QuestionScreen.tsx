@@ -61,7 +61,9 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
   const byline = cover ? throwers(view, onMe.filter((h) => h.power === cover).map((h) => h.by), cover) : '';
   return (
     <div className={styles.column}>
-      <p className={styles.phonePrompt}>{question.prompt}</p>
+      <p className={styles.phonePrompt} data-testid="phone-prompt">
+        {question.prompt}
+      </p>
       {!open && <p className={styles.hint}>{t.getReady}</p>}
       {view.ladder && !climbing && <p className={styles.hint}>{t.audienceMode}</p>}
       {open && climbing && seat && <LifelineBar view={view} seat={seat} socket={socket} />}
