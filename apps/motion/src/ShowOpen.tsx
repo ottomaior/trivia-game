@@ -3,6 +3,7 @@ import { useAudioData, visualizeAudio } from '@remotion/media-utils';
 import { loadFont as loadShrikhand } from '@remotion/google-fonts/Shrikhand';
 import { loadFont as loadArchivo } from '@remotion/google-fonts/Archivo';
 import type { FC } from 'react';
+import voices from '../../web/public/voice/manifest.json';
 import { C, paper } from '../art/paperlib.mjs';
 import { ottoDefs, backUpper, backFore, neck, torso, head, frontArm } from '../art/otto-rig.mjs';
 
@@ -16,7 +17,9 @@ const LOGO_MOVE_AT = 82;
 const WALK_AT = 84;
 const WALK_FRAMES = 30;
 const VOICE_AT = 118;
-const VOICE_FRAMES = Math.ceil((4389 / 1000) * FPS);
+/** The welcome line the clip uses, and how long it is (from the voice manifest, so a retake stays in sync). */
+export const VOICE_LINE = 'welcome-1';
+const VOICE_FRAMES = Math.ceil(((voices as Record<string, { durationMs: number }>)[VOICE_LINE]!.durationMs / 1000) * FPS);
 const CAST_AT = 182;
 const CAST = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo'];
 

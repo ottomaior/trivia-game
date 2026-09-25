@@ -85,9 +85,16 @@ export const PARTY_ROUNDS = 8;
 export const VOTE_OPTIONS = 3;
 export const CHOICES_PER_QUESTION = 4;
 
+/**
+ * Length of the show open, the rendered clip the TV plays through the intro
+ * (apps/web/public/clips/show-open.mp4, from apps/motion). TVs that can't play
+ * it show the title card for as long.
+ */
+export const SHOW_OPEN_MS = 10_000;
+
 /** Phase lengths in ms. Phases waiting on players end early once all acted. */
 export const TIMINGS = {
-  intro: 4_000,
+  intro: SHOW_OPEN_MS,
   vote: 8_000,
   /** A vote where someone can still use a power play: picking a target takes a moment. */
   votePower: 12_000,

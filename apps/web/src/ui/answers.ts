@@ -38,3 +38,19 @@ export function letterOf(i: number): string {
 export function tileStyle(tile: Tile, i: number, panel = false): CSSProperties {
   return { '--tile-art': `url(${panel ? tile.panel : tile.art})`, '--tile-bg': tile.bg, color: tile.fg, '--i': i } as CSSProperties;
 }
+
+/** A quiz answer's paper button on the phone (its colour; the shape sits on a cream disc). */
+export function phoneAnswerStyle(i: number): CSSProperties {
+  const tile = TILE[i]!;
+  return { '--tile-art': `url(/art/ph-tile-${'abcd'[i]}.svg)`, color: tile.fg, '--disc-fg': tile.bg, '--i': i } as CSSProperties;
+}
+
+/** A party option on the phone: a cream paper row, the option's colour on its letter disc. */
+export function phoneOptionStyle(tile: Tile, i = 0): CSSProperties {
+  return { '--tile-art': 'url(/art/ph-row.svg)', color: 'var(--ink)', '--disc-bg': tile.bg, '--disc-fg': tile.fg, '--i': i } as CSSProperties;
+}
+
+/** A paper card in one of the option colours (your locked-in answer, lie or guess). */
+export function phoneCardStyle(tile: Tile): CSSProperties {
+  return { '--tile-art': `url(${tile.panel})`, color: tile.fg } as CSSProperties;
+}

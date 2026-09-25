@@ -2,7 +2,7 @@ import { t, type PlayerView, type Stage } from '@trivia/shared';
 import { useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { letterOf, optionTile } from '../../ui/answers.ts';
+import { letterOf, optionTile, phoneOptionStyle } from '../../ui/answers.ts';
 import styles from '../Phone.module.css';
 import { moveItem, orderUi } from './orderUi.ts';
 
@@ -101,7 +101,7 @@ export function OrderScreen({ view, stage, socket }: { view: PlayerView; stage: 
           <li
             key={item}
             className={`${styles.orderItem} ${drag?.item === item ? styles.orderPlaceholder : ''}`}
-            style={{ background: optionTile(item).bg, color: optionTile(item).fg } as CSSProperties}
+            style={phoneOptionStyle(optionTile(item))}
             onPointerDown={ui === 'drag' ? (e) => grab(e, item) : undefined}
             data-testid={`order-item-${slot}`}
             data-item={item}
@@ -140,7 +140,7 @@ export function OrderScreen({ view, stage, socket }: { view: PlayerView; stage: 
         {drag && (
           <li
             className={`${styles.orderItem} ${styles.orderGhost}`}
-            style={{ background: optionTile(drag.item).bg, color: optionTile(drag.item).fg, top: drag.y - listTop - drag.grab } as CSSProperties}
+            style={{ ...phoneOptionStyle(optionTile(drag.item)), top: drag.y - listTop - drag.grab }}
             aria-hidden="true"
           >
             <span className={styles.orderSlot} />
@@ -166,7 +166,7 @@ export function OrderList({ items, order, marks }: { items: string[]; order: num
         <li
           key={item}
           className={`${styles.orderItem} ${marks ? (marks[slot] ? styles.orderRight : styles.orderWrong) : ''}`}
-          style={{ background: optionTile(item).bg, color: optionTile(item).fg } as CSSProperties}
+          style={phoneOptionStyle(optionTile(item))}
         >
           <span className={styles.orderSlot}>{slot + 1}.</span>
           <span className={styles.choiceLetter}>{letterOf(item)}</span>

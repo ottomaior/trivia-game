@@ -2,7 +2,7 @@ import { BLUFF_LIE_MAX_CHARS, t, type PlayerView, type Stage } from '@trivia/sha
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { letterOf, optionTile } from '../../ui/answers.ts';
+import { letterOf, optionTile, phoneCardStyle, phoneOptionStyle } from '../../ui/answers.ts';
 import styles from '../Phone.module.css';
 
 type WriteStage = Extract<Stage, { phase: 'bluff_write' }>;
@@ -55,7 +55,7 @@ export function BluffWriteScreen({ view, stage, socket }: { view: PlayerView; st
     return (
       <div className={styles.column}>
         <p className={styles.hint}>{t.bluffYourLie}</p>
-        <div className={styles.lockedCard} style={{ background: 'var(--plum)' }} data-testid="my-lie">
+        <div className={styles.lockedCard} style={phoneCardStyle(optionTile(2))} data-testid="my-lie">
           <span>{mine}</span>
         </div>
         <h2 className={styles.screenTitle}>{t.lockedIn}</h2>
@@ -70,7 +70,7 @@ export function BluffWriteScreen({ view, stage, socket }: { view: PlayerView; st
       <h2 className={styles.screenTitle}>{t.bluffWriteTitle}</h2>
       <p className={styles.hint}>{t.bluffWriteHint}</p>
       <input
-        className={styles.input}
+        className={`${styles.input} ${styles.noteInput}`}
         name="lie"
         value={text}
         onChange={(e) => {
@@ -116,7 +116,7 @@ export function BluffPickScreen({ view, stage, socket }: { view: PlayerView; sta
     const tile = optionTile(mine);
     return (
       <div className={styles.column}>
-        <div className={styles.lockedCard} style={{ background: tile.bg, color: tile.fg }}>
+        <div className={styles.lockedCard} style={phoneOptionStyle(tile)}>
           <span className={styles.lockedLetter}>{letterOf(mine)}</span>
           <span>{options[mine]}</span>
         </div>
@@ -138,7 +138,7 @@ export function BluffPickScreen({ view, stage, socket }: { view: PlayerView; sta
             <button
               key={i}
               className={`${styles.choice} ${styles.choiceCompact}`}
-              style={{ background: tile.bg, color: tile.fg, '--i': i } as CSSProperties}
+              style={phoneOptionStyle(tile, i)}
               disabled={own}
               onClick={() => void pick(i)}
               data-testid={`option-${i}`}

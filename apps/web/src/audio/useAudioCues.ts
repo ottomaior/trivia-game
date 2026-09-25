@@ -7,19 +7,24 @@ import { audio } from './engine.ts';
 /** Lets the question card land before Otto starts reading (the server times the phase to match). */
 const QUESTION_VOICE_DELAY_S = QUESTION_VOICE_DELAY_MS / 1000;
 
-/** Plays sounds, music and Otto's voice for each new TV view, plus the countdown ticks. */
-export function useAudioCues(view: HostView | null): void {
+/**
+ * Plays sounds, music and Otto's voice for each new TV view, plus the
+ * countdown ticks. With `showOpen` the intro is the show-open clip, which has
+ * its own sting, applause and welcome, so those are skipped.
+ */
+export function useAudioCues(view: HostView | null, { showOpen = false }: { showOpen?: boolean } = {}): void {
   const prev = useRef<HostView | null>(null);
 
   useEffect(() => {
     if (!view) return;
     const before = prev.current;
-    for (const { cue, at } of cuesFor(before, view)) audio.play(cue, at);
+    const clip = showOpen && view.stage.phase === 'intro';
+    if (!clip) for (const { cue, at } of cuesFor(before, view)) audio.play(cue, at);
     audio.music(musicFor(view.stage.phase, view.paused));
     // Otto speaks each new line (only once it's actually new, not on every update).
     const line = view.otto;
     const phaseChanged = before?.stage.phase !== view.stage.phase;
-    if (line && (phaseChanged || line.key !== before?.otto?.key || line.variant !== before?.otto?.variant)) {
+    if (line && !clip && (phaseChanged || line.key !== before?.otto?.key || line.variant !== before?.otto?.variant)) {
       audio.voice(line, ottoDelay(view.stage.phase));
     }
     // Otto reads each new question out; the answers open when he has finished.
