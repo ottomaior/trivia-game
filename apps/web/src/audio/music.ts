@@ -35,6 +35,7 @@ function note(
   osc.frequency.value = freq;
   lp.type = 'lowpass';
   lp.frequency.value = filter;
+  env.gain.value = 0; // a gain is 1 until its first event: stay silent until the note starts
   env.gain.setValueAtTime(0.0001, t);
   env.gain.exponentialRampToValueAtTime(gain, t + 0.01);
   env.gain.exponentialRampToValueAtTime(0.0001, t + dur);
