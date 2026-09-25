@@ -26,6 +26,23 @@ export async function openTv(browser: Browser, path = '/tv?fx=lite'): Promise<{ 
   return { tv, code: (await codeEl.textContent())!, errors };
 }
 
+/** Every paper drawing on the page has loaded and decoded (no missing or broken bitmap). */
+export async function expectArtLoaded(page: Page): Promise<void> {
+  // Resolves to the drawings still missing, so a failure names them. Slow under
+  // a full suite run, when several games download the art at once.
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => {
+          const art = [...document.images].filter((img) => img.src.includes('/art/'));
+          if (art.length === 0) return ['(no art on the page)'];
+          return art.filter((img) => !img.complete || img.naturalWidth === 0).map((img) => img.src);
+        }),
+      { timeout: 20_000 },
+    )
+    .toEqual([]);
+}
+
 export async function openPhone(browser: Browser, path = '/'): Promise<Page> {
   const context = await browser.newContext({ ...devices['Pixel 7'] });
   const page = await context.newPage();

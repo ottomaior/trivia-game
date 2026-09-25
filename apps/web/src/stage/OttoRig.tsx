@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { audio } from '../audio/engine.ts';
 import { Character } from '../ui/Character.tsx';
 import { moodFor } from '../ui/Otto.tsx';
+import { art } from '../ui/art.ts';
 import { PaperOtto, type Pose } from '../ui/PaperOtto.tsx';
 import styles from './OttoRig.module.css';
 
@@ -115,7 +116,7 @@ export function OttoRig({
         />
       </div>
       <div className={styles.podium}>
-        <img src="/art/podium.svg" alt="" className={styles.podiumArt} draggable={false} />
+        <img src={art('podium')} alt="" className={styles.podiumArt} draggable={false} />
         <span className={styles.podiumSign}>{t.ottoName}</span>
       </div>
       {text && !bubbleGone && (

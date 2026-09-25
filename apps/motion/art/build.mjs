@@ -3,8 +3,9 @@
 // plus an index.html contact sheet, and copies the audio the clips use.
 //
 // `--out <dir>` writes the SVGs somewhere else (relative to the working
-// directory); `--web` writes only the SVGs, for the game (apps/web runs
-// `node ../motion/art/build.mjs --web --out public/art`).
+// directory); `--web` writes only the SVGs, for the game (apps/web's
+// scripts/art.mjs runs it, then renders every SVG to a WebP bitmap, so the
+// browser never evaluates the paper filters).
 import { copyFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

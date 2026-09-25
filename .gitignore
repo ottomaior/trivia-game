@@ -10,3 +10,4 @@ playwright-report/
 audio-src/
 # Paper-studio art, generated from apps/motion/art by the web build.
 apps/web/public/art/
+apps/web/.art/

@@ -37,7 +37,7 @@
   height: 190em;
   translate: -50% -50%;
   will-change: transform;
-  background: var(--burgundy) url('/art/bg-rays.svg') center / 100% 100%;
+  background: var(--burgundy) url('/art/bg-rays.webp') center / 100% 100%;
   animation: spin 120s linear infinite;
 }
 
@@ -48,7 +48,7 @@
   width: 96em;
   aspect-ratio: 1000 / 520;
   transform: translateX(-50%);
-  background: url('/art/bg-arch.svg') center / 100% 100%;
+  background: url('/art/bg-arch.webp') center / 100% 100%;
 }
 
 @keyframes spin {
@@ -125,7 +125,7 @@
   right: -20%;
   bottom: -2em;
   height: 11em;
-  background: var(--floor-2) url('/art/bg-floor.svg') top center / 100% auto no-repeat;
+  background: var(--floor-2) url('/art/bg-floor.webp') top center / 100% auto no-repeat;
   transform: translateZ(2em);
 }
 
@@ -220,7 +220,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.9em 2.4em 0.5em;
-  background: url('/art/desk.svg') center / 100% 100% no-repeat;
+  background: url('/art/desk.webp') center / 100% 100% no-repeat;
 }
 
 .lamp {

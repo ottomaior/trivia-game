@@ -1,16 +1,17 @@
 import type { Ref } from 'react';
+import { art } from './art.ts';
 import styles from './PaperOtto.module.css';
 
 export type Pose = 'idle' | 'point' | 'armsUp' | 'facepalm' | 'lean';
 
 /** One layer of the rig; the layers that "boil" stack three hand-cut versions and flick between them. */
 function Layer({ name, boil, className }: { name: string; boil?: boolean; className?: string }) {
-  if (!boil) return <img src={`/art/otto-${name}.svg`} alt="" draggable={false} className={className} />;
+  if (!boil) return <img src={art(`otto-${name}`)} alt="" draggable={false} className={className} />;
   return (
     <span className={`${styles.boil} ${className ?? ''}`}>
-      <img src={`/art/otto-${name}.svg`} alt="" draggable={false} />
-      <img src={`/art/otto-${name}-1.svg`} alt="" draggable={false} />
-      <img src={`/art/otto-${name}-2.svg`} alt="" draggable={false} />
+      <img src={art(`otto-${name}`)} alt="" draggable={false} />
+      <img src={art(`otto-${name}-1`)} alt="" draggable={false} />
+      <img src={art(`otto-${name}-2`)} alt="" draggable={false} />
     </span>
   );
 }

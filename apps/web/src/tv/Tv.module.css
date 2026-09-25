@@ -350,7 +350,7 @@
 /* The pack's name sits above the round counter in game. */
 .packTag {
   padding: 0.3em 1.5em 0.5em;
-  background: url('/art/ribbon.svg') center / 100% 100% no-repeat;
+  background: url('/art/ribbon.webp') center / 100% 100% no-repeat;
   color: var(--paper);
   white-space: nowrap;
   transform: rotate(-2deg);
@@ -485,7 +485,7 @@
 
 .roundTag {
   padding: 0.3em 0.9em 0.45em;
-  background: url('/art/tag-dark.svg') center / 100% 100% no-repeat;
+  background: url('/art/tag-dark.webp') center / 100% 100% no-repeat;
   white-space: nowrap;
 }
 
@@ -549,7 +549,7 @@
 
 .categoryChip {
   padding: 0.35em 1.2em 0.55em;
-  background: url('/art/tag-plum.svg') center / 100% 100% no-repeat;
+  background: url('/art/tag-plum.webp') center / 100% 100% no-repeat;
   color: var(--paper);
   font-size: 1.5em;
   font-weight: 800;
@@ -617,7 +617,7 @@
 .prompt {
   margin: 0;
   padding: 1.1em 1.6em 1.3em;
-  background: url('/art/card.svg') center / 100% 100% no-repeat;
+  background: url('/art/card.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-size: 3em;
   font-weight: 800;
@@ -666,7 +666,7 @@
   flex: none;
   width: 1.7em;
   height: 1.7em;
-  background: url('/art/badge.svg') center / 100% 100% no-repeat;
+  background: url('/art/badge.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 2em;
@@ -714,7 +714,7 @@
   top: -1.1em;
   width: 3.4em;
   height: 3.4em;
-  background: url('/art/check.svg') center / contain no-repeat;
+  background: url('/art/check.webp') center / contain no-repeat;
 }
 
 .pickers {
@@ -819,12 +819,12 @@
   height: calc(1.6em + var(--h) * 1.25em);
   padding-top: 0.45em;
   /* Paper steps: climbed ones teal, the next one mustard, the rest cream. */
-  background: url('/art/panel-1.svg') center / 100% 100% no-repeat;
+  background: url('/art/panel-1.webp') center / 100% 100% no-repeat;
   color: var(--paper);
 }
 
 .stepAhead .stepFace {
-  background-image: url('/art/panel-5.svg');
+  background-image: url('/art/panel-5.webp');
   color: var(--ink);
   opacity: 0.55;
 }
@@ -835,7 +835,7 @@
 }
 
 .stepNext .stepFace {
-  background-image: url('/art/panel-3.svg');
+  background-image: url('/art/panel-3.webp');
   color: var(--ink);
   opacity: 1;
   animation: stepPulse 0.9s ease-in-out infinite alternate;
@@ -919,7 +919,7 @@
   align-items: center;
   gap: 1em;
   padding: 0.55em 1.6em 0.8em;
-  background: url('/art/ph-row.svg') center / 100% 100% no-repeat;
+  background: url('/art/ph-row.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-size: 1.3em;
 }
@@ -1562,7 +1562,7 @@
   position: relative;
   margin: 0;
   padding: 0.35em 2.2em 0.55em;
-  background: url('/art/ribbon.svg') center / 100% 100% no-repeat;
+  background: url('/art/ribbon.webp') center / 100% 100% no-repeat;
   color: var(--paper);
   font-family: var(--font-display);
   font-size: 2.6em;
@@ -1715,7 +1715,7 @@
 .clothesline {
   position: relative;
   padding-top: 0.5em;
-  background: url('/art/rope.svg') top center / 100% auto no-repeat;
+  background: url('/art/rope.webp') top center / 100% auto no-repeat;
 }
 
 .lineCards {
@@ -1746,7 +1746,7 @@
   width: 100%;
   min-height: 9em;
   padding: 2em 0.8em 1.3em;
-  background: url('/art/pcard-hang.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-hang.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   text-align: center;
   transform: rotate(var(--tilt));
@@ -1793,7 +1793,7 @@
 .yearTag {
   margin-top: 0.5em;
   padding: 0.05em 0.7em 0.35em;
-  background: url('/art/pcard-year.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-year.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 2.2em;
@@ -1837,7 +1837,7 @@
   align-items: center;
   margin-top: -0.4em;
   padding: 0.3em 1.1em 0.6em;
-  background: url('/art/pcard-result.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-result.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   line-height: 1.15;
 }
@@ -1900,7 +1900,7 @@
 
 .valueTag {
   padding: 0.1em 0.7em 0.35em;
-  background: url('/art/pcard-value.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-value.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-size: 2.3em;
   font-weight: 800;
@@ -1908,7 +1908,7 @@
 }
 
 .tapeBest .valueTag {
-  background-image: url('/art/pcard-year.svg');
+  background-image: url('/art/pcard-year.webp');
 }
 
 .pin {
@@ -1944,7 +1944,7 @@
   width: 2.8em;
   height: 2.8em;
   margin-top: -1.7em;
-  background: url('/art/chip-teal.svg') center / contain no-repeat;
+  background: url('/art/chip-teal.webp') center / contain no-repeat;
 }
 
 .tapeStrip {
@@ -1955,7 +1955,7 @@
   height: 3.2em;
   background:
     repeating-linear-gradient(90deg, transparent 0 calc(2% - 2px), #3a2a14 calc(2% - 2px) 2%) 0 0.25em / 100% 35% no-repeat,
-    url('/art/tape-plain.svg') center / 100% 100% no-repeat;
+    url('/art/tape-plain.webp') center / 100% 100% no-repeat;
 }
 
 /* Centred on its spot (a real width: tests and screen readers need a box). */
@@ -2019,12 +2019,12 @@
   gap: 0.3em;
   min-height: 8.5em;
   padding: 0.8em 1.4em 1.4em;
-  background: url('/art/pcard-opt.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-opt.webp') center / 100% 100% no-repeat;
   color: var(--ink);
 }
 
 .bluffTruth {
-  background-image: url('/art/pcard-opt-truth.svg');
+  background-image: url('/art/pcard-opt-truth.webp');
   z-index: 1;
 }
 

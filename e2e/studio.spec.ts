@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
+import { autoplay, expectArtLoaded, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('the full studio plays a solo game with lights and particles, without errors', async ({ browser }) => {
   const { tv, code, errors } = await openTv(browser, '/tv?fx=full');
@@ -7,6 +7,7 @@ test('the full studio plays a solo game with lights and particles, without error
   await expect(tv.getByTestId('fx-canvas')).toHaveCount(1);
   const solo = await joinByLink(browser, code, 'Otto');
   await expect(tv.getByTestId('seat')).toHaveCount(1);
+  await expectArtLoaded(tv);
 
   await startShow(solo);
   // (The slot spin outlasts vote_result at the tests' 15% timing, so it isn't checked here.)
