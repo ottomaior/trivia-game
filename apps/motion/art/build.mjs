@@ -26,7 +26,7 @@ mkdirSync(OUT, { recursive: true });
 
 // Panels the game stretches to fit their text (cards, tiles, desks, the
 // floor) must fill any box instead of keeping their proportions.
-const STRETCH = /^(card|opt-|panel-|pcard-|ph-|desk|bg-floor|tag|tile-|ribbon)/;
+const STRETCH = /^(card|opt-|panel-|pcard-|ph-|desk|bg-floor|tag|tile-|ribbon|tape|timeline)/;
 
 function svg(name, w, h, defs, body) {
   const fit = STRETCH.test(name) ? ' preserveAspectRatio="none"' : '';

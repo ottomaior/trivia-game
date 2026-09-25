@@ -1,11 +1,12 @@
-import { BLUFF_BLANK, t, type HostView, type Pick, type PlayerSummary, type RevealResult, type Stage } from '@trivia/shared';
+import { BLUFF_BLANK, t, type Expression, type HostView, type Pick, type PlayerSummary, type RevealResult, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Character } from '../../ui/Character.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import { letterOf, optionTile, TILE, tileStyle } from '../../ui/answers.ts';
 import { AnswerShape } from '../../ui/AnswerShape.tsx';
-import { withUnit } from '../../ui/format.ts';
+import { heldExpression, revealExpression } from '../../stage/expressions.ts';
+import { BluffCards, Clothesline, Tape } from './PartyProps.tsx';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
@@ -31,11 +32,21 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
       {result.kind === 'mc' && question.kind === 'mc' && (
         <McTiles choices={question.choices} result={result} picks={picks} byId={byId} mode={view.mode} />
       )}
-      {result.kind === 'bluff' && <BluffTiles result={result} picks={picks} byId={byId} />}
+      {result.kind === 'bluff' && <BluffCards options={result.options} byId={byId} points={new Map(picks.map((p) => [p.playerId, p.points]))} />}
       {result.kind === 'timeline' && question.kind === 'timeline' && (
-        <OrderReveal items={question.items} result={result} picks={picks} byId={byId} />
+        <OrderReveal items={question.items} result={result} picks={picks} byId={byId} face={(id) => revealExpression(stage, id)} />
       )}
-      {result.kind === 'number' && <GuessReveal result={result} picks={picks} byId={byId} />}
+      {result.kind === 'number' && (
+        <Tape
+          guesses={result.guesses}
+          unit={result.unit}
+          byId={byId}
+          answer={result.answer}
+          bets={result.bets}
+          closest={result.closest}
+          faces={(id) => revealExpression(stage, id) ?? heldExpression(view, id)}
+        />
+      )}
       <footer className={styles.gameFooter}>
         {!inStudio && <Otto line={view.otto} players={view.players} size="9em" bubbleDelay="3.2s" />}
         <div className={styles.revealNotes}>
@@ -53,12 +64,12 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
 
 type ById = Map<string, PlayerSummary>;
 
-/** A player's blob dropping onto a tile, with the points they won (when `points` is given). */
-function PickerBlob({ player, index, points }: { player: PlayerSummary | undefined; index: number; points?: number }) {
+/** A player dropping onto a tile, with the face it earned and the points they won (when `points` is given). */
+function PickerBlob({ player, index, points, expression }: { player: PlayerSummary | undefined; index: number; points?: number; expression?: Expression }) {
   if (!player) return null;
   return (
     <span className={styles.picker} style={{ '--j': index } as CSSProperties}>
-      <Character id={player.avatar.character} size="2.8em" />
+      <Character id={player.avatar.character} size="2.8em" expression={expression} />
       {points !== undefined && points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(points)}</span>}
     </span>
   );
@@ -85,7 +96,13 @@ function McTiles({ choices, result, picks, byId, mode }: { choices: string[]; re
               {picks
                 .filter((p) => p.choice === i)
                 .map((p, j) => (
-                  <PickerBlob key={p.playerId} player={byId.get(p.playerId)} index={j} points={mode !== 'ladder' ? p.points : undefined} />
+                  <PickerBlob
+                    key={p.playerId}
+                    player={byId.get(p.playerId)}
+                    index={j}
+                    points={mode !== 'ladder' ? p.points : undefined}
+                    expression={isCorrect ? 'correct' : 'wrong'}
+                  />
                 ))}
             </span>
           </li>
@@ -95,117 +112,42 @@ function McTiles({ choices, result, picks, byId, mode }: { choices: string[]; re
   );
 }
 
-/**
- * Blöffölő: the options as they were shown, now with who wrote each lie and
- * who fell for it; the truth flashes.
- */
-function BluffTiles({ result, picks, byId }: { result: ResultOf<'bluff'>; picks: Pick[]; byId: ById }) {
-  const points = new Map(picks.map((p) => [p.playerId, p.points]));
-  return (
-    <ol className={`${styles.tiles} ${result.options.length > 4 ? styles.tilesMany : ''}`}>
-      {result.options.map((o, i) => {
-        const tile = optionTile(i);
-        const names = o.authors.map((id) => byId.get(id)?.name ?? '?').join(', ');
-        return (
-          <li
-            key={i}
-            className={`${styles.tile} ${o.truth ? styles.tileCorrect : styles.tileLie}`}
-            style={tileStyle(tile, i)}
-            data-testid={o.truth ? 'correct-tile' : 'bluff-option'}
-          >
-            <span className={styles.tileLetter}>{letterOf(i)}</span>
-            <span className={styles.optionBody}>
-              <span className={styles.tileText}>{o.text}</span>
-              <span className={styles.optionTag}>{o.truth ? t.bluffTruthTag : names ? t.bluffWroteIt(names) : t.bluffHouseLie}</span>
-            </span>
-            <span className={styles.pickers}>
-              {o.pickers.map((id, j) => (
-                <PickerBlob key={id} player={byId.get(id)} index={j} points={o.truth ? points.get(id) : undefined} />
-              ))}
-            </span>
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
-
-/** Időrend: the cards fall into order with their years; below, how each player's order compares. */
-function OrderReveal({ items, result, picks, byId }: { items: string[]; result: ResultOf<'timeline'>; picks: Pick[]; byId: ById }) {
+/** Időrend: the cards hang in order with their years; below, how each player did. */
+function OrderReveal({
+  items,
+  result,
+  picks,
+  byId,
+  face,
+}: {
+  items: string[];
+  result: ResultOf<'timeline'>;
+  picks: Pick[];
+  byId: ById;
+  face: (playerId: string) => Expression | undefined;
+}) {
   return (
     <div className={styles.orderReveal}>
-      <ol className={`${styles.timelineRow} ${styles.tilesOpen}`}>
-        {result.order.map((shown, k) => (
-          <li
-            key={shown}
-            className={`${styles.tile} ${styles.timelineCard}`}
-            style={tileStyle(optionTile(shown), k, true)}
-            data-testid={k === 0 ? 'correct-tile' : undefined}
-          >
-            <span className={styles.timelineYear}>{result.years[k]}</span>
-            <span className={styles.tileLetter}>{letterOf(shown)}</span>
-            <span className={styles.timelineText}>{items[shown]}</span>
-          </li>
-        ))}
-      </ol>
+      <Clothesline cards={result.order.map((item) => ({ item, text: items[item]! }))} open years={result.years} />
       <ul className={styles.orderRows}>
         {picks.map((p, j) => {
           const player = byId.get(p.playerId);
           const order = result.orders[p.playerId] ?? null;
+          const right = order ? order.filter((shown, k) => shown === result.order[k]).length : 0;
           return (
             <li key={p.playerId} className={styles.orderRow} style={{ '--j': j } as CSSProperties}>
-              {player && <Character id={player.avatar.character} size="2.4em" />}
-              <span className={styles.orderName}>{player?.name}</span>
-              {order ? (
-                order.map((shown, k) => (
-                  <span key={k} className={`${styles.orderChip} ${shown === result.order[k] ? styles.orderChipGood : styles.orderChipBad}`}>
-                    {letterOf(shown)}
-                  </span>
-                ))
-              ) : (
-                <span className={styles.orderNone}>{t.noAnswer}</span>
-              )}
-              {p.points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(p.points)}</span>}
+              {player && <Character id={player.avatar.character} size="5.6em" expression={face(p.playerId)} />}
+              <span className={styles.orderCard}>
+                <span className={styles.orderName}>{player?.name}</span>
+                <span className={`${styles.orderScore} ${order && right === order.length ? styles.orderPerfect : ''}`}>
+                  {!order ? t.noAnswer : right === order.length ? t.orderPerfect : t.orderRight(right, order.length)}
+                </span>
+                {p.points > 0 && <span className={styles.pickerPoints}>{t.plusPoints(p.points)}</span>}
+              </span>
             </li>
           );
         })}
       </ul>
-    </div>
-  );
-}
-
-/** Tippelj!: the exact answer, then every guess by how far off it was, with the chips that backed it. */
-function GuessReveal({ result, picks, byId }: { result: ResultOf<'number'>; picks: Pick[]; byId: ById }) {
-  const points = new Map(picks.map((p) => [p.playerId, p.points]));
-  const byDistance = result.guesses.map((g, index) => ({ ...g, index })).sort((a, b) => a.distance - b.distance || a.index - b.index);
-  const backers = (index: number) =>
-    Object.entries(result.bets).flatMap(([id, chips]) => chips.filter((c) => c === index).map(() => id));
-  return (
-    <div className={styles.guessReveal}>
-      <p className={styles.answerCard} data-testid="correct-tile">
-        {withUnit(result.answer, result.unit)}
-      </p>
-      <ol className={styles.guessList}>
-        {byDistance.map((g, j) => {
-          const player = byId.get(g.playerId);
-          const closest = result.closest.includes(g.playerId);
-          return (
-            <li key={g.playerId} className={`${styles.guessRow} ${closest ? styles.guessRowBest : ''}`} style={{ '--j': j } as CSSProperties}>
-              {player && <Character id={player.avatar.character} size="2.6em" />}
-              <span className={styles.orderName}>{player?.name}</span>
-              <span className={styles.guessValue}>{withUnit(g.value, result.unit)}</span>
-              <span className={styles.guessOff}>{g.distance === 0 ? '✓' : t.guessOff(t.number(g.distance))}</span>
-              <span className={styles.chips}>
-                {backers(g.index).map((id, k) => {
-                  const b = byId.get(id);
-                  return b ? <Character key={`${id}-${k}`} id={b.avatar.character} size="1.6em" /> : null;
-                })}
-              </span>
-              {(points.get(g.playerId) ?? 0) > 0 && <span className={styles.pickerPoints}>{t.plusPoints(points.get(g.playerId)!)}</span>}
-            </li>
-          );
-        })}
-      </ol>
     </div>
   );
 }

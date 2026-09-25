@@ -26,7 +26,7 @@ export function PowerHits({ hits, players, waiting }: { hits: PowerHit[]; player
             <span className={styles.powerArrow}>
               <PowerIcon power={h.power} size="1.6em" />
             </span>
-            <Character id={target.avatar.character} size="2.4em" expression="wrong" />
+            <Character id={target.avatar.character} size="2.4em" expression={h.power === 'freeze' ? 'frozen' : 'slimed'} />
             <span>{target.name}</span>
           </li>
         );
