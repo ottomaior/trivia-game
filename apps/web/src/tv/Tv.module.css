@@ -180,6 +180,98 @@
   color: var(--ice);
 }
 
+/* The mode board: the five modes as a column of paper rows. The picked one grows and holds the vote or the setup; the rest fade. */
+.modeBoard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Five rows plus the vote or the setup must fit under the seats, so the board runs smaller than the panel. */
+  font-size: 0.8em;
+}
+
+.modeCard {
+  display: flex;
+  flex: 1 1 100%;
+  flex-direction: column;
+  gap: 0.6em;
+  min-width: 0;
+  padding: 0.35em 0.8em;
+  background: var(--burgundy-deep);
+  border: 0.15em solid var(--teal);
+  border-radius: var(--radius);
+  animation: hopIn 350ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.modeCardOn {
+  gap: 0.4em;
+  padding: 0.45em 0.9em 0.6em;
+  border-color: var(--mustard);
+}
+
+/* Once a mode is picked, the others shrink and share a line where the panel is wide enough. */
+.modeCardDim {
+  flex: 1 1 auto;
+  padding: 0.15em 0.7em;
+  opacity: 0.45;
+}
+
+.modeCardDim .modeName {
+  font-size: 1.15em;
+}
+
+.modeHead {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  min-width: 0;
+}
+
+.modeName {
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 1.5em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+}
+
+.modeCardOn .modeName {
+  font-size: 2em;
+  color: var(--mustard);
+}
+
+/* Inside the picked card, a big pack's category chips (up to 28) must still fit under the seats. */
+.packSetup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.packSetup .packTitle {
+  font-size: 2em;
+}
+
+.packSetup .packCats {
+  gap: 0.35em;
+}
+
+.packSetup .packCats li {
+  padding: 0.1em 0.55em;
+  font-size: 0.95em;
+}
+
+/* Read by screen readers and tests, not shown. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .packTally {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -225,9 +317,9 @@
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 3.4em;
+  font-size: 2.6em;
   line-height: 1;
-  color: var(--mustard);
+  color: var(--cream);
 }
 
 .packCats {
@@ -1234,6 +1326,7 @@
 .lobbyStudio .packPanel {
   font-size: 1.4em;
 }
+
 
 /* ---- Studio versions (the screen is on the studio's board) ---------------- */
 

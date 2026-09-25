@@ -17,6 +17,7 @@ import {
   type ErrorCode,
   type GameMode,
   type Lifeline,
+  type ModeOption,
   type OttoLine,
   type Phase,
   type Pick,
@@ -26,7 +27,7 @@ import {
   type RevealResult,
   type Standing,
 } from '@trivia/shared';
-import type { PackOffer } from '../content/packs.ts';
+import { modeOptions, type PackOffer } from '../content/packs.ts';
 import type { Category, McQuestion, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
 import {
@@ -93,11 +94,13 @@ export class Room {
   hostConnected = false;
   hostDisconnectedAt: number | null = null;
 
-  /** Lobby: players vote for a pack, then the VIP trims its categories. */
-  lobbyStep: 'packs' | 'setup' = 'packs';
+  /** Lobby: the VIP picks a mode, players vote for one of its packs, then the VIP trims its categories. */
+  lobbyStep: 'mode' | 'packs' | 'setup' = 'mode';
+  /** The mode the VIP picked; null on the mode step. */
+  lobbyMode: GameMode | null = null;
   /** Packs with enough questions to play; null while they load. */
   packOffers: PackOffer[] | null = null;
-  /** Player id to pack slug. */
+  /** Player id to pack slug; votes for every mode's packs are kept, so a mode change loses nothing. */
   readonly packVotes = new Map<string, string>();
   /** The locked pack; kept for "play again". */
   pack: PackOffer | null = null;
@@ -278,13 +281,39 @@ export class Room {
     this.packOffers = offers;
     const slugs = new Set(offers?.map((o) => o.slug));
     for (const [id, slug] of this.packVotes) if (!slugs.has(slug)) this.packVotes.delete(id);
+    // Offers only arrive past the mode step through a retried load; a picked mode that lost its packs goes back.
+    if (this.phase === 'lobby' && this.lobbyStep !== 'mode' && this.modePacks().length === 0) this.resetToModes();
+  }
+
+  /** The modes on offer, with their pack counts; null while the offers load. */
+  modeOptions(): ModeOption[] | null {
+    return this.packOffers ? modeOptions(this.packOffers) : null;
+  }
+
+  /** The offered packs of the picked mode. */
+  modePacks(): PackOffer[] {
+    return this.packOffers?.filter((o) => o.mode === this.lobbyMode) ?? [];
+  }
+
+  /** The VIP picks a game mode; one with a single pack is locked right away. */
+  pickMode(byId: string, mode: GameMode): Result {
+    if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
+    if (this.lobbyStep !== 'mode') return { ok: false, error: 'BAD_REQUEST' };
+    if (this.connectedPlayers().length < MIN_PLAYERS) return { ok: false, error: 'TOO_FEW_PLAYERS' };
+    const offers = this.packOffers?.filter((o) => o.mode === mode) ?? [];
+    if (offers.length === 0) return { ok: false, error: 'NO_QUESTIONS' };
+    this.lobbyMode = mode;
+    if (offers.length === 1) this.lockOffer(offers[0]!);
+    else this.lobbyStep = 'packs';
+    return { ok: true };
   }
 
   /** Any player may vote, and change their vote, while the lobby is on the pack step. */
   votePack(playerId: string, slug: string): Result {
     if (!this.players.has(playerId)) return { ok: false, error: 'NOT_FOUND' };
     if (this.phase !== 'lobby' || this.lobbyStep !== 'packs') return { ok: false, error: 'NOT_ALLOWED' };
-    if (!this.packOffers?.some((o) => o.slug === slug)) return { ok: false, error: 'BAD_REQUEST' };
+    if (!this.modePacks().some((o) => o.slug === slug)) return { ok: false, error: 'BAD_REQUEST' };
     this.packVotes.set(playerId, slug);
     return { ok: true };
   }
@@ -294,22 +323,39 @@ export class Room {
     return new Map([...this.packVotes].filter(([id]) => this.players.has(id)));
   }
 
-  /** The VIP closes the pack vote. Most votes wins, ties are random, and with no votes the first pack plays. */
+  /** The current votes for the picked mode's packs: what the screens list and the lock counts. */
+  visiblePackVotes(): Map<string, string> {
+    const slugs = new Set(this.modePacks().map((o) => o.slug));
+    return new Map([...this.currentPackVotes()].filter(([, slug]) => slugs.has(slug)));
+  }
+
+  /** The VIP closes the pack vote. Most votes wins, ties are random, and with no votes the mode's first pack plays. */
   lockPack(byId: string): Result {
     if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
     if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
     if (this.lobbyStep !== 'packs') return { ok: false, error: 'BAD_REQUEST' };
     if (this.connectedPlayers().length < MIN_PLAYERS) return { ok: false, error: 'TOO_FEW_PLAYERS' };
-    const offers = this.packOffers;
-    if (!offers?.length) return { ok: false, error: 'NO_QUESTIONS' };
-    const votes = [...this.currentPackVotes().values()];
+    const offers = this.modePacks();
+    if (offers.length === 0) return { ok: false, error: 'NO_QUESTIONS' };
+    const votes = [...this.visiblePackVotes().values()];
     const tally = offers.map((o) => votes.filter((slug) => slug === o.slug).length);
     const index = votes.length > 0 ? mostVoted(tally, this.rng) : 0;
-    this.pack = offers[index]!;
-    this.enabledCategories.clear();
-    for (const c of this.pack.categories) this.enabledCategories.add(c.id);
-    this.lobbyStep = 'setup';
+    this.lockOffer(offers[index]!);
     return { ok: true };
+  }
+
+  private lockOffer(offer: PackOffer): void {
+    this.pack = offer;
+    this.enabledCategories.clear();
+    for (const c of offer.categories) this.enabledCategories.add(c.id);
+    this.lobbyStep = 'setup';
+  }
+
+  private resetToModes(): void {
+    this.lobbyStep = 'mode';
+    this.lobbyMode = null;
+    this.pack = null;
+    this.enabledCategories.clear();
   }
 
   /** The VIP switches a category of the locked pack on or off. */
@@ -330,14 +376,27 @@ export class Room {
     return { ok: true };
   }
 
-  /** Reopens the pack vote; the votes are kept. */
+  /** Back one step from the setup: the pack vote (votes kept), or the mode step when the mode has a single pack. */
   backToPacks(byId: string): Result {
     if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
     if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
     if (this.lobbyStep !== 'setup') return { ok: false, error: 'BAD_REQUEST' };
-    this.lobbyStep = 'packs';
-    this.pack = null;
-    this.enabledCategories.clear();
+    if (this.modePacks().length > 1) {
+      this.lobbyStep = 'packs';
+      this.pack = null;
+      this.enabledCategories.clear();
+    } else {
+      this.resetToModes();
+    }
+    return { ok: true };
+  }
+
+  /** Back to the mode step from the pack vote or the setup; the votes are kept. */
+  backToModes(byId: string): Result {
+    if (byId !== this.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'lobby') return { ok: false, error: 'IN_PROGRESS' };
+    if (this.lobbyStep === 'mode') return { ok: false, error: 'BAD_REQUEST' };
+    this.resetToModes();
     return { ok: true };
   }
 
@@ -824,16 +883,14 @@ export class Room {
     this.otto = finalLine(this.standingFacts(), this.lines, this.ladder ? SOLO_LADDER_HIGH : undefined);
   }
 
-  /** Back to the lobby for a new game: the pack vote starts over. */
+  /** Back to the lobby for a new game: the mode choice and the pack vote start over. */
   enterLobby(): void {
     for (const p of this.players.values()) p.score = 0;
     this.powers.clear();
     this.hits = [];
     this.phase = 'lobby';
-    this.lobbyStep = 'packs';
     this.packVotes.clear();
-    this.pack = null;
-    this.enabledCategories.clear();
+    this.resetToModes();
     this.ladder = null;
     this.bluff = null;
     this.timeline = null;

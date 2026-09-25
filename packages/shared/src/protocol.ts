@@ -13,6 +13,7 @@ import type {
   LadderWalkPayload,
   LifelinePayload,
   PackVotePayload,
+  PickModePayload,
   PlayerJoinPayload,
   PlayerResumePayload,
   PowerChoosePayload,
@@ -64,10 +65,15 @@ export interface ClientToServerEvents {
   'player:join': (payload: PlayerJoinPayload, ack: Ack<PlayerSession & { avatar: Avatar }>) => void;
   'player:resume': (payload: PlayerResumePayload, ack: Ack) => void;
   'player:setAvatar': (payload: SetAvatarPayload, ack: Ack) => void;
+  /** Lobby, first step: the VIP picks a game mode; a mode with a single pack is locked at once. */
+  'vip:pickMode': (payload: PickModePayload, ack: Ack) => void;
   'pack:vote': (payload: PackVotePayload, ack: Ack) => void;
   'vip:lockPack': (payload: object, ack: Ack) => void;
   'vip:setCategory': (payload: SetCategoryPayload, ack: Ack) => void;
+  /** From the setup back one step: the pack vote, or the mode step when the mode has a single pack. */
   'vip:backToPacks': (payload: object, ack: Ack) => void;
+  /** From the pack vote back to the mode step; votes are kept. */
+  'vip:backToModes': (payload: object, ack: Ack) => void;
   'vip:start': (payload: object, ack: Ack) => void;
   'vip:kick': (payload: KickPayload, ack: Ack) => void;
   'vip:playAgain': (payload: object, ack: Ack) => void;

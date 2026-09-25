@@ -1,10 +1,18 @@
 import { expect, test } from '@playwright/test';
 import { joinByLink, openTv } from './helpers.ts';
 
-test('phones vote for a pack, the VIP trims its categories, and the TV follows along', async ({ browser }) => {
+test('the VIP picks the quiz, phones vote for a pack, the VIP trims its categories, and the TV follows along', async ({ browser }) => {
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
+
+  // The mode board: the TV shows the sections, only the VIP's phone can tap one.
+  await expect(tv.getByTestId('mode-board')).toContainText('Kvíz');
+  await expect(tv.getByTestId('mode-board')).toContainText('Tippelj!');
+  await expect(bela.getByRole('button', { name: /^Kvíz/ })).toBeDisabled();
+  await anna.getByRole('button', { name: /^Kvíz/ }).click();
+  await expect(anna.getByRole('heading', { name: 'Melyik csomag legyen?' })).toBeVisible();
+  await expect(bela.getByRole('button', { name: /^Milliomos-létra/ })).toHaveCount(0); // only quiz packs now
 
   // Votes show up on the TV as they come in, and can be changed.
   await bela.getByRole('button', { name: /^Alap/ }).click();
@@ -25,8 +33,15 @@ test('phones vote for a pack, the VIP trims its categories, and the TV follows a
   await expect(sport).toHaveAttribute('aria-checked', 'false');
   await expect(bela.getByRole('listitem').filter({ hasText: /^Sport$/ })).toHaveCount(0);
 
-  // "Vissza" reopens the vote; locking again brings every category back.
+  // "Vissza" reopens the vote, and once more returns to the mode board; the votes survive the round trip.
   await anna.getByRole('button', { name: 'Vissza' }).click();
+  await expect(anna.getByRole('heading', { name: 'Melyik csomag legyen?' })).toBeVisible();
+  await anna.getByRole('button', { name: 'Vissza' }).click();
+  await expect(anna.getByRole('heading', { name: 'Mit játszunk?' })).toBeVisible();
+  await expect(tv.getByTestId('pack-tally')).toHaveCount(0);
+  await anna.getByRole('button', { name: /^Kvíz/ }).click();
+  await expect(tv.getByTestId('pack-tally')).toContainText('Nagy mix');
+  // Locking again brings every category back.
   await anna.getByRole('button', { name: 'Tovább' }).click();
   await expect(anna.getByRole('switch', { name: /^Sport/ })).toHaveAttribute('aria-checked', 'true');
   await anna.getByRole('switch', { name: /^Sport/ }).click();

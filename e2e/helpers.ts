@@ -148,12 +148,21 @@ async function playPartyPhase(phone: Page, choice: number): Promise<void> {
   if ((await bet.isVisible()) && (await bet.isEnabled({ timeout: 500 }).catch(() => false))) await bet.click({ timeout: 1_000 }).catch(() => {});
 }
 
+/** The mode cards of the lobby, as their buttons are named. */
+const MODE_NAMES = ['Kvíz', 'Milliomos-létra', 'Blöffölő', 'Időrend', 'Tippelj!'];
+
 /**
- * The VIP's way into the show: votes for `pack` if given, closes the pack
- * vote ("Tovább"), and starts from the category screen.
+ * The VIP's way into the show. `choice` is a mode card ('Milliomos-létra'…)
+ * or a quiz pack ('Nagy mix'); with none, the quiz plays its default pack.
+ * In the quiz the pack vote is closed with "Tovább"; a mode with one pack
+ * lands on the category screen at once. Then "Indulhat a műsor".
  */
-export async function startShow(vip: Page, pack?: string): Promise<void> {
-  if (pack) await vip.getByRole('button', { name: new RegExp(`^${pack}`) }).click();
-  await vip.getByRole('button', { name: 'Tovább' }).click();
+export async function startShow(vip: Page, choice?: string): Promise<void> {
+  const mode = choice && MODE_NAMES.includes(choice) ? choice : 'Kvíz';
+  await vip.getByTestId('mode-picker').getByRole('button', { name: new RegExp(`^${mode}`) }).click();
+  if (mode === 'Kvíz') {
+    if (choice) await vip.getByRole('button', { name: new RegExp(`^${choice}`) }).click();
+    await vip.getByRole('button', { name: 'Tovább' }).click();
+  }
   await vip.getByRole('button', { name: 'Indulhat a műsor' }).click();
 }

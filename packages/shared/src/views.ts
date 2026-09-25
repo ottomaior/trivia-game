@@ -43,8 +43,15 @@ export interface PackOption {
   slug: string;
   name: string;
   description: string;
+  mode: GameMode;
   categories: number;
   questions: number;
+}
+
+/** A game mode the lobby offers; `packs` counts its playable packs (never zero: modes without one are left out). */
+export interface ModeOption {
+  mode: GameMode;
+  packs: number;
 }
 
 /** One category of the locked pack, which the VIP can switch off. */
@@ -136,10 +143,12 @@ export interface Standing {
 }
 
 export type Stage =
-  /** Players vote for a pack; `packs` is null while the offers load. `votes` maps player id to pack slug. */
-  | { phase: 'lobby'; step: 'packs'; packs: PackOption[] | null; votes: Record<string, string> }
+  /** The VIP picks a game mode; `modes` is null while the offers load. */
+  | { phase: 'lobby'; step: 'mode'; modes: ModeOption[] | null }
+  /** Players vote for one of the picked mode's packs; `votes` maps player id to pack slug (only this mode's). */
+  | { phase: 'lobby'; step: 'packs'; modes: ModeOption[]; mode: GameMode; packs: PackOption[]; votes: Record<string, string> }
   /** The pack is locked; the VIP may switch categories off before starting. */
-  | { phase: 'lobby'; step: 'setup'; pack: PackOption; categories: PackCategory[]; minQuestions: number }
+  | { phase: 'lobby'; step: 'setup'; modes: ModeOption[]; mode: GameMode; pack: PackOption; categories: PackCategory[]; minQuestions: number }
   | { phase: 'intro' }
   /** `powerVote`: someone can throw a power play, so the vote runs longer (TIMINGS.votePower). */
   | { phase: 'vote'; options: CategoryOption[]; votes: Record<string, number>; hits: PowerHit[]; powerVote: boolean }
