@@ -7,7 +7,6 @@ test('the full studio plays a solo game with lights and particles, without error
   test.setTimeout(150_000);
   const { tv, code, errors } = await openTv(browser, '/tv?fx=full');
   await expect(tv.locator('[data-fx="full"]')).toBeVisible();
-  await expect(tv.getByTestId('fx-canvas')).toHaveCount(1);
   const solo = await joinByLink(browser, code, 'Otto');
   await expect(tv.getByTestId('seat')).toHaveCount(1);
 
@@ -18,6 +17,9 @@ test('the full studio plays a solo game with lights and particles, without error
 
   await expect(tv.getByRole('heading', { name: 'Végeredmény' })).toBeVisible();
   await expect(tv.getByTestId('podium')).toHaveCount(1);
+  // The light/particle canvas, checked once the game is over: without a GPU, Pixi starts WebGL
+  // in software, which can take ~8s when other specs run alongside.
+  await expect(tv.getByTestId('fx-canvas')).toHaveCount(1);
   expect(errors).toEqual([]);
 });
 
