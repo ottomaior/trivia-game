@@ -1,4 +1,4 @@
-import { GAME_MODES, questionKindFor, type GameMode, type PackOption, type QuestionKind } from '@trivia/shared';
+import { GAME_MODES, questionKindFor, type GameMode, type ModeOption, type PackOption, type QuestionKind } from '@trivia/shared';
 import { z } from 'zod';
 import categoriesJson from '../../seed/categories.json' with { type: 'json' };
 import packsJson from '../../seed/packs.json' with { type: 'json' };
@@ -83,7 +83,16 @@ export function packOption(offer: PackOffer): PackOption {
     slug: offer.slug,
     name: offer.name,
     description: offer.description,
+    mode: offer.mode,
     categories: offer.categories.length,
     questions: offer.questions,
   };
+}
+
+/** The modes with at least one offer, in GAME_MODES order, with their pack counts. */
+export function modeOptions(offers: PackOffer[]): ModeOption[] {
+  return GAME_MODES.flatMap((mode) => {
+    const packs = offers.filter((o) => o.mode === mode).length;
+    return packs > 0 ? [{ mode, packs }] : [];
+  });
 }

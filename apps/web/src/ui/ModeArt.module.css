@@ -1,0 +1,21 @@
+.art {
+  display: block;
+  flex: none;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* The quiz: the four answer tiles in a little grid. The tiles stretch to any box. */
+.tiles {
+  display: grid;
+  flex: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 6%;
+  pointer-events: none;
+}
+
+.tiles img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

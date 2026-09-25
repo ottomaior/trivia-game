@@ -10,7 +10,7 @@ test('Blöffölő: lies are written, a friend falls for one, and the game runs t
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
-  await bela.getByRole('button', { name: /^Blöffölő/ }).click();
+  await expect(bela.getByText('A VIP választja a játékmódot…')).toBeVisible();
   await startShow(anna, 'Blöffölő');
 
   // Everyone writes a lie; the phone keeps it, the TV only counts who's done.

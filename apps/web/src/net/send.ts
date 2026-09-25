@@ -3,10 +3,12 @@ import { ACK_TIMEOUT_MS, type GameSocket } from './socket.ts';
 
 type PlayerCommand =
   | 'player:setAvatar'
+  | 'vip:pickMode'
   | 'pack:vote'
   | 'vip:lockPack'
   | 'vip:setCategory'
   | 'vip:backToPacks'
+  | 'vip:backToModes'
   | 'vip:start'
   | 'vip:kick'
   | 'vip:playAgain'

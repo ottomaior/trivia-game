@@ -58,6 +58,9 @@ export const TEST_PACKS: PackDef[] = [
   { slug: 'minden', name: 'Minden', description: 'Minden kategória.', mode: 'classic', categories: '*' },
 ];
 
+/** A second quiz pack, for tests that need a real pack vote (a mode with one pack skips it). */
+export const TEST_CLASSIC_PACK_2: PackDef = { slug: 'fele', name: 'Fele', description: 'Az első két kategória.', mode: 'classic', categories: ['c1', 'c2'] };
+
 /** Milliomos-létra over every fixture category. */
 export const TEST_LADDER_PACK: PackDef = {
   slug: 'letra',

@@ -1,4 +1,4 @@
-import { MAX_PLAYERS } from '@trivia/shared';
+import { MAX_PLAYERS, type GameMode } from '@trivia/shared';
 import { describe, expect, it } from 'vitest';
 import { HOUSEHOLD, seededRng } from '../testing.ts';
 import { Room } from './Room.ts';
@@ -158,31 +158,93 @@ describe('answering and scoring', () => {
 
 describe('question packs', () => {
   const cat = (id: number, questions: number) => ({ id, slug: `c${id}`, name: `Kategória ${id}`, questions });
-  const offer = (slug: string, categories: ReturnType<typeof cat>[]) => ({
+  const offer = (slug: string, categories: ReturnType<typeof cat>[], mode: GameMode = 'classic') => ({
     slug,
     name: slug.toUpperCase(),
     description: '',
-    mode: 'classic' as const,
+    mode,
     categories,
     questions: categories.reduce((n, c) => n + c.questions, 0),
   });
+  const offers = () => [
+    offer('alap', [cat(1, 20), cat(2, 20)]),
+    offer('pop', [cat(3, 20), cat(4, 20), cat(5, 20)]),
+    offer('letra', [cat(1, 20), cat(2, 20)], 'ladder'),
+  ];
 
+  /** Three players, offers loaded, the VIP has picked the quiz: the pack vote is open. */
   function lobbyWithOffers() {
     const room = newRoom();
     const a = joinOk(room, 'Anna');
     const b = joinOk(room, 'Béla');
     const c = joinOk(room, 'Cili');
-    room.setPackOffers([offer('alap', [cat(1, 20), cat(2, 20)]), offer('pop', [cat(3, 20), cat(4, 20), cat(5, 20)])]);
+    room.setPackOffers(offers());
+    expect(room.pickMode(a.id, 'classic')).toEqual({ ok: true });
     return { room, a, b, c };
   }
 
-  it('lets anyone vote and change their vote, but only for an offered pack', () => {
+  it('offers the modes with a pack, in order, and lets only the VIP pick one', () => {
+    const room = newRoom();
+    const a = joinOk(room, 'Anna');
+    const b = joinOk(room, 'Béla');
+    expect(room.modeOptions()).toBeNull();
+    room.setPackOffers(offers());
+    expect(room.modeOptions()).toEqual([
+      { mode: 'classic', packs: 2 },
+      { mode: 'ladder', packs: 1 },
+    ]);
+    expect(room.pickMode(b.id, 'classic')).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(room.pickMode(a.id, 'bluff')).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    expect(room.pickMode(a.id, 'classic')).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('packs');
+    expect(room.pickMode(a.id, 'ladder')).toEqual({ ok: false, error: 'BAD_REQUEST' }); // not on the mode step
+  });
+
+  it('locks a mode with a single pack right away, and "back" from there returns to the modes', () => {
+    const room = newRoom();
+    const a = joinOk(room, 'Anna');
+    room.setPackOffers(offers());
+    expect(room.pickMode(a.id, 'ladder')).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('setup');
+    expect(room.pack?.slug).toBe('letra');
+    expect(room.mode).toBe('ladder');
+    expect(room.backToPacks(a.id)).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('mode');
+    expect(room.lobbyMode).toBeNull();
+    expect(room.pack).toBeNull();
+  });
+
+  it('lets anyone vote and change their vote, but only for a pack of the picked mode', () => {
     const { room, a, b } = lobbyWithOffers();
     expect(room.votePack(a.id, 'pop')).toEqual({ ok: true });
     expect(room.votePack(b.id, 'alap')).toEqual({ ok: true });
     expect(room.votePack(b.id, 'pop')).toEqual({ ok: true });
     expect(room.votePack(b.id, 'nincs')).toEqual({ ok: false, error: 'BAD_REQUEST' });
+    expect(room.votePack(b.id, 'letra')).toEqual({ ok: false, error: 'BAD_REQUEST' }); // another mode's pack
     expect(Object.fromEntries(room.currentPackVotes())).toEqual({ [a.id]: 'pop', [b.id]: 'pop' });
+  });
+
+  it('keeps the votes across a change of mode, and lists only the picked mode\'s', () => {
+    const { room, a, b } = lobbyWithOffers();
+    room.votePack(b.id, 'pop');
+    expect(room.backToModes(a.id)).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('mode');
+    expect(room.backToModes(a.id)).toEqual({ ok: false, error: 'BAD_REQUEST' });
+    expect(room.pickMode(a.id, 'ladder')).toEqual({ ok: true });
+    expect(room.visiblePackVotes().size).toBe(0);
+    room.backToPacks(a.id);
+    expect(room.pickMode(a.id, 'classic')).toEqual({ ok: true });
+    expect(Object.fromEntries(room.visiblePackVotes())).toEqual({ [b.id]: 'pop' });
+    expect(room.lockPack(a.id)).toEqual({ ok: true });
+    expect(room.pack?.slug).toBe('pop');
+  });
+
+  it('falls back to the mode step when a reload drops every pack of the picked mode', () => {
+    const { room, a } = lobbyWithOffers();
+    room.votePack(a.id, 'pop');
+    room.setPackOffers(offers().filter((o) => o.mode === 'ladder'));
+    expect(room.lobbyStep).toBe('mode');
+    expect(room.currentPackVotes().size).toBe(0);
   });
 
   it('locks the most voted pack with every category on, and only the VIP may', () => {
@@ -205,12 +267,14 @@ describe('question packs', () => {
     expect(room.pack?.slug).toBe('alap');
   });
 
-  it('cannot lock before the offers arrive', () => {
+  it('cannot pick a mode before the offers arrive', () => {
     const room = newRoom();
     const a = joinOk(room, 'Anna');
-    expect(room.lockPack(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    expect(room.pickMode(a.id, 'classic')).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    expect(room.lockPack(a.id)).toEqual({ ok: false, error: 'BAD_REQUEST' });
     room.setPackOffers([]);
-    expect(room.lockPack(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
+    expect(room.modeOptions()).toEqual([]);
+    expect(room.pickMode(a.id, 'classic')).toEqual({ ok: false, error: 'NO_QUESTIONS' });
   });
 
   it('lets the VIP switch categories off while enough questions stay on', () => {
@@ -238,7 +302,7 @@ describe('question packs', () => {
     expect(room.canStart(a.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
   });
 
-  it('keeps the pack for play again, and a new lobby starts the vote over', () => {
+  it('keeps the pack for play again, and a new lobby starts from the mode choice', () => {
     const { room, a } = lobbyWithOffers();
     room.votePack(a.id, 'pop');
     room.lockPack(a.id);
@@ -246,7 +310,8 @@ describe('question packs', () => {
     room.enterFinal();
     expect(room.canStart(a.id)).toEqual({ ok: true });
     room.enterLobby();
-    expect(room.lobbyStep).toBe('packs');
+    expect(room.lobbyStep).toBe('mode');
+    expect(room.lobbyMode).toBeNull();
     expect(room.pack).toBeNull();
     expect(room.currentPackVotes().size).toBe(0);
   });
