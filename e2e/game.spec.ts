@@ -2,6 +2,8 @@ import { expect, test } from '@playwright/test';
 import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('three phones play a full 10-round game on one TV', async ({ browser }) => {
+  // About a minute on its own; other spec files run alongside it, so give it room.
+  test.setTimeout(150_000);
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');

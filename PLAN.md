@@ -265,6 +265,15 @@ The first real test found Otto talking nonstop (about 5 clips a round, ~51 a gam
 - ✅ Milliomos-létra: a separate game mode picked like a pack. 15 rungs that get harder, safe rungs at 5 and 10, everyone answers at once, a wrong answer drops you to your last safe rung, walk away before any rung, and one each of 50:50, ask the audience (the players already out) and phone a friend.
 - Voice last: the new Otto lines and the read-alouds for the new questions are recorded once everything is in.
 
+### Phase 3.6 — Party modes: Blöffölő, Időrend, Tippelj! (built; needs a game night and recordings)
+- ✅ Three more game modes picked like a pack, each eight rounds of the classic loop (category vote with the slot spin, read-aloud, reveal, scoreboard, last round doubled; no power plays). Questions got kinds (`mc`, `bluff`, `timeline`, `number`) with their own seed files and payloads; the store picks and counts by kind, and each pack is sized by its own kind (migration 0002 widens the kind check).
+- ✅ **Blöffölő:** everyone types a lie for the blank (a lie that is the truth, or nearly, is refused), then picks the truth from the mixed options; the house pads the list to four with its own lies. 1000 for the truth, 500 per friend fooled; identical lies merge and share the victims. The TV unmasks who wrote what and who fell for it.
+- ✅ **Időrend:** order five items by year on the phone, by dragging (default) or with arrows (`ORDER_UI` in `phone/screens/orderUi.ts`, or `?order=arrows` on one phone). 200 per item in place, plus a speed bonus for a perfect order. The TV lays the cards out as a timeline and shows each player's order.
+- ✅ **Tippelj!:** type a number, then put two chips on the closest guesses (skipped with fewer than two guesses). 1000 for the closest (ties share), 500 extra for spot on, 500 per winning chip.
+- ✅ Otto: a welcome per mode and reveal lines (a lie many fell for, nobody finding the truth, perfect orders, a spot-on guess…) under the usual one-comment-a-round rule.
+- ✅ Content: 68 bluff facts, 63 timeline sets and 70 number questions, blind-checked (see CLAUDE.md, "Party modes").
+- Next: `pnpm voice:generate` (13 new line sets) and `pnpm voice:generate --questions` (about 200 new prompts) on the owner's PC; a game night to tune the timers (write 45s, pick 20s, order 35s, guess 25s, bet 15s) and whether drag or arrows works better on real phones.
+
 ### Phase 4 — Special rounds
 - **Linking** (match 4 left items to 4 right items) and **Sorting** (drag or tap items into one of 2 bins). These use the `kind`/`payload` columns, and the generator and verifier get prompts for each kind.
 - Placed at fixed rounds (for example 4 and 8). Scoring is per correct item, with a speed bonus.

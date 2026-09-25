@@ -11,7 +11,7 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 - The TV has three effects modes, forced with `/tv?fx=full|lite|flat`. E2E defaults to `lite` because headless Chromium has no GPU.
 - Otto's lines (`packages/shared/src/strings.ts`) must stay free of names and numbers, because they are pre-recorded; after editing them, the voice needs regenerating. Each line starts with a bracketed performance cue (`[excited]`, `[sighs]`, `[short pause]`…) that ElevenLabs v3 acts out and screens strip (`ottoText`); keep one on every line. The TV never repeats a variant until all were said (`LinePicker`), so frequent situations need many variants.
 - Otto is a host, not a commentator: each round he reads the question and says at most one more thing, only when something happened (rules in `apps/server/src/game/otto.ts`; small moments only after a quiet round). Keep lines short: `ottoMaxChars` sets a budget per line (about 13 characters a second), and a test enforces it; prefer cues that don't add pauses. The server waits for Otto to finish before moving on, using each clip's `durationMs` from the voice manifests, so a long line slows the game rather than getting cut off.
-- Otto reads every question aloud: `pnpm voice:generate --questions` records each prompt in `seed/questions.json` into `apps/web/public/voice/q/`, named by a hash of the prompt (`questionVoiceId`), so a reworded question is recorded again. Otto's voice is ElevenLabs voice `M336tBVZHWWiWb4R54ui` on `eleven_v3` (Starter plan; the key is only on the owner's PC).
+- Otto reads every question aloud: `pnpm voice:generate --questions` records each prompt in the seed files (`questions.json`, `bluff.json`, `timeline.json`, `numbers.json`) into `apps/web/public/voice/q/`, named by a hash of the prompt (`questionVoiceId`), so a reworded question is recorded again. Otto's voice is ElevenLabs voice `M336tBVZHWWiWb4R54ui` on `eleven_v3` (Starter plan; the key is only on the owner's PC).
 - Schema change: edit `apps/server/src/db/schema.ts`, run `pnpm db:generate`, and commit the new migration. Railway applies it on deploy.
 
 ## Production
@@ -24,7 +24,7 @@ Hungarian party trivia game: the TV runs `/tv`, phones join at `/ABCD`. pnpm mon
 
 ## Adding questions
 
-Questions live in `apps/server/seed/questions.json`. Every deploy loads any new ones into the database and skips ones already there, so adding questions means editing this file, checking it, committing, and pushing. **Do not use `pnpm gen`** (it spends Anthropic API credits); write the questions yourself in the session.
+Multiple-choice questions live in `apps/server/seed/questions.json`; the party modes have their own files (see "Party modes" below). Every deploy loads any new ones into the database and skips ones already there, so adding questions means editing the file, checking it, committing, and pushing. **Do not use `pnpm gen`** (it spends Anthropic API credits); write the questions yourself in the session.
 
 ### Format
 
@@ -48,7 +48,17 @@ Append objects to the array:
 
 ### Packs
 
-Players vote for a question pack in the lobby, the VIP can switch some of its categories off, and each round's category vote then offers only that pack's categories. Packs are defined in `apps/server/seed/packs.json` as lists of category slugs (`"*"` means all), and a category can be in several packs. A pack is offered only once its categories hold at least `PACK_MIN_QUESTIONS` (60) questions, so a new pack or category can be added before its questions are written. `pnpm questions:check` prints the counts per category and per pack, and flags packs that are still hidden. A pack with `"mode": "ladder"` plays Milliomos-létra (15 rungs, `apps/server/src/rooms/Ladder.ts`) instead of the ten-round game; its rungs draw easy, medium and hard questions in turn, so every category needs all three difficulties.
+Players vote for a question pack in the lobby, the VIP can switch some of its categories off, and each round's category vote then offers only that pack's categories. Packs are defined in `apps/server/seed/packs.json` as lists of category slugs (`"*"` means all), and a category can be in several packs. A pack is offered only once its categories hold at least `PACK_MIN_QUESTIONS` (60) questions, so a new pack or category can be added before its questions are written. `pnpm questions:check` prints the counts per category and per pack, and flags packs that are still hidden. A pack with `"mode": "ladder"` plays Milliomos-létra (15 rungs, `apps/server/src/rooms/Ladder.ts`) instead of the ten-round game; its rungs draw easy, medium and hard questions in turn, so every category needs all three difficulties. Packs with `"mode": "bluff"`, `"timeline"` or `"guess"` play the party modes below, and are sized only by questions of their own kind.
+
+### Party modes
+
+Three modes play eight rounds of the classic loop (category vote, Otto reads the prompt, reveal, scoreboard; no power plays) with their own kind of question, each in its own seed file. Their rules are in `apps/server/src/rooms/Bluff.ts`, `Timeline.ts` and `Guess.ts`, their scoring in `packages/shared/src/rules.ts`. The general content rules above apply to all of them; `pnpm questions:check` validates and counts every file.
+
+- **Blöffölő** (`seed/bluff.json`): everyone writes a believable lie, then picks the truth from the lies. Entries are `{category, difficulty, prompt, answer, alternates?, decoys, explanation?}`. The prompt has exactly one `____` blank (read aloud as a pause) or is a short question. `answer` is short (at most 40 characters) and surprising; `alternates` are other spellings of the truth, which players can't submit as lies; `decoys` are the house's two believable lies, used when too few players write one. Pick facts where no other filler of the blank is also true: players' lies are scored as lies, so a blank with several correct answers ("more X live in Australia than people") is unfair.
+- **Időrend** (`seed/timeline.json`): order five items chronologically. Entries are `{category, difficulty, prompt, items: [{text, year}] ×5, explanation?}`, listed earliest first with different years. Avoid items whose year depends on the definition (festival vs cinema release, single vs album, construction start vs opening) when it could change the order, and pin ambiguous items in the text ("Dűne, első rész").
+- **Tippelj!** (`seed/numbers.json`): guess a number, then bet chips on the closest guesses. Entries are `{category, difficulty, prompt, answer, unit?, explanation?}`. The answer is one exact, undisputed number; skip facts that sources give differently (heights, areas, runtimes) or pin them ("2024 végén"). Decimals and negatives work (players may type a decimal comma), but avoid answers like 9¾ that are awkward to type.
+
+The blind check (below) works the same way per file: for Blöffölő the checker sees the prompt with the truth and the two decoys shuffled and also flags blanks with other true fillers; for Tippelj! it gives the exact number; for Időrend it orders the five items shown in shuffled order.
 
 ### Content rules
 
@@ -65,7 +75,7 @@ Players vote for a question pack in the lobby, the VIP can switch some of its ca
 
 ### Workflow
 
-1. Write the new questions and append them to `apps/server/seed/questions.json`.
+1. Write the new questions and append them to `apps/server/seed/questions.json` (or the party mode's file).
 2. Run `pnpm questions:check` and fix every error and warning.
 3. **Blind check:** start a sub-agent (Agent tool) that sees only the prompts and the four choices in shuffled order, labelled A–D, never the answer key. Ask it to answer each one, with a confidence from 0 to 1 and a note on anything ambiguous, outdated, or misspelled. Remove or fix every question where its choice differs from the key, its confidence is below 0.85, or it raised a concern. Report what was dropped and why.
 4. Run `pnpm test` (the seed file has its own test), then commit the questions on their own with a message like `Add 40 questions (zene, sport)` and push.

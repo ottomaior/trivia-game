@@ -37,7 +37,7 @@ Steps:
    - bash/zsh: `export ELEVENLABS_API_KEY=…` and `export ELEVENLABS_VOICE_ID=…`
 4. `pnpm voice:generate --dry-run` lists what would be recorded and the
    estimated credits. Then `pnpm voice:generate` records Otto's lines and
-   `pnpm voice:generate --questions` reads the questions aloud (into `q/`).
+   `pnpm voice:generate --questions` reads the questions aloud (into `q/`), from every seed file.
 5. `pnpm dev`, open http://localhost:5173/tv and play a round to listen.
    Re-record lines you don't like: `pnpm voice:generate --redo welcome-0,winner-1`
    (ids are in the dry run). `--redo` only adds retakes on top of lines that

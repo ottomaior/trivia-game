@@ -15,7 +15,12 @@ export default defineConfig({
     launchOptions: executablePath ? { executablePath } : {},
     trace: 'retain-on-failure',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] }, testIgnore: /party\.spec\.ts/ },
+    // The party-mode games drive three browsers for minutes: they run after the rest, so their load
+    // doesn't slow the timing-sensitive specs (the ladder's short reveal, the 10-round game).
+    { name: 'party', use: { ...devices['Desktop Chrome'] }, testMatch: /party\.spec\.ts/, dependencies: ['chromium'] },
+  ],
   webServer: [
     {
       command: 'node apps/server/dist/index.js',
