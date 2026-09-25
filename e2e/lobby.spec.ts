@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { joinByLink, openPhone, openTv } from './helpers.ts';
+import { joinByLink, openPhone, openTv, reloadTv } from './helpers.ts';
 
 test('TV creates a room; phones join by QR link and by typing the code', async ({ browser }) => {
   const { tv, code } = await openTv(browser);
@@ -23,11 +23,8 @@ test('TV creates a room; phones join by QR link and by typing the code', async (
   await expect(p2.getByTestId('my-name')).toHaveText('Győző');
   await expect(tv.getByTestId('seat')).toHaveCount(2);
 
-  // Refreshing the TV resumes the same room. Chrome usually keeps the earlier
-  // click across a reload; if not, the TV asks for one to re-enable sound.
-  await tv.reload();
-  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
-  if (await again.isVisible().catch(() => false)) await again.click();
+  // Refreshing the TV resumes the same room.
+  await reloadTv(tv);
   await expect(tv.getByTestId('room-code')).toHaveText(code);
   await expect(tv.getByTestId('seat')).toHaveCount(2);
 

@@ -2,6 +2,7 @@ import { isInputPhase, t, type HostSession, type HostView } from '@trivia/shared
 import { useCallback, useEffect, useState } from 'react';
 import { audio } from '../audio/engine.ts';
 import { useAudioCues } from '../audio/useAudioCues.ts';
+import { loadVoiceCredit } from '../audio/voiceCredit.ts';
 import { roughSync, syncClock } from '../net/clock.ts';
 import { ACK_TIMEOUT_MS } from '../net/socket.ts';
 import { KEYS, readJson, removeKey, uuid, writeJson } from '../net/storage.ts';
@@ -69,6 +70,11 @@ export function TvApp() {
   useEffect(() => {
     if (activated) audio.unlock();
   }, [activated]);
+
+  // Fetch the voice credit while the socket connects, not after the start screen appears.
+  useEffect(() => {
+    void loadVoiceCredit();
+  }, []);
 
   // Test hook: /tv?audiotest exposes an offline render of every sound.
   useEffect(() => {

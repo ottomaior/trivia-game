@@ -22,8 +22,61 @@ export async function openTv(browser: Browser, path = '/tv?fx=lite'): Promise<{ 
   await tv.goto(path);
   await tv.getByRole('button', { name: 'Kezdés' }).click();
   const codeEl = tv.getByTestId('room-code');
-  await expect(codeEl).toHaveText(/^[A-Z]{4}$/);
+  // The room code is on the page within moments of the click, but the TV's first render of the
+  // studio (in software, without a GPU) can keep the page from answering for a few seconds when
+  // other specs run alongside.
+  await expect(codeEl).toHaveText(/^[A-Z]{4}$/, { timeout: 15_000 });
   return { tv, code: (await codeEl.textContent())!, errors };
+}
+
+/** Reloads the TV and waits until it is back in its room (see tvBackInRoom). */
+export async function reloadTv(tv: Page): Promise<void> {
+  await tv.reload();
+  await tvBackInRoom(tv);
+}
+
+/**
+ * Waits until a freshly loaded TV page has resumed its room. The browser
+ * doesn't always carry the earlier click over (Edge does in some runs, not in
+ * others), so the TV may cover the screen with "click to continue" to
+ * re-enable sound; this clicks it. The overlay renders in the same update as
+ * the live screen's mute button, so once the button is there the overlay's
+ * presence is settled; checking any earlier races it, and a late overlay
+ * swallows the test's next click.
+ */
+export async function tvBackInRoom(tv: Page): Promise<void> {
+  // Reconnecting, reclaiming the room and the studio's first render: slow when other specs run alongside.
+  await expect(tv.getByTestId('mute')).toBeVisible({ timeout: 15_000 });
+  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
+  if (await again.isVisible()) {
+    await again.click();
+    await expect(again).toBeHidden();
+  }
+}
+
+/**
+ * Starts watching `page` for `text`, and returns a check of whether it has
+ * appeared since. For screens that last about a second at test speed: a busy
+ * page can answer a poll too late to see them, but a MutationObserver in the
+ * page notes them as they render. Poll it with `expect.poll(seen).toBe(true)`.
+ */
+export async function watchForText(page: Page, text: string): Promise<() => Promise<boolean>> {
+  const key = `__seen_${Math.random().toString(36).slice(2)}`;
+  await page.evaluate(
+    ({ key, text }) => {
+      const w = window as unknown as Record<string, boolean>;
+      const observer = new MutationObserver(check);
+      function check() {
+        if (!document.body.textContent?.includes(text)) return;
+        w[key] = true;
+        observer.disconnect();
+      }
+      observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+      check();
+    },
+    { key, text },
+  );
+  return () => page.evaluate((key) => (window as unknown as Record<string, boolean>)[key] === true, key);
 }
 
 export async function openPhone(browser: Browser, path = '/'): Promise<Page> {

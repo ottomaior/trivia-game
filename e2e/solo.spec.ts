@@ -2,6 +2,9 @@ import { expect, test } from '@playwright/test';
 import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('one phone can play a whole game alone', async ({ browser }) => {
+  // A whole 10-round game: about a minute at test speed, whatever the machine; setting up the TV
+  // and phone takes longer when other specs run alongside.
+  test.setTimeout(150_000);
   const { tv, code } = await openTv(browser);
   const solo = await joinByLink(browser, code, 'Otto');
   await expect(tv.getByText('A VIP a telefonjáról indítja a műsort')).toBeVisible();

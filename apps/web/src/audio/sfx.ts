@@ -33,6 +33,7 @@ function tone(ctx: Ctx, out: AudioNode, o: ToneOpts): void {
   osc.type = o.type ?? 'triangle';
   osc.frequency.setValueAtTime(o.freq, o.start);
   if (o.glideTo) osc.frequency.exponentialRampToValueAtTime(o.glideTo, o.start + o.dur);
+  env.gain.value = 0; // a gain is 1 until its first event: stay silent until the note starts
   env.gain.setValueAtTime(0.0001, o.start);
   env.gain.exponentialRampToValueAtTime(peak, o.start + attack);
   env.gain.setValueAtTime(peak, Math.max(o.start + attack, o.start + o.dur - release));
@@ -84,6 +85,7 @@ export function noise(ctx: Ctx, out: AudioNode, o: NoiseOpts): GainNode {
   filter.Q.value = o.q ?? 0.7;
   const env = ctx.createGain();
   const peak = o.gain ?? 0.2;
+  env.gain.value = 0; // a gain is 1 until its first event: stay silent until the note starts
   env.gain.setValueAtTime(0.0001, o.start);
   env.gain.exponentialRampToValueAtTime(peak, o.start + 0.005);
   env.gain.exponentialRampToValueAtTime(0.0001, o.start + o.dur);
@@ -234,8 +236,9 @@ export const SFX: Partial<Record<Cue, (ctx: Ctx, out: AudioNode, t: number) => n
     return 0.9;
   },
   wipe(ctx, out, t) {
-    // A quick squeegee swipe.
-    noise(ctx, out, { start: t, dur: 0.25, gain: 0.25, type: 'bandpass', freq: 800, sweepTo: 3500, q: 1.5 });
+    // A quick squeegee swipe. (A narrow band of noise comes out quiet: at 0.25 its peak was
+    // barely audible, 0.05-0.1, while splat and shatter reach 0.4.)
+    noise(ctx, out, { start: t, dur: 0.25, gain: 0.5, type: 'bandpass', freq: 800, sweepTo: 3500, q: 1.5 });
     return 0.3;
   },
   winner(ctx, out, t) {
