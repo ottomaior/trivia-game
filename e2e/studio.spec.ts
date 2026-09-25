@@ -46,3 +46,27 @@ test('a slow TV steps down from the full studio to lite, then to flat', async ({
   // The choice is remembered, so the next visit starts flat without measuring again.
   expect(await tv.evaluate(() => localStorage.getItem('otto.fxmode'))).toContain('flat');
 });
+
+test('the intro plays the show open, or the title card when the clip is missing', async ({ browser }) => {
+  // With the clip: it plays over the studio through the intro (in a browser with H.264).
+  const { tv, code, errors } = await openTv(browser);
+  const h264 = await tv.evaluate(() => document.createElement('video').canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"') !== '');
+  const anna = await joinByLink(browser, code, 'Anna');
+  await startShow(anna);
+  if (h264) await expect(tv.getByTestId('show-open')).toBeVisible();
+  await expect(tv.getByTestId('prompt')).toBeVisible({ timeout: 20_000 });
+  await expect(tv.getByTestId('show-open')).toHaveCount(0);
+  expect(errors).toEqual([]);
+
+  // Without it (a missing file here): the title card and the usual sounds instead.
+  const context = await browser.newContext({ viewport: { width: 1920, height: 1080 } });
+  await context.route('**/clips/show-open.mp4', (r) => r.fulfill({ status: 404, body: '' }));
+  const tv2 = await context.newPage();
+  await tv2.goto('/tv?fx=lite');
+  await tv2.getByRole('button', { name: 'Kezdés' }).click();
+  const code2 = (await tv2.getByTestId('room-code').textContent())!;
+  const bela = await joinByLink(browser, code2, 'Béla');
+  await startShow(bela);
+  await expect(tv2.getByRole('heading', { name: "Otto's Quiz Show" })).toBeVisible();
+  await expect(tv2.getByTestId('show-open')).toHaveCount(0);
+});

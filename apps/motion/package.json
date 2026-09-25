@@ -6,7 +6,8 @@
     "art": "node art/build.mjs",
     "studio": "node art/build.mjs && remotion studio src/index.ts",
     "render": "node art/build.mjs && remotion render src/index.ts ShowOpen out/show-open.mp4 --codec=h264",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p .",
+    "render:web": "node art/build.mjs && remotion render src/index.ts ShowOpen ../web/public/clips/show-open.mp4 --codec=h264 --crf=28 --scale=0.66666666666666666 --pixel-format=yuv420p --color-space=bt709"
   },
   "devDependencies": {
     "@remotion/cli": "4.0.529",
