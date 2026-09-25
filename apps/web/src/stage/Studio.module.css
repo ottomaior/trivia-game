@@ -1,6 +1,8 @@
-/* The 2.5D studio. Everything is sized in em (1em = 1/54 of the screen
-   height), laid out on a 96×54em stage, and pushed to different depths so
-   the camera moves give real parallax. */
+/* The 2.5D studio. Everything is sized in em (see .tv), laid out on a
+   96×54em stage, and pushed to different depths so the camera moves give
+   real parallax. On a screen squarer than 16:9 (an iPad) the stage keeps its
+   shape and stands on the bottom edge, and the backdrop fills the space
+   above it. */
 
 .studio {
   position: relative;
@@ -8,14 +10,28 @@
   height: 100%;
   overflow: hidden;
   perspective: 90em;
-  perspective-origin: 50% 38%;
+  /* 38% of the way down the stage, wherever the stage stands. */
+  perspective-origin: 50% calc(100% - 33.48em);
   background: var(--burgundy-deep);
+}
+
+/* The stage. Centred with a margin, as GSAP owns its transform (the shake). */
+.shake {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 96em;
+  height: 54em;
+  margin-left: -48em;
+}
+
+.camera {
+  position: absolute;
+  inset: 0;
 }
 
 .shake,
 .camera {
-  position: absolute;
-  inset: 0;
   transform-style: preserve-3d;
   will-change: transform;
 }
