@@ -1,9 +1,15 @@
 import { expect, test } from '@playwright/test';
+import { SLOW_BASE_URL } from '../playwright.config.ts';
 import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
 
+// The 40%-speed server: at 15% a question is open for about 3s, less than it
+// takes to reload a phone (or to notice a question and pause) when other specs
+// run alongside.
+test.use({ baseURL: SLOW_BASE_URL });
+
 test('three phones play a full 10-round game on one TV', async ({ browser }) => {
-  // About a minute on its own; other spec files run alongside it, so give it room.
-  test.setTimeout(150_000);
+  // About a minute and a half on its own; other spec files run alongside it, so give it room.
+  test.setTimeout(240_000);
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
@@ -12,11 +18,32 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
 
   await startShow(anna);
 
-  // First question: check the TV and phones agree, and survive a phone reload.
-  await expect(tv.getByTestId('prompt')).toBeVisible({ timeout: 10_000 });
-  const prompt = await tv.getByTestId('prompt').textContent();
+  // First question: the TV and the phones show the same one.
+  const prompt = anna.getByTestId('phone-prompt');
+  await expect(prompt).toBeVisible({ timeout: 15_000 });
+  const first = (await prompt.textContent())!;
+  await expect(tv.getByText(first)).toBeVisible({ timeout: 10_000 }); // on the question, or its reveal
+
+  // Second question: a phone reloaded mid-question gets the question back. So
+  // that the reload can't outlast the question, the game is held still
+  // meanwhile: without a TV the server pauses (and the phones say so), and it
+  // carries on from the same moment once the TV is back. A phone starts the
+  // pause, as the phones show a new question before the busier TV page does.
+  // Leaving the TV page closes its socket at once (closing the tab can leave
+  // it to time out).
+  const second = prompt.filter({ hasNotText: first });
+  await expect(second).toBeVisible({ timeout: 30_000 });
+  const text = (await second.textContent())!;
+  const tvUrl = tv.url();
+  await tv.goto('about:blank');
   await cili.reload();
-  await expect(cili.getByText(prompt!)).toBeVisible();
+  await expect(cili.getByText('A tévé kapcsolata megszakadt')).toBeVisible();
+  await tv.goto(tvUrl);
+  // The TV has to reconnect and reclaim its seat first (slow when other specs run alongside).
+  await expect(cili.getByTestId('phone-prompt')).toHaveText(text, { timeout: 15_000 });
+  // A freshly loaded TV page asks for a click to re-enable sound.
+  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
+  if (await again.isVisible().catch(() => false)) await again.click();
 
   await Promise.all([autoplay(anna, 0), autoplay(bela, 1), autoplay(cili, 0)]);
 

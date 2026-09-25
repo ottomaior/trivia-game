@@ -56,11 +56,13 @@ export async function autoplay(phone: Page, choice = 0): Promise<void> {
     }
     // Milliomos-létra: keep climbing.
     const stay = phone.getByRole('button', { name: 'Maradok' });
-    if ((await stay.isVisible()) && (await stay.getAttribute('aria-pressed')) !== 'true') {
+    if ((await stay.isVisible()) && (await stay.getAttribute('aria-pressed', { timeout: 500 }).catch(() => 'true')) !== 'true') {
       await stay.click({ timeout: 1_000 }).catch(() => {});
     }
     const answer = phone.getByTestId(`choice-${choice}`);
-    if ((await answer.isVisible()) && (await answer.isEnabled())) {
+    // Checks after isVisible() are bounded: without a timeout they wait for the element,
+    // which never comes back if the phase ended in between (e.g. the last question).
+    if ((await answer.isVisible()) && (await answer.isEnabled({ timeout: 500 }).catch(() => false))) {
       await answer.click({ timeout: 1_000 }).catch(() => {});
     }
     // Party modes (one cheap check first, so the quiz polls as fast as ever).
@@ -82,7 +84,7 @@ async function playPartyPhase(phone: Page, choice: number): Promise<void> {
   if (await option.isVisible()) await option.click({ timeout: 1_000 }).catch(() => {});
   // Időrend: send the order as it is.
   const done = phone.getByTestId('order-done');
-  if ((await done.isVisible()) && (await done.isEnabled())) await done.click({ timeout: 1_000 }).catch(() => {});
+  if ((await done.isVisible()) && (await done.isEnabled({ timeout: 500 }).catch(() => false))) await done.click({ timeout: 1_000 }).catch(() => {});
   // Tippelj!: guess, then both chips on the first guess.
   const guess = phone.getByTestId('guess-input');
   if (await guess.isVisible()) {
@@ -90,7 +92,7 @@ async function playPartyPhase(phone: Page, choice: number): Promise<void> {
     await phone.getByTestId('guess-submit').click({ timeout: 1_000 }).catch(() => {});
   }
   const bet = phone.getByTestId('bet-0');
-  if ((await bet.isVisible()) && (await bet.isEnabled())) await bet.click({ timeout: 1_000 }).catch(() => {});
+  if ((await bet.isVisible()) && (await bet.isEnabled({ timeout: 500 }).catch(() => false))) await bet.click({ timeout: 1_000 }).catch(() => {});
 }
 
 /**
