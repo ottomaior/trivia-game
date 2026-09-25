@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { SLOW_BASE_URL } from '../playwright.config.ts';
-import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
+import { autoplay, joinByLink, openTv, startShow, tvBackInRoom } from './helpers.ts';
 
 // The 40%-speed server: at 15% a question is open for about 3s, less than it
 // takes to reload a phone (or to notice a question and pause) when other specs
@@ -41,9 +41,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   await tv.goto(tvUrl);
   // The TV has to reconnect and reclaim its seat first (slow when other specs run alongside).
   await expect(cili.getByTestId('phone-prompt')).toHaveText(text, { timeout: 15_000 });
-  // A freshly loaded TV page asks for a click to re-enable sound.
-  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
-  if (await again.isVisible().catch(() => false)) await again.click();
+  await tvBackInRoom(tv);
 
   await Promise.all([autoplay(anna, 0), autoplay(bela, 1), autoplay(cili, 0)]);
 

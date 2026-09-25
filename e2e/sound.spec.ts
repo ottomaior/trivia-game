@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { joinByLink, openTv, startShow, trackErrors } from './helpers.ts';
+import { joinByLink, openTv, reloadTv, startShow, trackErrors } from './helpers.ts';
 
 test('every synthesized sound makes noise and none of them clips', async ({ browser }) => {
   const { tv } = await openTv(browser, '/tv?audiotest');
@@ -29,9 +29,7 @@ test('M mutes the TV and the choice survives a reload', async ({ browser }) => {
   await expect(mute).toHaveAttribute('aria-pressed', 'false');
   await tv.keyboard.press('m');
   await expect(mute).toHaveAttribute('aria-pressed', 'true');
-  await tv.reload();
-  const again = tv.getByRole('button', { name: 'Kattints a műsor folytatásához' });
-  if (await again.isVisible().catch(() => false)) await again.click();
+  await reloadTv(tv);
   await expect(tv.getByTestId('mute')).toHaveAttribute('aria-pressed', 'true');
   await tv.getByTestId('mute').click();
   await expect(tv.getByTestId('mute')).toHaveAttribute('aria-pressed', 'false');
@@ -65,15 +63,29 @@ test("Otto's voice: the TV credits the voice service and plays recorded lines wi
   const tv = await context.newPage();
   const errors = trackErrors(tv);
   await tv.goto('/tv?fx=lite');
+  // The start screen shows once the TV has connected; the credit comes with it.
+  const start = tv.getByRole('button', { name: 'Kezdés' });
+  await expect(start).toBeEnabled();
   await expect(tv.getByTestId('voice-credit')).toHaveText('Ottó hangja: ElevenLabs');
-  await tv.getByRole('button', { name: 'Kezdés' }).click();
+  await start.click();
   const code = (await tv.getByTestId('room-code').textContent())!;
   await expect(tv.getByTestId('voice-credit')).toBeVisible();
   const anna = await joinByLink(browser, code, 'Anna');
+  // At test speed Otto's lines come and go between two polls: note each one as it appears,
+  // with whether his mouth follows a recording (data-voiced) instead of flapping.
+  await tv.evaluate(() => {
+    const seen: { text: string; voiced: string | null }[] = [];
+    (window as unknown as { __ottoLines: typeof seen }).__ottoLines = seen;
+    new MutationObserver(() => {
+      const text = document.querySelector('[data-testid="otto-line"]')?.textContent;
+      if (!text || seen.at(-1)?.text === text) return;
+      seen.push({ text, voiced: document.querySelector('[data-testid="otto-rig"]')?.getAttribute('data-voiced') ?? null });
+    }).observe(document.body, { childList: true, subtree: true });
+  });
   await startShow(anna);
-  await expect(tv.getByTestId('otto-line')).toBeVisible();
-  // Otto's mouth follows the recording instead of flapping.
-  await expect(tv.getByTestId('otto-rig')).toHaveAttribute('data-voiced', 'true');
+  await expect
+    .poll(() => tv.evaluate(() => (window as unknown as { __ottoLines: { voiced: string | null }[] }).__ottoLines), { timeout: 15_000 })
+    .toContainEqual(expect.objectContaining({ voiced: 'true' }));
   await tv.waitForTimeout(1500);
   expect(errors).toEqual([]);
 });
