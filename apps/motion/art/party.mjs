@@ -79,6 +79,8 @@ ${petals}<circle cx="50" cy="46" r="28" fill="${C.mustardLt}"/><circle cx="50" c
     if (big) ticks += `<text x="${x}" y="52" font-family="Arial, sans-serif" font-weight="700" font-size="18" fill="#3a2a14" text-anchor="middle">${v}</text>`;
   }
   svg('tape.svg', 970, 72, [wob(363)], `<g filter="${id(363)}"><path d="M4 6 L966 4 L966 66 L4 68 Z" fill="#e8c24a"/>${ticks}</g>`);
+  // The same tape blank, for the game, which prints its own scale on it.
+  svg('tape-plain.svg', 970, 72, [wob(364)], `<g filter="${id(364)}"><path d="M4 6 L966 4 L966 66 L4 68 Z" fill="#e8c24a"/></g>`);
   svg('pin.svg', 40, 56, [wob(365, { border: 2, wobble: 1.5, blur: 1.5 })], `<g filter="${id(365)}">
 <path d="M19 26 L20 54 L21 26 Z" stroke="#8c8c96" stroke-width="3"/><circle cx="20" cy="18" r="14" fill="${C.rust}"/><ellipse cx="15" cy="13" rx="4" ry="3" fill="#e8a08a"/></g>`);
   const chip = (name, fill, seed) => svg(name, 64, 64, [wob(seed, { border: 2, wobble: 1.5, blur: 2, dy: 3 })], `<g filter="${id(seed)}">
@@ -99,10 +101,21 @@ ${petals}<circle cx="50" cy="46" r="28" fill="${C.mustardLt}"/><circle cx="50" c
   const badge = (name, seed, inner, used = false) => svg(name, 96, 96, [wob(seed, { border: 3, wobble: 2 })], `<g filter="${id(seed)}">
 <circle cx="48" cy="46" r="38" fill="${used ? '#6b5a58' : C.teal}"/>${inner}
 ${used ? `<path d="M22 20 L74 72 M74 20 L22 72" stroke="${C.rust}" stroke-width="9" stroke-linecap="round"/>` : ''}</g>`);
-  badge('life-fifty.svg', 375, `<text x="48" y="55" font-family="Arial, sans-serif" font-weight="900" font-size="24" fill="${C.paper}" text-anchor="middle">50:50</text>`);
-  badge('life-audience.svg', 377, `<circle cx="34" cy="40" r="8" fill="${C.paper}"/><circle cx="62" cy="40" r="8" fill="${C.paper}"/><circle cx="48" cy="34" r="9" fill="${C.paper}"/><path d="M20 66 C22 52 46 52 48 66 Z M48 66 C50 52 74 52 76 66 Z M32 62 C34 46 62 46 64 62 Z" fill="${C.paper}"/>`, true);
-  badge('life-phone.svg', 379, `<path d="M30 30 C28 26 34 22 38 26 L44 34 C46 38 42 42 40 44 C44 52 50 58 56 60 C58 58 62 54 66 56 L72 62 C76 66 72 72 68 70 C46 66 32 52 30 30 Z" fill="${C.paper}"/>`);
+  // Each lifeline, fresh and used (greyed and crossed out).
+  const lifelines = {
+    fifty: `<text x="48" y="55" font-family="Arial, sans-serif" font-weight="900" font-size="24" fill="${C.paper}" text-anchor="middle">50:50</text>`,
+    audience: `<circle cx="34" cy="40" r="8" fill="${C.paper}"/><circle cx="62" cy="40" r="8" fill="${C.paper}"/><circle cx="48" cy="34" r="9" fill="${C.paper}"/><path d="M20 66 C22 52 46 52 48 66 Z M48 66 C50 52 74 52 76 66 Z M32 62 C34 46 62 46 64 62 Z" fill="${C.paper}"/>`,
+    phone: `<path d="M30 30 C28 26 34 22 38 26 L44 34 C46 38 42 42 40 44 C44 52 50 58 56 60 C58 58 62 54 66 56 L72 62 C76 66 72 72 68 70 C46 66 32 52 30 30 Z" fill="${C.paper}"/>`,
+  };
+  let seed = 375;
+  for (const [name, inner] of Object.entries(lifelines)) {
+    badge(`life-${name}.svg`, seed++, inner);
+    badge(`life-${name}-used.svg`, seed++, inner, true);
+  }
   // A "stuck on" paper tag for statuses.
   card('tag.svg', 120, 40, C.cream, 381);
   card('tag-wide.svg', 170, 40, C.cream, 383);
+  // Label tags for the board's header: the round (dark) and the category (plum).
+  card('tag-dark.svg', 170, 48, '#5a2533', 385);
+  card('tag-plum.svg', 170, 48, C.plum, 387);
 }

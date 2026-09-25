@@ -4,7 +4,7 @@ import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { Character } from '../../ui/Character.tsx';
 import { PowerIcon } from '../../ui/PowerIcon.tsx';
-import { TILE } from '../../ui/answers.ts';
+import { phoneAnswerStyle } from '../../ui/answers.ts';
 import styles from '../Phone.module.css';
 
 type VoteStage = Extract<Stage, { phase: 'vote' }>;
@@ -20,7 +20,7 @@ export function VoteScreen({ view, stage, socket }: { view: PlayerView; stage: V
         <button
           key={o.id}
           className={`${styles.choice} ${mine === i ? styles.choiceMine : ''} ${mine !== null && mine !== i ? styles.choiceDim : ''}`}
-          style={{ background: TILE[i]!.bg, color: TILE[i]!.fg }}
+          style={phoneAnswerStyle(i)}
           onClick={() => {
             navigator.vibrate?.(30);
             void send(socket, 'vote:cast', { option: i });

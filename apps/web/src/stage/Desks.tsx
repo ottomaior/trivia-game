@@ -1,6 +1,7 @@
 import { actedIds, MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type Expression, type PowerHit } from '@trivia/shared';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Character } from '../ui/Character.tsx';
+import { heldExpression, revealExpression } from './expressions.ts';
 import { useCountUp } from '../ui/countUp.ts';
 import { PowerIcon } from '../ui/PowerIcon.tsx';
 import { REVEAL_BEATS } from './director.ts';
@@ -52,8 +53,8 @@ export function Desks({ view }: { view: HostView }) {
   const leaders = ranked ? new Set(ranked.filter((s) => s.rank === 1 && s.score > 0).map((s) => s.playerId)) : new Set<string>();
   const picks = stage.phase === 'reveal' ? new Map(stage.picks.map((p) => [p.playerId, p])) : null;
   const answered = new Set(actedIds(stage));
-  // On the ladder, those who fell or stopped sit back from the rest.
-  const offLadder = new Set(view.ladder?.seats.filter((s) => s.status === 'out' || s.status === 'walked').map((s) => s.playerId));
+  // On the ladder, those who stopped sit back from the rest (those who fell look it).
+  const walked = new Set(view.ladder?.seats.filter((s) => s.status === 'walked').map((s) => s.playerId));
   const hits = 'hits' in stage ? stage.hits : [];
   // Held power plays show on the desks during the game, not in the lobby or on the podium.
   const showPowers = stage.phase !== 'lobby' && stage.phase !== 'final';
@@ -78,12 +79,14 @@ export function Desks({ view }: { view: HostView }) {
           place={final ? (rankOf.get(p.id) ?? null) : null}
           locked={answered.has(p.id)}
           pick={picks?.get(p.id) ?? null}
+          verdict={stage.phase === 'reveal' ? (revealExpression(stage, p.id) ?? null) : null}
+          held={heldExpression(view, p.id)}
           leader={leaders.has(p.id)}
           hits={hits.filter((h) => h.target === p.id)}
           holdsPower={showPowers && p.hasPower}
           phaseKey={`${stage.phase}-${view.round}`}
           mode={view.mode}
-          off={offLadder.has(p.id)}
+          off={walked.has(p.id)}
         />
       ))}
     </div>
@@ -95,6 +98,8 @@ function Desk({
   slot,
   locked,
   pick,
+  verdict,
+  held,
   leader,
   hits,
   holdsPower,
@@ -109,24 +114,30 @@ function Desk({
   place: number | null;
   locked: boolean;
   pick: Pick | null;
+  /** The face their answer earns at the reveal (shown on the reveal beat). */
+  verdict: Expression | null;
+  /** A face that stays: an uncleared power play, or out of the ladder. */
+  held: Expression | undefined;
   leader: boolean;
   /** Power plays thrown at this player this round. */
   hits: PowerHit[];
   holdsPower: boolean;
   phaseKey: string;
   mode: GameMode;
-  /** Off the ladder (fell or stopped). */
+  /** Stopped climbing the ladder. */
   off: boolean;
 }) {
   // Faces change on the reveal beat when the camera reaches the desks.
-  const [expression, setExpression] = useState<Expression | undefined>();
-  const verdict: Expression | null = pick ? (pick.correct ? 'correct' : 'wrong') : null;
+  // Until then, a face that stays (ice, slime, out) shows, except that at the
+  // reveal a fall off the ladder waits for the beat too.
+  const [face, setFace] = useState<Expression | undefined>();
   useEffect(() => {
-    setExpression(undefined);
+    setFace(undefined);
     if (!verdict) return;
-    const id = setTimeout(() => setExpression(verdict), REVEAL_BEATS.toContestants * 1000);
+    const id = setTimeout(() => setFace(verdict), REVEAL_BEATS.toContestants * 1000);
     return () => clearTimeout(id);
   }, [verdict, phaseKey]);
+  const expression = face ?? (verdict ? undefined : held);
 
   const gained = pick?.points ?? 0;
   const score = useCountUp(player.score, player.score - gained, 900, (REVEAL_BEATS.pointsFly + 0.5) * 1000);

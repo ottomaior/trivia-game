@@ -2,7 +2,7 @@
 
 The art for the redesign and the pre-rendered broadcast clips. The look is an old-school TV quiz show built from cut paper: every piece has paper grain, a slightly torn outline, a cream cut-out border and a soft shadow. The mockups live on the design canvas ("Otto's Quiz Show visual direction", a claude.ai Design artifact).
 
-The game uses the drawings directly: `apps/web`'s `dev` and `build` scripts run `node ../motion/art/build.mjs --web --out public/art`, which writes only the SVGs (no contact sheet, no audio) into `apps/web/public/art/`, and the screens show them as images. The generator is plain Node with no dependencies, so it also runs in the Docker build. The Remotion clips are rendered here and committed to the web app when they are used.
+The game uses the drawings directly: `apps/web`'s `dev` and `build` scripts run `node ../motion/art/build.mjs --web --out public/art`, which writes only the SVGs (no contact sheet, no audio) into `apps/web/public/art/`, and the screens show them as images. The generator is plain Node with no dependencies, so it also runs in the Docker build. The Remotion clips are rendered here and committed to the web app when they are used: the TV plays the show open full-screen through the intro (see `apps/web/src/tv/ShowOpenClip.tsx`).
 
 ## Commands
 
@@ -17,6 +17,7 @@ pnpm motion:render
 - `motion:art` builds every drawing into `public/art/` (open `public/art/index.html` for a sheet of all the faces) and copies the audio the clips use from `apps/web/public` into `public/audio/`.
 - `motion:studio` opens Remotion Studio to preview and scrub the clips.
 - `motion:render` renders the show open to `out/show-open.mp4` (1080p, H.264 with sound, about a minute).
+- `pnpm --filter @trivia/motion render:web` renders the copy the game plays, `apps/web/public/clips/show-open.mp4` (720p, CRF 28, standard-range yuv420p for older TV decoders, about 2.5 MB). It is committed, so re-render only when the clip changes: every version adds to the repository's history. The clip uses Ottó's `welcome-1` recording (its length comes from the voice manifest), so re-render after that line is re-recorded.
 
 `public/` and `out/` are generated and not committed.
 

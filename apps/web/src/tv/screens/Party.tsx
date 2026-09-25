@@ -5,10 +5,10 @@ import { Character } from '../../ui/Character.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
-import { letterOf, optionTile } from '../../ui/answers.ts';
-import { withUnit } from '../../ui/format.ts';
+import { letterOf, optionTile, tileStyle } from '../../ui/answers.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
+import { Clothesline, Tape } from './PartyProps.tsx';
 import { RoundCard, usePromptWordsIn } from './Question.tsx';
 
 /** A party-mode round on the TV, from the read-out question to the last input. */
@@ -95,10 +95,12 @@ export function PartyBoard({ view, stage }: { view: HostView; stage: PartyStage 
 function Body({ view, stage }: { view: HostView; stage: PartyStage }) {
   const { question } = stage;
   if (stage.phase === 'bluff_pick') return <OptionGrid options={stage.options} />;
-  if (question.kind === 'timeline') return <TimelineCards items={question.items} open={stage.phase === 'order_open'} />;
+  if (question.kind === 'timeline') {
+    return <Clothesline cards={question.items.map((text, item) => ({ item, text }))} open={stage.phase === 'order_open'} />;
+  }
   if (stage.phase === 'guess_bet') {
     const unit = question.kind === 'number' ? question.unit : null;
-    return <GuessLine view={view} guesses={stage.guesses} unit={unit} />;
+    return <Tape guesses={stage.guesses} unit={unit} byId={new Map(view.players.map((p) => [p.id, p]))} />;
   }
   if (question.kind === 'number' && question.unit) {
     return (
@@ -116,44 +118,11 @@ function OptionGrid({ options }: { options: string[] }) {
   return (
     <ol className={`${styles.tiles} ${styles.tilesOpen} ${options.length > 4 ? styles.tilesMany : ''}`}>
       {options.map((text, i) => (
-        <li key={i} className={styles.tile} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
+        <li key={i} className={styles.tile} style={tileStyle(optionTile(i), i)}>
           <span className={styles.tileLetter}>{letterOf(i)}</span>
           <span className={styles.tileText}>{text}</span>
         </li>
       ))}
-    </ol>
-  );
-}
-
-/** Időrend: the five items side by side, lettered, in the order shown on the phones. */
-export function TimelineCards({ items, open }: { items: string[]; open: boolean }) {
-  return (
-    <ol className={`${styles.timelineRow} ${open ? styles.tilesOpen : ''}`}>
-      {items.map((text, i) => (
-        <li key={i} className={`${styles.tile} ${styles.timelineCard}`} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
-          <span className={styles.tileLetter}>{letterOf(i)}</span>
-          <span className={styles.timelineText}>{text}</span>
-        </li>
-      ))}
-    </ol>
-  );
-}
-
-/** Tippelj!: everyone's guess on a number line, smallest first; players bet on the closest. */
-function GuessLine({ view, guesses, unit }: { view: HostView; guesses: { playerId: string; value: number }[]; unit: string | null }) {
-  const byId = new Map(view.players.map((p) => [p.id, p]));
-  return (
-    <ol className={`${styles.guessLine} ${styles.tilesOpen}`}>
-      {guesses.map((g, i) => {
-        const p = byId.get(g.playerId);
-        return (
-          <li key={g.playerId} className={`${styles.tile} ${styles.guessCard}`} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
-            {p && <Character id={p.avatar.character} size="3em" />}
-            <span className={styles.guessValue}>{withUnit(g.value, unit)}</span>
-            <span className={styles.guessName}>{p?.name}</span>
-          </li>
-        );
-      })}
     </ol>
   );
 }

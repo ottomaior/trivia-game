@@ -13,6 +13,7 @@ import { ottoReal } from './otto-real.mjs';
 import { buildCast6 } from './cast6.mjs';
 import { buildParty } from './party.mjs';
 import { buildExpressions, EXPRESSIONS } from './expr.mjs';
+import { buildOttoParts, buildPanels, buildSet } from './stage.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
@@ -23,8 +24,13 @@ const AUDIO = join(HERE, '..', 'public', 'audio');
 const WEB = join(HERE, '..', '..', 'web', 'public');
 mkdirSync(OUT, { recursive: true });
 
+// Panels the game stretches to fit their text (cards, tiles, desks, the
+// floor) must fill any box instead of keeping their proportions.
+const STRETCH = /^(card|opt-|panel-|pcard-|ph-|desk|bg-floor|tag|tile-|ribbon|tape|timeline)/;
+
 function svg(name, w, h, defs, body) {
-  const s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
+  const fit = STRETCH.test(name) ? ' preserveAspectRatio="none"' : '';
+  const s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"${fit}>
 <defs>
 ${defs.join('\n')}
 </defs>
@@ -168,6 +174,9 @@ ${glows}
     `<g filter="url(#ck)"><circle cx="32" cy="31" r="22" fill="#86a845"/><path d="M21 31 L29 39 L43 23" stroke="${C.paper}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`);
 }
 buildCast6(C, paper, svg);
+buildOttoParts(svg);
+buildSet(C, paper, svg);
+buildPanels(C, paper, svg);
 buildParty(C, paper, svg);
 const chars = buildExpressions(C, paper, svg);
 if (!WEB_ONLY) {

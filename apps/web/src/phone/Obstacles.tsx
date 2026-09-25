@@ -162,9 +162,9 @@ function useClearedAfterExit(gone: boolean, onCleared: () => void) {
 /** Green goo with darker lumps, shiny bubbles and drips. */
 function paintSlime(g: CanvasRenderingContext2D, w: number, h: number): void {
   const grad = g.createLinearGradient(0, 0, w, h);
-  grad.addColorStop(0, '#9bd64f');
-  grad.addColorStop(0.5, '#86c440');
-  grad.addColorStop(1, '#5e9a2a');
+  grad.addColorStop(0, '#c4e07a');
+  grad.addColorStop(0.5, '#9cc24a');
+  grad.addColorStop(1, '#6f9a30');
   g.fillStyle = grad;
   g.fillRect(0, 0, w, h);
   const r = Math.min(w, h);

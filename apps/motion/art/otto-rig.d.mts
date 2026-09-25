@@ -12,3 +12,12 @@ export const frontArm: string;
 
 /** The head with the eyes open or shut, the mouth open 0–1, and the pupils shifted by `look`. */
 export function head(options?: { blink?: boolean; mouth?: number; look?: number }): string;
+
+/** The head's layers for the live game: face (mouth closed), open mouth, moustache, shut eyelids. */
+export const headLayers: Record<'face' | 'mouth' | 'stache' | 'lids', string>;
+
+/** Where the open mouth's top lip sits in rig space (the live mouth scales from here). */
+export const MOUTH_TOP: [number, number];
+
+/** The filter the head layers' inner pieces use. */
+export function ottoLayerDefs(boil?: number): string;
