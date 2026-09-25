@@ -9,7 +9,7 @@ export function RoundLabel({ view, pack = true }: { view: HostView; pack?: boole
   return (
     <span className={styles.roundLabel}>
       {pack && view.pack && <span className={styles.packTag}>{view.pack}</span>}
-      {roundText(view.mode, view.round, view.totalRounds)}
+      <span className={styles.roundTag}>{roundText(view.mode, view.round, view.totalRounds)}</span>
       {view.mode !== 'ladder' && pointsMultiplier(view.round, view.totalRounds) > 1 && (
         <span className={styles.doubleBadge}>{t.doublePoints}</span>
       )}

@@ -2,7 +2,7 @@ import { t } from '@trivia/shared';
 import { useVoiceCredit } from '../audio/voiceCredit.ts';
 import styles from './Tv.module.css';
 
-/** "Otto hangja: …", shown only when the voice service asks for a credit. */
+/** "Ottó hangja: …", shown only when the voice service asks for a credit. */
 export function VoiceCredit({ className = '' }: { className?: string }) {
   const credit = useVoiceCredit();
   if (!credit) return null;

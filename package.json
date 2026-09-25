@@ -21,7 +21,10 @@
     "questions:check": "pnpm --filter @trivia/server questions:check",
     "audio:render": "pnpm --filter @trivia/server audio:render",
     "audio:prepare": "pnpm --filter @trivia/server audio:prepare",
-    "voice:generate": "pnpm --filter @trivia/server voice:generate"
+    "voice:generate": "pnpm --filter @trivia/server voice:generate",
+    "motion:art": "pnpm --filter @trivia/motion art",
+    "motion:studio": "pnpm --filter @trivia/motion studio",
+    "motion:render": "pnpm --filter @trivia/motion render"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

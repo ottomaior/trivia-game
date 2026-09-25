@@ -1,10 +1,10 @@
 import { t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
-import { TILE } from '../../ui/answers.ts';
+import { TILE, tileStyle } from '../../ui/answers.ts';
 import { audio } from '../../audio/engine.ts';
 import { useLowFx } from '../../ui/lowfx.ts';
 import { useSlotSpin } from '../../ui/slotSpin.ts';
@@ -50,12 +50,12 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
                   : ''
               }`}
               data-testid={result && spin.landed && i === chosen ? 'chosen-category' : undefined}
-              style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
+              style={tileStyle(TILE[i]!, i, true)}
             >
               <span className={styles.voteName}>{o.name}</span>
               <span className={styles.voters}>
                 {voters.map((p) => (
-                  <Blob key={p.id} avatar={p.avatar} size="3.2em" />
+                  <Character key={p.id} id={p.avatar.character} size="3.2em" />
                 ))}
               </span>
             </li>

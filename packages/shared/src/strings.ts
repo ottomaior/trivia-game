@@ -1,4 +1,4 @@
-import type { GameMode, Lifeline } from './rules.ts';
+import type { CharacterId, GameMode, Lifeline } from './rules.ts';
 import type { OttoLine, OttoLineKey } from './views.ts';
 
 // All player-facing text. The game is Hungarian only.
@@ -9,7 +9,7 @@ const rungText = (n: number) => (n === 0 ? 'Start' : `${n}. lépcső`);
 
 export const t = {
   tagline: 'Az évszázad kvízműsora',
-  voiceCredit: (by: string) => `Otto hangja: ${by}`,
+  voiceCredit: (by: string) => `Ottó hangja: ${by}`,
   startPrompt: 'Kattints a kezdéshez',
   start: 'Kezdés',
   clickToContinue: 'Kattints a műsor folytatásához',
@@ -58,8 +58,19 @@ export const t = {
   enabledQuestions: (n: number) => `${fmt(n)} kérdés van bekapcsolva`,
   vipPicking: 'A VIP válogatja a kategóriákat…',
   waitingForMore: (n: number) => `Még ${n} versenyzőre várunk…`,
-  yourColor: 'A színed',
-  newFace: 'Új arc',
+  /** The host's name as it appears on the set (his podium). */
+  ottoName: 'Ottó',
+  yourCharacter: 'A szereplőd',
+  characters: {
+    gomboc: 'Gombóc',
+    kocka: 'Kocka',
+    bab: 'Bab',
+    csepp: 'Csepp',
+    csillag: 'Csillag',
+    felho: 'Felhő',
+    szellem: 'Szellem',
+    bogyo: 'Bogyó',
+  } satisfies Record<CharacterId, string>,
   remove: 'Kiküld',
   voteTitle: 'Válaszd ki a következő kategóriát',
   chosenCategory: 'A következő kategória',
@@ -97,7 +108,7 @@ export const t = {
     offensive: 'Sértő',
     other: 'Egyéb',
   },
-  flagThanks: 'Köszönjük — Otto utánanéz.',
+  flagThanks: 'Köszönjük — Ottó utánanéz.',
   // Milliomos-létra
   ladderTitle: 'Milliomos-létra',
   rungOf: (n: number, total: number) => `${n}. lépcső / ${total}`,
@@ -174,6 +185,11 @@ export const t = {
   guessNotClosest: 'Nem a tiéd lett a legközelebbi',
   guessAnswerWas: 'A pontos válasz:',
   guessOff: (d: string) => `Eltérés: ${d}`,
+  guessSpotOn: 'Telitalálat!',
+  guessExactLabel: 'A pontos válasz',
+  bluffFellFor: 'Bedőlt:',
+  bluffFound: 'Megtalálta:',
+  bluffNobodyFell: 'Senki sem dőlt be',
   chipsWon: (n: number) => `${n} nyerő zseton`,
   betChips: (n: number) => `${n} zseton`,
   mineTag: (name: string) => `${name} (te)`,
@@ -195,7 +211,7 @@ export const t = {
     TOO_FEW_PLAYERS: 'Nincs elég csatlakozott játékos.',
     NO_QUESTIONS: 'Most nincs elérhető kérdés.',
     TOO_FEW_QUESTIONS: 'Így túl kevés kérdés maradna.',
-    COLOR_TAKEN: 'Ezt a színt már más választotta.',
+    CHARACTER_TAKEN: 'Ezt a szereplőt már más választotta.',
     TOO_CLOSE: 'Ez túl közel van az igazsághoz. Írj mást!',
   },
   /**
@@ -214,7 +230,7 @@ export const t = {
     ],
     welcomeSolo: [
       '[warmly] Jó estét! [playfully] Ma egyetlen, ám annál bátrabb versenyzőnk van.',
-      '[chuckles] Egyszemélyes műsor? [proudly] Otto erre is készen áll!',
+      '[chuckles] Egyszemélyes műsor? [proudly] Ottó erre is készen áll!',
       '[playfully] Csak ketten vagyunk: te meg én. [chuckles] Meg a bajszom.',
       '[excited] Magányos hős a stúdióban! [mischievously] A dicsőség csak a tiéd.',
       '[warmly] Egy versenyző, egy bajusz, és rengeteg kérdés. [excited] Kezdjük!',

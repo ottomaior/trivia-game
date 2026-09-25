@@ -17,15 +17,16 @@ export const LOBBY_DISCONNECT_GRACE_MS = 60_000;
 /** A room whose TV has been gone this long is closed. */
 export const HOST_ABSENT_ROOM_TTL_MS = 10 * 60_000;
 
-export const AVATAR_COLORS = ['mustard', 'teal', 'ice', 'rust', 'plum', 'cream'] as const;
-export type AvatarColor = (typeof AVATAR_COLORS)[number];
+/** The paper cast players pick from (drawn in apps/motion/art); one per player. */
+export const CHARACTERS = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo'] as const;
+export type CharacterId = (typeof CHARACTERS)[number];
 
-export const AVATAR_FACES = ['grin', 'wink', 'shades', 'shock', 'sleepy', 'smug'] as const;
-export type AvatarFace = (typeof AVATAR_FACES)[number];
+/** How a character reacts; each has its own drawing (no expression = its idle face). */
+export const EXPRESSIONS = ['correct', 'wrong', 'fooled', 'sneaky', 'out', 'frozen', 'slimed'] as const;
+export type Expression = (typeof EXPRESSIONS)[number];
 
 export interface Avatar {
-  color: AvatarColor;
-  face: AvatarFace;
+  character: CharacterId;
 }
 
 /** Trim, collapse inner whitespace, clamp length. */
@@ -84,9 +85,16 @@ export const PARTY_ROUNDS = 8;
 export const VOTE_OPTIONS = 3;
 export const CHOICES_PER_QUESTION = 4;
 
+/**
+ * Length of the show open, the rendered clip the TV plays through the intro
+ * (apps/web/public/clips/show-open.mp4, from apps/motion). TVs that can't play
+ * it show the title card for as long.
+ */
+export const SHOW_OPEN_MS = 10_000;
+
 /** Phase lengths in ms. Phases waiting on players end early once all acted. */
 export const TIMINGS = {
-  intro: 4_000,
+  intro: SHOW_OPEN_MS,
   vote: 8_000,
   /** A vote where someone can still use a power play: picking a target takes a moment. */
   votePower: 12_000,

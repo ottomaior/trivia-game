@@ -482,9 +482,10 @@ describe("RoomRunner: Otto's pacing", () => {
     const speech: SpeechLengths = { line: () => 6_000, question: () => 3_000 };
     const { runner, room, players } = setup({ players: 2, speech });
     await begin(runner, players[0]!.id);
-    // The welcome takes 6s: the 4s intro waits for it.
-    expect(room.phaseEndsAt).toBe(Date.now() + 6_000 + SPEECH_TAIL_MS);
-    await vi.advanceTimersByTimeAsync(6_000 + SPEECH_TAIL_MS);
+    // The intro lasts as long as the show open, or the 6s welcome if that's longer.
+    const intro = Math.max(TIMINGS.intro, 6_000 + SPEECH_TAIL_MS);
+    expect(room.phaseEndsAt).toBe(Date.now() + intro);
+    await vi.advanceTimersByTimeAsync(intro);
     expect(room.phase).toBe('vote');
     for (const p of players) runner.vote(p.id, 0);
     expect(room.phase).toBe('vote_result'); // Otto is quiet in an ordinary vote

@@ -1,16 +1,36 @@
 :root {
-  /* Palette from the mockups. */
-  --burgundy: #2a0e18;
-  --burgundy-deep: #1c0910;
-  --mustard: #e8b23a;
-  --teal: #1f6f6b;
-  --cream: #f4e9d4;
-  --ice: #9fd3e0;
-  --rust: #b8462a;
-  --plum: #6a3d7a;
+  /* The paper studio's palette (apps/motion/art/paperlib.mjs). */
+  --burgundy: #2c121a;
+  --burgundy-deep: #1e0b12;
+  --bg-ray: #3a1823;
+  --floor: #4a2130;
+  --floor-2: #381720;
+  --mustard: #d9a13b;
+  --mustard-dk: #b8832a;
+  --mustard-lt: #ebc26a;
+  --teal: #3f7d74;
+  --teal-dk: #2e5f58;
+  --cream: #efe3c8;
+  --paper: #f6eedb;
+  --ink: #2a1a14;
+  --ice: #9fc7cc;
+  --rust: #b8553a;
+  --rust-dk: #96432d;
+  --plum: #6e4b72;
+  --plum-dk: #553858;
   /* Power plays. */
-  --slime: #86c440;
-  --slime-deep: #3f6e1c;
+  --slime: #9cc24a;
+  --slime-deep: #6f9a30;
+
+  /* Each character's main colour, for chips, bars and swatches. */
+  --char-gomboc: var(--mustard);
+  --char-kocka: var(--rust);
+  --char-bab: var(--teal);
+  --char-csepp: var(--ice);
+  --char-csillag: var(--plum);
+  --char-felho: var(--cream);
+  --char-szellem: #8fb04a;
+  --char-bogyo: #d98a8f;
 
   /* Answer tiles A–D. */
   --answer-a: var(--rust);

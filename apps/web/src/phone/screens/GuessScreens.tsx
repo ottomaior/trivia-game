@@ -2,8 +2,8 @@ import { GUESS_CHIPS, t, type PlayerView, type Stage } from '@trivia/shared';
 import { useState, type CSSProperties, type FormEvent } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { Blob } from '../../ui/Blob.tsx';
-import { optionTile } from '../../ui/answers.ts';
+import { Character } from '../../ui/Character.tsx';
+import { optionTile, phoneCardStyle, phoneOptionStyle } from '../../ui/answers.ts';
 import { withUnit } from '../../ui/format.ts';
 import { parseGuess } from '../guess.ts';
 import styles from '../Phone.module.css';
@@ -42,7 +42,7 @@ export function GuessScreen({ view, stage, socket }: { view: PlayerView; stage: 
     return (
       <div className={styles.column}>
         <p className={styles.hint}>{t.yourGuess}</p>
-        <div className={styles.lockedCard} style={{ background: 'var(--teal)' }} data-testid="my-guess">
+        <div className={styles.lockedCard} style={phoneCardStyle(optionTile(1))} data-testid="my-guess">
           <span className={styles.lockedLetter}>{withUnit(mine, unit)}</span>
         </div>
         <h2 className={styles.screenTitle}>{t.lockedIn}</h2>
@@ -125,18 +125,20 @@ export function BetScreen({ view, stage, socket }: { view: PlayerView; stage: Be
             <button
               key={g.playerId}
               className={`${styles.choice} ${styles.choiceCompact} ${on > 0 ? styles.choiceMine : ''}`}
-              style={{ background: tile.bg, color: tile.fg } as CSSProperties}
+              style={phoneOptionStyle(tile, i)}
               disabled={placed !== null}
               onClick={() => void place(i)}
               data-testid={`bet-${i}`}
             >
-              {p && <Blob avatar={p.avatar} size="2.6rem" />}
+              {p && <Character id={p.avatar.character} size="2.6rem" />}
               <span className={styles.choiceText}>
                 {withUnit(g.value, unit)}
                 <span className={styles.betOwner}>{g.playerId === view.me.id ? t.mineTag(p?.name ?? '') : p?.name}</span>
               </span>
               <span className={styles.betChips} aria-label={t.betChips(on)}>
-                {'●'.repeat(on)}
+                {Array.from({ length: on }, (_, k) => (
+                  <img key={k} src="/art/chip-teal.svg" alt="" draggable={false} />
+                ))}
               </span>
             </button>
           );

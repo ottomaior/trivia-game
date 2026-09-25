@@ -11,6 +11,8 @@ import { initialFxMode, LowFxContext, rememberFxMode, stepDown, type FxMode } fr
 import { Marquee, type MarqueeMode } from '../ui/Marquee.tsx';
 import { Studio } from '../stage/Studio.tsx';
 import { MuteButton } from './MuteButton.tsx';
+import { ShowOpenClip } from './ShowOpenClip.tsx';
+import { preloadShowOpen, showOpenPlayable } from './showOpen.ts';
 import { StartScreen } from './StartScreen.tsx';
 import { TvStage } from './TvStage.tsx';
 import styles from './Tv.module.css';
@@ -47,7 +49,21 @@ export function TvApp() {
     });
   }, []);
   const liveView = screen.kind === 'live' ? screen.view : null;
-  useAudioCues(liveView);
+  // The show open plays through the intro where it can; a clip that fails falls back to the title card.
+  const [clipFailed, setClipFailed] = useState(false);
+  const showOpen = showOpenPlayable(fxMode) && !clipFailed;
+  useAudioCues(liveView, { showOpen });
+  const phase = liveView?.stage.phase;
+  useEffect(() => {
+    if (showOpen && phase === 'lobby') preloadShowOpen();
+  }, [showOpen, phase]);
+  const onClipFailed = useCallback(() => {
+    setClipFailed(true);
+    // The sounds the clip would have carried.
+    audio.play('start');
+    audio.play('applause', 0.5);
+    if (liveView?.otto) audio.voice(liveView.otto);
+  }, [liveView]);
 
   // Chrome keeps the earlier click across a reload, so sound can start right away.
   useEffect(() => {
@@ -144,6 +160,7 @@ export function TvApp() {
             ) : (
               <Studio view={screen.view} lite={fxMode === 'lite'} onTooSlow={onTooSlow} />
             ))}
+          {showOpen && liveView?.stage.phase === 'intro' && <ShowOpenClip paused={liveView.paused} onFail={onClipFailed} />}
           {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
             <p className={styles.center}>{t.connecting}</p>
           )}

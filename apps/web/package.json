@@ -3,8 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "art": "node ../motion/art/build.mjs --web --out public/art",
+    "dev": "node ../motion/art/build.mjs --web --out public/art && vite",
+    "build": "node ../motion/art/build.mjs --web --out public/art && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p .",
     "test": "vitest run"

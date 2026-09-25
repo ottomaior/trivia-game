@@ -65,7 +65,7 @@ test("Otto's voice: the TV credits the voice service and plays recorded lines wi
   const tv = await context.newPage();
   const errors = trackErrors(tv);
   await tv.goto('/tv?fx=lite');
-  await expect(tv.getByTestId('voice-credit')).toHaveText('Otto hangja: ElevenLabs');
+  await expect(tv.getByTestId('voice-credit')).toHaveText('Ottó hangja: ElevenLabs');
   await tv.getByRole('button', { name: 'Kezdés' }).click();
   const code = (await tv.getByTestId('room-code').textContent())!;
   await expect(tv.getByTestId('voice-credit')).toBeVisible();

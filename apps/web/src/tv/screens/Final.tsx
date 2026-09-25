@@ -1,6 +1,6 @@
 import { scoreText, t, type HostView, type Standing } from '@trivia/shared';
 import type { CSSProperties } from 'react';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character } from '../../ui/Character.tsx';
 import { useLowFx } from '../../ui/lowfx.ts';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
@@ -36,7 +36,7 @@ export function Final({ view, standings }: { view: HostView; standings: Standing
                 data-testid="podium"
                 style={{ '--d': `${RISE_DELAY[rank]}s` } as CSSProperties}
               >
-                <Blob avatar={p.avatar} size={s.rank === 1 ? '7em' : '5em'} />
+                <Character id={p.avatar.character} size={s.rank === 1 ? '7em' : '5em'} />
                 <span className={styles.podiumName}>{p.name}</span>
                 <span className={styles.podiumScore}>{scoreText(view.mode, s.score)}</span>
                 <span className={styles.podiumBlock}>{s.rank}</span>
@@ -76,7 +76,7 @@ function FinalBoard({ view, standings }: { view: HostView; standings: Standing[]
               style={{ '--d': `${0.3 + (standings.length - 1 - i) * 0.25}s` } as CSSProperties}
             >
               <span className={styles.finalRank}>{s.rank}.</span>
-              <Blob avatar={p.avatar} size="3.4em" />
+              <Character id={p.avatar.character} size="3.4em" />
               <span className={styles.finalName}>{p.name}</span>
               <span className={styles.finalScore}>{scoreText(view.mode, s.score)}</span>
             </li>

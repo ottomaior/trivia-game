@@ -78,8 +78,8 @@ describe.skipIf(!url)('PgStore', () => {
     const q = (await store.pickQuestion(household, cat!.id, 3, [], 'mc'))!;
     if (q.kind !== 'mc') throw new Error('expected a multiple-choice question');
     const players = [
-      { seat: 0, name: 'Anna', avatar: { color: 'teal' as const, face: 'grin' as const } },
-      { seat: 1, name: 'Béla', avatar: { color: 'rust' as const, face: 'wink' as const } },
+      { seat: 0, name: 'Anna', avatar: { character: 'bab' as const } },
+      { seat: 1, name: 'Béla', avatar: { character: 'kocka' as const } },
     ];
     const settings = { mode: 'classic' as const, pack: 'alap', categories: ['film'] };
     const m1 = await store.startMatch({ householdId: household, roomCode: 'BCDF', players, settings });

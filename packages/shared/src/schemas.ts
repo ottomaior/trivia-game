@@ -1,8 +1,7 @@
 import { z } from 'zod';
 import {
-  AVATAR_COLORS,
-  AVATAR_FACES,
   BLUFF_LIE_MAX_CHARS,
+  CHARACTERS,
   CHOICES_PER_QUESTION,
   GUESS_CHIPS,
   TIMELINE_ITEMS,
@@ -44,8 +43,7 @@ export const playerResumeSchema = z.object({
 });
 
 export const setAvatarSchema = z.object({
-  color: z.enum(AVATAR_COLORS),
-  face: z.enum(AVATAR_FACES),
+  character: z.enum(CHARACTERS),
 });
 
 export const kickSchema = z.object({ playerId: z.string().min(1).max(64) });

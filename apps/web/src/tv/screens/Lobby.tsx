@@ -1,6 +1,7 @@
 import { MAX_PLAYERS, MIN_PLAYERS, t, type HostView } from '@trivia/shared';
+import { useEffect } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character, preloadCharacters } from '../../ui/Character.tsx';
 import { Logo } from '../../ui/Logo.tsx';
 import { QrCode } from '../../ui/QrCode.tsx';
 import styles from '../Tv.module.css';
@@ -11,6 +12,8 @@ export function Lobby({ view }: { view: HostView }) {
   const missing = Math.max(0, MIN_PLAYERS - view.players.filter((p) => p.connected).length);
   const seats = Array.from({ length: MAX_PLAYERS }, (_, i) => view.players[i] ?? null);
   const inStudio = useInStudio();
+  // Every face the game can show, cached before the first reveal.
+  useEffect(() => preloadCharacters(true), []);
 
   return (
     <div className={`${styles.lobby} ${inStudio ? styles.lobbyStudio : ''}`}>
@@ -43,7 +46,7 @@ export function Lobby({ view }: { view: HostView }) {
           {seats.map((p, i) =>
             p ? (
               <li key={p.id} className={styles.seat} data-testid="seat">
-                <Blob avatar={p.avatar} size="5.5em" dimmed={!p.connected} />
+                <Character id={p.avatar.character} size="5.5em" dimmed={!p.connected} />
                 <span className={styles.seatName}>{p.name}</span>
                 {p.isVip && <span className={styles.vip}>{t.vip}</span>}
               </li>
@@ -98,7 +101,7 @@ function PackPanel({ view }: { view: HostView }) {
               <span className={styles.packRowName}>{pack.name}</span>
               <span className={styles.voters}>
                 {voters.map((p) => (
-                  <Blob key={p.id} avatar={p.avatar} size="2.2em" />
+                  <Character key={p.id} id={p.avatar.character} size="2.2em" />
                 ))}
               </span>
             </li>

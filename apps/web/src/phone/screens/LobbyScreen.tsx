@@ -1,8 +1,8 @@
-import { AVATAR_COLORS, AVATAR_FACES, MIN_PLAYERS, t, type AvatarColor, type PlayerView, type Stage } from '@trivia/shared';
-import { useState } from 'react';
+import { CHARACTERS, MIN_PLAYERS, t, type CharacterId, type PlayerView, type Stage } from '@trivia/shared';
+import { useEffect, useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { Blob } from '../../ui/Blob.tsx';
+import { Character, preloadCharacters } from '../../ui/Character.tsx';
 import styles from '../Phone.module.css';
 import { SetupScreen } from './SetupScreen.tsx';
 
@@ -18,7 +18,7 @@ function PacksLobby({ view, stage, socket }: { view: PlayerView; stage: PacksSta
   const { me } = view;
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const takenColors = new Set(view.players.filter((p) => p.id !== me.id).map((p) => p.avatar.color));
+  const taken = new Set(view.players.filter((p) => p.id !== me.id).map((p) => p.avatar.character));
   const missing = Math.max(0, MIN_PLAYERS - view.players.filter((p) => p.connected).length);
 
   async function run(action: () => Promise<{ ok: boolean; error?: string }>) {
@@ -29,35 +29,32 @@ function PacksLobby({ view, stage, socket }: { view: PlayerView; stage: PacksSta
     if (!res.ok && res.error && res.error in t.errors) setError(t.errors[res.error as keyof typeof t.errors]);
   }
 
-  const setColor = (color: AvatarColor) => run(() => send(socket, 'player:setAvatar', { color, face: me.avatar.face }));
-  const nextFace = () => {
-    const i = AVATAR_FACES.indexOf(me.avatar.face);
-    const face = AVATAR_FACES[(i + 1) % AVATAR_FACES.length]!;
-    return run(() => send(socket, 'player:setAvatar', { color: me.avatar.color, face }));
-  };
+  const pick = (character: CharacterId) => run(() => send(socket, 'player:setAvatar', { character }));
+  useEffect(() => preloadCharacters(), []);
 
   return (
     <div className={styles.lobby}>
-      <button className={styles.blobButton} onClick={nextFace} aria-label={t.newFace} disabled={busy}>
-        <Blob avatar={me.avatar} size="8rem" />
-      </button>
+      <div className={styles.myCharacter}>
+        <Character id={me.avatar.character} size="8rem" />
+      </div>
       <p className={styles.name} data-testid="my-name">
         {me.name}
       </p>
       {me.isVip && <span className={styles.vip}>{t.vip}</span>}
 
-      <div className={styles.swatches} role="radiogroup" aria-label={t.yourColor}>
-        {AVATAR_COLORS.map((c) => (
+      <div className={styles.cast} role="radiogroup" aria-label={t.yourCharacter}>
+        {CHARACTERS.map((c) => (
           <button
             key={c}
             role="radio"
-            aria-checked={me.avatar.color === c}
-            aria-label={c}
-            className={`${styles.swatch} ${me.avatar.color === c ? styles.swatchOn : ''}`}
-            style={{ background: `var(--${c})` }}
-            disabled={busy || takenColors.has(c)}
-            onClick={() => setColor(c)}
-          />
+            aria-checked={me.avatar.character === c}
+            aria-label={t.characters[c]}
+            className={`${styles.castPick} ${me.avatar.character === c ? styles.castPickOn : ''}`}
+            disabled={busy || taken.has(c)}
+            onClick={() => pick(c)}
+          >
+            <Character id={c} size="3.3rem" />
+          </button>
         ))}
       </div>
 
@@ -80,7 +77,7 @@ function PacksLobby({ view, stage, socket }: { view: PlayerView; stage: PacksSta
                 .filter((p) => p.id !== me.id)
                 .map((p) => (
                   <li key={p.id}>
-                    <Blob avatar={p.avatar} size="2rem" dimmed={!p.connected} />
+                    <Character id={p.avatar.character} size="2rem" dimmed={!p.connected} />
                     <span>{p.name}</span>
                     <button
                       className={styles.textButton}
@@ -145,7 +142,7 @@ function PackPicker({
             {voters.length > 0 && (
               <span className={styles.packVoters}>
                 {voters.map((pl) => (
-                  <Blob key={pl.id} avatar={pl.avatar} size="1.6rem" />
+                  <Character key={pl.id} id={pl.avatar.character} size="1.6rem" />
                 ))}
               </span>
             )}

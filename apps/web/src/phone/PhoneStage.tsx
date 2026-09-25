@@ -1,6 +1,6 @@
 import { mcQuestionStage, scoreText, t, type PlayerView } from '@trivia/shared';
 import type { GameSocket } from '../net/socket.ts';
-import { Blob } from '../ui/Blob.tsx';
+import { Character } from '../ui/Character.tsx';
 import styles from './Phone.module.css';
 import { BluffPickScreen, BluffWriteScreen, ReadingScreen } from './screens/BluffScreens.tsx';
 import { FinalScreen } from './screens/FinalScreen.tsx';
@@ -21,7 +21,7 @@ export function PhoneStage({ view, socket }: { view: PlayerView; socket: GameSoc
     <div className={styles.stage}>
       {stage.phase !== 'lobby' && (
         <header className={styles.meBar}>
-          <Blob avatar={me.avatar} size="2.4rem" />
+          <Character id={me.avatar.character} size="2.4rem" />
           <span className={styles.meName}>{me.name}</span>
           <span className={styles.meScore}>{scoreText(view.mode, me.score)}</span>
         </header>
