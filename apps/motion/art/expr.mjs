@@ -166,7 +166,7 @@ export function buildExpressions(C, paper, svg) {
       const w = 20 * k, h = 9 * k;
       let zig = `M${f(mx - w)} ${my}`;
       for (let i = 1; i <= 8; i++) zig += ` L${f(mx - w + (i * 2 * w) / 8)} ${f(my + (i % 2 ? -h / 3 : h / 3))}`;
-      s += `<rect x="${f(mx - w)} " y="${f(my - h)}" width="${f(2 * w)}" height="${f(2 * h)}" rx="${f(4 * k)}" fill="${K.white}" stroke="${K.ink}" stroke-width="${f(3 * k)}"/><path d="${zig}" stroke="${K.ink}" stroke-width="${f(2.2 * k)}" fill="none" stroke-linejoin="round"/>`;
+      s += `<rect x="${f(mx - w)}" y="${f(my - h)}" width="${f(2 * w)}" height="${f(2 * h)}" rx="${f(4 * k)}" fill="${K.white}" stroke="${K.ink}" stroke-width="${f(3 * k)}"/><path d="${zig}" stroke="${K.ink}" stroke-width="${f(2.2 * k)}" fill="none" stroke-linejoin="round"/>`;
       return s;
     },
     slimed(c) {

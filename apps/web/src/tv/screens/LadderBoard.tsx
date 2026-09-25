@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Character } from '../../ui/Character.tsx';
 import { Otto } from '../../ui/Otto.tsx';
+import { art } from '../../ui/art.ts';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
@@ -74,7 +75,7 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
                   return (
                     <img
                       key={l}
-                      src={`/art/life-${l}${used ? '-used' : ''}.svg`}
+                      src={art(`life-${l}${used ? '-used' : ''}`)}
                       alt={t.lifelines[l]}
                       title={t.lifelines[l]}
                       className={styles.lifeBadge}

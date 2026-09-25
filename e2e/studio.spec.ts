@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { autoplay, joinByLink, openTv, startShow } from './helpers.ts';
+import { autoplay, expectArtLoaded, joinByLink, openTv, startShow } from './helpers.ts';
 
 test('the full studio plays a solo game with lights and particles, without errors', async ({ browser }) => {
   // A whole 10-round game: about a minute at test speed, whatever the machine; setting up the TV
@@ -9,6 +9,7 @@ test('the full studio plays a solo game with lights and particles, without error
   await expect(tv.locator('[data-fx="full"]')).toBeVisible();
   const solo = await joinByLink(browser, code, 'Otto');
   await expect(tv.getByTestId('seat')).toHaveCount(1);
+  await expectArtLoaded(tv);
 
   await startShow(solo);
   // (The slot spin outlasts vote_result at the tests' 15% timing, so it isn't checked here.)

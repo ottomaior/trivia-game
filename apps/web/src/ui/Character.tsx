@@ -1,12 +1,13 @@
 import { CHARACTERS, EXPRESSIONS, type CharacterId, type Expression } from '@trivia/shared';
+import { art } from './art.ts';
 
-// The paper cast. Each drawing is its own SVG file in /art (generated from
-// apps/motion/art by the build), shown as an <img>: the browser rasterises
-// the paper filters once and caches them, so even a slow TV can afford them.
+// The paper cast. Each drawing is its own bitmap in /art (drawn by
+// apps/motion/art, rendered by the build), shown as an <img>, so a slow TV
+// only ever composites finished pictures.
 
 /** The drawing for a character, idle or with an expression. */
 export function artUrl(id: CharacterId, expression?: Expression): string {
-  return expression ? `/art/${id}-${expression}.svg` : `/art/${id}.svg`;
+  return art(expression ? `${id}-${expression}` : id);
 }
 
 /** The character's main colour, for chips, bars and swatches. */

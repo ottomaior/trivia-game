@@ -2,6 +2,7 @@ import { t, type BluffOption, type Expression, type Guess, type PlayerSummary } 
 import type { CSSProperties } from 'react';
 import { Character } from '../../ui/Character.tsx';
 import { letterOf, optionTile } from '../../ui/answers.ts';
+import { art } from '../../ui/art.ts';
 import { withUnit } from '../../ui/format.ts';
 import styles from '../Tv.module.css';
 
@@ -34,7 +35,7 @@ export function Clothesline({ cards, open, years }: { cards: { item: number; tex
               data-testid={years && k === 0 ? 'correct-tile' : undefined}
             >
               <span className={styles.hangPaper}>
-                <img className={styles.peg} src="/art/peg.svg" alt="" draggable={false} />
+                <img className={styles.peg} src={art('peg')} alt="" draggable={false} />
                 <span className={styles.hangLetter} style={{ background: tile.bg, color: tile.fg }}>
                   {letterOf(c.item)}
                 </span>
@@ -45,7 +46,7 @@ export function Clothesline({ cards, open, years }: { cards: { item: number; tex
           );
         })}
       </ol>
-      {years && <img className={styles.timelineArrow} src="/art/timeline.svg" alt="" draggable={false} />}
+      {years && <img className={styles.timelineArrow} src={art('timeline')} alt="" draggable={false} />}
     </div>
   );
 }
@@ -106,7 +107,7 @@ export function Tape({
                   })}
                 </span>
               )}
-              <img className={styles.pin} src="/art/pin.svg" alt="" draggable={false} />
+              <img className={styles.pin} src={art('pin')} alt="" draggable={false} />
             </li>
           );
         })}
@@ -155,10 +156,10 @@ export function BluffCards({ options, byId, points }: { options: BluffOption[]; 
             style={{ '--i': i } as CSSProperties}
             data-testid={o.truth ? 'correct-tile' : 'bluff-option'}
           >
-            {o.truth && <img className={styles.rosette} src="/art/rosette.svg" alt="" draggable={false} />}
+            {o.truth && <img className={styles.rosette} src={art('rosette')} alt="" draggable={false} />}
             <span className={styles.bluffText}>{o.text}</span>
             <span className={styles.bluffTag}>
-              {!o.truth && <img className={styles.bluffMask} src="/art/mask.svg" alt="" draggable={false} />}
+              {!o.truth && <img className={styles.bluffMask} src={art('mask')} alt="" draggable={false} />}
               {o.truth ? t.bluffTruthTag : names ? t.bluffWroteIt(names) : t.bluffHouseLie}
             </span>
             <span className={styles.bluffPeople}>

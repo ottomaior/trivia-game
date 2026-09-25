@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { art } from './art.ts';
 
 /** Spoken names of the four answer shapes (for screen readers). */
 export const SHAPE_NAMES = ['háromszög', 'rombusz', 'kör', 'négyzet'] as const;
@@ -17,7 +18,7 @@ export const OPTION_TILE = [
   { bg: 'var(--cream)', fg: 'var(--ink)' },
   { bg: 'var(--char-szellem)', fg: 'var(--ink)' },
   { bg: 'var(--char-bogyo)', fg: 'var(--ink)' },
-].map((o, n) => ({ ...o, art: `/art/opt-${n}.svg`, panel: `/art/panel-${n}.svg` }));
+].map((o, n) => ({ ...o, art: art(`opt-${n}`), panel: art(`panel-${n}`) }));
 
 export type Tile = (typeof OPTION_TILE)[number];
 
@@ -42,12 +43,12 @@ export function tileStyle(tile: Tile, i: number, panel = false): CSSProperties {
 /** A quiz answer's paper button on the phone (its colour; the shape sits on a cream disc). */
 export function phoneAnswerStyle(i: number): CSSProperties {
   const tile = TILE[i]!;
-  return { '--tile-art': `url(/art/ph-tile-${'abcd'[i]}.svg)`, color: tile.fg, '--disc-fg': tile.bg, '--i': i } as CSSProperties;
+  return { '--tile-art': `url(${art(`ph-tile-${'abcd'[i]}`)})`, color: tile.fg, '--disc-fg': tile.bg, '--i': i } as CSSProperties;
 }
 
 /** A party option on the phone: a cream paper row, the option's colour on its letter disc. */
 export function phoneOptionStyle(tile: Tile, i = 0): CSSProperties {
-  return { '--tile-art': 'url(/art/ph-row.svg)', color: 'var(--ink)', '--disc-bg': tile.bg, '--disc-fg': tile.fg, '--i': i } as CSSProperties;
+  return { '--tile-art': `url(${art('ph-row')})`, color: 'var(--ink)', '--disc-bg': tile.bg, '--disc-fg': tile.fg, '--i': i } as CSSProperties;
 }
 
 /** A paper card in one of the option colours (your locked-in answer, lie or guess). */

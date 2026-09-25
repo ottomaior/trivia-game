@@ -13,7 +13,7 @@
   outline: 0.35rem solid var(--rust);
   outline-offset: 0.35rem;
   /* The paper sunburst, still (flat mode sees it; the studio draws its own on top). */
-  background: var(--burgundy) url('/art/bg-rays.svg') center / cover no-repeat;
+  background: var(--burgundy) url('/art/bg-rays.webp') center / cover no-repeat;
   overflow: hidden;
 }
 

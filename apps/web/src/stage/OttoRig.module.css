@@ -46,7 +46,7 @@
   margin: 0;
   padding: 0.8em 1.3em 1.2em;
   /* A cut paper speech card. */
-  background: url('/art/pcard-q.svg') center / 100% 100% no-repeat;
+  background: url('/art/pcard-q.webp') center / 100% 100% no-repeat;
   color: var(--ink);
   font-size: 1.5em;
   font-weight: 800;

@@ -4,6 +4,7 @@ import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { Character } from '../../ui/Character.tsx';
 import { optionTile, phoneCardStyle, phoneOptionStyle } from '../../ui/answers.ts';
+import { art } from '../../ui/art.ts';
 import { withUnit } from '../../ui/format.ts';
 import { parseGuess } from '../guess.ts';
 import styles from '../Phone.module.css';
@@ -137,7 +138,7 @@ export function BetScreen({ view, stage, socket }: { view: PlayerView; stage: Be
               </span>
               <span className={styles.betChips} aria-label={t.betChips(on)}>
                 {Array.from({ length: on }, (_, k) => (
-                  <img key={k} src="/art/chip-teal.svg" alt="" draggable={false} />
+                  <img key={k} src={art('chip-teal')} alt="" draggable={false} />
                 ))}
               </span>
             </button>

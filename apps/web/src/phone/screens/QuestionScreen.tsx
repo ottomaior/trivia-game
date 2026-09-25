@@ -4,6 +4,7 @@ import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { phoneAnswerStyle, phoneCardStyle, TILE } from '../../ui/answers.ts';
 import { AnswerShape } from '../../ui/AnswerShape.tsx';
+import { art } from '../../ui/art.ts';
 import { FreezeCover, SlimeCover } from '../Obstacles.tsx';
 import styles from '../Phone.module.css';
 
@@ -155,7 +156,7 @@ function LifelineBar({ view, seat, socket }: { view: PlayerView; seat: LadderSea
             title={kind === 'audience' && !hasAudience ? t.noAudienceYet : undefined}
             onClick={() => (kind === 'phone' ? setChoosingFriend(true) : void use(kind))}
           >
-            <img src={`/art/life-${kind}${used ? '-used' : ''}.svg`} alt="" className={styles.lifelineArt} draggable={false} />
+            <img src={art(`life-${kind}${used ? '-used' : ''}`)} alt="" className={styles.lifelineArt} draggable={false} />
             {t.lifelines[kind]}
           </button>
         );

@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { joinByLink, openPhone, openTv, reloadTv } from './helpers.ts';
+import { expectArtLoaded, joinByLink, openPhone, openTv, reloadTv } from './helpers.ts';
 
 test('TV creates a room; phones join by QR link and by typing the code', async ({ browser }) => {
   const { tv, code } = await openTv(browser);
 
   const p1 = await joinByLink(browser, code, 'Anna');
   await expect(p1.getByText('VIP', { exact: true })).toBeVisible();
+  await expectArtLoaded(p1);
 
   // Phone 2 types the code (lowercase) on the bare URL.
   const p2 = await openPhone(browser);

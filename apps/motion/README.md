@@ -2,7 +2,7 @@
 
 The art for the redesign and the pre-rendered broadcast clips. The look is an old-school TV quiz show built from cut paper: every piece has paper grain, a slightly torn outline, a cream cut-out border and a soft shadow. The mockups live on the design canvas ("Otto's Quiz Show visual direction", a claude.ai Design artifact).
 
-The game uses the drawings directly: `apps/web`'s `dev` and `build` scripts run `node ../motion/art/build.mjs --web --out public/art`, which writes only the SVGs (no contact sheet, no audio) into `apps/web/public/art/`, and the screens show them as images. The generator is plain Node with no dependencies, so it also runs in the Docker build. The Remotion clips are rendered here and committed to the web app when they are used: the TV plays the show open full-screen through the intro (see `apps/web/src/tv/ShowOpenClip.tsx`).
+The game uses the drawings as bitmaps: `apps/web`'s `dev` and `build` scripts run `apps/web/scripts/art.mjs`, which runs `node ../motion/art/build.mjs --web --out .art/svg` (only the SVGs, no contact sheet or audio) and then renders every SVG to a WebP in `apps/web/public/art/` with resvg, because the paper filters are far too slow for a smart TV's browser to evaluate itself. The generator is plain Node with no dependencies, so it also runs in the Docker build; the rasteriser's dependencies are `apps/web` devDependencies. The Remotion clips are rendered here and committed to the web app when they are used: the TV plays the show open full-screen through the intro (see `apps/web/src/tv/ShowOpenClip.tsx`).
 
 ## Commands
 

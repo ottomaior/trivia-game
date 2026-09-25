@@ -7,6 +7,7 @@ import {
 } from '@trivia/shared';
 import Fastify from 'fastify';
 import { existsSync } from 'node:fs';
+import { relative } from 'node:path';
 import { Server } from 'socket.io';
 import { systemClock, type Clock } from './clock.ts';
 import type { Rng } from './content/select.ts';
@@ -71,7 +72,24 @@ export async function createApp(opts: AppOptions) {
   }));
 
   if (opts.webDistDir && existsSync(opts.webDistDir)) {
-    await app.register(fastifyStatic, { root: opts.webDistDir, wildcard: false });
+    const distDir = opts.webDistDir;
+    await app.register(fastifyStatic, {
+      root: distDir,
+      wildcard: false,
+      // The art carries a version query and Vite's assets a content hash, so
+      // a TV keeps them for a year; recordings and clips are unhashed, so they
+      // are checked again after a day (a 304 unless re-recorded); manifests
+      // and the page itself are always checked.
+      setHeaders(reply, file) {
+        const path = relative(distDir, file).replaceAll('\\', '/');
+        const cache = /^(art|assets)\//.test(path)
+          ? 'public, max-age=31536000, immutable'
+          : /^(voice|audio|clips)\//.test(path) && !path.endsWith('.json')
+            ? 'public, max-age=86400, stale-while-revalidate=604800'
+            : 'no-cache';
+        void reply.header('Cache-Control', cache);
+      },
+    });
     // Client-side routes (/tv, /ABCD) all load the single-page app.
     app.setNotFoundHandler((req, reply) => {
       if (req.method === 'GET' && !req.url.startsWith('/socket.io')) {
