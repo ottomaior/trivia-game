@@ -7,6 +7,10 @@ import type { MusicTrack } from '@trivia/shared';
 
 export type Track = MusicTrack;
 
+/** How far ahead notes are booked on the audio clock, and how often the booking runs. */
+const LOOKAHEAD_S = 1.0;
+const SCHEDULE_EVERY_MS = 250;
+
 const A4 = 440;
 const f = (semitonesFromA4: number) => A4 * 2 ** (semitonesFromA4 / 12);
 
@@ -118,15 +122,18 @@ export class MusicPlayer {
     if (!pattern) return;
     const stepDur = 60 / pattern.bpm / pattern.stepsPerBeat;
     this.nextTime = this.ctx.currentTime + 0.05;
+    // Notes are booked a second ahead: a main-thread stall shorter than that
+    // (a screen change, a burst of bitmaps decoding on a TV) then never
+    // delays or bunches them.
     const schedule = () => {
-      while (this.nextTime < this.ctx.currentTime + 0.3) {
+      while (this.nextTime < this.ctx.currentTime + LOOKAHEAD_S) {
         pattern.play(this.ctx, this.out, this.step, this.nextTime, stepDur);
         this.nextTime += stepDur;
         this.step = (this.step + 1) % pattern.steps;
       }
     };
     schedule();
-    this.timer = setInterval(schedule, 100);
+    this.timer = setInterval(schedule, SCHEDULE_EVERY_MS);
   }
 
   stop(): void {

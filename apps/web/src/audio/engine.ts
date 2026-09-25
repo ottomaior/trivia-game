@@ -97,7 +97,11 @@ class AudioEngine {
   unlock(): void {
     if (typeof AudioContext === 'undefined') return;
     if (!this.ctx) {
-      const ctx = new AudioContext();
+      // Nothing here needs a tight buffer (cues are scheduled ahead on the audio
+      // clock, and lip sync only reads a level), so ask for the roomier
+      // 'playback' one: a TV whose main thread stalls for a frame or two then
+      // doesn't crackle.
+      const ctx = new AudioContext({ latencyHint: 'playback' });
       this.ctx = ctx;
       this.master = ctx.createGain();
       this.master.gain.value = this.muted ? 0 : LEVELS.master;
@@ -317,7 +321,7 @@ class AudioEngine {
     const { ctx, musicBus } = this;
     if (!ctx || !musicBus) return;
     const now = ctx.currentTime;
-    musicBus.gain.cancelScheduledValues(now);
+    holdAt(musicBus.gain, now);
     musicBus.gain.setTargetAtTime(LEVELS.music * level, now, 0.03);
     musicBus.gain.setTargetAtTime(LEVELS.music, now + seconds, 0.25);
   }
@@ -372,6 +376,21 @@ class AudioEngine {
       this.voices.set(key, p);
     }
     return p;
+  }
+}
+
+/**
+ * Cancels a parameter's scheduled changes from `at` on, keeping the value it
+ * has reached (cancelling alone would snap it back to the value before the
+ * ramp, an audible click when a duck lands mid-fade).
+ */
+function holdAt(param: AudioParam, at: number): void {
+  if (typeof param.cancelAndHoldAtTime === 'function') {
+    param.cancelAndHoldAtTime(at);
+  } else {
+    const current = param.value;
+    param.cancelScheduledValues(at);
+    param.setValueAtTime(current, at);
   }
 }
 
