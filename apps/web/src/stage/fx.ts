@@ -1,4 +1,4 @@
-import { Application, Container, Sprite, Texture } from 'pixi.js';
+import { Application, Container, Sprite, Texture, Ticker } from 'pixi.js';
 
 // The studio's light and particle layer: one transparent WebGL canvas over the
 // stage. A focus spotlight, bursts of paper scraps and confetti, and points
@@ -62,6 +62,13 @@ class StudioFx {
       app.destroy(true);
       return;
     }
+    // Pixi keeps a global "system" ticker running for its pointer tracking and
+    // its texture garbage collector, and it asks for a frame on every screen
+    // refresh even with nothing on the canvas. Nothing here is interactive
+    // (clicks pass through), and the few textures are freed on unmount, so
+    // both go: the layer then costs nothing between effects.
+    app.renderer.events.setTargetElement(null as unknown as HTMLElement);
+    Ticker.system.stop();
     this.app = app;
     this.host = host;
     app.canvas.setAttribute('data-testid', 'fx-canvas');

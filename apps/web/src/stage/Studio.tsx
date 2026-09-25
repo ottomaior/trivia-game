@@ -1,5 +1,4 @@
 import { isInputPhase, type HostView } from '@trivia/shared';
-import { gsap } from 'gsap';
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react';
 import { TvStage } from '../tv/TvStage.tsx';
 import { Desks } from './Desks.tsx';
@@ -82,17 +81,49 @@ function toCamera(shot: ShotName) {
   return { x: -s.x * u, y: -s.y * u, z: s.z * u, rotationY: s.rotationY };
 }
 
-/** Plays the phase's camera moves. */
+/** GSAP's power2.inOut, as a CSS easing. */
+const EASE_IN_OUT = 'cubic-bezier(0.455, 0.03, 0.515, 0.955)';
+
+function cameraTransform(shot: ShotName): string {
+  const c = toCamera(shot);
+  return `translate3d(${c.x}px, ${c.y}px, ${c.z}px) rotateY(${c.rotationY}deg)`;
+}
+
+/** Freezes an animation where it is (as the element's own style) and drops it. */
+function settle(anim: Animation | null): void {
+  if (!anim) return;
+  try {
+    anim.commitStyles();
+  } catch {
+    // The element is gone: nothing to keep.
+  }
+  anim.cancel();
+}
+
+/**
+ * Plays the phase's camera moves. They are Web Animations of one transform,
+ * which the browser runs on its compositor: the main thread does no work per
+ * frame while the camera glides, which matters on a TV's weak CPU.
+ */
 function useCamera(ref: React.RefObject<HTMLDivElement | null>, phase: HostView['stage']['phase'], round: number) {
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const tl = gsap.timeline();
-    for (const cue of shotsFor(phase)) {
-      tl.to(el, { ...toCamera(cue.shot), duration: cue.duration, ease: 'power2.inOut' }, cue.at);
-    }
+    let running: Animation | null = null;
+    const timers = shotsFor(phase).map((cue) =>
+      setTimeout(() => {
+        settle(running);
+        const from = el.style.transform || getComputedStyle(el).transform;
+        running = el.animate([{ transform: from === 'none' ? 'translate3d(0, 0, 0)' : from }, { transform: cameraTransform(cue.shot) }], {
+          duration: cue.duration * 1000,
+          easing: EASE_IN_OUT,
+          fill: 'forwards',
+        });
+      }, cue.at * 1000),
+    );
     return () => {
-      tl.kill();
+      timers.forEach(clearTimeout);
+      settle(running);
     };
   }, [ref, phase, round]);
 }
@@ -176,24 +207,15 @@ function usePowerEffects(rootRef: React.RefObject<HTMLDivElement | null>, view: 
   }, [view.round, thrown, clearedKey]); // only when a hit lands or clears; the view is read as it was then
 }
 
+/** A short jolt of the whole set (a round nobody got right); on the compositor, like the camera. */
 function shake(el: HTMLElement | null) {
   if (!el) return;
   const u = em();
-  gsap.fromTo(
-    el,
-    { x: 0, y: 0 },
-    {
-      keyframes: [
-        { x: -0.6 * u, y: 0.3 * u },
-        { x: 0.5 * u, y: -0.4 * u },
-        { x: -0.35 * u, y: 0.2 * u },
-        { x: 0.2 * u, y: -0.1 * u },
-        { x: 0, y: 0 },
-      ],
-      duration: 0.45,
-      ease: 'power1.out',
-    },
-  );
+  const at = (x: number, y: number) => ({ transform: `translate(${x * u}px, ${y * u}px)` });
+  el.animate([at(0, 0), at(-0.6, 0.3), at(0.5, -0.4), at(-0.35, 0.2), at(0.2, -0.1), at(0, 0)], {
+    duration: 450,
+    easing: 'ease-out',
+  });
 }
 
 /**

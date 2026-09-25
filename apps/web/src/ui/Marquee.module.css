@@ -25,8 +25,6 @@
   height: calc(100% - 2 * (1.2rem + 0.45rem));
   overflow: visible;
   pointer-events: none;
-  /* Its own compositor layer: a chase step repaints the bulbs, not the screen behind them. */
-  will-change: transform;
 }
 
 .bulbs rect {
@@ -42,11 +40,12 @@
   stroke: color-mix(in srgb, var(--mustard) 28%, var(--burgundy-deep));
 }
 
-.lit,
-.glow {
+/* Three rings of lit bulbs, each every third bulb, one bulb further on than
+   the last (their dash offsets are set in Marquee.tsx). */
+.bulbs .lit,
+.bulbs .glow {
   stroke: #ffd66b;
-  stroke-dasharray: 0 24; /* every third bulb */
-  animation: chase 1.2s steps(3) infinite;
+  stroke-dasharray: 0 24;
 }
 
 /* The halo around each lit bulb: the same dots, wider and faint. */
@@ -55,25 +54,41 @@
   opacity: 0.35;
 }
 
-.frame[data-mode='fast'] .lit,
-.frame[data-mode='fast'] .glow {
-  animation-duration: 0.45s;
+/* The chase: each ring is lit for a third of the cycle, one after another.
+   Only opacity changes, so it runs on the compositor. */
+.ring {
+  --chase: 1.2s;
+  animation: chase var(--chase) step-end infinite;
+  animation-delay: calc(var(--chase) * var(--k) * -0.6667);
 }
 
-.frame[data-mode='flash'] .lit,
-.frame[data-mode='flash'] .glow {
-  stroke-dasharray: 0 8;
+.frame[data-mode='fast'] .ring {
+  --chase: 0.45s;
+}
+
+/* All three together light every bulb; they flash as one. */
+.frame[data-mode='flash'] .ring {
   animation: flash 0.5s steps(2) infinite;
 }
 
-.frame[data-mode='still'] .lit,
-.frame[data-mode='still'] .glow {
+/* Still: the first ring stays lit. */
+.frame[data-mode='still'] .ring {
   animation: none;
 }
 
+.frame[data-mode='still'] .ring ~ .ring {
+  opacity: 0;
+}
+
 @keyframes chase {
-  to {
-    stroke-dashoffset: -24;
+  0% {
+    opacity: 1;
+  }
+  33.333% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

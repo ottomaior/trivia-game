@@ -1,15 +1,13 @@
 import { noise } from './sfx.ts';
 
-// Two procedural loops, scheduled a little ahead on the audio clock so timing
-// stays tight even if the main thread stutters.
+// Two procedural loops. Each is rendered once, offline, into a buffer that
+// then loops (renderLoop): playing a buffer costs nothing per note, where a
+// live synth builds oscillators and filters for every note on the main and
+// audio threads, which a TV's weak CPU hears as crackle.
 
 import type { MusicTrack } from '@trivia/shared';
 
 export type Track = MusicTrack;
-
-/** How far ahead notes are booked on the audio clock, and how often the booking runs. */
-const LOOKAHEAD_S = 1.0;
-const SCHEDULE_EVERY_MS = 250;
 
 const A4 = 440;
 const f = (semitonesFromA4: number) => A4 * 2 ** (semitonesFromA4 / 12);
@@ -101,45 +99,35 @@ const PATTERNS: Partial<Record<Track, Pattern>> = {
 };
 
 /** Plays one looping track into `out` until stop() is called. */
-export class MusicPlayer {
-  private timer: ReturnType<typeof setInterval> | null = null;
-  private nextTime = 0;
-  private step = 0;
+/** Whether this track has a synthesized version. */
+export function canSynthesize(track: Track): boolean {
+  return PATTERNS[track] !== undefined;
+}
 
-  constructor(
-    private readonly ctx: AudioContext,
-    private readonly out: AudioNode,
-    readonly track: Track,
-  ) {}
+/** The tracks that have a synthesized version. */
+export function synthesizedTracks(): Track[] {
+  return Object.keys(PATTERNS) as Track[];
+}
 
-  /** Whether this track has a synthesized version. */
-  static canSynthesize(track: Track): boolean {
-    return PATTERNS[track] !== undefined;
+/**
+ * Renders one seamless loop of a synthesized track into a mono buffer. Two
+ * passes are rendered and the second is kept, so it already holds the tails
+ * of the notes that ring on past the loop point and loops without a seam.
+ * The rendering runs off the main thread.
+ */
+export async function renderLoop(track: Track, sampleRate: number): Promise<AudioBuffer | null> {
+  const pattern = PATTERNS[track];
+  if (!pattern || typeof OfflineAudioContext === 'undefined') return null;
+  const stepDur = 60 / pattern.bpm / pattern.stepsPerBeat;
+  const loop = Math.round(pattern.steps * stepDur * sampleRate);
+  const ctx = new OfflineAudioContext(1, loop * 2, sampleRate);
+  for (let step = 0; step < pattern.steps * 2; step++) {
+    pattern.play(ctx, ctx.destination, step % pattern.steps, step * stepDur, stepDur);
   }
-
-  start(): void {
-    const pattern = PATTERNS[this.track];
-    if (!pattern) return;
-    const stepDur = 60 / pattern.bpm / pattern.stepsPerBeat;
-    this.nextTime = this.ctx.currentTime + 0.05;
-    // Notes are booked a second ahead: a main-thread stall shorter than that
-    // (a screen change, a burst of bitmaps decoding on a TV) then never
-    // delays or bunches them.
-    const schedule = () => {
-      while (this.nextTime < this.ctx.currentTime + LOOKAHEAD_S) {
-        pattern.play(this.ctx, this.out, this.step, this.nextTime, stepDur);
-        this.nextTime += stepDur;
-        this.step = (this.step + 1) % pattern.steps;
-      }
-    };
-    schedule();
-    this.timer = setInterval(schedule, SCHEDULE_EVERY_MS);
-  }
-
-  stop(): void {
-    if (this.timer) clearInterval(this.timer);
-    this.timer = null;
-  }
+  const both = await ctx.startRendering();
+  const out = new AudioBuffer({ length: loop, numberOfChannels: 1, sampleRate });
+  out.copyToChannel(both.getChannelData(0).subarray(loop), 0);
+  return out;
 }
 
 /** Schedules `seconds` of a track in one go (for offline rendering in the self-test). */
