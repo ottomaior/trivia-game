@@ -5,7 +5,13 @@ test('Milliomos-létra: the staircase, a lifeline, walking away, and a final in 
   const { tv, code, errors } = await openTv(browser);
   const anna = await joinByLink(browser, code, 'Anna');
   const bela = await joinByLink(browser, code, 'Béla');
-  await bela.getByRole('button', { name: /^Milliomos-létra/ }).click();
+  // Only the VIP picks the mode; the ladder has one pack, so it lands on the category screen at once.
+  await expect(bela.getByText('A VIP választja a játékmódot…')).toBeVisible();
+  await expect(bela.getByRole('button', { name: /^Milliomos-létra/ })).toBeDisabled();
+  await anna.getByRole('button', { name: /^Milliomos-létra/ }).click();
+  await expect(tv.getByTestId('pack-setup')).toContainText('Milliomos-létra');
+  await anna.getByRole('button', { name: 'Vissza' }).click();
+  await expect(anna.getByRole('heading', { name: 'Mit játszunk?' })).toBeVisible();
   await startShow(anna, 'Milliomos-létra');
 
   // Rung 1: the TV shows the staircase; nobody can walk away yet.

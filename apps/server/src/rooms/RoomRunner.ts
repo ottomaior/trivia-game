@@ -10,6 +10,7 @@ import {
   VOTE_OPTIONS,
   type ErrorCode,
   type FlagReason,
+  type GameMode,
   type Lifeline,
   type PowerPlay,
   type TimingKey,
@@ -69,6 +70,13 @@ export class RoomRunner {
   // -------------------------------------------------------------------------
   // Commands (from sockets)
 
+  pickMode(byId: string, mode: GameMode): Result {
+    if (this.room.packOffers === null) this.loadOffers();
+    const res = this.room.pickMode(byId, mode);
+    if (res.ok) this.changed();
+    return res;
+  }
+
   votePack(playerId: string, slug: string): Result {
     if (this.room.packOffers === null) this.loadOffers();
     const res = this.room.votePack(playerId, slug);
@@ -91,6 +99,12 @@ export class RoomRunner {
 
   backToPacks(byId: string): Result {
     const res = this.room.backToPacks(byId);
+    if (res.ok) this.changed();
+    return res;
+  }
+
+  backToModes(byId: string): Result {
+    const res = this.room.backToModes(byId);
     if (res.ok) this.changed();
     return res;
   }

@@ -12,6 +12,7 @@ import {
   ladderWalkSchema,
   lifelineSchema,
   packVoteSchema,
+  pickModeSchema,
   playerJoinSchema,
   playerResumeSchema,
   powerChooseSchema,
@@ -224,6 +225,7 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       }),
     );
 
+    socket.on('vip:pickMode', playerCommand(pickModeSchema, (runner, playerId, { mode }) => runner.pickMode(playerId, mode)));
     socket.on('pack:vote', playerCommand(packVoteSchema, (runner, playerId, { pack }) => runner.votePack(playerId, pack)));
     socket.on('vip:lockPack', playerCommand(emptyPayload, (runner, playerId) => runner.lockPack(playerId)));
     socket.on(
@@ -233,6 +235,7 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       ),
     );
     socket.on('vip:backToPacks', playerCommand(emptyPayload, (runner, playerId) => runner.backToPacks(playerId)));
+    socket.on('vip:backToModes', playerCommand(emptyPayload, (runner, playerId) => runner.backToModes(playerId)));
     socket.on('vip:start', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:playAgain', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:newLobby', playerCommand(emptyPayload, (runner, playerId) => runner.newLobby(playerId)));

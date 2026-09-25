@@ -7,6 +7,15 @@ const fmt = (n: number) => n.toLocaleString('hu');
 /** A banked ladder rung; zero means still at the bottom. */
 const rungText = (n: number) => (n === 0 ? 'Start' : `${n}. lépcső`);
 
+/** The game modes as the lobby's section cards name them; the four party ones double as their in-game titles. */
+const modeNames: Record<GameMode, string> = {
+  classic: 'Kvíz',
+  ladder: 'Milliomos-létra',
+  bluff: 'Blöffölő',
+  timeline: 'Időrend',
+  guess: 'Tippelj!',
+};
+
 export const t = {
   tagline: 'Az évszázad kvízműsora',
   voiceCredit: (by: string) => `Ottó hangja: ${by}`,
@@ -20,6 +29,7 @@ export const t = {
   playersCount: (n: number, max: number) => `${n}/${max} versenyző`,
   needMorePlayers: (n: number) => `Még ${n} kell a kezdéshez`,
   vipStartsOnPhone: 'A VIP a telefonjáról indítja a műsort',
+  modePickOnPhone: 'A VIP a telefonján választ játékmódot',
   packVoteOnPhone: 'Szavazzatok csomagra a telefonotokon',
   vipPicksCategories: 'A VIP válogatja a kategóriákat',
   packQuestions: (n: number) => `${fmt(n)} kérdés`,
@@ -49,6 +59,17 @@ export const t = {
   vipHint: 'Te vagy a VIP — te indítod a műsort.',
   waitForVip: 'A VIP indítja a műsort.',
   startShow: 'Indulhat a műsor',
+  modeTitle: 'Mit játszunk?',
+  modeNames,
+  modeTaglines: {
+    classic: 'Tíz kérdés, négy válasz, témacsomag szavazásra.',
+    ladder: 'Tizenöt egyre nehezebb kérdés, biztos pontokkal és segítségekkel.',
+    bluff: 'Írj hihető kamut, és találd meg az igazat a hazugságok között.',
+    timeline: 'Öt dolog, egy kérdés: mi volt előbb? Rakd sorba!',
+    guess: 'Tippelj egy számot, és tegyél zsetont a legjobb tippekre.',
+  } satisfies Record<GameMode, string>,
+  modePacks: (n: number) => `${n} csomag`,
+  vipPicksMode: 'A VIP választja a játékmódot…',
   packsTitle: 'Melyik csomag legyen?',
   packsLoading: 'Csomagok betöltése…',
   noPacks: 'Most nincs játszható csomag.',
@@ -110,7 +131,7 @@ export const t = {
   },
   flagThanks: 'Köszönjük — Ottó utánanéz.',
   // Milliomos-létra
-  ladderTitle: 'Milliomos-létra',
+  ladderTitle: modeNames.ladder,
   rungOf: (n: number, total: number) => `${n}. lépcső / ${total}`,
   rung: rungText,
   safeRung: 'Biztos pont',
@@ -138,7 +159,7 @@ export const t = {
   friendSays: (name: string) => `${name} tippje:`,
   cancel: 'Mégse',
   // Blöffölő
-  bluffTitle: 'Blöffölő',
+  bluffTitle: modeNames.bluff,
   bluffWriteTitle: 'Írj egy hihető hazugságot!',
   bluffWriteHint: 'Ha a többiek bedőlnek neki, pontot kapsz.',
   bluffLiePlaceholder: 'A te kamu válaszod',
@@ -157,7 +178,7 @@ export const t = {
   bluffHouseLie: 'A ház kamuja',
   bluffWroteIt: (names: string) => `Írta: ${names}`,
   // Időrend
-  orderTitle: 'Időrend',
+  orderTitle: modeNames.timeline,
   orderHint: 'Húzd sorba: legfelül a legkorábbi.',
   orderHintArrows: 'Rendezd sorba a nyilakkal: legfelül a legkorábbi.',
   orderDone: 'Kész',
@@ -170,7 +191,7 @@ export const t = {
   orderPerfect: 'Tökéletes sorrend!',
   orderCorrectWas: 'A helyes sorrend:',
   // Tippelj!
-  guessTitle: 'Tippelj!',
+  guessTitle: modeNames.guess,
   guessHint: 'Írd be a tipped: a legközelebbi nyer.',
   guessPlaceholder: 'A tipped',
   guessSubmit: 'Tippelek',

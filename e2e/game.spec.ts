@@ -61,7 +61,7 @@ test('three phones play a full 10-round game on one TV', async ({ browser }) => 
   // Back to a fresh lobby with the same players.
   await anna.getByRole('button', { name: 'Új váró' }).click();
   await expect(tv.getByTestId('seat')).toHaveCount(3);
-  await expect(bela.getByRole('heading', { name: 'Melyik csomag legyen?' })).toBeVisible();
+  await expect(bela.getByRole('heading', { name: 'Mit játszunk?' })).toBeVisible();
 
   // Sound, music and animations ran the whole game without a single error.
   expect(errors).toEqual([]);

@@ -6,6 +6,7 @@ import {
   GUESS_CHIPS,
   TIMELINE_ITEMS,
   FLAG_REASONS,
+  GAME_MODES,
   NAME_MAX_LENGTH,
   POWER_PLAYS,
   ROOM_CODE_LENGTH,
@@ -49,6 +50,8 @@ export const setAvatarSchema = z.object({
 export const kickSchema = z.object({ playerId: z.string().min(1).max(64) });
 
 export const voteSchema = z.object({ option: z.int().min(0).max(9) });
+
+export const pickModeSchema = z.object({ mode: z.enum(GAME_MODES) });
 
 export const packVoteSchema = z.object({ pack: z.string().min(1).max(40) });
 
@@ -113,6 +116,7 @@ export type PlayerResumePayload = z.infer<typeof playerResumeSchema>;
 export type SetAvatarPayload = z.infer<typeof setAvatarSchema>;
 export type KickPayload = z.infer<typeof kickSchema>;
 export type VotePayload = z.infer<typeof voteSchema>;
+export type PickModePayload = z.infer<typeof pickModeSchema>;
 export type PackVotePayload = z.infer<typeof packVoteSchema>;
 export type SetCategoryPayload = z.infer<typeof setCategorySchema>;
 export type LadderWalkPayload = z.infer<typeof ladderWalkSchema>;

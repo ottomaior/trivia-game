@@ -117,11 +117,14 @@ function stage(room: Room): Stage {
 }
 
 function lobbyStage(room: Room): Stage {
-  const { pack } = room;
-  if (room.lobbyStep === 'setup' && pack) {
+  const { pack, lobbyMode } = room;
+  const modes = room.modeOptions();
+  if (room.lobbyStep === 'setup' && pack && modes) {
     return {
       phase: 'lobby',
       step: 'setup',
+      modes,
+      mode: pack.mode,
       pack: packOption(pack),
       categories: pack.categories.map((c) => ({
         id: c.id,
@@ -132,12 +135,17 @@ function lobbyStage(room: Room): Stage {
       minQuestions: MIN_GAME_QUESTIONS,
     };
   }
-  return {
-    phase: 'lobby',
-    step: 'packs',
-    packs: room.packOffers?.map(packOption) ?? null,
-    votes: Object.fromEntries(room.currentPackVotes()),
-  };
+  if (room.lobbyStep === 'packs' && lobbyMode && modes) {
+    return {
+      phase: 'lobby',
+      step: 'packs',
+      modes,
+      mode: lobbyMode,
+      packs: room.modePacks().map(packOption),
+      votes: Object.fromEntries(room.visiblePackVotes()),
+    };
+  }
+  return { phase: 'lobby', step: 'mode', modes };
 }
 
 function base(room: Room, now: number) {

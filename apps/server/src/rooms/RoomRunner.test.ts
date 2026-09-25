@@ -1,4 +1,4 @@
-import { bluffRevealMs, GUESS_CHIPS, LADDER_RUNGS, ottoLineOffsetMs, PARTY_ROUNDS, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
+import { bluffRevealMs, GUESS_CHIPS, LADDER_RUNGS, ottoLineOffsetMs, PARTY_ROUNDS, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS, type GameMode } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { McQuestion } from '../content/types.ts';
@@ -11,6 +11,7 @@ import {
   HOUSEHOLD,
   seededRng,
   TEST_BLUFF_PACK,
+  TEST_CLASSIC_PACK_2,
   TEST_GUESS_PACK,
   TEST_LADDER_PACK,
   TEST_PACKS,
@@ -59,10 +60,10 @@ function mcq(room: Room): McQuestion {
 /** Lets pending promises (store calls) settle without moving time. */
 const flush = () => vi.advanceTimersByTimeAsync(0);
 
-/** Waits for the pack offers, locks the pack as the VIP, and starts the show. */
+/** Waits for the pack offers, picks the quiz as the VIP (its one pack locks at once), and starts the show. */
 async function begin(runner: RoomRunner, vipId: string) {
   await flush();
-  expect(runner.lockPack(vipId)).toEqual({ ok: true });
+  expect(runner.pickMode(vipId, 'classic')).toEqual({ ok: true });
   return runner.start(vipId);
 }
 
@@ -72,13 +73,15 @@ async function runToFinal(room: Room): Promise<void> {
 }
 
 describe('RoomRunner', () => {
-  it('only lets the VIP lock the pack and start, and only once a pack is locked', async () => {
+  it('only lets the VIP pick the mode and start, and only once a pack is locked', async () => {
     const { runner, room, players } = setup({ players: 2 });
     await flush();
     expect(room.packOffers?.map((o) => o.slug)).toEqual(['minden', 'letra']);
     expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
-    expect(runner.lockPack(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
-    expect(runner.lockPack(players[0]!.id)).toEqual({ ok: true });
+    expect(runner.lockPack(players[0]!.id)).toEqual({ ok: false, error: 'BAD_REQUEST' }); // no mode picked yet
+    expect(runner.pickMode(players[1]!.id, 'classic')).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(runner.pickMode(players[0]!.id, 'classic')).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('setup'); // the quiz has one pack here, so it is locked at once
     expect(runner.start(players[1]!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
     expect(runner.start(players[0]!.id)).toEqual({ ok: true });
   });
@@ -306,15 +309,18 @@ describe('RoomRunner', () => {
     await runToFinal(room);
     expect(runner.newLobby(players[0]!.id)).toEqual({ ok: true });
     expect(room.phase).toBe('lobby');
-    expect(room.lobbyStep).toBe('packs');
+    expect(room.lobbyStep).toBe('mode');
     expect(room.pack).toBeNull();
     expect(runner.start(players[0]!.id)).toEqual({ ok: false, error: 'NO_QUESTIONS' });
   });
 
   it('asks only the categories left switched on, and records the pack with the match', async () => {
-    const { runner, room, players, store } = setup({ players: 2 });
+    const { runner, room, players, store } = setup({ players: 2, packs: [...TEST_PACKS, TEST_CLASSIC_PACK_2, TEST_LADDER_PACK] });
     await flush();
     const vip = players[0]!.id;
+    expect(runner.votePack(players[1]!.id, 'minden')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // no mode picked yet
+    expect(runner.pickMode(vip, 'classic')).toEqual({ ok: true });
+    expect(room.lobbyStep).toBe('packs'); // two quiz packs: the vote is open
     expect(runner.votePack(players[1]!.id, 'minden')).toEqual({ ok: true });
     expect(runner.lockPack(vip)).toEqual({ ok: true });
     expect(runner.setCategory(vip, 4, false)).toEqual({ ok: true });
@@ -340,7 +346,7 @@ describe('RoomRunner', () => {
     const { runner, room, players } = setup({ players: 2, store });
     await flush();
     const vip = players[0]!.id;
-    runner.lockPack(vip);
+    runner.pickMode(vip, 'classic');
     expect(runner.setCategory(vip, 2, false)).toEqual({ ok: true });
     runner.start(vip);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
@@ -363,11 +369,10 @@ describe('RoomRunner', () => {
 });
 
 describe('RoomRunner: Milliomos-létra', () => {
-  /** Votes for the ladder pack, locks it and starts. */
+  /** Picks the ladder (its one pack locks at once) and starts. */
   async function beginLadder(runner: RoomRunner, room: Room, vipId: string) {
     await flush();
-    expect(runner.votePack(vipId, 'letra')).toEqual({ ok: true });
-    expect(runner.lockPack(vipId)).toEqual({ ok: true });
+    expect(runner.pickMode(vipId, 'ladder')).toEqual({ ok: true });
     expect(room.mode).toBe('ladder');
     expect(runner.start(vipId)).toEqual({ ok: true });
   }
@@ -574,10 +579,11 @@ describe('RoomRunner: party modes', () => {
     return setup({ players, store, packs: [...TEST_PACKS, TEST_BLUFF_PACK, TEST_TIMELINE_PACK, TEST_GUESS_PACK] });
   }
 
-  async function beginPack(runner: RoomRunner, room: Room, vipId: string, slug: string) {
+  /** Picks a party mode (each has one pack, locked at once) and plays to the first question. */
+  async function beginMode(runner: RoomRunner, room: Room, vipId: string, mode: GameMode) {
     await flush();
-    expect(runner.votePack(vipId, slug)).toEqual({ ok: true });
-    expect(runner.lockPack(vipId)).toEqual({ ok: true });
+    expect(runner.pickMode(vipId, mode)).toEqual({ ok: true });
+    expect(room.mode).toBe(mode);
     expect(runner.start(vipId)).toEqual({ ok: true });
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     expect(room.phase).toBe('vote');
@@ -607,7 +613,7 @@ describe('RoomRunner: party modes', () => {
   it('Blöffölő: write, pick, reveal; lies stay secret until the reveal; eight rounds', async () => {
     const { runner, room, players } = partySetup(3);
     const [a, b, c] = players as [Player, Player, Player];
-    await beginPack(runner, room, a.id, 'blof');
+    await beginMode(runner, room, a.id, 'bluff');
     expect(room.totalRounds).toBe(PARTY_ROUNDS);
     expect(room.powers.size).toBe(0);
     const q = room.question!;
@@ -654,7 +660,7 @@ describe('RoomRunner: party modes', () => {
   it('Blöffölő: the house pads a lonely round, and a silent player just misses out', async () => {
     const { runner, room, players } = partySetup(2);
     const [a, b] = players as [Player, Player];
-    await beginPack(runner, room, a.id, 'blof');
+    await beginMode(runner, room, a.id, 'bluff');
     const q = room.question!;
     if (q.kind !== 'bluff') throw new Error('expected a bluff question');
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
@@ -671,7 +677,7 @@ describe('RoomRunner: party modes', () => {
   it('Időrend: the years stay secret, a perfect order scores most, eight rounds', async () => {
     const { runner, room, players } = partySetup(2);
     const [a, b] = players as [Player, Player];
-    await beginPack(runner, room, a.id, 'rend');
+    await beginMode(runner, room, a.id, 'timeline');
     const q = room.question!;
     if (q.kind !== 'timeline') throw new Error('expected a timeline question');
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
@@ -702,7 +708,7 @@ describe('RoomRunner: party modes', () => {
   it('Tippelj!: guess, bet, reveal; the answer stays secret; a lone guesser skips the bets', async () => {
     const { runner, room, players } = partySetup(2);
     const [a, b] = players as [Player, Player];
-    await beginPack(runner, room, a.id, 'tipp');
+    await beginMode(runner, room, a.id, 'guess');
     let q = room.question!;
     if (q.kind !== 'number') throw new Error('expected a number question');
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
