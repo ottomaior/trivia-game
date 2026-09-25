@@ -21,7 +21,13 @@ const VOICE_AT = 118;
 export const VOICE_LINE = 'welcome-1';
 const VOICE_FRAMES = Math.ceil(((voices as Record<string, { durationMs: number }>)[VOICE_LINE]!.durationMs / 1000) * FPS);
 const CAST_AT = 182;
-const CAST = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo'];
+const CAST = ['gomboc', 'kocka', 'bab', 'csepp', 'csillag', 'felho', 'szellem', 'bogyo', 'tacsko', 'majmi', 'suni', 'uborka'];
+/** Six stickers crowd each side of Ottó, in two staggered rows: even ones behind, odd ones in front. */
+const HALF = CAST.length / 2;
+const castSlot = (i: number) => {
+  const side = i < HALF ? 14 : 812, k = i % HALF;
+  return { x: side + k * 72, y: k % 2 ? 540 : 508, front: k % 2 === 1 };
+};
 
 const CREAM = '#f6eedb';
 const sticker = (px: number) =>
@@ -152,13 +158,16 @@ export const ShowOpen: FC = () => {
             <g transform={`rotate(${tilt} 180 250)`} dangerouslySetInnerHTML={{ __html: head({ blink, mouth, look }) }} />
             <g transform={`rotate(${micArm} 104 292)`} dangerouslySetInnerHTML={{ __html: frontArm }} />
           </g>
-          {CAST.map((name, i) => {
-            const pop = spring({ frame: frame - (CAST_AT + i * 5), fps, config: { damping: 9, stiffness: 160 } });
-            const x = i < 4 ? 14 + i * 112 : 830 + (i - 4) * 112;
-            const y = interpolate(pop, [0, 1], [720, 520]) + (pop > 0.98 ? Math.sin((frame + i * 7) / 6) * 3 : 0);
-            const face = frame > CAST_AT + i * 5 + 10 ? `${name}-correct.svg` : `${name}.svg`;
-            return <image key={name} href={staticFile(`art/${face}`)} x={x} y={y} width={120} height={120} />;
-          })}
+          {[false, true].map((front) =>
+            CAST.map((name, i) => {
+              const slot = castSlot(i);
+              if (slot.front !== front) return null;
+              const pop = spring({ frame: frame - (CAST_AT + i * 4), fps, config: { damping: 9, stiffness: 160 } });
+              const y = interpolate(pop, [0, 1], [720, slot.y]) + (pop > 0.98 ? Math.sin((frame + i * 7) / 6) * 3 : 0);
+              const face = frame > CAST_AT + i * 4 + 10 ? `${name}-correct.svg` : `${name}.svg`;
+              return <image key={name} href={staticFile(`art/${face}`)} x={slot.x} y={y} width={112} height={112} />;
+            }),
+          )}
           <g filter="url(#sLip)">
             <path d="M-20 652 C240 644 520 656 760 648 C1000 640 1160 654 1300 646 L1300 760 L-20 760 Z" fill="#3a1822" />
             <path d="M-20 652 C240 644 520 656 760 648 C1000 640 1160 654 1300 646" stroke={C.mustard} strokeWidth="7" fill="none" />

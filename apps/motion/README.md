@@ -34,6 +34,7 @@ Remotion is free for individuals and companies of up to three people.
 | `art/otto-rig.mjs` | Ottó as a jointed puppet for animation: separate arm, forearm, head and mic-arm pieces with pivots, a mouth that opens 0–1, blinking eyelids, and `boil` to redraw the edges |
 | `art/build.mjs` | Gombóc and Kocka, the studio background, question card, answer tiles, desks, podium and timer, and runs the rest |
 | `art/cast6.mjs` | Bab, Csepp, Csillag, Felhő, Szellem and Bogyó |
+| `art/cast4.mjs` | Tacskó, Majmi, Süni and Uborka: each body's parts and face anchors, shared with `expr.mjs` |
 | `art/expr.mjs` | Every player's expressions: correct, wrong, fooled, sneaky (Blöffölő), out (Milliomos-létra), frozen and slimed (power plays). Each character is a face-free body with eye and mouth anchors; each expression is one face recipe placed on them. |
 | `art/party.mjs` | Party-mode props: the bluffer's mask and truth rosette, clothesline and pegs, measuring tape, pins and chips, the ladder and lifeline badges, phone cards |
 | `src/ShowOpen.tsx` | The 10-second show open: the studio lights up, the logo slams in, Ottó hops on and says his welcome line (mouth driven by the clip's loudness), and the cast pops up |
