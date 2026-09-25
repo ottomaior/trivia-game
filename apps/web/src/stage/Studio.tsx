@@ -1,11 +1,10 @@
 import { isInputPhase, type HostView } from '@trivia/shared';
 import { gsap } from 'gsap';
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef } from 'react';
 import { TvStage } from '../tv/TvStage.tsx';
 import { Desks } from './Desks.tsx';
 import { REVEAL_BEATS, SHOTS, shotsFor, type ShotName } from './director.ts';
-import { fx } from './fx.ts';
-import { FxLayer } from './FxLayer.tsx';
+import { fx } from './fxHandle.ts';
 import { OttoRig } from './OttoRig.tsx';
 import { fxForcedByUrl } from '../ui/lowfx.ts';
 import { measureFps, MIN_FPS } from './perfGuard.ts';
@@ -14,6 +13,9 @@ import styles from './Studio.module.css';
 
 /** 1em in px on the TV (the TV sizes everything from the screen height). */
 const em = () => window.innerHeight / 54;
+
+/** The WebGL layer, with Pixi inside: only the full studio pays for the download. */
+const FxLayer = lazy(() => import('./FxLayer.tsx').then((m) => ({ default: m.FxLayer })));
 
 /**
  * The 2.5D studio: a CSS 3D set (sunburst backdrop, question board, Otto's
@@ -63,7 +65,11 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
           <div className={styles.floor} />
         </div>
       </div>
-      {!lite && <FxLayer />}
+      {!lite && (
+        <Suspense fallback={null}>
+          <FxLayer />
+        </Suspense>
+      )}
       <div className={styles.grain} />
       <div className={styles.vignette} />
     </div>

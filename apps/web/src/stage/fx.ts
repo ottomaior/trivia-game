@@ -40,6 +40,8 @@ class StudioFx {
   private spotTarget: { x: number; y: number; w: number } | null = null;
   /** Bumped on every mount/destroy, so a slow init can tell it was superseded. */
   private generation = 0;
+  /** Frames in a row with nothing moving; the loop stops after a few, once the empty scene has been drawn. */
+  private idleFrames = 0;
 
   get ready(): boolean {
     return this.app !== null;
@@ -100,6 +102,18 @@ class StudioFx {
     app.stage.addChild(this.layer);
 
     app.ticker.add((ticker) => this.tick(ticker.deltaMS / 1000));
+    // The ticker also renders, so it only runs while something moves: an idle
+    // studio then costs no WebGL frames at all (see `wake` and `tick`).
+    app.ticker.stop();
+  }
+
+  /** Starts the frame loop when an effect begins; `tick` stops it again once everything has settled. */
+  private wake(): void {
+    const ticker = this.app?.ticker;
+    if (ticker && !ticker.started) {
+      this.idleFrames = 0;
+      ticker.start();
+    }
   }
 
   destroy(): void {
@@ -189,6 +203,7 @@ class StudioFx {
   spotlight(rect: DOMRect | null): void {
     if (!this.app) return;
     this.spotTarget = rect ? { ...this.centre(rect), w: Math.max(rect.width, rect.height) * 2.2 } : null;
+    this.wake();
   }
 
   private spawn(o: {
@@ -228,6 +243,7 @@ class StudioFx {
       fade: o.fade,
       target: o.target,
     });
+    this.wake();
   }
 
   private tick(dt: number): void {
@@ -268,6 +284,15 @@ class StudioFx {
         p.sprite.destroy();
         this.particles.splice(i, 1);
       }
+    }
+
+    // Nothing left moving: let a couple more frames render the settled (empty) scene, then stop.
+    const spotSettled = !this.spot || (this.spotTarget === null && this.spot.alpha < 0.005);
+    if (spotSettled && this.particles.length === 0) {
+      if (this.spot) this.spot.alpha = 0;
+      if (++this.idleFrames > 2) this.app.ticker.stop();
+    } else {
+      this.idleFrames = 0;
     }
   }
 }

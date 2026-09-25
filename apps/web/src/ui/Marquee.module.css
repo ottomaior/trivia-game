@@ -25,6 +25,8 @@
   height: calc(100% - 2 * (1.2rem + 0.45rem));
   overflow: visible;
   pointer-events: none;
+  /* Its own compositor layer: a chase step repaints the bulbs, not the screen behind them. */
+  will-change: transform;
 }
 
 .bulbs rect {
@@ -40,23 +42,32 @@
   stroke: color-mix(in srgb, var(--mustard) 28%, var(--burgundy-deep));
 }
 
-.lit {
+.lit,
+.glow {
   stroke: #ffd66b;
   stroke-dasharray: 0 24; /* every third bulb */
-  filter: drop-shadow(0 0 0.25rem #ffd66b);
   animation: chase 1.2s steps(3) infinite;
 }
 
-.frame[data-mode='fast'] .lit {
+/* The halo around each lit bulb: the same dots, wider and faint. */
+.bulbs .glow {
+  stroke-width: 1.2rem;
+  opacity: 0.35;
+}
+
+.frame[data-mode='fast'] .lit,
+.frame[data-mode='fast'] .glow {
   animation-duration: 0.45s;
 }
 
-.frame[data-mode='flash'] .lit {
+.frame[data-mode='flash'] .lit,
+.frame[data-mode='flash'] .glow {
   stroke-dasharray: 0 8;
   animation: flash 0.5s steps(2) infinite;
 }
 
-.frame[data-mode='still'] .lit {
+.frame[data-mode='still'] .lit,
+.frame[data-mode='still'] .glow {
   animation: none;
 }
 

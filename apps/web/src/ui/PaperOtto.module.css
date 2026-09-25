@@ -130,6 +130,9 @@
 .mouth {
   transform-origin: 49.05% 42.57%;
   transform: scaleY(var(--mouth, 0));
+  /* Lip sync sets --mouth from script every frame: on its own compositor layer
+     that is a transform update, not a repaint of the head. */
+  will-change: transform;
 }
 
 .otto[data-talking='true'][data-voiced='false'] .mouth {
