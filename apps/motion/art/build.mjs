@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { C, paper } from './paperlib.mjs';
 import { ottoReal } from './otto-real.mjs';
 import { buildCast6 } from './cast6.mjs';
+import { buildCast4 } from './cast4.mjs';
 import { buildParty } from './party.mjs';
 import { buildExpressions, EXPRESSIONS } from './expr.mjs';
 import { buildOttoParts, buildPanels, buildSet } from './stage.mjs';
@@ -174,6 +175,7 @@ ${glows}
     `<g filter="url(#ck)"><circle cx="32" cy="31" r="22" fill="#86a845"/><path d="M21 31 L29 39 L43 23" stroke="${C.paper}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>`);
 }
 buildCast6(C, paper, svg);
+buildCast4(C, paper, svg);
 buildOttoParts(svg);
 buildSet(C, paper, svg);
 buildPanels(C, paper, svg);

@@ -31,6 +31,10 @@
   --char-felho: var(--cream);
   --char-szellem: #8fb04a;
   --char-bogyo: #d98a8f;
+  --char-tacsko: #b9713f;
+  --char-majmi: #7d4d38;
+  --char-suni: #5c3b33;
+  --char-uborka: #5d9140;
 
   /* Answer tiles A–D. */
   --answer-a: var(--rust);
