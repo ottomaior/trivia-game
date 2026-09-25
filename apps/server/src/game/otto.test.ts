@@ -2,13 +2,16 @@ import { allOttoLines, ottoMaxChars, ottoText, ottoVariants, type OttoLineKey } 
 import { describe, expect, it } from 'vitest';
 import { seededRng } from '../testing.ts';
 import {
+  bluffRevealLine,
   finalLine,
+  guessRevealLine,
   ladderRevealLine,
   ladderStepLine,
   LinePicker,
   powerLine,
   revealLine,
   scoreboardLine,
+  timelineRevealLine,
   voteLine,
   welcomeLine,
   type RevealFact,
@@ -200,5 +203,41 @@ describe('ladder lines', () => {
     });
     // A phone that dropped walked away quietly: nothing to say.
     expect(ladderRevealLine([{ playerId: 'a', correct: false, status: 'walked' }], 7, pick)).toBeNull();
+  });
+});
+
+describe('party-mode lines', () => {
+  const opt = (truth: boolean, authors: string[], pickers: string[]) => ({ truth, authors, pickers });
+
+  it('Blöffölő: a lie several fell for always, nobody finding the truth always, the rest only after a quiet round', () => {
+    const pick = new LinePicker(seededRng());
+    expect(bluffRevealLine([opt(true, [], []), opt(false, ['a'], ['b', 'c'])], 3, pick, false)).toMatchObject({ key: 'bluffBigLie', focus: ['a'] });
+    expect(bluffRevealLine([opt(true, [], []), opt(false, ['a'], ['b']), opt(false, [], ['a'])], 2, pick, false)?.key).toBe('bluffAllFooled');
+    const allTruth = [opt(true, [], ['a', 'b', 'c']), opt(false, ['a'], [])];
+    expect(bluffRevealLine(allTruth, 3, pick, false)).toBeNull();
+    expect(bluffRevealLine(allTruth, 3, pick, true)?.key).toBe('bluffAllTruth');
+    expect(bluffRevealLine([opt(true, [], ['a']), opt(false, [], ['b'])], 2, pick, true)?.key).toBe('bluffNobodyFooled');
+    expect(bluffRevealLine([opt(true, [], []), opt(false, [], ['a'])], 1, pick, true)).toBeNull(); // solo: quiet
+  });
+
+  it('Időrend: all perfect or a lone perfect order always, chaos only after a quiet round', () => {
+    const pick = new LinePicker(seededRng());
+    const o = (playerId: string, rightSlots: number) => ({ playerId, order: [0, 1, 2, 3, 4], rightSlots, allRight: rightSlots === 5 });
+    expect(timelineRevealLine([o('a', 5), o('b', 5)], pick, false)?.key).toBe('timelineAllPerfect');
+    expect(timelineRevealLine([o('a', 5), o('b', 2)], pick, false)).toMatchObject({ key: 'timelinePerfect', focus: ['a'] });
+    expect(timelineRevealLine([o('a', 1), o('b', 0)], pick, false)).toBeNull();
+    expect(timelineRevealLine([o('a', 1), o('b', 0)], pick, true)?.key).toBe('timelineChaos');
+    expect(timelineRevealLine([o('a', 5)], pick, false)).toBeNull();
+  });
+
+  it('Tippelj!: a spot-on guess always, winning chips or wild guesses after a quiet round', () => {
+    const pick = new LinePicker(seededRng());
+    const out = (playerId: string, closest: boolean, exact = false, chipsOnClosest = 0) => ({ playerId, closest, exact, chipsOnClosest });
+    const result = (distances: number[]) => ({ answer: 100, guesses: distances.map((distance, i) => ({ playerId: `p${i}`, distance })) });
+    expect(guessRevealLine(result([0, 40]), [out('a', true, true), out('b', false)], pick, false)).toMatchObject({ key: 'guessExact', focus: ['a'] });
+    expect(guessRevealLine(result([5, 40]), [out('a', true), out('b', false, false, 2)], pick, false)).toBeNull();
+    expect(guessRevealLine(result([5, 40]), [out('a', true), out('b', false, false, 2)], pick, true)).toMatchObject({ key: 'guessBetsWin', focus: ['b'] });
+    expect(guessRevealLine(result([60, 80]), [out('a', true), out('b', false)], pick, true)?.key).toBe('guessWayOff');
+    expect(guessRevealLine(result([20, 80]), [out('a', true), out('b', false)], pick, true)).toBeNull();
   });
 });

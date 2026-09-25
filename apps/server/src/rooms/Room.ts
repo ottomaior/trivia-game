@@ -3,13 +3,16 @@ import {
   AVATAR_COLORS,
   AVATAR_FACES,
   grantsPowerPlay,
+  isInputPhase,
   MAX_LATENCY_CREDIT_MS,
   MAX_PLAYERS,
   MIN_GAME_QUESTIONS,
   MIN_PLAYERS,
   normalizeName,
   pointsMultiplier,
+  roundsFor,
   scoreAnswer,
+  scoreBluff,
   TOTAL_ROUNDS,
   type Avatar,
   type ErrorCode,
@@ -21,13 +24,16 @@ import {
   type PowerHit,
   type PowerPlay,
   type PowerState,
+  type RevealResult,
   type Standing,
 } from '@trivia/shared';
 import type { PackOffer } from '../content/packs.ts';
-import type { Category, Question } from '../content/types.ts';
+import type { Category, McQuestion, Question } from '../content/types.ts';
 import type { Rng } from '../content/select.ts';
 import {
+  bluffRevealLine,
   finalLine,
+  guessRevealLine,
   ladderRevealLine,
   ladderStepLine,
   line,
@@ -36,11 +42,15 @@ import {
   revealLine,
   scoreboardLine,
   SOLO_LADDER_HIGH,
+  timelineRevealLine,
   voteLine,
   welcomeLine,
 } from '../game/otto.ts';
 import { randomId, randomToken } from './ids.ts';
+import { BluffGame } from './Bluff.ts';
+import { GuessGame } from './Guess.ts';
 import { LadderGame } from './Ladder.ts';
+import { TimelineGame } from './Timeline.ts';
 
 export interface Player {
   id: string;
@@ -95,7 +105,6 @@ export class Room {
   readonly enabledCategories = new Set<number>();
 
   round = 0;
-  readonly totalRounds: number;
   phaseEndsAt: number | null = null;
   paused = false;
 
@@ -106,6 +115,8 @@ export class Room {
   answersOpenedAt: number | null = null;
   readonly answers = new Map<string, Answer>();
   picks: Pick[] = [];
+  /** The answer as this round's kind reveals it; set when the reveal starts. */
+  revealResult: RevealResult | null = null;
   standings: Standing[] = [];
   otto: OttoLine | null = null;
   /** Deals Otto's line variants so none repeats before all were said. */
@@ -124,6 +135,10 @@ export class Room {
 
   /** Milliomos-létra state for this game; null in the classic game. */
   ladder: LadderGame | null = null;
+  /** The party modes' round state; each is null unless its mode is being played. */
+  bluff: BluffGame | null = null;
+  timeline: TimelineGame | null = null;
+  guess: GuessGame | null = null;
 
   /** Questions asked this game, so none repeats and flags can be checked. */
   readonly askedQuestionIds = new Set<string>();
@@ -143,10 +158,15 @@ export class Room {
     readonly householdId: string,
     readonly createdAt: number,
     private readonly rng: Rng = Math.random,
-    totalRounds = TOTAL_ROUNDS,
+    /** Rounds of the classic game (tests shorten it); other modes have their own length. */
+    private readonly classicRounds = TOTAL_ROUNDS,
   ) {
-    this.totalRounds = totalRounds;
     this.lines = new LinePicker(rng);
+  }
+
+  /** Rounds in this game: ten in the classic, fifteen rungs on the ladder, eight in the party modes. */
+  get totalRounds(): number {
+    return roundsFor(this.mode, this.classicRounds);
   }
 
   // -------------------------------------------------------------------------
@@ -352,6 +372,7 @@ export class Room {
     this.lastCategoryId = null;
     this.standings = [];
     this.picks = [];
+    this.revealResult = null;
     this.question = null;
     this.streaks.clear();
     this.noneCorrectRun = 0;
@@ -362,7 +383,25 @@ export class Room {
     this.hits = [];
     this.phase = 'intro';
     this.ladder = this.mode === 'ladder' ? new LadderGame([...this.players.keys()], this.rng) : null;
-    this.otto = this.ladder ? line('ladderWelcome', this.lines) : welcomeLine(this.players.size, this.lines);
+    this.bluff = this.mode === 'bluff' ? new BluffGame(this.rng) : null;
+    this.timeline = this.mode === 'timeline' ? new TimelineGame(this.rng) : null;
+    this.guess = this.mode === 'guess' ? new GuessGame() : null;
+    this.otto = this.welcome();
+  }
+
+  private welcome(): OttoLine {
+    switch (this.mode) {
+      case 'classic':
+        return welcomeLine(this.players.size, this.lines);
+      case 'ladder':
+        return line('ladderWelcome', this.lines);
+      case 'bluff':
+        return line('bluffWelcome', this.lines);
+      case 'timeline':
+        return line('timelineWelcome', this.lines);
+      case 'guess':
+        return line('guessWelcome', this.lines);
+    }
   }
 
   enterVote(options: VoteOption[]): void {
@@ -373,8 +412,9 @@ export class Room {
     this.answers.clear();
     this.hits = [];
     this.powerPasses.clear();
-    // Power plays need someone to throw them at: none in a solo game.
-    const granted = grantsPowerPlay(this.round) && this.players.size > 1;
+    // Power plays need someone to throw them at (none in a solo game), and
+    // buttons to cover: only the classic quiz has them.
+    const granted = this.mode === 'classic' && grantsPowerPlay(this.round) && this.players.size > 1;
     if (granted) for (const id of this.players.keys()) this.powers.add(id);
     this.phase = 'vote';
     this.otto = voteLine(this.round, this.totalRounds, this.lines, granted && !this.powersExplained);
@@ -506,7 +546,7 @@ export class Room {
 
   useLifeline(playerId: string, kind: Lifeline, friendId?: string): Result {
     const q = this.question;
-    if (this.phase !== 'question_open' || !this.ladder || !q) return { ok: false, error: 'NOT_ALLOWED' };
+    if (this.phase !== 'question_open' || !this.ladder || q?.kind !== 'mc') return { ok: false, error: 'NOT_ALLOWED' };
     return this.ladder.useLifeline(playerId, kind, {
       answered: this.answers.has(playerId),
       correct: q.correct,
@@ -518,9 +558,9 @@ export class Room {
 
   /** Settles the rung: scores become the rungs everyone holds. */
   enterLadderReveal(): void {
-    const q = this.question;
+    const q = this.mcQuestion();
     const ladder = this.ladder;
-    if (!q || !ladder) throw new Error('ladder reveal without a question');
+    if (!ladder) throw new Error('ladder reveal without a ladder');
     const prevRanks = new Map(this.rankedStandings().map((s) => [s.playerId, s.rank]));
     const connected = new Set(this.connectedPlayers().map((p) => p.id));
     const outcomes = ladder.settle(this.answers, q.correct, connected);
@@ -533,6 +573,7 @@ export class Room {
     }));
     for (const p of this.players.values()) p.score = ladder.rungOf(p.id);
     this.standings = this.rankedStandings(prevRanks);
+    this.revealResult = { kind: 'mc', correct: q.correct };
     this.phase = 'reveal';
     this.otto = ladderRevealLine(outcomes, ladder.rung, this.lines);
   }
@@ -543,9 +584,13 @@ export class Room {
     this.lastCategoryId = question.categoryId;
     this.answers.clear();
     this.answersOpenedAt = null;
+    this.revealResult = null;
     this.phase = 'question_read';
     // The TV reads the question out; Otto's bubble makes way for it.
     this.otto = null;
+    if (question.kind === 'bluff') this.bluff?.startRound(question);
+    if (question.kind === 'timeline') this.timeline?.startRound(question);
+    if (question.kind === 'number') this.guess?.startRound(question);
   }
 
   openAnswers(now: number): void {
@@ -557,7 +602,7 @@ export class Room {
   submitAnswer(playerId: string, questionId: string, choice: number, now: number): Result {
     const player = this.players.get(playerId);
     if (!player) return { ok: false, error: 'NOT_FOUND' };
-    if (this.phase !== 'question_open' || !this.question || this.question.id !== questionId) {
+    if (this.phase !== 'question_open' || this.question?.kind !== 'mc' || this.question.id !== questionId) {
       return { ok: false, error: 'NOT_ALLOWED' };
     }
     if (this.answers.has(playerId)) return { ok: false, error: 'NOT_ALLOWED' }; // no changing
@@ -570,14 +615,169 @@ export class Room {
     return { ok: true };
   }
 
+  // --- Party modes: Blöffölő, Időrend, Tippelj! -------------------------------
+
+  /** Blöffölő: everyone writes a lie. */
+  enterBluffWrite(now: number): void {
+    this.openInput('bluff_write', now);
+  }
+
+  submitLie(playerId: string, questionId: string, lie: string): Result {
+    const player = this.inputPlayer(playerId, questionId, 'bluff_write');
+    if (typeof player === 'string') return { ok: false, error: player };
+    return this.bluff!.write(playerId, lie);
+  }
+
+  /** Blöffölő: the lies are in; everyone looks for the truth among them. */
+  enterBluffPick(now: number): void {
+    this.bluff!.buildOptions();
+    this.openInput('bluff_pick', now);
+  }
+
+  pickBluff(playerId: string, questionId: string, option: number, now: number): Result {
+    const player = this.inputPlayer(playerId, questionId, 'bluff_pick');
+    if (typeof player === 'string') return { ok: false, error: player };
+    return this.bluff!.pick(playerId, option, this.elapsed(player, now));
+  }
+
+  enterBluffReveal(): void {
+    const { options, outcomes } = this.bluff!.settle([...this.players.keys()]);
+    const double = pointsMultiplier(this.round, this.totalRounds);
+    this.finishRound(
+      outcomes.map((o) => ({
+        playerId: o.playerId,
+        choice: o.choice,
+        correct: o.foundTruth,
+        points: scoreBluff(o.foundTruth, o.fooled) * double,
+        responseMs: o.responseMs,
+      })),
+      { kind: 'bluff', options },
+    );
+    this.otto = this.comment(bluffRevealLine(options, this.players.size, this.lines, this.quietBefore));
+  }
+
+  /** Időrend: everyone puts the items in order. */
+  enterOrderOpen(now: number): void {
+    this.openInput('order_open', now);
+  }
+
+  submitOrder(playerId: string, questionId: string, order: number[], now: number): Result {
+    const player = this.inputPlayer(playerId, questionId, 'order_open');
+    if (typeof player === 'string') return { ok: false, error: player };
+    return this.timeline!.submit(playerId, order, this.elapsed(player, now));
+  }
+
+  enterTimelineReveal(openMs: number): void {
+    const timeline = this.timeline!;
+    const outcomes = timeline.settle([...this.players.keys()], openMs);
+    const double = pointsMultiplier(this.round, this.totalRounds);
+    this.finishRound(
+      outcomes.map((o) => ({
+        playerId: o.playerId,
+        choice: null,
+        correct: o.allRight,
+        points: o.points * double,
+        responseMs: o.responseMs,
+      })),
+      {
+        kind: 'timeline',
+        order: timeline.correctOrder(),
+        years: timeline.years(),
+        orders: Object.fromEntries(outcomes.map((o) => [o.playerId, o.order])),
+      },
+    );
+    this.otto = this.comment(timelineRevealLine(outcomes, this.lines, this.quietBefore));
+  }
+
+  /** Tippelj!: everyone types a number. */
+  enterGuessOpen(now: number): void {
+    this.openInput('guess_open', now);
+  }
+
+  submitGuess(playerId: string, questionId: string, value: number, now: number): Result {
+    const player = this.inputPlayer(playerId, questionId, 'guess_open');
+    if (typeof player === 'string') return { ok: false, error: player };
+    return this.guess!.submit(playerId, value, this.elapsed(player, now));
+  }
+
+  /** Tippelj!: the guesses are on the TV, sorted; everyone with a guess bets on the closest. */
+  enterGuessBet(now: number): void {
+    this.openInput('guess_bet', now);
+  }
+
+  placeBets(playerId: string, questionId: string, chips: number[]): Result {
+    const player = this.inputPlayer(playerId, questionId, 'guess_bet');
+    if (typeof player === 'string') return { ok: false, error: player };
+    return this.guess!.bet(playerId, chips);
+  }
+
+  enterGuessReveal(): void {
+    const q = this.question;
+    if (q?.kind !== 'number') throw new Error('guess reveal without a number question');
+    const settled = this.guess!.settle([...this.players.keys()]);
+    const double = pointsMultiplier(this.round, this.totalRounds);
+    this.finishRound(
+      settled.outcomes.map((o) => ({
+        playerId: o.playerId,
+        choice: o.choice,
+        correct: o.closest,
+        points: o.points * double,
+        responseMs: o.responseMs,
+      })),
+      { kind: 'number', answer: q.answer, unit: q.unit, guesses: settled.guesses, bets: settled.bets, closest: settled.closest },
+    );
+    this.otto = this.comment(guessRevealLine({ answer: q.answer, guesses: settled.guesses }, settled.outcomes, this.lines, this.quietBefore));
+  }
+
+  /** Starts a phase in which players act against the clock. */
+  private openInput(phase: Phase, now: number): void {
+    this.phase = phase;
+    this.answersOpenedAt = now;
+    this.otto = null;
+  }
+
+  /** The player acting on the live question in `phase`, or why they can't. */
+  private inputPlayer(playerId: string, questionId: string, phase: Phase): Player | ErrorCode {
+    const player = this.players.get(playerId);
+    if (!player) return 'NOT_FOUND';
+    if (this.phase !== phase || this.question?.id !== questionId) return 'NOT_ALLOWED';
+    return player;
+  }
+
+  /** Time since the phase opened, minus the phone's latency: measured here, never by the phone. */
+  private elapsed(player: Player, now: number): number {
+    return Math.max(0, Math.round(now - (this.answersOpenedAt ?? now) - player.latencyMs));
+  }
+
+  /** Scores the round (`picks` carry the final points), ranks everyone and opens the reveal. */
+  private finishRound(picks: Pick[], result: RevealResult): void {
+    const prevRanks = new Map(this.rankedStandings().map((s) => [s.playerId, s.rank]));
+    this.picks = picks;
+    for (const pick of picks) {
+      const p = this.players.get(pick.playerId);
+      if (p) p.score += pick.points;
+    }
+    this.standings = this.rankedStandings(prevRanks);
+    this.revealResult = result;
+    this.phase = 'reveal';
+    for (const p of picks) this.streaks.set(p.playerId, p.correct ? (this.streaks.get(p.playerId) ?? 0) + 1 : 0);
+    this.noneCorrectRun = picks.some((p) => p.correct) ? 0 : this.noneCorrectRun + 1;
+  }
+
+  /** The current question, which must be multiple choice (the classic game and the ladder). */
+  private mcQuestion(): McQuestion {
+    const q = this.question;
+    if (q?.kind !== 'mc') throw new Error('expected a multiple-choice question');
+    return q;
+  }
+
   /** Shifts the answer clock after a pause so frozen time doesn't count. */
   shiftAnswerClock(pausedMs: number): void {
     if (this.answersOpenedAt !== null) this.answersOpenedAt += pausedMs;
   }
 
   enterReveal(openMs: number): void {
-    const q = this.question;
-    if (!q) throw new Error('reveal without a question');
+    const q = this.mcQuestion();
     const prevRanks = new Map(this.rankedStandings().map((s) => [s.playerId, s.rank]));
 
     this.picks = [...this.players.values()].map((p) => {
@@ -588,6 +788,7 @@ export class Room {
       return { playerId: p.id, choice: a?.choice ?? null, correct, points, responseMs: a?.responseMs ?? null };
     });
     this.standings = this.rankedStandings(prevRanks);
+    this.revealResult = { kind: 'mc', correct: q.correct };
     this.phase = 'reveal';
 
     for (const p of this.picks) this.streaks.set(p.playerId, p.correct ? (this.streaks.get(p.playerId) ?? 0) + 1 : 0);
@@ -635,9 +836,13 @@ export class Room {
     this.pack = null;
     this.enabledCategories.clear();
     this.ladder = null;
+    this.bluff = null;
+    this.timeline = null;
+    this.guess = null;
     this.round = 0;
     this.standings = [];
     this.picks = [];
+    this.revealResult = null;
     this.question = null;
     this.otto = null;
   }
@@ -656,6 +861,14 @@ export class Room {
       const waitFor = ladder ? connected.filter((p) => ladder.status(p.id) === 'in') : connected;
       return waitFor.every((p) => this.answers.has(p.id));
     }
+    if (this.phase === 'bluff_write') return connected.every((p) => this.bluff?.lieOf(p.id) != null);
+    if (this.phase === 'bluff_pick') return connected.every((p) => this.bluff?.pickOf(p.id) != null);
+    if (this.phase === 'order_open') return connected.every((p) => this.timeline?.orderOf(p.id) != null);
+    if (this.phase === 'guess_open') return connected.every((p) => this.guess?.guessOf(p.id) != null);
+    if (this.phase === 'guess_bet') {
+      // No guess, no chips: only those who guessed are waited for.
+      return connected.filter((p) => this.guess?.guessOf(p.id) != null).every((p) => this.guess?.betsOf(p.id) != null);
+    }
     return false;
   }
 
@@ -664,7 +877,8 @@ export class Room {
     const player = this.players.get(playerId);
     if (!player) return { ok: false, error: 'NOT_FOUND' };
     if (!this.askedQuestionIds.has(questionId)) return { ok: false, error: 'NOT_FOUND' };
-    if (this.phase === 'question_read' || this.phase === 'question_open') {
+    // No flagging the live question: the reveal is where it can be judged.
+    if (this.phase === 'question_read' || isInputPhase(this.phase)) {
       if (this.question?.id === questionId) return { ok: false, error: 'NOT_ALLOWED' };
     }
     const key = `${playerId}:${questionId}`;

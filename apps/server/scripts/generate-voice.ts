@@ -9,13 +9,14 @@
  *   pnpm voice:generate --dry-run            what would be recorded, and the cost
  *   pnpm voice:generate                      records new or changed lines only
  *   pnpm voice:generate --redo welcome-0     records those lines again (retakes)
- *   pnpm voice:generate --questions          reads every question in seed/questions.json aloud
- *                                            (into public/voice/q/; also --dry-run, --redo <id>)
+ *   pnpm voice:generate --questions          reads every question in the seed files aloud
+ *                                            (questions, bluff, timeline, numbers; into
+ *                                            public/voice/q/; also --dry-run, --redo <id>)
  *
  * --provider elevenlabs|azure picks the service; by default ElevenLabs when
  * ELEVENLABS_API_KEY is set, otherwise Azure. Then commit apps/web/public/voice/.
  */
-import { allOttoLines, stripCues } from '@trivia/shared';
+import { allOttoLines, BLUFF_BLANK, stripCues } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import {
@@ -49,14 +50,19 @@ const model = env.ELEVENLABS_MODEL ?? ELEVEN_DEFAULT_MODEL;
 const keepCues = which === 'elevenlabs' && elevenSupportsCues(model);
 const lines = values.questions ? questionLines() : allOttoLines().map((l) => (keepCues ? l : { ...l, text: stripCues(l.text) }));
 
-/** Every question prompt in the seed file, named by its prompt so a reworded question is recorded again. */
+/**
+ * Every question prompt in the seed files, named by its prompt so a reworded
+ * question is recorded again. Blöffölő's blank is read as a pause.
+ */
 function questionLines() {
   const seen = new Set<string>();
-  return loadSeedFile().questions.flatMap((q) => {
-    const id = questionVoiceId(q.prompt);
+  const seed = loadSeedFile();
+  const prompts = [...seed.questions, ...seed.bluff, ...seed.timeline, ...seed.numbers].map((q) => q.prompt);
+  return prompts.flatMap((prompt) => {
+    const id = questionVoiceId(prompt);
     if (seen.has(id)) return [];
     seen.add(id);
-    return [{ id, text: q.prompt.trim() }];
+    return [{ id, text: prompt.trim().split(BLUFF_BLANK).join('…') }];
   });
 }
 

@@ -57,7 +57,12 @@ export function shotsFor(phase: Phase): CameraCue[] {
     case 'question_read':
       return [{ at: 0, shot: 'board', duration: 1 }];
     case 'question_open':
-      // Pull back so the desks' "locked in" lamps are in view.
+    case 'bluff_write':
+    case 'bluff_pick':
+    case 'order_open':
+    case 'guess_open':
+    case 'guess_bet':
+      // Pull back so the desks' "locked in" lamps are in view (the board stays readable).
       return [{ at: 0.2, shot: 'wide', duration: 1.4 }];
     case 'reveal':
       return [

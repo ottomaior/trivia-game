@@ -1,7 +1,9 @@
 import {
+  bluffRevealMs,
   difficultyForRound,
   ladderDifficulty,
   ottoLineOffsetMs,
+  questionKindFor,
   QUESTION_VOICE_DELAY_MS,
   SPEECH_TAIL_MS,
   TIMINGS,
@@ -13,8 +15,9 @@ import {
   type TimingKey,
 } from '@trivia/shared';
 import type { Clock } from '../clock.ts';
-import { buildOffers, type PackDef } from '../content/packs.ts';
+import { buildOffers, packKinds, type KindCounts, type PackDef } from '../content/packs.ts';
 import { shuffleChoices, type Rng } from '../content/select.ts';
+import type { Question } from '../content/types.ts';
 import type { Store } from '../db/store.ts';
 import { questionVoiceId } from '../content/normalize.ts';
 import type { SpeechLengths } from '../game/speech.ts';
@@ -118,6 +121,36 @@ export class RoomRunner {
 
   answer(playerId: string, questionId: string, choice: number): Result {
     const res = this.room.submitAnswer(playerId, questionId, choice, this.deps.clock());
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  writeLie(playerId: string, questionId: string, lie: string): Result {
+    const res = this.room.submitLie(playerId, questionId, lie);
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  pickBluff(playerId: string, questionId: string, option: number): Result {
+    const res = this.room.pickBluff(playerId, questionId, option, this.deps.clock());
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  submitOrder(playerId: string, questionId: string, order: number[]): Result {
+    const res = this.room.submitOrder(playerId, questionId, order, this.deps.clock());
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  submitGuess(playerId: string, questionId: string, value: number): Result {
+    const res = this.room.submitGuess(playerId, questionId, value, this.deps.clock());
+    if (res.ok) this.afterAction();
+    return res;
+  }
+
+  placeBets(playerId: string, questionId: string, chips: number[]): Result {
+    const res = this.room.placeBets(playerId, questionId, chips);
     if (res.ok) this.afterAction();
     return res;
   }
@@ -228,14 +261,17 @@ export class RoomRunner {
     this.changed();
   }
 
-  /** Called when a phase timer fires (or everyone acted early). */
+  /**
+   * Called when a phase timer fires (or everyone acted early). Every mode but
+   * the ladder shares the round loop (vote → question → … → reveal →
+   * scoreboard); what happens between the question and the reveal is the mode's.
+   */
   private advance(): void {
     this.timer = null;
     if (this.room.ladder) {
       this.advanceLadder();
       return;
     }
-    const now = this.deps.clock();
     switch (this.room.phase) {
       case 'intro':
       case 'scoreboard':
@@ -246,14 +282,6 @@ export class RoomRunner {
         return;
       case 'vote_result':
         this.startQuestion();
-        return;
-      case 'question_read':
-        this.room.openAnswers(now);
-        this.schedule('questionOpen');
-        this.changed();
-        return;
-      case 'question_open':
-        this.finishQuestion();
         return;
       case 'reveal':
         if (this.room.round >= this.room.totalRounds) this.finishGame();
@@ -266,6 +294,115 @@ export class RoomRunner {
       case 'lobby':
       case 'ladder_step':
       case 'final':
+        return;
+      default:
+        this.advanceQuestion();
+    }
+  }
+
+  /** From the read-out question to the reveal: each mode's own phases. */
+  private advanceQuestion(): void {
+    switch (this.room.mode) {
+      case 'classic':
+      case 'ladder':
+        this.advanceClassic();
+        return;
+      case 'bluff':
+        this.advanceBluff();
+        return;
+      case 'timeline':
+        this.advanceTimeline();
+        return;
+      case 'guess':
+        this.advanceGuess();
+        return;
+    }
+  }
+
+  /** Blöffölő: write a lie → pick the truth → the options unmasked one by one. */
+  private advanceBluff(): void {
+    const { room } = this;
+    const now = this.deps.clock();
+    switch (room.phase) {
+      case 'question_read':
+        room.enterBluffWrite(now);
+        this.schedule('bluffWrite');
+        break;
+      case 'bluff_write':
+        room.enterBluffPick(now);
+        this.schedule('bluffPick');
+        break;
+      case 'bluff_pick':
+        room.enterBluffReveal();
+        this.recordRound();
+        this.scheduleDuration(bluffRevealMs(room.bluff!.options().length));
+        break;
+      default:
+        return;
+    }
+    this.changed();
+  }
+
+  /** Időrend: put the items in order → the reveal. */
+  private advanceTimeline(): void {
+    const { room } = this;
+    switch (room.phase) {
+      case 'question_read':
+        room.enterOrderOpen(this.deps.clock());
+        this.schedule('orderOpen');
+        break;
+      case 'order_open':
+        room.enterTimelineReveal(this.duration('orderOpen'));
+        this.recordRound();
+        this.schedule('reveal');
+        break;
+      default:
+        return;
+    }
+    this.changed();
+  }
+
+  /** Tippelj!: guess → bet on the closest (skipped with fewer than two guesses) → the reveal. */
+  private advanceGuess(): void {
+    const { room } = this;
+    switch (room.phase) {
+      case 'question_read':
+        room.enterGuessOpen(this.deps.clock());
+        this.schedule('guessOpen');
+        break;
+      case 'guess_open':
+        if (room.guess!.guessed().length >= 2) {
+          room.enterGuessBet(this.deps.clock());
+          this.schedule('guessBet');
+          break;
+        }
+        room.enterGuessReveal();
+        this.recordRound();
+        this.schedule('reveal');
+        break;
+      case 'guess_bet':
+        room.enterGuessReveal();
+        this.recordRound();
+        this.schedule('reveal');
+        break;
+      default:
+        return;
+    }
+    this.changed();
+  }
+
+  /** The quiz: the answers open once the question is read, then the reveal. */
+  private advanceClassic(): void {
+    switch (this.room.phase) {
+      case 'question_read':
+        this.room.openAnswers(this.deps.clock());
+        this.schedule('questionOpen');
+        this.changed();
+        return;
+      case 'question_open':
+        this.finishQuestion();
+        return;
+      default:
         return;
     }
   }
@@ -330,10 +467,10 @@ export class RoomRunner {
     const { room } = this;
     const difficulty = ladderDifficulty(room.ladder!.rung + 1);
     const exclude = room.lastCategoryId === null ? [] : [room.lastCategoryId];
-    const [category] = await store.pickCategories(room.householdId, 1, exclude, [...room.enabledCategories]);
+    const [category] = await store.pickCategories(room.householdId, 1, exclude, 'mc', [...room.enabledCategories]);
     if (!category) return null;
-    const q = await store.pickQuestion(room.householdId, category.id, difficulty, [...room.askedQuestionIds]);
-    return q ? { category, question: shuffleChoices(q, this.deps.rng) } : null;
+    const q = await store.pickQuestion(room.householdId, category.id, difficulty, [...room.askedQuestionIds], 'mc');
+    return q ? { category, question: this.shuffled(q) } : null;
   }
 
   private async beginRound(): Promise<void> {
@@ -366,15 +503,21 @@ export class RoomRunner {
     const { room } = this;
     const difficulty = difficultyForRound(room.round + 1, room.totalRounds);
     const exclude = room.lastCategoryId === null ? [] : [room.lastCategoryId];
-    const categories = await store.pickCategories(room.householdId, VOTE_OPTIONS, exclude, [...room.enabledCategories]);
+    const kind = questionKindFor(room.mode);
+    const categories = await store.pickCategories(room.householdId, VOTE_OPTIONS, exclude, kind, [...room.enabledCategories]);
     const asked = [...room.askedQuestionIds];
     const options = await Promise.all(
       categories.map(async (category) => {
-        const q = await store.pickQuestion(room.householdId, category.id, difficulty, asked);
-        return q ? { category, question: shuffleChoices(q, this.deps.rng) } : null;
+        const q = await store.pickQuestion(room.householdId, category.id, difficulty, asked, kind);
+        return q ? { category, question: this.shuffled(q) } : null;
       }),
     );
     return options.filter((o): o is VoteOption => o !== null);
+  }
+
+  /** Multiple-choice answers in a fresh order, so position carries no information; other kinds as they are. */
+  private shuffled(q: Question): Question {
+    return q.kind === 'mc' ? shuffleChoices(q, this.deps.rng) : q;
   }
 
   private finishVote(): void {
@@ -438,13 +581,14 @@ export class RoomRunner {
 
   // -------------------------------------------------------------------------
 
-  /** Sizes the packs from the current question counts; a stale or late result is dropped. */
+  /** Sizes the packs from the current question counts (of each kind the packs play); a stale or late result is dropped. */
   private loadOffers(): void {
     const load = ++this.offersLoad;
-    this.deps.store
-      .countQuestions()
-      .then((counts) => {
+    const kinds = packKinds(this.deps.packs);
+    Promise.all(kinds.map((kind) => this.deps.store.countQuestions(kind)))
+      .then((lists) => {
         if (load !== this.offersLoad || this.room.phase !== 'lobby') return;
+        const counts: KindCounts = Object.fromEntries(kinds.map((kind, i) => [kind, lists[i]]));
         this.room.setPackOffers(buildOffers(this.deps.packs, counts, this.deps.minPackQuestions));
         this.changed();
       })
@@ -491,8 +635,13 @@ export class RoomRunner {
 
   /** Schedules the end of the phase just entered: its usual length, or longer if Otto needs it. */
   private schedule(key: TimingKey): void {
+    this.scheduleDuration(TIMINGS[key]);
+  }
+
+  /** Like schedule(), for a phase whose length (at full speed) depends on the round. */
+  private scheduleDuration(ms: number): void {
     this.noteSpeech();
-    this.scheduleMs(Math.max(this.duration(key), this.speechUntil - this.deps.clock()));
+    this.scheduleMs(Math.max(Math.round(ms * this.deps.timingScale), this.speechUntil - this.deps.clock()));
   }
 
   private scheduleMs(ms: number): void {

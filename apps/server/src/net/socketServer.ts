@@ -1,5 +1,10 @@
 import {
   answerSchema,
+  betSchema,
+  bluffPickSchema,
+  bluffWriteSchema,
+  guessSubmitSchema,
+  orderSubmitSchema,
   flagSchema,
   hostCreateSchema,
   hostResumeSchema,
@@ -244,6 +249,26 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
       playerCommand(lifelineSchema, (runner, playerId, input) =>
         runner.lifeline(playerId, input.kind, input.kind === 'phone' ? input.friendId : undefined),
       ),
+    );
+    socket.on(
+      'bluff:write',
+      playerCommand(bluffWriteSchema, (runner, playerId, { questionId, lie }) => runner.writeLie(playerId, questionId, lie)),
+    );
+    socket.on(
+      'bluff:pick',
+      playerCommand(bluffPickSchema, (runner, playerId, { questionId, option }) => runner.pickBluff(playerId, questionId, option)),
+    );
+    socket.on(
+      'order:submit',
+      playerCommand(orderSubmitSchema, (runner, playerId, { questionId, order }) => runner.submitOrder(playerId, questionId, order)),
+    );
+    socket.on(
+      'guess:submit',
+      playerCommand(guessSubmitSchema, (runner, playerId, { questionId, value }) => runner.submitGuess(playerId, questionId, value)),
+    );
+    socket.on(
+      'guess:bet',
+      playerCommand(betSchema, (runner, playerId, { questionId, chips }) => runner.placeBets(playerId, questionId, chips)),
     );
     socket.on(
       'question:flag',

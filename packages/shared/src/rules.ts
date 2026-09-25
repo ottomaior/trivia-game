@@ -52,9 +52,35 @@ export const PACK_MIN_QUESTIONS = 60;
 /** Switching categories off must leave at least this many questions on. */
 export const MIN_GAME_QUESTIONS = 30;
 
-/** `classic`: ten rounds with a category vote; `ladder`: Milliomos-létra. */
-export const GAME_MODES = ['classic', 'ladder'] as const;
+/**
+ * `classic`: ten rounds with a category vote; `ladder`: Milliomos-létra;
+ * `bluff`: Blöffölő (write a lie, find the truth); `timeline`: Időrend (put
+ * five things in order); `guess`: Tippelj! (guess a number, bet on the closest).
+ */
+export const GAME_MODES = ['classic', 'ladder', 'bluff', 'timeline', 'guess'] as const;
 export type GameMode = (typeof GAME_MODES)[number];
+
+/** What a question asks for: four choices, a lie to write, an order, or a number. */
+export const QUESTION_KINDS = ['mc', 'bluff', 'timeline', 'number'] as const;
+export type QuestionKind = (typeof QUESTION_KINDS)[number];
+
+/** The kind of question each mode plays. */
+export function questionKindFor(mode: GameMode): QuestionKind {
+  switch (mode) {
+    case 'classic':
+    case 'ladder':
+      return 'mc';
+    case 'bluff':
+      return 'bluff';
+    case 'timeline':
+      return 'timeline';
+    case 'guess':
+      return 'number';
+  }
+}
+
+/** Rounds in the party modes (Blöffölő, Időrend, Tippelj!): their rounds run longer than a quiz round. */
+export const PARTY_ROUNDS = 8;
 export const VOTE_OPTIONS = 3;
 export const CHOICES_PER_QUESTION = 4;
 
@@ -74,6 +100,18 @@ export const TIMINGS = {
   ladderStep: 7_000,
   /** Ladder answers get longer: there are lifelines to use. */
   ladderOpen: 30_000,
+  /** Blöffölő: everyone types a believable lie… */
+  bluffWrite: 45_000,
+  /** …then picks the answer they think is true. */
+  bluffPick: 20_000,
+  /** The options are unmasked one by one (longer with more options, see bluffRevealMs). */
+  bluffReveal: 12_000,
+  /** Időrend: put the five items in order. */
+  orderOpen: 35_000,
+  /** Tippelj!: type a number… */
+  guessOpen: 25_000,
+  /** …then bet chips on the guesses you think are closest. */
+  guessBet: 15_000,
 } as const;
 export type TimingKey = keyof typeof TIMINGS;
 
@@ -89,6 +127,13 @@ export const QUESTION_VOICE_DELAY_MS = 400;
 export const SPEECH_TAIL_MS = 500;
 /** Otto's speaking rate, for estimating lines that haven't been recorded yet. */
 export const SPEECH_CHARS_PER_SECOND = 13;
+
+/** Phases in which players act on their phones against the clock. */
+export const INPUT_PHASES: readonly Phase[] = ['question_open', 'bluff_write', 'bluff_pick', 'order_open', 'guess_open', 'guess_bet'];
+
+export function isInputPhase(phase: Phase): boolean {
+  return INPUT_PHASES.includes(phase);
+}
 
 /** Milliseconds into a phase at which Otto's line for that phase starts. */
 export function ottoLineOffsetMs(phase: Phase): number {
@@ -175,4 +220,74 @@ export function ladderDifficulty(rung: number): Difficulty {
 /** What a wrong answer on `rung` leaves you with: the highest safe rung below it. */
 export function fallbackRung(rung: number): number {
   return Math.max(0, ...LADDER_SAFE_RUNGS.filter((r) => r < rung));
+}
+
+/** Rounds a game of this mode has; `classicRounds` can be shortened for tests. */
+export function roundsFor(mode: GameMode, classicRounds = TOTAL_ROUNDS): number {
+  if (mode === 'classic') return classicRounds;
+  if (mode === 'ladder') return LADDER_RUNGS;
+  return PARTY_ROUNDS;
+}
+
+/** Share of the answer time still left when the player answered, 0–1 (the same curve as a quiz answer). */
+function timeLeftShare(responseMs: number, openMs: number): number {
+  return 1 - Math.min(1, Math.max(0, responseMs / openMs));
+}
+
+// ---------------------------------------------------------------------------
+// Blöffölő: everyone writes a lie; the TV mixes the lies with the truth.
+
+export const BLUFF_LIE_MAX_CHARS = 40;
+/** Too few lies (a small group, or someone asleep) get padded with the house's own. */
+export const BLUFF_MIN_OPTIONS = 4;
+/** A lie this similar to the truth (trigram similarity) is refused: write something else. */
+export const BLUFF_TOO_CLOSE = 0.8;
+export const BLUFF_TRUTH_POINTS = 1000;
+export const BLUFF_FOOL_POINTS = 500;
+/** Each option beyond four adds this much to the reveal, so every one gets its moment. */
+export const BLUFF_REVEAL_PER_EXTRA_OPTION_MS = 2_000;
+
+export function scoreBluff(foundTruth: boolean, fooled: number): number {
+  return (foundTruth ? BLUFF_TRUTH_POINTS : 0) + fooled * BLUFF_FOOL_POINTS;
+}
+
+export function bluffRevealMs(options: number): number {
+  return TIMINGS.bluffReveal + Math.max(0, options - BLUFF_MIN_OPTIONS) * BLUFF_REVEAL_PER_EXTRA_OPTION_MS;
+}
+
+// ---------------------------------------------------------------------------
+// Időrend: five items to put in chronological order.
+
+export const TIMELINE_ITEMS = 5;
+export const TIMELINE_ITEM_POINTS = 200;
+/** Only a perfect order earns the speed bonus. */
+export const TIMELINE_SPEED_BONUS = 500;
+
+/** How many positions of `order` match `correct`. */
+export function slotsRight(order: readonly number[], correct: readonly number[]): number {
+  return correct.reduce((n, item, i) => n + (order[i] === item ? 1 : 0), 0);
+}
+
+export function scoreTimeline(right: number, total: number, responseMs: number, openMs: number): number {
+  const bonus = right === total ? Math.round(TIMELINE_SPEED_BONUS * timeLeftShare(responseMs, openMs)) : 0;
+  return right * TIMELINE_ITEM_POINTS + bonus;
+}
+
+// ---------------------------------------------------------------------------
+// Tippelj!: guess a number, then bet chips on whose guess is closest.
+
+export const GUESS_CHIPS = 2;
+export const GUESS_CLOSEST_POINTS = 1000;
+export const GUESS_EXACT_BONUS = 500;
+export const GUESS_CHIP_POINTS = 500;
+
+/** Players whose guess is nearest the answer; ties share. */
+export function closestGuesses(guesses: readonly { playerId: string; value: number }[], answer: number): string[] {
+  if (guesses.length === 0) return [];
+  const best = Math.min(...guesses.map((g) => Math.abs(g.value - answer)));
+  return guesses.filter((g) => Math.abs(g.value - answer) === best).map((g) => g.playerId);
+}
+
+export function scoreGuess(closest: boolean, exact: boolean, chipsOnClosest: number): number {
+  return (closest ? GUESS_CLOSEST_POINTS : 0) + (exact ? GUESS_EXACT_BONUS : 0) + chipsOnClosest * GUESS_CHIP_POINTS;
 }

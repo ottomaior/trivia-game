@@ -126,6 +126,58 @@ export const t = {
   friendThinking: (name: string) => `${name} még gondolkodik…`,
   friendSays: (name: string) => `${name} tippje:`,
   cancel: 'Mégse',
+  // Blöffölő
+  bluffTitle: 'Blöffölő',
+  bluffWriteTitle: 'Írj egy hihető hazugságot!',
+  bluffWriteHint: 'Ha a többiek bedőlnek neki, pontot kapsz.',
+  bluffLiePlaceholder: 'A te kamu válaszod',
+  bluffSubmit: 'Beküldöm',
+  bluffYourLie: 'A hazugságod:',
+  bluffPickTitle: 'Melyik az igazság?',
+  bluffOwnLie: 'Ez a tiéd',
+  bluffWriting: 'Írják a hazugságokat',
+  bluffPicking: 'Keresd az igazságot a telefonodon',
+  bluffFoundTruth: 'Megtaláltad az igazságot!',
+  bluffFooledBy: (names: string) => (names ? `Bedőltél: ${names} kamujának` : 'Bedőltél a ház kamujának'),
+  bluffMissed: 'Nem választottál',
+  bluffFooled: (n: number) => `${n} embert átvertél`,
+  bluffTruthWas: 'Az igazság:',
+  bluffTruthTag: 'Igazság',
+  bluffHouseLie: 'A ház kamuja',
+  bluffWroteIt: (names: string) => `Írta: ${names}`,
+  // Időrend
+  orderTitle: 'Időrend',
+  orderHint: 'Húzd sorba: legfelül a legkorábbi.',
+  orderHintArrows: 'Rendezd sorba a nyilakkal: legfelül a legkorábbi.',
+  orderDone: 'Kész',
+  orderEarliest: 'Legkorábbi',
+  orderLatest: 'Legkésőbbi',
+  orderMoveUp: 'Feljebb',
+  orderMoveDown: 'Lejjebb',
+  orderOnPhone: 'Rakd időrendbe a telefonodon',
+  orderRight: (n: number, total: number) => `${n} / ${total} a helyén`,
+  orderPerfect: 'Tökéletes sorrend!',
+  orderCorrectWas: 'A helyes sorrend:',
+  // Tippelj!
+  guessTitle: 'Tippelj!',
+  guessHint: 'Írd be a tipped: a legközelebbi nyer.',
+  guessPlaceholder: 'A tipped',
+  guessSubmit: 'Tippelek',
+  guessInvalid: 'Ez nem szám.',
+  guessOnPhone: 'Tippelj a telefonodon',
+  betTitle: 'Kinek a tippje a legközelebbi?',
+  betHint: (n: number) => (n === 0 ? 'Zsetonok letéve!' : `Tegyél fel még ${n} zsetont`),
+  betOnPhone: 'Tegyétek fel a zsetonokat',
+  noGuessNoBet: 'Nem tippeltél, így most nem fogadhatsz. Nézd a tévét!',
+  yourGuess: 'A tipped:',
+  guessClosest: 'A tiéd a legközelebbi!',
+  guessNotClosest: 'Nem a tiéd lett a legközelebbi',
+  guessAnswerWas: 'A pontos válasz:',
+  guessOff: (d: string) => `Eltérés: ${d}`,
+  chipsWon: (n: number) => `${n} nyerő zseton`,
+  betChips: (n: number) => `${n} zseton`,
+  mineTag: (name: string) => `${name} (te)`,
+  number: (n: number) => n.toLocaleString('hu', { maximumFractionDigits: 3 }),
   yourRank: (rank: number) => `${rank}. helyen állsz`,
   playAgain: 'Új játék',
   newLobby: 'Új váró',
@@ -144,6 +196,7 @@ export const t = {
     NO_QUESTIONS: 'Most nincs elérhető kérdés.',
     TOO_FEW_QUESTIONS: 'Így túl kevés kérdés maradna.',
     COLOR_TAKEN: 'Ezt a színt már más választotta.',
+    TOO_CLOSE: 'Ez túl közel van az igazsághoz. Írj mást!',
   },
   /**
    * Otto's lines. Bracketed cues ("[excited]") tell the voice how to perform
@@ -386,6 +439,87 @@ export const t = {
       '[amazed] A létra teteje! Ez maga a legenda!',
       '[dramatically] A csúcsra ért! Tapsot kérek!',
     ],
+    // Blöffölő
+    bluffWelcome: [
+      '[mischievously] Ma este hazudni fogunk. Minél hihetőbben, annál jobb!',
+      '[whispers] Jó estét, kedves hazudozók! [excited] Kezdődik a blöff!',
+      '[playfully] Egy igazság, sok kamu. Ki talál rá, és ki ver át kit?',
+      '[excited] Üdv a Blöffölőben! Ma a hihető hazugság aranyat ér.',
+    ],
+    bluffNobodyFooled: [
+      '[surprised] Senki sem dőlt be semminek! Kemény közönség.',
+      '[sighs] Ezeket a kamukat messziről kiszúrták.',
+      '[playfully] Átlátszó hazugságok. Próbálják meg jobban!',
+      '[amused] Ennyi blöff, és egy áldozat sincs!',
+    ],
+    bluffAllFooled: [
+      '[gasps] Az igazságot senki sem találta meg!',
+      '[dramatically] Mindenki bedőlt valaminek. Micsoda kör!',
+      '[laughs] Az igazság ott volt, és senki sem hitte el.',
+      '[amused] Ma a hazugság győzött. Szép munka, csalók!',
+    ],
+    bluffBigLie: [
+      '[laughs] Ezt a kamut többen is elhitték!',
+      '[impressed] Mesteri hazugság! Többen is bedőltek neki.',
+      '[mischievously] Ügyes! Erre a blöffre sokan ráharaptak.',
+      '[amazed] Micsoda szemfényvesztés! Többen is bevették.',
+    ],
+    bluffAllTruth: [
+      '[impressed] Mindenki kiszúrta az igazságot! Éles szemek.',
+      '[surprised] Itt senkit sem lehetett átverni.',
+      '[warmly] Mindenki megtalálta! Bravó, detektívek!',
+      '[sighs] Az igazság győzött. A hazugok most sírnak.',
+    ],
+    // Időrend
+    timelineWelcome: [
+      '[excited] Üdv az Időrendben! Ma mindent a helyére teszünk.',
+      '[warmly] Jó estét! Ma az időgépé a főszerep. Mi volt előbb?',
+      '[playfully] Ma kiderül, kinek jár pontosan a fejében a naptár!',
+      '[dramatically] Múlt, jelen, sorrend! Kezdődik az Időrend.',
+    ],
+    timelinePerfect: [
+      '[impressed] Tökéletes sorrend! Ez egy élő naptár.',
+      '[excited] Hibátlan! Mintha ott lett volna mindennél.',
+      '[amazed] Minden a helyén! Micsoda időérzék!',
+      '[proudly] Tiszta sor! Szebben én sem raktam volna.',
+    ],
+    timelineChaos: [
+      '[laughs] Ebben a sorrendben nagy kavarodás van.',
+      '[sighs] Az idő ma nem a barátunk.',
+      '[playfully] Összekeveredtek az évszázadok, látom.',
+      '[amused] Ez inkább időzavar, mint időrend.',
+    ],
+    timelineAllPerfect: [
+      '[amazed] Mindenki hibátlan! Ez egy történészklub?',
+      '[excited] Mind tökéletes sorrendet raktak ki!',
+      '[impressed] Senki sem hibázott. Le a kalappal!',
+      '[warmly] Mind a helyén, mindenkinél. Csodás!',
+    ],
+    // Tippelj!
+    guessWelcome: [
+      '[excited] Kezdődik a Tippelj! Ma a számoké a főszerep.',
+      '[playfully] Nem kell tudni, elég jól tippelni. Kezdjük!',
+      '[warmly] Jó estét! Ma az nyer, aki a legközelebb jár.',
+      '[mischievously] Ma tippelünk, és fogadunk is. Zsetonokat elő!',
+    ],
+    guessExact: [
+      '[amazed] Telitalálat! Pontosan ennyi!',
+      '[gasps] Hajszálpontos tipp! Ez már varázslat.',
+      '[excited] Pontosan eltalálta! Tapsot kérek!',
+      '[impressed] Pontosan annyi! Ez már nem tipp, ez tudás.',
+    ],
+    guessWayOff: [
+      '[laughs] Hát, ezek a tippek messze jártak.',
+      '[sighs] A valóság egészen máshol volt.',
+      '[amused] Bátor tippek. Nagyon bátrak.',
+      '[playfully] Szép tippek, csak épp másik kérdésre.',
+    ],
+    guessBetsWin: [
+      '[mischievously] Aki jól fogad, annak nem kell jól tippelnie!',
+      '[impressed] Ügyes fogadás! A zsetonok jó helyre mentek.',
+      '[playfully] Nem tudta, de tudta, kire kell tenni!',
+      '[excited] Nyerő zsetonok! Remek szimat.',
+    ],
   } satisfies Record<OttoLineKey, string[]>,
 };
 
@@ -407,7 +541,17 @@ export function roundText(mode: GameMode, round: number, total: number): string 
  * explanation get a little more room, reactions the least.
  */
 export function ottoMaxChars(key: OttoLineKey): number {
-  if (key === 'welcome' || key === 'welcomeSolo' || key === 'powerGranted' || key === 'ladderWelcome') return 60;
+  if (
+    key === 'welcome' ||
+    key === 'welcomeSolo' ||
+    key === 'powerGranted' ||
+    key === 'ladderWelcome' ||
+    key === 'bluffWelcome' ||
+    key === 'timelineWelcome' ||
+    key === 'guessWelcome'
+  ) {
+    return 60;
+  }
   if (key === 'lastRound' || key === 'winner' || key === 'tie' || key === 'soloFinalHigh' || key === 'soloFinalLow') return 50;
   return 45;
 }

@@ -1,10 +1,21 @@
-import { LADDER_RUNGS, ottoLineOffsetMs, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
+import { bluffRevealMs, GUESS_CHIPS, LADDER_RUNGS, ottoLineOffsetMs, PARTY_ROUNDS, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { McQuestion } from '../content/types.ts';
 import { MemoryStore } from '../db/store.ts';
 import { loadSpeechLengths, silentSpeech, type SpeechLengths } from '../game/speech.ts';
 import { toHostView, toPlayerView } from '../game/views.ts';
-import { fixtureContent, HOUSEHOLD, seededRng, TEST_LADDER_PACK, TEST_PACKS } from '../testing.ts';
+import type { PackDef } from '../content/packs.ts';
+import {
+  fixtureContent,
+  HOUSEHOLD,
+  seededRng,
+  TEST_BLUFF_PACK,
+  TEST_GUESS_PACK,
+  TEST_LADDER_PACK,
+  TEST_PACKS,
+  TEST_TIMELINE_PACK,
+} from '../testing.ts';
 import { Room, type Player } from './Room.ts';
 import { RoomRunner } from './RoomRunner.ts';
 
@@ -14,7 +25,7 @@ beforeEach(() => {
 });
 afterEach(() => vi.useRealTimers());
 
-function setup(opts: { players?: number; store?: MemoryStore; speech?: SpeechLengths } = {}) {
+function setup(opts: { players?: number; store?: MemoryStore; speech?: SpeechLengths; packs?: PackDef[] } = {}) {
   const store = opts.store ?? new MemoryStore(fixtureContent(), seededRng(7));
   const room = new Room('BCDF', HOUSEHOLD, Date.now(), seededRng(3));
   const changes: string[] = [];
@@ -22,7 +33,7 @@ function setup(opts: { players?: number; store?: MemoryStore; speech?: SpeechLen
     store,
     clock: () => Date.now(),
     rng: seededRng(5),
-    packs: [...TEST_PACKS, TEST_LADDER_PACK],
+    packs: opts.packs ?? [...TEST_PACKS, TEST_LADDER_PACK],
     minPackQuestions: 1,
     timingScale: 1,
     speech: opts.speech ?? silentSpeech,
@@ -36,6 +47,13 @@ function setup(opts: { players?: number; store?: MemoryStore; speech?: SpeechLen
     return res.player;
   });
   return { store, room, runner, players, changes };
+}
+
+/** The current question, which these tests expect to be multiple choice. */
+function mcq(room: Room): McQuestion {
+  const q = room.question;
+  if (q?.kind !== 'mc') throw new Error('expected a multiple-choice question');
+  return q;
 }
 
 /** Lets pending promises (store calls) settle without moving time. */
@@ -75,7 +93,7 @@ describe('RoomRunner', () => {
       runner.vote(solo!.id, 0);
       expect(room.phase).toBe('vote_result');
       await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead + 1_000);
-      runner.answer(solo!.id, room.question!.id, room.question!.correct);
+      runner.answer(solo!.id, room.question!.id, mcq(room).correct);
       expect(room.phase).toBe('reveal');
       await vi.advanceTimersByTimeAsync(TIMINGS.reveal + (round < TOTAL_ROUNDS ? TIMINGS.scoreboard : 0));
     }
@@ -124,7 +142,7 @@ describe('RoomRunner', () => {
 
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
-    const q = room.question!;
+    const q = mcq(room);
     await vi.advanceTimersByTimeAsync(4_000);
     runner.answer(players[0]!.id, q.id, q.correct);
     expect(room.phase).toBe('question_open');
@@ -151,7 +169,7 @@ describe('RoomRunner', () => {
     runner.answer(players[0]!.id, room.question!.id, 0);
     runner.answer(players[1]!.id, room.question!.id, 1);
     const reveal = toHostView(room, Date.now()).stage;
-    expect(reveal.phase === 'reveal' && reveal.correct).toBe(room.question!.correct);
+    expect(reveal.phase === 'reveal' && reveal.result).toEqual({ kind: 'mc', correct: mcq(room).correct });
   });
 
   it('shuffles answer positions across rounds', async () => {
@@ -163,7 +181,7 @@ describe('RoomRunner', () => {
       for (const p of players) runner.passPower(p.id);
       for (const p of players) runner.vote(p.id, 0);
       await vi.advanceTimersByTimeAsync(TIMINGS.voteResult);
-      positions.add(room.question!.correct);
+      positions.add(mcq(room).correct);
       await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
       for (const p of players) runner.answer(p.id, room.question!.id, 0);
       await vi.advanceTimersByTimeAsync(TIMINGS.reveal + TIMINGS.scoreboard);
@@ -190,7 +208,7 @@ describe('RoomRunner', () => {
     expect(room.paused).toBe(false);
     expect(room.phaseEndsAt).toBe(Date.now() + 15_000);
     // The minute away does not count against answer time.
-    runner.answer(players[0]!.id, room.question!.id, room.question!.correct);
+    runner.answer(players[0]!.id, room.question!.id, mcq(room).correct);
     expect(room.answers.get(players[0]!.id)?.responseMs).toBe(5_000);
   });
 
@@ -201,7 +219,7 @@ describe('RoomRunner', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     for (const p of players) runner.vote(p.id, 0);
     await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
-    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    for (const p of players) runner.answer(p.id, room.question!.id, mcq(room).correct);
     await vi.advanceTimersByTimeAsync(TIMINGS.reveal + TIMINGS.scoreboard);
 
     // Round 2 hands out power plays: the vote waits for both decisions.
@@ -216,7 +234,7 @@ describe('RoomRunner', () => {
     expect(room.otto).toBeNull(); // Otto just explained power plays: one freeze needs no second word
 
     await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
-    const q = room.question!;
+    const q = mcq(room);
     const bView = toPlayerView(room, b!.id, Date.now());
     expect(bView?.stage.phase === 'question_open' && bView.stage.hits).toEqual([
       { by: a!.id, target: b!.id, power: 'freeze', cleared: false },
@@ -365,7 +383,7 @@ describe('RoomRunner: Milliomos-létra', () => {
       }
       if (room.phase === 'question_open' && !room.answers.has(solo.id)) {
         difficulties.push(room.question!.difficulty);
-        runner.answer(solo.id, room.question!.id, room.question!.correct);
+        runner.answer(solo.id, room.question!.id, mcq(room).correct);
       }
       await vi.advanceTimersByTimeAsync(500);
     }
@@ -386,7 +404,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     expect(runner.walk(a.id, true)).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // nothing to keep yet
     await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep + TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
-    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    for (const p of players) runner.answer(p.id, room.question!.id, mcq(room).correct);
     expect(room.phase).toBe('reveal');
     expect(room.picks.map((p) => p.points)).toEqual([1, 1]);
 
@@ -399,7 +417,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     expect(room.ladder!.status(a.id)).toBe('walked');
 
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
-    const q = room.question!;
+    const q = mcq(room);
     expect(runner.answer(a.id, q.id, q.correct)).toEqual({ ok: true }); // a tips as the audience…
     expect(room.phase).toBe('question_open'); // …but only b's answer is awaited
     runner.answer(b.id, q.id, (q.correct + 1) % 4);
@@ -423,7 +441,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     const [a, b, c] = players as [Player, Player, Player];
     await beginLadder(runner, room, a.id);
     await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderStep + TIMINGS.questionRead);
-    const q1 = room.question!;
+    const q1 = mcq(room);
     expect(runner.lifeline(a.id, 'audience')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // no audience yet
     runner.answer(a.id, q1.id, q1.correct);
     runner.answer(b.id, q1.id, q1.correct);
@@ -434,7 +452,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
 
-    const q = room.question!;
+    const q = mcq(room);
     const now = () => Date.now();
     expect(runner.lifeline(a.id, 'fifty')).toEqual({ ok: true });
     const hidden = toPlayerView(room, a.id, now())!.mine.ladder!.hidden;
@@ -476,7 +494,7 @@ describe("RoomRunner: Otto's pacing", () => {
     expect(room.phaseEndsAt).toBe(Date.now() + QUESTION_VOICE_DELAY_MS + 3_000 + SPEECH_TAIL_MS);
     await vi.advanceTimersByTimeAsync(QUESTION_VOICE_DELAY_MS + 3_000 + SPEECH_TAIL_MS);
     expect(room.phase).toBe('question_open');
-    for (const p of players) runner.answer(p.id, room.question!.id, room.question!.correct);
+    for (const p of players) runner.answer(p.id, room.question!.id, mcq(room).correct);
     expect(room.phase).toBe('reveal');
 
     // Round 2's vote explains power plays: voting fast doesn't cut Otto off.
@@ -526,7 +544,7 @@ describe("RoomRunner: Otto's pacing", () => {
           }
           if (room.phase === 'question_open' && rng() < 0.1) {
             for (const power of ['freeze', 'slime'] as const) runner.clearPower(p.id, power);
-            runner.answer(p.id, room.question!.id, rng() < 0.6 ? room.question!.correct : (room.question!.correct + 1) % 4);
+            runner.answer(p.id, room.question!.id, rng() < 0.6 ? mcq(room).correct : (mcq(room).correct + 1) % 4);
           }
           record();
         }
@@ -545,5 +563,173 @@ describe("RoomRunner: Otto's pacing", () => {
       expect(lines.length).toBeLessThanOrEqual(12);
       expect(lines.length).toBeGreaterThanOrEqual(3);
     }
+  });
+});
+
+describe('RoomRunner: party modes', () => {
+  /** A room with every party pack on offer and questions of every kind. */
+  function partySetup(players: number) {
+    const store = new MemoryStore(fixtureContent(4, 12, ['mc', 'bluff', 'timeline', 'number']), seededRng(7));
+    return setup({ players, store, packs: [...TEST_PACKS, TEST_BLUFF_PACK, TEST_TIMELINE_PACK, TEST_GUESS_PACK] });
+  }
+
+  async function beginPack(runner: RoomRunner, room: Room, vipId: string, slug: string) {
+    await flush();
+    expect(runner.votePack(vipId, slug)).toEqual({ ok: true });
+    expect(runner.lockPack(vipId)).toEqual({ ok: true });
+    expect(runner.start(vipId)).toEqual({ ok: true });
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    expect(room.phase).toBe('vote');
+    // Nobody votes: the vote runs out, the category spins, the question is read.
+    await vi.advanceTimersByTimeAsync(TIMINGS.vote + TIMINGS.voteResult);
+    expect(room.phase).toBe('question_read');
+  }
+
+  /** Before the reveal, no view may carry anything that gives the answer away. */
+  function expectNoSecrets(room: Room, playerIds: string[], words: string[]) {
+    const views = [toHostView(room, Date.now()), ...playerIds.map((id) => toPlayerView(room, id, Date.now()))];
+    for (const v of views) {
+      const json = JSON.stringify(v);
+      for (const w of words) expect(json, `${room.phase}: ${w}`).not.toContain(w);
+    }
+  }
+
+  it('offers each party pack only with questions of its own kind', async () => {
+    const { room } = partySetup(2);
+    await flush();
+    expect(room.packOffers?.map((o) => o.slug)).toEqual(['minden', 'blof', 'rend', 'tipp']);
+    const bare = setup({ packs: [...TEST_PACKS, TEST_BLUFF_PACK] });
+    await flush();
+    expect(bare.room.packOffers?.map((o) => o.slug)).toEqual(['minden']);
+  });
+
+  it('Blöffölő: write, pick, reveal; lies stay secret until the reveal; eight rounds', async () => {
+    const { runner, room, players } = partySetup(3);
+    const [a, b, c] = players as [Player, Player, Player];
+    await beginPack(runner, room, a.id, 'blof');
+    expect(room.totalRounds).toBe(PARTY_ROUNDS);
+    expect(room.powers.size).toBe(0);
+    const q = room.question!;
+    if (q.kind !== 'bluff') throw new Error('expected a bluff question');
+
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    expect(room.phase).toBe('bluff_write');
+    expect(runner.writeLie(a.id, q.id, q.answer.toUpperCase())).toEqual({ ok: false, error: 'TOO_CLOSE' });
+    expect(runner.writeLie(a.id, q.id, 'Anna kamuja')).toEqual({ ok: true });
+    expect(runner.writeLie(b.id, q.id, 'Béla kamuja')).toEqual({ ok: true });
+    expect(toPlayerView(room, a.id, Date.now())!.mine.lie).toBe('Anna kamuja');
+    expect(toPlayerView(room, b.id, Date.now())!.mine.lie).toBe('Béla kamuja');
+    expect(JSON.stringify(toPlayerView(room, c.id, Date.now()))).not.toContain('kamuja');
+    expectNoSecrets(room, [c.id], [q.answer, q.decoys[0], '"correct"', '"authors"']);
+    expect(JSON.stringify(toHostView(room, Date.now()))).not.toContain('kamuja');
+    expect(runner.writeLie(c.id, q.id, 'Cili kamuja')).toEqual({ ok: true });
+
+    // Everyone wrote: straight to picking. The options show texts, never who wrote them.
+    expect(room.phase).toBe('bluff_pick');
+    const pick = toHostView(room, Date.now()).stage;
+    if (pick.phase !== 'bluff_pick') throw new Error('expected the pick');
+    expect([...pick.options].sort()).toEqual(['Anna kamuja', 'Béla kamuja', 'Cili kamuja', q.answer].sort());
+    expectNoSecrets(room, [a.id, b.id, c.id], ['"truth"', '"authors"', '"correct"', q.decoys[0]]);
+    const idx = (t: string) => pick.options.indexOf(t);
+    expect(runner.pickBluff(a.id, q.id, idx('Anna kamuja'))).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    runner.pickBluff(a.id, q.id, idx(q.answer));
+    runner.pickBluff(b.id, q.id, idx('Anna kamuja'));
+    runner.pickBluff(c.id, q.id, idx('Anna kamuja'));
+
+    expect(room.phase).toBe('reveal');
+    const reveal = toHostView(room, Date.now()).stage;
+    if (reveal.phase !== 'reveal' || reveal.result.kind !== 'bluff') throw new Error('expected a bluff reveal');
+    expect(reveal.result.options.find((o) => o.truth)?.pickers).toEqual([a.id]);
+    const points = Object.fromEntries(room.picks.map((p) => [p.playerId, p.points]));
+    expect(points).toEqual({ [a.id]: 2000, [b.id]: 0, [c.id]: 0 }); // the truth, plus two fooled
+    expect(room.otto?.key).toBe('bluffBigLie');
+    expect(room.phaseEndsAt! - Date.now()).toBeGreaterThanOrEqual(bluffRevealMs(4));
+
+    await runToFinal(room);
+    expect(room.round).toBe(PARTY_ROUNDS);
+    expect(room.standings[0]!.playerId).toBe(a.id);
+  });
+
+  it('Blöffölő: the house pads a lonely round, and a silent player just misses out', async () => {
+    const { runner, room, players } = partySetup(2);
+    const [a, b] = players as [Player, Player];
+    await beginPack(runner, room, a.id, 'blof');
+    const q = room.question!;
+    if (q.kind !== 'bluff') throw new Error('expected a bluff question');
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    runner.writeLie(a.id, q.id, 'egyetlen kamu');
+    await vi.advanceTimersByTimeAsync(TIMINGS.bluffWrite);
+    expect(room.phase).toBe('bluff_pick');
+    expect(room.bluff!.options()).toHaveLength(4); // the lie, the truth and both house lies
+    await vi.advanceTimersByTimeAsync(TIMINGS.bluffPick);
+    expect(room.phase).toBe('reveal');
+    expect(room.picks.every((p) => p.choice === null && p.points === 0)).toBe(true);
+    expect(b.score).toBe(0);
+  });
+
+  it('Időrend: the years stay secret, a perfect order scores most, eight rounds', async () => {
+    const { runner, room, players } = partySetup(2);
+    const [a, b] = players as [Player, Player];
+    await beginPack(runner, room, a.id, 'rend');
+    const q = room.question!;
+    if (q.kind !== 'timeline') throw new Error('expected a timeline question');
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    expect(room.phase).toBe('order_open');
+    const view = toHostView(room, Date.now());
+    expect(view.stage.phase === 'order_open' && view.stage.question.kind === 'timeline' && view.stage.question.items).toHaveLength(5);
+    expectNoSecrets(room, [a.id, b.id], ['"year', '2000', '2004', '"order":[']);
+
+    const right = room.timeline!.correctOrder();
+    expect(runner.submitOrder(a.id, q.id, right)).toEqual({ ok: true });
+    expect(toPlayerView(room, a.id, Date.now())!.mine.order).toEqual(right);
+    expect(toPlayerView(room, b.id, Date.now())!.mine.order).toBeNull();
+    expect(runner.submitOrder(b.id, q.id, [...right].reverse())).toEqual({ ok: true });
+    expect(room.phase).toBe('reveal');
+    const reveal = toHostView(room, Date.now()).stage;
+    if (reveal.phase !== 'reveal' || reveal.result.kind !== 'timeline') throw new Error('expected a timeline reveal');
+    expect(reveal.result.years).toEqual([2000, 2001, 2002, 2003, 2004]);
+    expect(reveal.result.order).toEqual(right);
+    const [pa, pb] = room.picks;
+    expect(pa).toMatchObject({ correct: true });
+    expect(pa!.points).toBeGreaterThan(1000);
+    expect(pb).toMatchObject({ correct: false, points: 200 }); // reversed: only the middle one is in place
+
+    await runToFinal(room);
+    expect(room.round).toBe(PARTY_ROUNDS);
+  });
+
+  it('Tippelj!: guess, bet, reveal; the answer stays secret; a lone guesser skips the bets', async () => {
+    const { runner, room, players } = partySetup(2);
+    const [a, b] = players as [Player, Player];
+    await beginPack(runner, room, a.id, 'tipp');
+    let q = room.question!;
+    if (q.kind !== 'number') throw new Error('expected a number question');
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
+    expect(room.phase).toBe('guess_open');
+    expectNoSecrets(room, [a.id, b.id], ['"answer"']);
+    runner.submitGuess(a.id, q.id, q.answer);
+    runner.submitGuess(b.id, q.id, q.answer + 1000);
+    expect(room.phase).toBe('guess_bet');
+    const bet = toHostView(room, Date.now()).stage;
+    expect(bet.phase === 'guess_bet' && bet.guesses.map((g) => g.playerId)).toEqual([a.id, b.id]);
+    expectNoSecrets(room, [a.id, b.id], ['"answer"', '"distance"', '"closest"']);
+    expect(runner.placeBets(a.id, q.id, [0, 0])).toEqual({ ok: true });
+    expect(toPlayerView(room, a.id, Date.now())!.mine.bets).toEqual([0, 0]);
+    expect(runner.placeBets(b.id, q.id, [1, 1])).toEqual({ ok: true });
+    expect(room.phase).toBe('reveal');
+    const points = Object.fromEntries(room.picks.map((p) => [p.playerId, p.points]));
+    expect(points).toEqual({ [a.id]: 1000 + 500 + GUESS_CHIPS * 500, [b.id]: 0 });
+    expect(room.otto?.key).toBe('guessExact');
+
+    // Next round: only one guess, so no betting.
+    await vi.advanceTimersByTimeAsync(TIMINGS.reveal + TIMINGS.scoreboard + TIMINGS.vote + TIMINGS.voteResult + TIMINGS.questionRead);
+    expect(room.phase).toBe('guess_open');
+    q = room.question!;
+    runner.submitGuess(a.id, q.id, 5);
+    await vi.advanceTimersByTimeAsync(TIMINGS.guessOpen);
+    expect(room.phase).toBe('reveal');
+
+    await runToFinal(room);
+    expect(room.round).toBe(PARTY_ROUNDS);
   });
 });

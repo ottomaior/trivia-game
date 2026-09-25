@@ -27,7 +27,7 @@ describe('packs', () => {
       ],
       ['a', 'b', 'c'],
     );
-    const offers = buildOffers(packs, counts([['a', 5, 5, 5], ['b', 10, 10, 10], ['c', 0, 0, 0]]), 30);
+    const offers = buildOffers(packs, { mc: counts([['a', 5, 5, 5], ['b', 10, 10, 10], ['c', 0, 0, 0]]) }, 30);
     expect(offers.map((o) => o.slug)).toEqual(['nagy', 'mind']);
     expect(offers[0]!.categories.map((c) => c.slug)).toEqual(['a', 'b']);
     expect(offers[0]!.questions).toBe(45);
@@ -40,7 +40,22 @@ describe('packs', () => {
       const n = (d: number) => qs.filter((q) => q.difficulty === d).length;
       return { id: i + 1, slug: c.slug, name: c.name, counts: [n(1), n(2), n(3)] as [number, number, number] };
     });
-    const offers = buildOffers(loadPacks(), bySlug, PACK_MIN_QUESTIONS);
+    const offers = buildOffers(loadPacks(), { mc: bySlug }, PACK_MIN_QUESTIONS);
     expect(offers.map((o) => o.slug)).toContain('alap');
+  });
+
+  it('sizes each pack by the kind of question its mode plays', () => {
+    const packs = loadPacks(
+      [
+        { slug: 'kviz', name: 'Kvíz', description: 'x', mode: 'classic', categories: '*' },
+        { slug: 'blof', name: 'Blöff', description: 'x', mode: 'bluff', categories: '*' },
+        { slug: 'tipp', name: 'Tipp', description: 'x', mode: 'guess', categories: '*' },
+      ],
+      ['a', 'b'],
+    );
+    const offers = buildOffers(packs, { mc: counts([['a', 20, 20, 20], ['b', 0, 0, 0]]), bluff: counts([['a', 0, 0, 0], ['b', 3, 3, 4]]) }, 10);
+    expect(offers.map((o) => o.slug)).toEqual(['kviz', 'blof']);
+    expect(offers[1]!.questions).toBe(10);
+    expect(offers[1]!.categories.map((c) => c.slug)).toEqual(['b']);
   });
 });

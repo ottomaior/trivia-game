@@ -1,6 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import {
+  bluffRevealMs,
+  closestGuesses,
   difficultyForRound,
+  isInputPhase,
+  questionKindFor,
+  roundsFor,
+  scoreBluff,
+  scoreGuess,
+  scoreTimeline,
+  slotsRight,
+  TIMINGS,
   isValidRoomCode,
   NAME_MAX_LENGTH,
   normalizeName,
@@ -69,5 +79,47 @@ describe('ottoText', () => {
 
   it('names voice clips after the key and wrapped variant', () => {
     expect(ottoVoiceId({ key: 'paused', variant: 3 })).toBe('paused-0');
+  });
+});
+
+describe('party modes', () => {
+  it('plays its own kind of question for its own number of rounds', () => {
+    expect(questionKindFor('classic')).toBe('mc');
+    expect(questionKindFor('ladder')).toBe('mc');
+    expect(questionKindFor('bluff')).toBe('bluff');
+    expect(questionKindFor('timeline')).toBe('timeline');
+    expect(questionKindFor('guess')).toBe('number');
+    expect(roundsFor('classic', 4)).toBe(4);
+    expect(roundsFor('ladder')).toBe(15);
+    expect(roundsFor('guess')).toBe(8);
+  });
+
+  it('knows which phases take input against the clock', () => {
+    expect(isInputPhase('question_open')).toBe(true);
+    expect(isInputPhase('guess_bet')).toBe(true);
+    expect(isInputPhase('question_read')).toBe(false);
+    expect(isInputPhase('reveal')).toBe(false);
+  });
+
+  it('scores Blöffölő and gives every extra option its moment in the reveal', () => {
+    expect(scoreBluff(true, 0)).toBe(1000);
+    expect(scoreBluff(false, 3)).toBe(1500);
+    expect(scoreBluff(true, 2)).toBe(2000);
+    expect(bluffRevealMs(3)).toBe(TIMINGS.bluffReveal);
+    expect(bluffRevealMs(6)).toBe(TIMINGS.bluffReveal + 4_000);
+  });
+
+  it('scores Időrend per item, with a speed bonus only for a perfect order', () => {
+    expect(slotsRight([2, 0, 1, 3, 4], [2, 1, 0, 3, 4])).toBe(3);
+    expect(scoreTimeline(3, 5, 0, 10_000)).toBe(600);
+    expect(scoreTimeline(5, 5, 0, 10_000)).toBe(1500);
+    expect(scoreTimeline(5, 5, 10_000, 10_000)).toBe(1000);
+  });
+
+  it('scores Tippelj!: the closest guesses share, and chips pay', () => {
+    expect(closestGuesses([{ playerId: 'a', value: 90 }, { playerId: 'b', value: 110 }, { playerId: 'c', value: 50 }], 100)).toEqual(['a', 'b']);
+    expect(closestGuesses([], 100)).toEqual([]);
+    expect(scoreGuess(true, true, 2)).toBe(2500);
+    expect(scoreGuess(false, false, 1)).toBe(500);
   });
 });

@@ -18,7 +18,12 @@ type PlayerCommand =
   | 'question:flag'
   | 'power:choose'
   | 'power:pass'
-  | 'power:clear';
+  | 'power:clear'
+  | 'bluff:write'
+  | 'bluff:pick'
+  | 'order:submit'
+  | 'guess:submit'
+  | 'guess:bet';
 
 /** Sends a phone command and resolves to its result; a timeout counts as a failure. */
 export async function send<E extends PlayerCommand>(

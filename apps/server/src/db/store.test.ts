@@ -24,36 +24,48 @@ describe.skipIf(!url)('PgStore', () => {
   });
 
   it('offers playable categories and prefers unseen questions of the right difficulty', async () => {
-    const cats = await store.pickCategories(household, 3, []);
+    const cats = await store.pickCategories(household, 3, [], 'mc');
     expect(cats).toHaveLength(3);
-    const q = await store.pickQuestion(household, cats[0]!.id, 2, []);
+    const q = await store.pickQuestion(household, cats[0]!.id, 2, [], 'mc');
     expect(q).not.toBeNull();
     expect(q!.difficulty).toBe(2);
-    expect(q!.choices).toHaveLength(4);
+    expect(q!.kind === 'mc' && q!.choices).toHaveLength(4);
 
     await store.markSeen(household, q!.id);
-    const next = await store.pickQuestion(household, cats[0]!.id, 2, []);
+    const next = await store.pickQuestion(household, cats[0]!.id, 2, [], 'mc');
     expect(next!.id).not.toBe(q!.id);
     expect(next!.difficulty).toBe(2);
   });
 
   it('counts questions per category and difficulty, and limits categories to the allowed ones', async () => {
-    const counts = await store.countQuestions();
+    const counts = await store.countQuestions('mc');
     const seed = loadSeedFile();
     const film = counts.find((c) => c.slug === 'film')!;
     // Other tests may retire questions, so at most what the seed holds.
     expect(film.counts[0]).toBeGreaterThan(0);
     expect(film.counts[0]).toBeLessThanOrEqual(seed.questions.filter((q) => q.category === 'film' && q.difficulty === 1).length);
-    const cats = await store.pickCategories(household, 3, [], [film.id]);
+    const cats = await store.pickCategories(household, 3, [], 'mc', [film.id]);
     expect(cats.map((c) => c.id)).toEqual([film.id]);
   });
 
+  it('keeps each kind of question apart', async () => {
+    const seed = loadSeedFile();
+    for (const [kind, list] of [['bluff', seed.bluff], ['timeline', seed.timeline], ['number', seed.numbers]] as const) {
+      const total = (await store.countQuestions(kind)).reduce((n, c) => n + c.counts[0] + c.counts[1] + c.counts[2], 0);
+      expect(total, kind).toBeLessThanOrEqual(list.length);
+      if (list.length === 0) continue;
+      const [cat] = await store.pickCategories(household, 1, [], kind);
+      const q = await store.pickQuestion(household, cat!.id, 2, [], kind);
+      expect(q?.kind).toBe(kind);
+    }
+  });
+
   it('never repeats a question excluded for this game', async () => {
-    const [cat] = await store.pickCategories(household, 1, []);
+    const [cat] = await store.pickCategories(household, 1, [], 'mc');
     // Other tests may retire questions in this shared database, so don't
     // assume a count: draw until the category runs dry.
     const asked: string[] = [];
-    for (let q = await store.pickQuestion(household, cat!.id, 1, asked); q; q = await store.pickQuestion(household, cat!.id, 1, asked)) {
+    for (let q = await store.pickQuestion(household, cat!.id, 1, asked, 'mc'); q; q = await store.pickQuestion(household, cat!.id, 1, asked, 'mc')) {
       expect(asked).not.toContain(q.id);
       asked.push(q.id);
       if (asked.length > 500) throw new Error('never ran dry');
@@ -62,8 +74,9 @@ describe.skipIf(!url)('PgStore', () => {
   });
 
   it('records a match and retires a question flagged in two matches', async () => {
-    const [cat] = await store.pickCategories(household, 1, []);
-    const q = (await store.pickQuestion(household, cat!.id, 3, []))!;
+    const [cat] = await store.pickCategories(household, 1, [], 'mc');
+    const q = (await store.pickQuestion(household, cat!.id, 3, [], 'mc'))!;
+    if (q.kind !== 'mc') throw new Error('expected a multiple-choice question');
     const players = [
       { seat: 0, name: 'Anna', avatar: { color: 'teal' as const, face: 'grin' as const } },
       { seat: 1, name: 'Béla', avatar: { color: 'rust' as const, face: 'wink' as const } },
@@ -91,7 +104,7 @@ describe.skipIf(!url)('PgStore', () => {
     const m2 = await store.startMatch({ householdId: household, roomCode: 'GHJK', players });
     expect(await store.flagQuestion({ questionId: q.id, matchId: m2, playerName: 'Anna', reason: 'wrong_answer' })).toEqual({ retired: true });
 
-    const retired = await store.pickQuestion(household, cat!.id, 3, []);
+    const retired = await store.pickQuestion(household, cat!.id, 3, [], 'mc');
     expect(retired?.id).not.toBe(q.id);
   });
 });

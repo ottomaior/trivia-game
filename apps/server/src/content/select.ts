@@ -1,4 +1,4 @@
-import type { Category, CategoryStats, Question } from './types.ts';
+import type { Category, CategoryStats, McQuestion } from './types.ts';
 
 export type Rng = () => number;
 
@@ -38,7 +38,7 @@ export function chooseCategories(
 }
 
 /** Shuffles the answer order so position carries no information. */
-export function shuffleChoices(q: Question, rng: Rng): Question {
+export function shuffleChoices(q: McQuestion, rng: Rng): McQuestion {
   const order = shuffle(
     q.choices.map((_, i) => i),
     rng,

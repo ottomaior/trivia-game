@@ -1,4 +1,4 @@
-import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type PlayerView, type PowerPlay, type Stage } from '@trivia/shared';
+import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type McQuestionStage, type PlayerView, type PowerPlay } from '@trivia/shared';
 import { useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
@@ -6,7 +6,7 @@ import { LETTERS, TILE } from '../../ui/answers.ts';
 import { FreezeCover, SlimeCover } from '../Obstacles.tsx';
 import styles from '../Phone.module.css';
 
-type QuestionStage = Extract<Stage, { phase: 'question_read' | 'question_open' }>;
+type QuestionStage = McQuestionStage;
 
 /** With both on you, the slime comes off first, then the ice underneath. */
 const COVER_ORDER: PowerPlay[] = ['slime', 'freeze'];

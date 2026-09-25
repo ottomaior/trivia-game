@@ -1,4 +1,4 @@
-import { MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type PowerHit } from '@trivia/shared';
+import { actedIds, MAX_PLAYERS, scoreText, t, type GameMode, type HostView, type Pick, type PlayerSummary, type PowerHit } from '@trivia/shared';
 import { useEffect, useState, type CSSProperties } from 'react';
 import { Blob, type Expression } from '../ui/Blob.tsx';
 import { useCountUp } from '../ui/countUp.ts';
@@ -51,7 +51,7 @@ export function Desks({ view }: { view: HostView }) {
   const rankOf = new Map(ranked?.map((s) => [s.playerId, s.rank]) ?? []);
   const leaders = ranked ? new Set(ranked.filter((s) => s.rank === 1 && s.score > 0).map((s) => s.playerId)) : new Set<string>();
   const picks = stage.phase === 'reveal' ? new Map(stage.picks.map((p) => [p.playerId, p])) : null;
-  const answered = stage.phase === 'question_open' ? new Set(stage.answered) : new Set<string>();
+  const answered = new Set(actedIds(stage));
   // On the ladder, those who fell or stopped sit back from the rest.
   const offLadder = new Set(view.ladder?.seats.filter((s) => s.status === 'out' || s.status === 'walked').map((s) => s.playerId));
   const hits = 'hits' in stage ? stage.hits : [];
@@ -172,7 +172,7 @@ function Desk({
         )}
         <span className={styles.nameplate}>{player.name}</span>
         <span className={styles.score}>{scoreText(mode, score)}</span>
-        {mode === 'classic' && gained > 0 && <span className={styles.gain}>{t.plusPoints(gained)}</span>}
+        {mode !== 'ladder' && gained > 0 && <span className={styles.gain}>{t.plusPoints(gained)}</span>}
       </div>
       {riser && (
         <div

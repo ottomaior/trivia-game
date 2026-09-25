@@ -12,6 +12,7 @@ function joinOk(room: Room, name: string) {
 }
 
 const question = {
+  kind: 'mc' as const,
   id: 'q1',
   categoryId: 1,
   category: 'Történelem',

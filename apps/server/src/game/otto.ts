@@ -211,3 +211,69 @@ export function ladderRevealLine(
   if (climbed.length === 0 || !LADDER_SAFE_RUNGS.includes(rung)) return null;
   return line('ladderSafe', pick, climbed);
 }
+
+// ---------------------------------------------------------------------------
+// Party modes. Same rule as the quiz: at most one comment a round, big
+// moments always, small ones only after a quiet round, nothing for a solo player
+// unless it is remarkable.
+
+/** Blöffölő: a lie several players fell for, or nobody finding the truth, is always worth a line. */
+export function bluffRevealLine(
+  options: { truth: boolean; authors: string[]; pickers: string[] }[],
+  players: number,
+  pick: LinePicker,
+  quietBefore = true,
+): OttoLine | null {
+  if (players < 2) return null;
+  const big = options
+    .filter((o) => !o.truth && o.authors.length > 0 && o.pickers.length >= 2)
+    .sort((a, b) => b.pickers.length - a.pickers.length)[0];
+  if (big) return line('bluffBigLie', pick, big.authors);
+  const truth = options.find((o) => o.truth);
+  const finders = truth?.pickers ?? [];
+  const picked = options.reduce((n, o) => n + o.pickers.length, 0);
+  if (picked > 0 && finders.length === 0) return line('bluffAllFooled', pick);
+  if (!quietBefore) return null;
+  if (players >= 3 && finders.length === players) return line('bluffAllTruth', pick, finders);
+  const fooledAny = options.some((o) => !o.truth && o.authors.length > 0 && o.pickers.length > 0);
+  if (picked > 0 && !fooledAny && finders.length < players) return line('bluffNobodyFooled', pick);
+  return null;
+}
+
+/** Időrend: everyone perfect, or the only perfect one, always; a round of chaos after a quiet one. */
+export function timelineRevealLine(
+  outcomes: { playerId: string; order: number[] | null; rightSlots: number; allRight: boolean }[],
+  pick: LinePicker,
+  quietBefore = true,
+): OttoLine | null {
+  const perfect = outcomes.filter((o) => o.allRight).map((o) => o.playerId);
+  if (outcomes.length === 1) return quietBefore && perfect.length === 1 ? line('timelinePerfect', pick, perfect) : null;
+  if (perfect.length === outcomes.length) return line('timelineAllPerfect', pick, perfect);
+  if (perfect.length === 1) return line('timelinePerfect', pick, perfect);
+  if (!quietBefore) return null;
+  const sent = outcomes.filter((o) => o.order !== null);
+  if (sent.length > 0 && sent.every((o) => o.rightSlots <= 1)) return line('timelineChaos', pick);
+  return null;
+}
+
+/** "Way off": even the nearest guess missed by more than half the answer. */
+export const WAY_OFF_SHARE = 0.5;
+
+/** Tippelj!: a spot-on guess always; winning chips or wild guesses after a quiet round. */
+export function guessRevealLine(
+  result: { answer: number; guesses: { playerId: string; distance: number }[] },
+  outcomes: { playerId: string; closest: boolean; exact: boolean; chipsOnClosest: number }[],
+  pick: LinePicker,
+  quietBefore = true,
+): OttoLine | null {
+  const exact = outcomes.filter((o) => o.exact).map((o) => o.playerId);
+  if (exact.length > 0) return line('guessExact', pick, exact);
+  if (!quietBefore || outcomes.length < 2) return null;
+  const sharp = outcomes.filter((o) => !o.closest && o.chipsOnClosest >= 2).map((o) => o.playerId);
+  if (sharp.length > 0) return line('guessBetsWin', pick, sharp);
+  const nearest = Math.min(...result.guesses.map((g) => g.distance));
+  if (result.answer !== 0 && result.guesses.length > 0 && nearest > Math.abs(result.answer) * WAY_OFF_SHARE) {
+    return line('guessWayOff', pick);
+  }
+  return null;
+}

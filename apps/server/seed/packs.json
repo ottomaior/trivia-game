@@ -137,5 +137,26 @@
     "description": "Tizenöt egyre nehezebb kérdés, biztos pontok és segítségek. Meddig jutsz?",
     "mode": "ladder",
     "categories": "*"
+  },
+  {
+    "slug": "bloffolo",
+    "name": "Blöffölő",
+    "description": "Írj hihető hazugságot, és találd meg az igazat a kamuk között!",
+    "mode": "bluff",
+    "categories": "*"
+  },
+  {
+    "slug": "idorend",
+    "name": "Időrend",
+    "description": "Filmek, slágerek, találmányok: mi volt előbb? Rakd sorba!",
+    "mode": "timeline",
+    "categories": "*"
+  },
+  {
+    "slug": "tippelj",
+    "name": "Tippelj!",
+    "description": "Számokra tippelsz, és zsetonokat teszel a legközelebbire.",
+    "mode": "guess",
+    "categories": "*"
   }
 ]

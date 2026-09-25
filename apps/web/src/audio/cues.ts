@@ -1,4 +1,4 @@
-import { ottoLineOffsetMs, type HostView, type OttoLineKey, type Phase, type PowerHit } from '@trivia/shared';
+import { actedIds, isInputPhase, ottoLineOffsetMs, type HostView, type OttoLineKey, type Phase, type PowerHit } from '@trivia/shared';
 import type { Track } from './music.ts';
 import type { Cue } from './sfx.ts';
 
@@ -49,6 +49,9 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
         cues.push(now('start'), { cue: 'applause', at: 0.5 });
         break;
       case 'question_read':
+      // The lies are in, or the guesses: a fresh board to look at.
+      case 'bluff_pick':
+      case 'guess_bet':
         cues.push(now('question'));
         break;
       case 'reveal': {
@@ -78,8 +81,9 @@ export function cuesFor(prev: HostView | null, next: HostView): CueEvent[] {
     if (Object.keys(b.votes).length > Object.keys(a.votes).length) cues.push(now('vote'));
   } else if (a.phase === 'ladder_step' && b.phase === 'ladder_step') {
     if (Object.keys(b.walking).length > Object.keys(a.walking).length) cues.push(now('vote'));
-  } else if (a.phase === 'question_open' && b.phase === 'question_open') {
-    if (b.answered.length > a.answered.length) cues.push(now('lockIn'));
+  } else if (isInputPhase(b.phase)) {
+    // Same input phase: someone answered, wrote, picked, ordered, guessed or bet.
+    if (actedIds(b).length > actedIds(a).length) cues.push(now('lockIn'));
   }
 
   // A power play lands on someone, or its target breaks free.
@@ -117,6 +121,11 @@ export function musicFor(phase: Phase, paused: boolean): Track | null {
       return 'lobby';
     case 'question_read':
     case 'question_open':
+    case 'bluff_write':
+    case 'bluff_pick':
+    case 'order_open':
+    case 'guess_open':
+    case 'guess_bet':
       return 'thinking';
     case 'final':
       return 'final';

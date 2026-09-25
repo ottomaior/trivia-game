@@ -13,6 +13,16 @@ export type Phase =
   | 'ladder_step'
   | 'question_read'
   | 'question_open'
+  /** Blöffölő: everyone types a believable lie. */
+  | 'bluff_write'
+  /** Blöffölő: the lies and the truth, mixed; everyone picks one. */
+  | 'bluff_pick'
+  /** Időrend: everyone puts the five items in order. */
+  | 'order_open'
+  /** Tippelj!: everyone types a number. */
+  | 'guess_open'
+  /** Tippelj!: everyone bets chips on the guesses they think are closest. */
+  | 'guess_bet'
   | 'reveal'
   | 'scoreboard'
   | 'final';
@@ -65,16 +75,26 @@ export interface LadderSeat {
   used: Lifeline[];
 }
 
-/** A question as screens may see it before the reveal: no answer key. */
-export interface PublicQuestion {
+interface PublicQuestionBase {
   id: string;
   category: string;
   difficulty: Difficulty;
   prompt: string;
-  choices: string[];
   /** Name of the recorded read-aloud of the prompt (public/voice/q/), if one was made. */
   voice: string;
 }
+
+/** A question as screens may see it before the reveal: no answer key. */
+export type PublicQuestion =
+  | (PublicQuestionBase & { kind: 'mc'; choices: string[] })
+  /** Blöffölő: the prompt only; the options appear once the lies are in. */
+  | (PublicQuestionBase & { kind: 'bluff' })
+  /** Időrend: the items in the order shown (shuffled), without their years. */
+  | (PublicQuestionBase & { kind: 'timeline'; items: string[] })
+  /** Tippelj!: the unit the answer is counted in ("km", "év"), if any. */
+  | (PublicQuestionBase & { kind: 'number'; unit: string | null });
+
+export type McQuestionView = Extract<PublicQuestion, { kind: 'mc' }>;
 
 /** A power play thrown this round: `target` has to clear it before answering. */
 export interface PowerHit {
@@ -91,6 +111,12 @@ export interface PowerHit {
  */
 export type PowerState = 'none' | 'held' | 'ready' | 'passed' | 'used';
 
+/**
+ * What one player did in a round. `choice` indexes the kind's option list:
+ * the answer tile, the Blöffölő option picked, or the player's own guess in
+ * the sorted guesses (null for Időrend and for no answer). `correct` means
+ * right answer / found the truth / perfect order / closest guess.
+ */
 export interface Pick {
   playerId: string;
   choice: number | null;
@@ -122,16 +148,89 @@ export type Stage =
   /** `rung` is about to be played; `walking` maps player id to their choice so far (true: stop here). */
   | { phase: 'ladder_step'; rung: number; category: CategoryOption; difficulty: Difficulty; walking: Record<string, boolean> }
   | { phase: 'question_read'; question: PublicQuestion; hits: PowerHit[] }
-  | { phase: 'question_open'; question: PublicQuestion; answered: string[]; hits: PowerHit[] }
+  | { phase: 'question_open'; question: McQuestionView; answered: string[]; hits: PowerHit[] }
+  /** `written`: who has sent a lie. */
+  | { phase: 'bluff_write'; question: PublicQuestion; written: string[] }
+  /** `options`: the lies and the truth, shuffled, with nothing about who wrote what. */
+  | { phase: 'bluff_pick'; question: PublicQuestion; options: string[]; picked: string[] }
+  | { phase: 'order_open'; question: PublicQuestion; answered: string[] }
+  | { phase: 'guess_open'; question: PublicQuestion; answered: string[] }
+  /** `guesses` ascending; a chip names a guess by its index here. `bet`: who has placed their chips. */
+  | { phase: 'guess_bet'; question: PublicQuestion; guesses: Guess[]; bet: string[] }
   | {
       phase: 'reveal';
       question: PublicQuestion;
-      correct: number;
       explanation: string | null;
       picks: Pick[];
+      result: RevealResult;
     }
   | { phase: 'scoreboard'; standings: Standing[] }
   | { phase: 'final'; standings: Standing[] };
+
+export interface Guess {
+  playerId: string;
+  value: number;
+}
+
+/** One Blöffölő option at the reveal: whose lie it was (none for the truth or the house's own) and who fell for it. */
+export interface BluffOption {
+  text: string;
+  truth: boolean;
+  authors: string[];
+  pickers: string[];
+}
+
+/** The answer, as each kind reveals it. */
+export type RevealResult =
+  | { kind: 'mc'; correct: number }
+  | { kind: 'bluff'; options: BluffOption[] }
+  /**
+   * `order`: the display indices of the items in chronological order, with
+   * their `years`; `orders`: each player's submitted order (null: none).
+   */
+  | { kind: 'timeline'; order: number[]; years: number[]; orders: Record<string, number[] | null> }
+  /**
+   * `guesses` ascending (the indices chips point at), `bets` each player's
+   * chips, `closest` whose guesses were nearest.
+   */
+  | {
+      kind: 'number';
+      answer: number;
+      unit: string | null;
+      guesses: (Guess & { distance: number })[];
+      bets: Record<string, number[]>;
+      closest: string[];
+    };
+
+/** The quiz's question stages (classic and ladder): the question is multiple choice. */
+export type McQuestionStage =
+  | Extract<Stage, { phase: 'question_open' }>
+  | (Extract<Stage, { phase: 'question_read' }> & { question: McQuestionView });
+
+/** The stage as a multiple-choice question being read or answered, or null. */
+export function mcQuestionStage(stage: Stage): McQuestionStage | null {
+  if (stage.phase === 'question_open') return stage;
+  if (stage.phase === 'question_read' && stage.question.kind === 'mc') return { ...stage, question: stage.question };
+  return null;
+}
+
+/** Players who have acted in the current phase (answered, written, picked, ordered, guessed or bet). */
+export function actedIds(stage: Stage): string[] {
+  switch (stage.phase) {
+    case 'question_open':
+    case 'order_open':
+    case 'guess_open':
+      return stage.answered;
+    case 'bluff_write':
+      return stage.written;
+    case 'bluff_pick':
+      return stage.picked;
+    case 'guess_bet':
+      return stage.bet;
+    default:
+      return [];
+  }
+}
 
 /**
  * A line for Otto: the key picks the text, the variant one of its versions.
@@ -171,7 +270,19 @@ export type OttoLineKey =
   | 'soloFinalHigh'
   | 'soloFinalLow'
   | 'paused'
-  | LadderLineKey;
+  | LadderLineKey
+  | BluffLineKey
+  | TimelineLineKey
+  | GuessLineKey;
+
+/** Otto's lines for Blöffölő. */
+export type BluffLineKey = 'bluffWelcome' | 'bluffNobodyFooled' | 'bluffAllFooled' | 'bluffBigLie' | 'bluffAllTruth';
+
+/** Otto's lines for Időrend. */
+export type TimelineLineKey = 'timelineWelcome' | 'timelinePerfect' | 'timelineChaos' | 'timelineAllPerfect';
+
+/** Otto's lines for Tippelj!. */
+export type GuessLineKey = 'guessWelcome' | 'guessExact' | 'guessWayOff' | 'guessBetsWin';
 
 /** Otto's lines for Milliomos-létra. */
 export type LadderLineKey =
@@ -219,6 +330,13 @@ export interface PlayerView extends BaseView {
     /** Milliomos-létra: what this player's lifelines show on the current question. */
     ladder: LadderHelp | null;
     power: PowerState;
+    /** Blöffölő: the lie this player wrote this round. */
+    lie: string | null;
+    /** Időrend: the order this player sent (display indices). */
+    order: number[] | null;
+    /** Tippelj!: this player's guess, and their chips (indices into the sorted guesses). */
+    guess: number | null;
+    bets: number[] | null;
   };
 }
 

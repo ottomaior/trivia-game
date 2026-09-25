@@ -1,16 +1,20 @@
 import {
+  bluffPayloadSchema,
   FLAG_RETIRE_MATCHES,
   mcPayloadSchema,
+  numberPayloadSchema,
+  timelinePayloadSchema,
   type Avatar,
   type Difficulty,
   type FlagReason,
   type GameMode,
+  type QuestionKind,
 } from '@trivia/shared';
 import { and, eq, sql } from 'drizzle-orm';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { chooseCategories, type Rng } from '../content/select.ts';
-import type { SeedData } from '../content/seed.ts';
+import { seedEntries, type SeedData, type SeedFile } from '../content/seed.ts';
 import type { Category, CategoryCount, CategoryStats, Question } from '../content/types.ts';
 import * as schema from './schema.ts';
 
@@ -43,19 +47,20 @@ export interface FlagRecord {
  */
 export interface Store {
   touchHousehold(householdId: string): Promise<void>;
-  /** Active questions per active category, for sizing the question packs. */
-  countQuestions(): Promise<CategoryCount[]>;
-  /** Up to `count` categories that have questions, freshest first; only `allowed` ones when given. */
-  pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]>;
+  /** Active questions of one kind per active category, for sizing the question packs. */
+  countQuestions(kind: QuestionKind): Promise<CategoryCount[]>;
+  /** Up to `count` categories that have questions of `kind`, freshest first; only `allowed` ones when given. */
+  pickCategories(householdId: string, count: number, exclude: number[], kind: QuestionKind, allowed?: number[]): Promise<Category[]>;
   /**
-   * Best question for the slot: unseen by this household first, then closest
-   * difficulty, then least recently seen. Null when the category is empty.
+   * Best question of `kind` for the slot: unseen by this household first, then
+   * closest difficulty, then least recently seen. Null when the category has none.
    */
   pickQuestion(
     householdId: string,
     categoryId: number,
     difficulty: Difficulty,
     exclude: string[],
+    kind: QuestionKind,
   ): Promise<Question | null>;
   markSeen(householdId: string, questionId: string): Promise<void>;
   startMatch(match: MatchStart): Promise<string>;
@@ -92,8 +97,8 @@ export class MemoryStore implements Store {
     this.households.add(householdId);
   }
 
-  async countQuestions(): Promise<CategoryCount[]> {
-    const active = this.active();
+  async countQuestions(kind: QuestionKind): Promise<CategoryCount[]> {
+    const active = this.active(kind);
     return this.categories.map((c) => {
       const counts: [number, number, number] = [0, 0, 0];
       for (const q of active) if (q.categoryId === c.id) counts[q.difficulty - 1]! += 1;
@@ -101,10 +106,10 @@ export class MemoryStore implements Store {
     });
   }
 
-  async pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]> {
+  async pickCategories(householdId: string, count: number, exclude: number[], kind: QuestionKind, allowed?: number[]): Promise<Category[]> {
     const seen = this.seen.get(householdId) ?? new Map();
     const stats: CategoryStats[] = this.categories.map((c) => {
-      const qs = this.active().filter((q) => q.categoryId === c.id);
+      const qs = this.active(kind).filter((q) => q.categoryId === c.id);
       return { ...c, total: qs.length, unseen: qs.filter((q) => !seen.has(q.id)).length };
     });
     return chooseCategories(stats, count, exclude, this.rng, allowed);
@@ -115,9 +120,10 @@ export class MemoryStore implements Store {
     categoryId: number,
     difficulty: Difficulty,
     exclude: string[],
+    kind: QuestionKind,
   ): Promise<Question | null> {
     const seen = this.seen.get(householdId) ?? new Map<string, number>();
-    const candidates = this.active()
+    const candidates = this.active(kind)
       .filter((q) => q.categoryId === categoryId && !exclude.includes(q.id))
       .map((q) => ({ q, r: this.rng() }));
     candidates.sort((a, b) => {
@@ -168,8 +174,8 @@ export class MemoryStore implements Store {
 
   async close(): Promise<void> {}
 
-  private active(): Question[] {
-    return this.questions.filter((q) => !this.retired.has(q.id));
+  private active(kind: QuestionKind): Question[] {
+    return this.questions.filter((q) => q.kind === kind && !this.retired.has(q.id));
   }
 }
 
@@ -194,27 +200,27 @@ export class PgStore implements Store {
       .onConflictDoUpdate({ target: schema.households.id, set: { lastSeenAt: sql`now()` } });
   }
 
-  async countQuestions(): Promise<CategoryCount[]> {
+  async countQuestions(kind: QuestionKind): Promise<CategoryCount[]> {
     const rows = await this.client<{ id: number; slug: string; name: string; d1: number; d2: number; d3: number }[]>`
       select c.id, c.slug, c.name,
              (count(q.id) filter (where q.difficulty = 1))::int as d1,
              (count(q.id) filter (where q.difficulty = 2))::int as d2,
              (count(q.id) filter (where q.difficulty = 3))::int as d3
       from categories c
-      left join questions q on q.category_id = c.id and q.status = 'active' and q.kind = 'mc'
+      left join questions q on q.category_id = c.id and q.status = 'active' and q.kind = ${kind}
       where c.active
       group by c.id
       order by c.id`;
     return rows.map(({ id, slug, name, d1, d2, d3 }) => ({ id, slug, name, counts: [d1, d2, d3] }));
   }
 
-  async pickCategories(householdId: string, count: number, exclude: number[], allowed?: number[]): Promise<Category[]> {
+  async pickCategories(householdId: string, count: number, exclude: number[], kind: QuestionKind, allowed?: number[]): Promise<Category[]> {
     const rows = await this.client<{ id: number; slug: string; name: string; total: number; unseen: number }[]>`
       select c.id, c.slug, c.name,
              count(q.id)::int as total,
              (count(q.id) filter (where hs.question_id is null))::int as unseen
       from categories c
-      join questions q on q.category_id = c.id and q.status = 'active' and q.kind = 'mc'
+      join questions q on q.category_id = c.id and q.status = 'active' and q.kind = ${kind}
       left join household_seen hs on hs.question_id = q.id and hs.household_id = ${householdId}
       where c.active
       group by c.id`;
@@ -226,6 +232,7 @@ export class PgStore implements Store {
     categoryId: number,
     difficulty: Difficulty,
     exclude: string[],
+    kind: QuestionKind,
   ): Promise<Question | null> {
     const rows = await this.client<
       { id: string; category_id: number; category: string; difficulty: number; prompt: string; payload: unknown; explanation: string | null }[]
@@ -234,23 +241,21 @@ export class PgStore implements Store {
       from questions q
       join categories c on c.id = q.category_id
       left join household_seen hs on hs.question_id = q.id and hs.household_id = ${householdId}
-      where q.category_id = ${categoryId} and q.status = 'active' and q.kind = 'mc'
+      where q.category_id = ${categoryId} and q.status = 'active' and q.kind = ${kind}
         and not (q.id = any(${exclude}::uuid[]))
       order by (hs.seen_at is not null), abs(q.difficulty - ${difficulty}), hs.seen_at nulls first, random()
       limit 1`;
     const row = rows[0];
     if (!row) return null;
-    const payload = mcPayloadSchema.parse(row.payload);
-    return {
+    const base = {
       id: row.id,
       categoryId: row.category_id,
       category: row.category,
       difficulty: row.difficulty as Difficulty,
       prompt: row.prompt,
-      choices: payload.choices,
-      correct: payload.correct,
       explanation: row.explanation,
     };
+    return questionFromPayload(kind, base, row.payload);
   }
 
   async markSeen(householdId: string, questionId: string): Promise<void> {
@@ -346,18 +351,18 @@ export class PgStore implements Store {
       const cats = await tx.select().from(schema.categories);
       const idBySlug = new Map(cats.map((c) => [c.slug, c.id]));
       let added = 0;
-      for (const q of data.questions) {
+      for (const q of seedEntries(data)) {
         const categoryId = idBySlug.get(q.category);
         if (!categoryId) throw new Error(`Unknown category ${q.category}`);
         const rows = await tx
           .insert(schema.questions)
           .values({
             categoryId,
-            kind: 'mc',
+            kind: q.kind,
             difficulty: q.difficulty,
             prompt: q.prompt,
-            payload: { choices: [q.answer, ...q.wrong], correct: 0 },
-            explanation: q.explanation ?? null,
+            payload: q.payload,
+            explanation: q.explanation,
             source: 'manual',
             sourceRef: 'seed',
             normHash: q.normHash,
@@ -384,15 +389,26 @@ export class PgStore implements Store {
   }
 }
 
-export interface SeedFile {
-  categories: { slug: string; name: string }[];
-  questions: {
-    category: string;
-    difficulty: Difficulty;
-    prompt: string;
-    answer: string;
-    wrong: [string, string, string];
-    explanation?: string;
-    normHash: string;
-  }[];
+export type { SeedFile };
+
+type QuestionBase = Pick<Question, 'id' | 'categoryId' | 'category' | 'difficulty' | 'prompt' | 'explanation'>;
+
+/** Rebuilds a stored question from its `payload`, which each kind shapes differently. */
+export function questionFromPayload(kind: QuestionKind, base: QuestionBase, payload: unknown): Question {
+  switch (kind) {
+    case 'mc': {
+      const p = mcPayloadSchema.parse(payload);
+      return { ...base, kind, choices: p.choices, correct: p.correct };
+    }
+    case 'bluff': {
+      const p = bluffPayloadSchema.parse(payload);
+      return { ...base, kind, answer: p.answer, alternates: p.alternates, decoys: p.decoys };
+    }
+    case 'timeline':
+      return { ...base, kind, items: timelinePayloadSchema.parse(payload).items };
+    case 'number': {
+      const p = numberPayloadSchema.parse(payload);
+      return { ...base, kind, answer: p.answer, unit: p.unit };
+    }
+  }
 }

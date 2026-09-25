@@ -27,7 +27,7 @@ describe('chooseCategories', () => {
 
 describe('shuffleChoices', () => {
   it('keeps the correct answer pointing at the same text', () => {
-    const q = { id: 'x', categoryId: 1, category: 'c', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], correct: 2, explanation: null };
+    const q = { kind: 'mc' as const, id: 'x', categoryId: 1, category: 'c', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], correct: 2, explanation: null };
     for (let seed = 1; seed < 20; seed++) {
       const s = shuffleChoices(q, seededRng(seed));
       expect(s.choices[s.correct]).toBe('c');

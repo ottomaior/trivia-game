@@ -1,4 +1,4 @@
-import { t, type HostSession, type HostView } from '@trivia/shared';
+import { isInputPhase, t, type HostSession, type HostView } from '@trivia/shared';
 import { useCallback, useEffect, useState } from 'react';
 import { audio } from '../audio/engine.ts';
 import { useAudioCues } from '../audio/useAudioCues.ts';
@@ -175,9 +175,8 @@ export function TvApp() {
 /** Bulbs chase faster while the clock runs and flash at the reveal. */
 function marqueeMode(view: HostView | null, still: boolean): MarqueeMode {
   if (still) return 'still';
+  if (view && isInputPhase(view.stage.phase)) return 'fast';
   switch (view?.stage.phase) {
-    case 'question_open':
-      return 'fast';
     case 'reveal':
     case 'final':
       return 'flash';

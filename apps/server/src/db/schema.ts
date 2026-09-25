@@ -51,7 +51,7 @@ export const questions = pgTable(
     kind: text('kind').notNull().default('mc'),
     difficulty: smallint('difficulty').notNull(),
     prompt: text('prompt').notNull(),
-    /** mc: {choices: string[4], correct: number}; link/sort shapes added later. */
+    /** mc: {choices: string[4], correct}; bluff: {answer, alternates, decoys}; timeline: {items: {text, year}[5]}; number: {answer, unit}. */
     payload: jsonb('payload').notNull(),
     explanation: text('explanation'),
     source: text('source').notNull(),
@@ -66,7 +66,7 @@ export const questions = pgTable(
     createdAt: createdAt(),
   },
   (t) => [
-    check('questions_kind_check', sql`${t.kind} in ('mc', 'link', 'sort')`),
+    check('questions_kind_check', sql`${t.kind} in ('mc', 'bluff', 'timeline', 'number')`),
     check('questions_difficulty_check', sql`${t.difficulty} between 1 and 3`),
     check('questions_source_check', sql`${t.source} in ('claude', 'manual')`),
     check('questions_status_check', sql`${t.status} in ('active', 'retired')`),

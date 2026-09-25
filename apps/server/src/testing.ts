@@ -1,3 +1,4 @@
+import type { QuestionKind } from '@trivia/shared';
 import type { PackDef } from './content/packs.ts';
 import type { SeedData } from './content/seed.ts';
 import type { Question } from './content/types.ts';
@@ -18,20 +19,36 @@ export function seededRng(seed = 1): () => number {
   };
 }
 
-/** `perCategory` questions in each of `categories` categories; answer is always choice 0. */
-export function fixtureContent(categories = 4, perCategory = 12): SeedData {
+/**
+ * `perCategory` questions of each kind in each of `categories` categories.
+ * Multiple choice: the answer is always choice 0. Blöffölő: the truth is
+ * "igazság j". Időrend: five items, a year apart. Tippelj!: the answer is j×10.
+ */
+export function fixtureContent(categories = 4, perCategory = 12, kinds: QuestionKind[] = ['mc']): SeedData {
   const cats = Array.from({ length: categories }, (_, i) => ({ id: i + 1, slug: `c${i + 1}`, name: `Kategória ${i + 1}` }));
-  const questions: Question[] = cats.flatMap((c) =>
-    Array.from({ length: perCategory }, (_, j) => ({
-      id: `q-${c.id}-${j}`,
-      categoryId: c.id,
-      category: c.name,
-      difficulty: ((j % 3) + 1) as 1 | 2 | 3,
-      prompt: `${c.name} kérdés ${j}`,
-      choices: [`jó ${j}`, `rossz a ${j}`, `rossz b ${j}`, `rossz c ${j}`],
-      correct: 0,
-      explanation: null,
-    })),
+  const questions: Question[] = kinds.flatMap((kind) =>
+    cats.flatMap((c) =>
+      Array.from({ length: perCategory }, (_, j): Question => {
+        const base = {
+          id: kind === 'mc' ? `q-${c.id}-${j}` : `${kind}-${c.id}-${j}`,
+          categoryId: c.id,
+          category: c.name,
+          difficulty: ((j % 3) + 1) as 1 | 2 | 3,
+          prompt: `${c.name} ${kind} kérdés ${j}`,
+          explanation: null,
+        };
+        switch (kind) {
+          case 'mc':
+            return { ...base, prompt: `${c.name} kérdés ${j}`, kind, choices: [`jó ${j}`, `rossz a ${j}`, `rossz b ${j}`, `rossz c ${j}`], correct: 0 };
+          case 'bluff':
+            return { ...base, kind, answer: `igazság ${j}`, alternates: [], decoys: [`házi kamu ${j}`, `másik kamu ${j}`] };
+          case 'timeline':
+            return { ...base, kind, items: Array.from({ length: 5 }, (_, k) => ({ text: `esemény ${j}-${k}`, year: 2000 + k })) };
+          case 'number':
+            return { ...base, kind, answer: j * 10, unit: 'db' };
+        }
+      }),
+    ),
   );
   return { categories: cats, questions };
 }
@@ -49,3 +66,12 @@ export const TEST_LADDER_PACK: PackDef = {
   mode: 'ladder',
   categories: '*',
 };
+
+/** Blöffölő over every fixture category. */
+export const TEST_BLUFF_PACK: PackDef = { slug: 'blof', name: 'Blöff', description: 'Blöffölő.', mode: 'bluff', categories: '*' };
+
+/** Időrend over every fixture category. */
+export const TEST_TIMELINE_PACK: PackDef = { slug: 'rend', name: 'Rend', description: 'Időrend.', mode: 'timeline', categories: '*' };
+
+/** Tippelj! over every fixture category. */
+export const TEST_GUESS_PACK: PackDef = { slug: 'tipp', name: 'Tipp', description: 'Tippelj!', mode: 'guess', categories: '*' };

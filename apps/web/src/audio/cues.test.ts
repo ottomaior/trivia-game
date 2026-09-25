@@ -35,7 +35,7 @@ function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
 }
 
 const lobby: Stage = { phase: 'lobby', step: 'packs', packs: null, votes: {} };
-const question = { id: 'q', category: 'Zene', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], voice: 'v' };
+const question = { kind: 'mc' as const, id: 'q', category: 'Zene', difficulty: 1 as const, prompt: 'p', choices: ['a', 'b', 'c', 'd'], voice: 'v' };
 const pick = (playerId: string, correct: boolean) => ({ playerId, choice: 0, correct, points: correct ? 900 : 0, responseMs: 1000 });
 const standing = (playerId: string, rank: number, prevRank: number) => ({ playerId, score: 1000, delta: 0, rank, prevRank });
 
@@ -65,7 +65,7 @@ describe('cuesFor', () => {
 
   it('rings and applauds a right answer, groans and "aww"s when nobody got it', () => {
     const open = view({ phase: 'question_open', question, answered: ['a', 'b'], hits: [] });
-    const reveal = (picks: ReturnType<typeof pick>[]) => view({ phase: 'reveal', question, correct: 0, explanation: null, picks });
+    const reveal = (picks: ReturnType<typeof pick>[]) => view({ phase: 'reveal', question, result: { kind: 'mc' as const, correct: 0 }, explanation: null, picks });
     expect(cuesFor(open, reveal([pick('a', true), pick('b', false)]))).toEqual(['reveal', 'applause']);
     expect(cuesFor(open, reveal([pick('a', true), pick('b', true)]))).toEqual(['reveal', 'applause', 'cheer']);
     expect(cuesFor(open, reveal([pick('a', false), pick('b', false)]))).toEqual(['wrong', 'aww']);
@@ -88,7 +88,7 @@ describe('cuesFor', () => {
   it('lets the audience laugh at Otto\'s jokes when he says them', () => {
     const open = view({ phase: 'question_open', question, answered: ['a', 'b'], hits: [] });
     const reveal = view(
-      { phase: 'reveal', question, correct: 0, explanation: null, picks: [pick('a', false), pick('b', false)] },
+      { phase: 'reveal', question, result: { kind: 'mc' as const, correct: 0 }, explanation: null, picks: [pick('a', false), pick('b', false)] },
       { otto: { key: 'noneCorrect', variant: 0, focus: [] } },
     );
     const laugh = timedCues(open, reveal).find((c) => c.cue === 'laugh');
@@ -96,7 +96,7 @@ describe('cuesFor', () => {
   });
 
   it('adds a sting when the lead changes, and a fanfare at the end', () => {
-    const reveal = view({ phase: 'reveal', question, correct: 0, explanation: null, picks: [] });
+    const reveal = view({ phase: 'reveal', question, result: { kind: 'mc' as const, correct: 0 }, explanation: null, picks: [] });
     const board = (rank1Prev: number) => view({ phase: 'scoreboard', standings: [standing('b', 1, rank1Prev), standing('a', 2, 1)] });
     expect(cuesFor(reveal, board(2))).toEqual(['scoreboard', 'leadChange', 'cheer']);
     expect(cuesFor(reveal, board(1))).toEqual(['scoreboard']);

@@ -1,4 +1,4 @@
-import type { HostView } from '@trivia/shared';
+import { isInputPhase, type HostView } from '@trivia/shared';
 import { gsap } from 'gsap';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { TvStage } from '../tv/TvStage.tsx';
@@ -53,7 +53,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
               line={view.otto}
               players={view.players}
               bubbleDelayMs={phase === 'reveal' ? REVEAL_BEATS.otto * 1000 : 0}
-              bubbleHideMs={phase === 'question_read' || phase === 'question_open' ? 1_800 : phase === 'scoreboard' ? 2_600 : undefined}
+              bubbleHideMs={phase === 'question_read' || isInputPhase(phase) ? 1_800 : phase === 'scoreboard' ? 2_600 : undefined}
             />
           </div>
           <div className={styles.deskArea}>

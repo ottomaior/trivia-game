@@ -5,7 +5,23 @@ import { REVEAL_BEATS, SHOTS, shotsFor } from './director.ts';
 import { averageFps } from './perfGuard.ts';
 import { deskScale, podiumSlots } from './Desks.tsx';
 
-const PHASES: Phase[] = ['lobby', 'intro', 'vote', 'vote_result', 'ladder_step', 'question_read', 'question_open', 'reveal', 'scoreboard', 'final'];
+const PHASES: Phase[] = [
+  'lobby',
+  'intro',
+  'vote',
+  'vote_result',
+  'ladder_step',
+  'question_read',
+  'question_open',
+  'bluff_write',
+  'bluff_pick',
+  'order_open',
+  'guess_open',
+  'guess_bet',
+  'reveal',
+  'scoreboard',
+  'final',
+];
 
 describe('director', () => {
   it('has a camera plan for every phase, in time order, using known shots', () => {

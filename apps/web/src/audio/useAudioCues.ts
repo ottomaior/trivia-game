@@ -1,4 +1,4 @@
-import { QUESTION_VOICE_DELAY_MS, type HostView } from '@trivia/shared';
+import { isInputPhase, QUESTION_VOICE_DELAY_MS, type HostView } from '@trivia/shared';
 import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { serverNow } from '../net/clock.ts';
 import { cuesFor, musicFor, ottoDelay } from './cues.ts';
@@ -29,11 +29,11 @@ export function useAudioCues(view: HostView | null): void {
     prev.current = view;
   }, [view]);
 
-  // Ticks for the last 5 seconds of a question, and a buzzer if time runs out.
+  // Ticks for the last 5 seconds of any answering phase, and a buzzer if time runs out.
   const phase = view?.stage.phase;
   const endsAt = view?.phaseEndsAt ?? null;
   useEffect(() => {
-    if (phase !== 'question_open' || endsAt === null) return;
+    if (!phase || !isInputPhase(phase) || endsAt === null) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     const left = endsAt - serverNow();
     for (let s = 5; s >= 1; s--) {

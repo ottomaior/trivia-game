@@ -1528,3 +1528,268 @@
     opacity: 0;
   }
 }
+
+/* ---- Party modes: Blöffölő, Időrend, Tippelj! ----------------------------- */
+
+.partyBody {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+
+.partyNote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 3em;
+  color: var(--mustard);
+  text-align: center;
+}
+
+.unitMystery {
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  border: 0.08em dashed var(--mustard);
+  border-radius: 0.4em;
+}
+
+/* Blöffölő: up to eight options in three columns. */
+.tilesMany {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tilesMany .tile {
+  min-height: 4.6em;
+}
+
+.tilesMany .tileText {
+  font-size: 1.9em;
+}
+
+.optionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  min-width: 0;
+}
+
+.optionTag {
+  font-size: 1.3em;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* A lie at the reveal: dimmed, but whose it was and who fell for it stay readable. */
+.tileLie::after {
+  content: '';
+  position: absolute;
+  inset: -0.22em;
+  background: color-mix(in srgb, var(--burgundy) 45%, transparent);
+  border-radius: 1em;
+  pointer-events: none;
+}
+
+.tileLie .pickers,
+.tileLie .optionBody {
+  position: relative;
+  z-index: 1;
+}
+
+/* Időrend: five cards in a row, a timeline. */
+.timelineRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timelineCard {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5em;
+  min-height: 11em;
+  padding: 1em 0.8em;
+  text-align: center;
+}
+
+.timelineText {
+  font-size: 1.9em;
+  font-weight: 800;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.timelineYear {
+  font-family: var(--font-display);
+  font-size: 2.6em;
+  line-height: 1;
+  color: inherit;
+}
+
+.orderReveal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+
+.orderRows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em 2.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orderRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
+.orderName {
+  margin-right: 0.3em;
+  font-weight: 800;
+}
+
+.orderChip {
+  display: grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  border-radius: 0.35em;
+  font-family: var(--font-display);
+}
+
+.orderChipGood {
+  background: var(--teal);
+  color: var(--cream);
+}
+
+.orderChipBad {
+  background: var(--rust);
+  color: var(--cream);
+  opacity: 0.75;
+}
+
+.orderNone {
+  color: var(--ice);
+}
+
+/* Tippelj!: the guesses on a number line, then by distance at the reveal. */
+.guessLine {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guessCard {
+  flex-direction: column;
+  gap: 0.3em;
+  min-width: 11em;
+  padding: 0.8em 1.2em;
+}
+
+.guessValue {
+  font-family: var(--font-display);
+  font-size: 2.4em;
+  line-height: 1.1;
+}
+
+.guessName {
+  font-size: 1.4em;
+  font-weight: 800;
+}
+
+.guessReveal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 2em;
+}
+
+.answerCard {
+  margin: 0;
+  padding: 0.5em 0.9em;
+  background: var(--mustard);
+  color: var(--burgundy);
+  border: 0.08em solid var(--burgundy-deep);
+  border-radius: 0.3em;
+  box-shadow: 0 0.1em 0 var(--burgundy-deep);
+  font-family: var(--font-display);
+  font-size: 4em;
+  line-height: 1.1;
+}
+
+.guessList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guessRow {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  padding: 0.4em 0.9em;
+  background: var(--burgundy-deep);
+  border-radius: 0.8em;
+  font-size: 1.2em;
+}
+
+.guessRow .guessValue {
+  font-size: 1.8em;
+}
+
+.guessRowBest {
+  outline: 0.25em dotted var(--mustard);
+  outline-offset: 0.15em;
+  background: var(--teal);
+}
+
+.guessOff {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--ice);
+}
+
+.chips {
+  display: flex;
+  gap: 0.2em;
+  margin-left: auto;
+}
+
+/* Party-mode animation (starting states only, like the rest). */
+.timelineRow.tilesOpen .tile,
+.guessLine.tilesOpen .tile {
+  animation: pop 320ms calc(var(--i, 0) * 90ms) cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+.tileLie::after {
+  animation: fadeIn 250ms calc(var(--i, 0) * 150ms) both;
+}
+
+.orderReveal .timelineCard {
+  animation: dropIn 450ms calc(0.2s + var(--i, 0) * 0.18s) cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+.orderRow,
+.guessRow {
+  animation: slideUp 400ms calc(1.3s + var(--j, 0) * 120ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+
+.answerCard {
+  animation: correctFlash 700ms 750ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}

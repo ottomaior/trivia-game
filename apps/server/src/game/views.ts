@@ -1,7 +1,7 @@
 import {
-  LADDER_RUNGS,
   MIN_GAME_QUESTIONS,
   type HostView,
+  type McQuestionView,
   type PlayerSummary,
   type PlayerView,
   type PublicQuestion,
@@ -28,19 +28,30 @@ function summarize(room: Room, p: Player): PlayerSummary {
   };
 }
 
-function publicQuestion(q: Question): PublicQuestion {
-  return {
-    id: q.id,
-    category: q.category,
-    difficulty: q.difficulty,
-    prompt: q.prompt,
-    choices: q.choices,
-    voice: questionVoiceId(q.prompt),
-  };
+/** What screens may know of a question before its reveal: never the answer, the years or the house's lies. */
+function publicQuestion(room: Room, q: Question): PublicQuestion {
+  const base = { id: q.id, category: q.category, difficulty: q.difficulty, prompt: q.prompt, voice: questionVoiceId(q.prompt) };
+  switch (q.kind) {
+    case 'mc':
+      return { ...base, kind: 'mc', choices: q.choices };
+    case 'bluff':
+      return { ...base, kind: 'bluff' };
+    case 'timeline':
+      return { ...base, kind: 'timeline', items: room.timeline?.displayItems() ?? [] };
+    case 'number':
+      return { ...base, kind: 'number', unit: q.unit };
+  }
+}
+
+function mcView(room: Room, q: Question): McQuestionView {
+  const pub = publicQuestion(room, q);
+  if (pub.kind !== 'mc') throw new Error('expected a multiple-choice question');
+  return pub;
 }
 
 function stage(room: Room): Stage {
   const q = room.question;
+  const question = () => publicQuestion(room, q!);
   switch (room.phase) {
     case 'lobby':
       return lobbyStage(room);
@@ -73,21 +84,31 @@ function stage(room: Room): Stage {
       };
     }
     case 'question_read':
-      return { phase: 'question_read', question: publicQuestion(q!), hits: room.hits };
+      return { phase: 'question_read', question: question(), hits: room.hits };
     case 'question_open':
       return {
         phase: 'question_open',
-        question: publicQuestion(q!),
+        question: mcView(room, q!),
         answered: [...room.answers.keys()],
         hits: room.hits,
       };
+    case 'bluff_write':
+      return { phase: 'bluff_write', question: question(), written: room.bluff!.written() };
+    case 'bluff_pick':
+      return { phase: 'bluff_pick', question: question(), options: room.bluff!.options(), picked: room.bluff!.picked() };
+    case 'order_open':
+      return { phase: 'order_open', question: question(), answered: room.timeline!.submitted() };
+    case 'guess_open':
+      return { phase: 'guess_open', question: question(), answered: room.guess!.guessed() };
+    case 'guess_bet':
+      return { phase: 'guess_bet', question: question(), guesses: room.guess!.sortedGuesses(), bet: room.guess!.betted() };
     case 'reveal':
       return {
         phase: 'reveal',
-        question: publicQuestion(q!),
-        correct: q!.correct,
+        question: question(),
         explanation: q!.explanation,
         picks: room.picks,
+        result: room.revealResult!,
       };
     case 'scoreboard':
     case 'final':
@@ -125,7 +146,7 @@ function base(room: Room, now: number) {
     roomCode: room.code,
     stage: stage(room),
     round: room.round,
-    totalRounds: ladder ? LADDER_RUNGS : room.totalRounds,
+    totalRounds: room.totalRounds,
     serverNow: now,
     phaseEndsAt: room.phaseEndsAt,
     paused: room.paused,
@@ -144,18 +165,23 @@ export function toPlayerView(room: Room, playerId: string, now: number): PlayerV
   const player = room.players.get(playerId);
   if (!player) return null;
   const inVote = room.phase === 'vote' || room.phase === 'vote_result';
-  const q = room.question;
+  const q = inVote ? null : room.question;
+  const { bluff, timeline, guess } = room;
   return {
     role: 'player',
     ...base(room, now),
     me: summarize(room, player),
+    // Only this player's own doings: other phones never see them.
     mine: {
       vote: inVote ? (room.votes.get(playerId) ?? null) : null,
-      choice: q && !inVote ? (room.answers.get(playerId)?.choice ?? null) : null,
-      flagged: q ? room.hasFlagged(playerId, q.id) : false,
-      // Only this player's own lifeline results; other phones never see them.
-      ladder: room.ladder && q ? room.ladder.help(playerId, room.answers, q.choices.length) : null,
+      choice: !q ? null : bluff ? bluff.pickOf(playerId) : (room.answers.get(playerId)?.choice ?? null),
+      flagged: room.question ? room.hasFlagged(playerId, room.question.id) : false,
+      ladder: room.ladder && q?.kind === 'mc' ? room.ladder.help(playerId, room.answers, q.choices.length) : null,
       power: room.powerState(playerId),
+      lie: q && bluff ? bluff.lieOf(playerId) : null,
+      order: q && timeline ? timeline.orderOf(playerId) : null,
+      guess: q && guess ? guess.guessOf(playerId) : null,
+      bets: q && guess ? guess.betsOf(playerId) : null,
     },
   };
 }

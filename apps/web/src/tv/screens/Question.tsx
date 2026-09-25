@@ -1,7 +1,7 @@
-import { pointsMultiplier, t, TIMINGS, type HostView, type Stage } from '@trivia/shared';
+import { pointsMultiplier, t, TIMINGS, type HostView, type McQuestionStage, type PublicQuestion } from '@trivia/shared';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
-import { useLayoutEffect, useRef, type CSSProperties } from 'react';
+import { useLayoutEffect, useRef, type CSSProperties, type RefObject } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Blob } from '../../ui/Blob.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
@@ -14,8 +14,6 @@ import { RoundLabel } from './common.tsx';
 
 gsap.registerPlugin(SplitText);
 
-type QuestionStage = Extract<Stage, { phase: 'question_read' | 'question_open' }>;
-
 /** Seconds into the read when the round card flips away (matches .roundCard in Tv.module.css)… */
 const CARD_OUT = 0.7;
 /** …and when the question's words start landing, once the card is gone. */
@@ -26,17 +24,12 @@ function openMs(view: HostView): number {
   return view.mode === 'ladder' ? TIMINGS.ladderOpen : TIMINGS.questionOpen;
 }
 
-export function Question({ view, stage }: { view: HostView; stage: QuestionStage }) {
-  const { question } = stage;
-  const open = stage.phase === 'question_open';
-  const answered = new Set(open ? stage.answered : []);
+/** In the studio the question lands word by word after the round card, once per question. */
+export function usePromptWordsIn(ref: RefObject<HTMLElement | null>, questionId: string, reading: boolean): void {
   const inStudio = useInStudio();
-  const promptRef = useRef<HTMLHeadingElement>(null);
-
-  // In the studio the question lands word by word after the round card.
   useLayoutEffect(() => {
-    const el = promptRef.current;
-    if (!inStudio || !el || stage.phase !== 'question_read') return;
+    const el = ref.current;
+    if (!inStudio || !el || !reading) return;
     const split = SplitText.create(el, { type: 'words' });
     const tween = gsap.from(split.words, {
       y: '0.7em',
@@ -51,7 +44,31 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
       tween.kill();
       split.revert();
     };
-  }, [inStudio, question.id]); // once per question: the prompt stays when answers open
+  }, [inStudio, questionId]); // once per question: the prompt stays when answers open
+}
+
+/** The split-flap card before each question in the studio: round, category, and the double-points badge. */
+export function RoundCard({ view, question }: { view: HostView; question: PublicQuestion }) {
+  return (
+    <div className={styles.roundCard} aria-hidden="true">
+      <span className={styles.roundCardNumber}>{view.mode === 'ladder' ? t.rung(view.round) : t.roundCard(view.round)}</span>
+      <span className={styles.roundCardMeta}>
+        {question.category} · {t.difficulty[question.difficulty]}
+      </span>
+      {view.mode !== 'ladder' && pointsMultiplier(view.round, view.totalRounds) > 1 && (
+        <span className={styles.doubleBadge}>{t.doublePoints}</span>
+      )}
+    </div>
+  );
+}
+
+export function Question({ view, stage }: { view: HostView; stage: McQuestionStage }) {
+  const { question } = stage;
+  const open = stage.phase === 'question_open';
+  const answered = new Set(open ? stage.answered : []);
+  const inStudio = useInStudio();
+  const promptRef = useRef<HTMLHeadingElement>(null);
+  usePromptWordsIn(promptRef, question.id, stage.phase === 'question_read');
 
   return (
     <div className={`${styles.game} ${inStudio ? styles.gameStudio : ''}`}>
@@ -77,17 +94,7 @@ export function Question({ view, stage }: { view: HostView; stage: QuestionStage
           </li>
         ))}
       </ol>
-      {inStudio && stage.phase === 'question_read' && (
-        <div className={styles.roundCard} aria-hidden="true">
-          <span className={styles.roundCardNumber}>{view.mode === 'ladder' ? t.rung(view.round) : t.roundCard(view.round)}</span>
-          <span className={styles.roundCardMeta}>
-            {question.category} · {t.difficulty[question.difficulty]}
-          </span>
-          {view.mode === 'classic' && pointsMultiplier(view.round, view.totalRounds) > 1 && (
-            <span className={styles.doubleBadge}>{t.doublePoints}</span>
-          )}
-        </div>
-      )}
+      {inStudio && stage.phase === 'question_read' && <RoundCard view={view} question={question} />}
       {!inStudio && (
         <footer className={styles.gameFooter}>
           <OttoFace size="7em" />

@@ -6,11 +6,26 @@
  *   pnpm flagged --retire <question-id>    # retire one by hand
  *   pnpm flagged --restore <question-id>   # put a wrongly retired one back
  */
-import { mcPayloadSchema } from '@trivia/shared';
+import { QUESTION_KINDS, type QuestionKind } from '@trivia/shared';
 import { and, desc, eq, gt, sql } from 'drizzle-orm';
 import { parseArgs } from 'node:util';
 import { questionFlags, questions } from '../src/db/schema.ts';
-import { PgStore } from '../src/db/store.ts';
+import { PgStore, questionFromPayload } from '../src/db/store.ts';
+import type { Question } from '../src/content/types.ts';
+
+/** The answer line for a flagged question, whatever its kind. */
+function answerLine(q: Question): string {
+  switch (q.kind) {
+    case 'mc':
+      return `answer: ${q.choices[q.correct]}  (others: ${q.choices.filter((_, i) => i !== q.correct).join(' | ')})`;
+    case 'bluff':
+      return `answer: ${q.answer}  (house lies: ${q.decoys.join(' | ')})`;
+    case 'timeline':
+      return `order: ${q.items.map((it) => `${it.text} (${it.year})`).join(' → ')}`;
+    case 'number':
+      return `answer: ${q.answer}${q.unit ? ` ${q.unit}` : ''}`;
+  }
+}
 
 const { values: args } = parseArgs({
   options: {
@@ -38,6 +53,7 @@ try {
       .select({
         id: questions.id,
         prompt: questions.prompt,
+        kind: questions.kind,
         payload: questions.payload,
         flagCount: questions.flagCount,
         timesShown: questions.timesShown,
@@ -51,8 +67,9 @@ try {
       .orderBy(desc(questions.flagCount));
     if (!rows.length) console.log('Nothing flagged.');
     for (const r of rows) {
-      const p = mcPayloadSchema.parse(r.payload);
-      console.log(`\n[${r.flagCount} flag] ${r.id}\n  ${r.prompt}\n  answer: ${p.choices[p.correct]}  (others: ${p.choices.filter((_, i) => i !== p.correct).join(' | ')})`);
+      const kind = (QUESTION_KINDS as readonly string[]).includes(r.kind) ? (r.kind as QuestionKind) : 'mc';
+      const q = questionFromPayload(kind, { id: r.id, categoryId: 0, category: '', difficulty: 1, prompt: r.prompt, explanation: null }, r.payload);
+      console.log(`\n[${r.flagCount} flag] ${r.id} (${kind})\n  ${r.prompt}\n  ${answerLine(q)}`);
       console.log(`  reasons: ${r.reasons}   answered right: ${r.timesCorrect}/${r.timesShown}`);
     }
   }

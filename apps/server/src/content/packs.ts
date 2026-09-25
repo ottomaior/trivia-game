@@ -1,4 +1,4 @@
-import { GAME_MODES, type GameMode, type PackOption } from '@trivia/shared';
+import { GAME_MODES, questionKindFor, type GameMode, type PackOption, type QuestionKind } from '@trivia/shared';
 import { z } from 'zod';
 import categoriesJson from '../../seed/categories.json' with { type: 'json' };
 import packsJson from '../../seed/packs.json' with { type: 'json' };
@@ -50,10 +50,22 @@ export function loadPacks(raw: unknown = packsJson, categorySlugs: string[] = ca
   return packs;
 }
 
-/** The packs worth offering: empty categories dropped, packs under `min` questions left out. */
-export function buildOffers(packs: PackDef[], counts: CategoryCount[], min: number): PackOffer[] {
-  const bySlug = new Map(counts.map((c) => [c.slug, c]));
+/** Question counts per kind, as the store reports them. */
+export type KindCounts = Partial<Record<QuestionKind, CategoryCount[]>>;
+
+/** The question kinds these packs play. */
+export function packKinds(packs: PackDef[]): QuestionKind[] {
+  return [...new Set(packs.map((p) => questionKindFor(p.mode)))];
+}
+
+/**
+ * The packs worth offering: empty categories dropped, packs under `min`
+ * questions left out. Each pack counts only the kind of question its mode plays.
+ */
+export function buildOffers(packs: PackDef[], countsByKind: KindCounts, min: number): PackOffer[] {
   return packs.flatMap((p) => {
+    const counts = countsByKind[questionKindFor(p.mode)] ?? [];
+    const bySlug = new Map(counts.map((c) => [c.slug, c]));
     const slugs = p.categories === '*' ? counts.map((c) => c.slug) : p.categories;
     const categories = slugs.flatMap((slug) => {
       const c = bySlug.get(slug);

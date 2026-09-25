@@ -1,6 +1,11 @@
 import type { Avatar } from './rules.ts';
 import type {
   AnswerPayload,
+  BetPayload,
+  BluffPickPayload,
+  BluffWritePayload,
+  GuessSubmitPayload,
+  OrderSubmitPayload,
   FlagPayload,
   HostCreatePayload,
   HostResumePayload,
@@ -32,7 +37,9 @@ export type ErrorCode =
   | 'TOO_FEW_PLAYERS'
   | 'NO_QUESTIONS'
   | 'TOO_FEW_QUESTIONS'
-  | 'COLOR_TAKEN';
+  | 'COLOR_TAKEN'
+  /** Blöffölő: the lie is (nearly) the truth itself. */
+  | 'TOO_CLOSE';
 
 export type Result<T extends object = object> =
   | ({ ok: true } & T)
@@ -76,6 +83,16 @@ export interface ClientToServerEvents {
   'power:pass': (payload: object, ack: Ack) => void;
   /** During the question: you broke the ice or wiped the slime off. */
   'power:clear': (payload: PowerClearPayload, ack: Ack) => void;
+  /** Blöffölő: send your lie… */
+  'bluff:write': (payload: BluffWritePayload, ack: Ack) => void;
+  /** …then pick the option you think is true. */
+  'bluff:pick': (payload: BluffPickPayload, ack: Ack) => void;
+  /** Időrend: the order you think is right (display indices, earliest first). */
+  'order:submit': (payload: OrderSubmitPayload, ack: Ack) => void;
+  /** Tippelj!: your guess… */
+  'guess:submit': (payload: GuessSubmitPayload, ack: Ack) => void;
+  /** …and your chips on the guesses you think are closest. */
+  'guess:bet': (payload: BetPayload, ack: Ack) => void;
   'time:ping': (payload: TimePingPayload, ack: (res: { t: number; serverNow: number }) => void) => void;
 }
 
