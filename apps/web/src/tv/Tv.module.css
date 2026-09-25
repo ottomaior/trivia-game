@@ -423,7 +423,17 @@
   font-size: 3.6em;
   color: var(--mustard);
   text-align: center;
-  text-shadow: 0.06em 0.06em 0 var(--rust);
+  /* Cut out of paper: a cream rim and a soft shadow, like the logo. */
+  text-shadow:
+    0.05em 0 0 var(--paper),
+    -0.05em 0 0 var(--paper),
+    0 0.05em 0 var(--paper),
+    0 -0.05em 0 var(--paper),
+    0.035em 0.035em 0 var(--paper),
+    -0.035em 0.035em 0 var(--paper),
+    0.035em -0.035em 0 var(--paper),
+    -0.035em -0.035em 0 var(--paper),
+    0.05em 0.1em 0.1em #12050880;
 }
 
 .hint {
@@ -433,12 +443,12 @@
 }
 
 .categoryChip {
-  padding: 0.35em 1em;
-  background: var(--cream);
-  color: var(--burgundy);
-  border-radius: 999px;
+  padding: 0.35em 1.1em 0.5em;
+  background: url('/art/pcard-result.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   font-size: 1.7em;
   font-weight: 800;
+  transform: rotate(-1.5deg);
 }
 
 .gameFooter {
@@ -471,10 +481,8 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 15em;
-  padding: 1.6em;
-  border: 0.25em solid var(--burgundy-deep);
-  border-radius: 1.2em;
-  box-shadow: 0 0.35em 0 var(--burgundy-deep);
+  padding: 1.8em 1.8em 2.6em;
+  background: var(--tile-art) center / 100% 100% no-repeat;
 }
 
 .voteName {
@@ -498,15 +506,12 @@
   min-height: 3.2em;
 }
 
-/* Question */
+/* Question: the prompt on a taped-up paper card. */
 .prompt {
   margin: 0;
-  padding: 1em 1.4em;
-  background: var(--cream);
-  color: var(--burgundy);
-  border: 0.22em solid var(--burgundy-deep);
-  border-radius: 1em;
-  box-shadow: 0 0.3em 0 var(--burgundy-deep);
+  padding: 1.1em 1.6em 1.3em;
+  background: url('/art/card.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   font-size: 3em;
   font-weight: 800;
   line-height: 1.2;
@@ -533,32 +538,38 @@
   opacity: 0.55;
 }
 
+/* A paper tile (--tile-art, from ui/answers.ts tileStyle). */
 .tile {
   position: relative;
   display: flex;
   align-items: center;
   gap: 1em;
   min-height: 5.6em;
-  padding: 0.8em 1.2em;
-  border: 0.22em solid var(--burgundy-deep);
-  border-radius: 1em;
-  box-shadow: 0 0.3em 0 var(--burgundy-deep);
+  padding: 0.7em 1.4em 1.3em 1em;
+  background: var(--tile-art) center / 100% 100% no-repeat;
   transition:
     opacity 300ms,
     transform 300ms;
 }
 
+/* The round paper badge with the answer's shape or the option's letter. */
 .tileLetter {
   display: grid;
   place-items: center;
   flex: none;
-  width: 1.5em;
-  height: 1.5em;
-  background: var(--burgundy-deep);
-  color: var(--cream);
-  border-radius: 50%;
+  width: 1.7em;
+  height: 1.7em;
+  background: url('/art/badge.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 2em;
+  line-height: 1;
+}
+
+.tileLetter > svg {
+  width: 0.7em;
+  height: 0.7em;
+  translate: -0.03em -0.04em;
 }
 
 .tileText {
@@ -567,13 +578,15 @@
   line-height: 1.15;
 }
 
-/* Dim wrong answers with an overlay so the pickers' blobs stay bright. */
+/* Dim wrong answers with an overlay cut to the tile's paper shape, so the
+   pickers' characters stay bright. */
 .tileWrong::after {
   content: '';
   position: absolute;
-  inset: -0.22em;
+  inset: 0;
   background: color-mix(in srgb, var(--burgundy) 65%, transparent);
-  border-radius: 1em;
+  -webkit-mask: var(--tile-art) center / 100% 100% no-repeat;
+  mask: var(--tile-art) center / 100% 100% no-repeat;
 }
 
 .tileWrong .pickers {
@@ -582,9 +595,19 @@
 }
 
 .tileCorrect {
-  outline: 0.35em dotted var(--mustard);
-  outline-offset: 0.3em;
-  transform: scale(1.02);
+  transform: scale(1.04) rotate(-0.8deg);
+  z-index: 1;
+}
+
+/* The right answer gets a green paper tick. */
+.tileCorrect::before {
+  content: '';
+  position: absolute;
+  right: -0.9em;
+  top: -1.1em;
+  width: 3.4em;
+  height: 3.4em;
+  background: url('/art/check.svg') center / contain no-repeat;
 }
 
 .pickers {
@@ -777,21 +800,22 @@
   list-style: none;
 }
 
+/* Each standing on a strip of cream paper. */
 .standingRow {
   display: grid;
   grid-template-columns: 3em 4em 12em 1fr 9em 5em 1.5em;
   align-items: center;
   gap: 1em;
-  padding: 0.5em 1.2em;
-  background: var(--burgundy-deep);
-  border-radius: 1em;
+  padding: 0.55em 1.6em 0.8em;
+  background: url('/art/ph-row.svg') center / 100% 100% no-repeat;
+  color: var(--ink);
   font-size: 1.3em;
 }
 
 .rank {
   font-family: var(--font-display);
   font-size: 2.2em;
-  color: var(--mustard);
+  color: var(--rust);
 }
 
 .standingName {
@@ -804,7 +828,7 @@
 
 .bar {
   height: 1.2em;
-  background: color-mix(in srgb, var(--cream) 10%, transparent);
+  background: color-mix(in srgb, var(--ink) 12%, transparent);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -826,11 +850,11 @@
 .delta {
   font-size: 1.4em;
   font-weight: 800;
-  color: var(--mustard);
+  color: var(--rust);
 }
 
 .moved {
-  color: var(--ice);
+  color: var(--teal);
 }
 
 /* Final */
@@ -1094,6 +1118,10 @@
   animation: dropIn 350ms calc(1.3s + var(--j, 0) * 120ms) cubic-bezier(0.3, 1.6, 0.5, 1) both;
 }
 
+.tileCorrect::before {
+  animation: pop 400ms 0.95s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
 .pickerPoints {
   animation: pop 300ms 1.9s cubic-bezier(0.3, 1.6, 0.5, 1) both;
 }
@@ -1291,12 +1319,7 @@
 
 /* Slot-machine spin over the categories. */
 .voteLit {
-  transform: translateY(-0.3em) scale(1.03);
-  outline: 0.35em solid #ffd66b;
-  outline-offset: 0.2em;
-  box-shadow:
-    0 0.35em 0 var(--burgundy-deep),
-    0 0 2em #ffd66b88;
+  transform: translateY(-0.5em) scale(1.05) rotate(-1deg);
 }
 
 .voteDim {
@@ -1388,11 +1411,9 @@
   overflow: hidden;
 }
 
+/* The studio's own paper sunburst turns behind the card now. */
 .titleBurst {
-  position: absolute;
-  inset: -40%;
-  background: repeating-conic-gradient(from 0deg at 50% 50%, #5a1c2e 0deg 9deg, var(--burgundy-deep) 9deg 18deg);
-  animation: spin 24s linear infinite, fadeIn 800ms both;
+  display: none;
 }
 
 .titleLogo {
@@ -1415,14 +1436,11 @@
 .titleRibbon {
   position: relative;
   margin: 0;
-  padding: 0.35em 1.6em;
-  background: var(--rust);
-  color: var(--cream);
-  border: 0.15em solid var(--burgundy-deep);
-  border-radius: 0.3em;
+  padding: 0.35em 2.2em 0.55em;
+  background: url('/art/ribbon.svg') center / 100% 100% no-repeat;
+  color: var(--paper);
   font-family: var(--font-display);
   font-size: 2.6em;
-  box-shadow: 0.15em 0.15em 0 var(--burgundy-deep);
   animation: ribbonIn 500ms 1.9s cubic-bezier(0.3, 1.5, 0.5, 1) both;
 }
 
@@ -1445,7 +1463,7 @@
   }
 }
 
-/* "Otto hangja: …": the voice service's credit, small and out of the way. */
+/* "Ottó hangja: …": the voice service's credit, small and out of the way. */
 .voiceCredit {
   margin: 0;
   font-size: 1.1em;
@@ -1584,9 +1602,10 @@
 .tileLie::after {
   content: '';
   position: absolute;
-  inset: -0.22em;
+  inset: 0;
   background: color-mix(in srgb, var(--burgundy) 45%, transparent);
-  border-radius: 1em;
+  -webkit-mask: var(--tile-art) center / 100% 100% no-repeat;
+  mask: var(--tile-art) center / 100% 100% no-repeat;
   pointer-events: none;
 }
 
@@ -1611,7 +1630,7 @@
   justify-content: flex-start;
   gap: 0.5em;
   min-height: 11em;
-  padding: 1em 0.8em;
+  padding: 1.1em 1em 1.8em;
   text-align: center;
 }
 
@@ -1696,7 +1715,7 @@
   flex-direction: column;
   gap: 0.3em;
   min-width: 11em;
-  padding: 0.8em 1.2em;
+  padding: 0.9em 1.4em 1.6em;
 }
 
 .guessValue {

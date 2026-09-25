@@ -9,7 +9,7 @@ const rungText = (n: number) => (n === 0 ? 'Start' : `${n}. lépcső`);
 
 export const t = {
   tagline: 'Az évszázad kvízműsora',
-  voiceCredit: (by: string) => `Otto hangja: ${by}`,
+  voiceCredit: (by: string) => `Ottó hangja: ${by}`,
   startPrompt: 'Kattints a kezdéshez',
   start: 'Kezdés',
   clickToContinue: 'Kattints a műsor folytatásához',
@@ -58,6 +58,8 @@ export const t = {
   enabledQuestions: (n: number) => `${fmt(n)} kérdés van bekapcsolva`,
   vipPicking: 'A VIP válogatja a kategóriákat…',
   waitingForMore: (n: number) => `Még ${n} versenyzőre várunk…`,
+  /** The host's name as it appears on the set (his podium). */
+  ottoName: 'Ottó',
   yourCharacter: 'A szereplőd',
   characters: {
     gomboc: 'Gombóc',
@@ -106,7 +108,7 @@ export const t = {
     offensive: 'Sértő',
     other: 'Egyéb',
   },
-  flagThanks: 'Köszönjük — Otto utánanéz.',
+  flagThanks: 'Köszönjük — Ottó utánanéz.',
   // Milliomos-létra
   ladderTitle: 'Milliomos-létra',
   rungOf: (n: number, total: number) => `${n}. lépcső / ${total}`,
@@ -223,7 +225,7 @@ export const t = {
     ],
     welcomeSolo: [
       '[warmly] Jó estét! [playfully] Ma egyetlen, ám annál bátrabb versenyzőnk van.',
-      '[chuckles] Egyszemélyes műsor? [proudly] Otto erre is készen áll!',
+      '[chuckles] Egyszemélyes műsor? [proudly] Ottó erre is készen áll!',
       '[playfully] Csak ketten vagyunk: te meg én. [chuckles] Meg a bajszom.',
       '[excited] Magányos hős a stúdióban! [mischievously] A dicsőség csak a tiéd.',
       '[warmly] Egy versenyző, egy bajusz, és rengeteg kérdés. [excited] Kezdjük!',

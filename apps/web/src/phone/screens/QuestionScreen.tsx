@@ -2,7 +2,8 @@ import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type McQ
 import { useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { LETTERS, TILE } from '../../ui/answers.ts';
+import { TILE } from '../../ui/answers.ts';
+import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import { FreezeCover, SlimeCover } from '../Obstacles.tsx';
 import styles from '../Phone.module.css';
 
@@ -48,7 +49,9 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
     return (
       <div className={styles.column}>
         <div className={styles.lockedCard} style={{ background: TILE[mine]!.bg, color: TILE[mine]!.fg }}>
-          <span className={styles.lockedLetter}>{LETTERS[mine]}</span>
+          <span className={styles.lockedLetter}>
+            <AnswerShape index={mine} />
+          </span>
           <span>{question.choices[mine]}</span>
         </div>
         <h2 className={styles.screenTitle}>{t.lockedIn}</h2>
@@ -79,7 +82,9 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
             onClick={() => answer(i)}
             data-testid={`choice-${i}`}
           >
-            <span className={styles.choiceLetter}>{LETTERS[i]}</span>
+            <span className={styles.choiceLetter}>
+              <AnswerShape index={i} color={TILE[i]!.bg} />
+            </span>
             <span className={styles.choiceText}>{c}</span>
             {votes !== null && (
               <span className={styles.audienceVotes}>{audienceTotal > 0 ? `${Math.round((votes / audienceTotal) * 100)}%` : '–'}</span>
@@ -172,7 +177,7 @@ function HelpNotes({ view, help, total }: { view: PlayerView; help: LadderHelp; 
           <p className={styles.hint}>{t.friendThinking(friend.name)}</p>
         ) : (
           <p className={styles.friendPick}>
-            {t.friendSays(friend.name)} <strong>{LETTERS[help.friend!.choice]}</strong>
+            {t.friendSays(friend.name)} <AnswerShape index={help.friend!.choice} size="1.3em" />
           </p>
         ))}
     </div>

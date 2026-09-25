@@ -1,0 +1,219 @@
+/* Ottó's paper rig. Every piece is a full-size image in the rig's 380x490
+   space, so the joints are percentages of that box (PIVOTS in
+   apps/motion/art/otto-rig.mjs): shoulders, elbow, neck, hips, and the top
+   lip the mouth opens from. */
+
+.otto {
+  position: relative;
+  aspect-ratio: 380 / 490;
+}
+
+/* Cropped at the chest (flat-mode screens): the top 62% of the rig. */
+.bust {
+  aspect-ratio: 380 / 304;
+  overflow: hidden;
+}
+
+.rig {
+  position: absolute;
+  inset: 0 0 auto;
+  aspect-ratio: 380 / 490;
+}
+
+.rig div,
+.rig img,
+.boil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.rig img {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hips,
+.armBack,
+.fore,
+.head,
+.armFront {
+  transition: transform 380ms cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.hips {
+  transform-origin: 47.37% 95.9%;
+}
+
+.armBack {
+  transform-origin: 65.79% 59.18%;
+}
+
+.fore {
+  transform-origin: 83.68% 66.53%;
+}
+
+.head {
+  transform-origin: 47.37% 51.02%;
+}
+
+.armFront {
+  transform-origin: 27.37% 59.59%;
+}
+
+/* --- Poses ---------------------------------------------------------------- */
+
+/* Idle: the free hand rests at the hip, the mic hand stays up. */
+.otto[data-pose='idle'] .armBack {
+  transform: rotate(40deg);
+}
+
+.otto[data-pose='idle'] .fore {
+  transform: rotate(95deg);
+}
+
+/* Point: the open-palm "here we go" presenting gesture. */
+.otto[data-pose='point'] .head {
+  transform: rotate(4deg);
+}
+
+.otto[data-pose='armsUp'] .armBack {
+  transform: rotate(-70deg);
+}
+
+.otto[data-pose='armsUp'] .fore {
+  transform: rotate(30deg);
+}
+
+.otto[data-pose='armsUp'] .armFront {
+  transform: rotate(-35deg);
+}
+
+.otto[data-pose='armsUp'] .head {
+  transform: translateY(-1.5%);
+}
+
+/* Facepalm: the head drops and the hand goes up to scratch it. */
+.otto[data-pose='facepalm'] .armBack {
+  transform: rotate(-95deg);
+}
+
+.otto[data-pose='facepalm'] .fore {
+  transform: rotate(-60deg);
+}
+
+.otto[data-pose='facepalm'] .head {
+  transform: rotate(-8deg) translateY(1.5%);
+}
+
+.otto[data-pose='lean'] .hips {
+  transform: rotate(4deg);
+}
+
+.otto[data-pose='lean'] .armBack {
+  transform: rotate(40deg);
+}
+
+.otto[data-pose='lean'] .fore {
+  transform: rotate(95deg);
+}
+
+.otto[data-pose='lean'] .head {
+  transform: rotate(5deg);
+}
+
+/* --- Talking -------------------------------------------------------------- */
+
+/* The open mouth scales down from the top lip: 0 is shut, 1 wide open. */
+.mouth {
+  transform-origin: 49.05% 42.57%;
+  transform: scaleY(var(--mouth, 0));
+}
+
+.otto[data-talking='true'][data-voiced='false'] .mouth {
+  animation: flap 170ms ease-in-out infinite alternate;
+}
+
+.otto[data-talking='true'] .bob {
+  animation: bob 340ms ease-in-out infinite alternate;
+}
+
+@keyframes flap {
+  from {
+    transform: scaleY(0.1);
+  }
+  to {
+    transform: scaleY(0.85);
+  }
+}
+
+@keyframes bob {
+  to {
+    transform: translateY(0.6%);
+  }
+}
+
+/* --- Ambient motion (full studio only) ------------------------------------ */
+
+.lids {
+  opacity: 0;
+}
+
+.otto[data-lively='true'] .lids {
+  animation: blink 4.3s step-end infinite;
+}
+
+.otto[data-lively='true'] .hips {
+  animation: sway 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  94% {
+    opacity: 1;
+  }
+  97% {
+    opacity: 0;
+  }
+}
+
+@keyframes sway {
+  from {
+    rotate: -1deg;
+  }
+  to {
+    rotate: 1deg;
+  }
+}
+
+/* Boiling edges: three cuts of the same piece, each shown a third of the
+   time, like hand-cut stop motion. Without it only the first is shown. */
+.boil > img:not(:first-child) {
+  display: none;
+}
+
+.otto[data-lively='true'] .boil > img {
+  display: block;
+  animation: boil 450ms step-end infinite;
+}
+
+.otto[data-lively='true'] .boil > img:nth-child(2) {
+  animation-delay: -150ms;
+}
+
+.otto[data-lively='true'] .boil > img:nth-child(3) {
+  animation-delay: -300ms;
+}
+
+@keyframes boil {
+  0% {
+    visibility: visible;
+  }
+  33.33% {
+    visibility: hidden;
+  }
+}

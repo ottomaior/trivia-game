@@ -5,7 +5,7 @@ import { Character } from '../../ui/Character.tsx';
 import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
-import { letterOf, optionTile } from '../../ui/answers.ts';
+import { letterOf, optionTile, tileStyle } from '../../ui/answers.ts';
 import { withUnit } from '../../ui/format.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
@@ -116,7 +116,7 @@ function OptionGrid({ options }: { options: string[] }) {
   return (
     <ol className={`${styles.tiles} ${styles.tilesOpen} ${options.length > 4 ? styles.tilesMany : ''}`}>
       {options.map((text, i) => (
-        <li key={i} className={styles.tile} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
+        <li key={i} className={styles.tile} style={tileStyle(optionTile(i), i)}>
           <span className={styles.tileLetter}>{letterOf(i)}</span>
           <span className={styles.tileText}>{text}</span>
         </li>
@@ -130,7 +130,7 @@ export function TimelineCards({ items, open }: { items: string[]; open: boolean 
   return (
     <ol className={`${styles.timelineRow} ${open ? styles.tilesOpen : ''}`}>
       {items.map((text, i) => (
-        <li key={i} className={`${styles.tile} ${styles.timelineCard}`} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
+        <li key={i} className={`${styles.tile} ${styles.timelineCard}`} style={tileStyle(optionTile(i), i, true)}>
           <span className={styles.tileLetter}>{letterOf(i)}</span>
           <span className={styles.timelineText}>{text}</span>
         </li>
@@ -147,7 +147,7 @@ function GuessLine({ view, guesses, unit }: { view: HostView; guesses: { playerI
       {guesses.map((g, i) => {
         const p = byId.get(g.playerId);
         return (
-          <li key={g.playerId} className={`${styles.tile} ${styles.guessCard}`} style={{ background: optionTile(i).bg, color: optionTile(i).fg, '--i': i } as CSSProperties}>
+          <li key={g.playerId} className={`${styles.tile} ${styles.guessCard}`} style={tileStyle(optionTile(i), i, true)}>
             {p && <Character id={p.avatar.character} size="3em" />}
             <span className={styles.guessValue}>{withUnit(g.value, unit)}</span>
             <span className={styles.guessName}>{p?.name}</span>

@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
-import { LETTERS } from '../../ui/answers.ts';
+import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import { withUnit } from '../../ui/format.ts';
 import { Burst } from '../Burst.tsx';
 import styles from '../Phone.module.css';
@@ -40,7 +40,7 @@ export function RevealScreen({ view, stage, socket }: { view: PlayerView; stage:
         <>
           <p className={styles.hint}>{t.theAnswerWas}</p>
           <p className={styles.answerText}>
-            {LETTERS[result.correct]}: {question.choices[result.correct]}
+            <AnswerShape index={result.correct} /> {question.choices[result.correct]}
           </p>
         </>
       )}

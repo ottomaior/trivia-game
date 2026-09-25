@@ -1,8 +1,8 @@
 import { Application, Container, Sprite, Texture } from 'pixi.js';
 
 // The studio's light and particle layer: one transparent WebGL canvas over the
-// stage. Sweeping spotlight beams, a focus spotlight, spark and confetti
-// bursts, and points flying to the desks. Positions come from DOM rects, so
+// stage. A focus spotlight, bursts of paper scraps and confetti, and points
+// flying to the desks as paper bits. Positions come from DOM rects, so
 // callers point effects at real elements on the stage.
 
 const PALETTE = [0xd9a13b, 0x3f7d74, 0xefe3c8, 0x9fc7cc, 0xb8553a, 0x6e4b72];
@@ -34,10 +34,10 @@ class StudioFx {
   private host: HTMLElement | null = null;
   private particles: Particle[] = [];
   private layer = new Container();
-  private beams: Sprite[] = [];
+  /** Torn paper shapes every particle is cut from (tinted per particle). */
+  private scraps: Texture[] = [];
   private spot: Sprite | null = null;
   private spotTarget: { x: number; y: number; w: number } | null = null;
-  private time = 0;
   /** Bumped on every mount/destroy, so a slow init can tell it was superseded. */
   private generation = 0;
 
@@ -65,29 +65,24 @@ class StudioFx {
     app.canvas.setAttribute('data-testid', 'fx-canvas');
     host.appendChild(app.canvas);
 
-    // Soft, wide light beams sweeping down from the rig.
-    const beamTex = canvasTexture(128, 512, (g) => {
-      const grad = g.createLinearGradient(0, 0, 0, 512);
-      grad.addColorStop(0, 'rgba(255,255,255,0.9)');
-      grad.addColorStop(1, 'rgba(255,255,255,0)');
-      g.fillStyle = grad;
-      g.beginPath();
-      g.moveTo(54, 0);
-      g.lineTo(74, 0);
-      g.lineTo(128, 512);
-      g.lineTo(0, 512);
-      g.closePath();
-      g.fill();
-    });
-    for (let i = 0; i < 3; i++) {
-      const beam = new Sprite(beamTex);
-      beam.anchor.set(0.5, 0);
-      beam.blendMode = 'add';
-      beam.alpha = 0.13;
-      beam.tint = i === 1 ? 0xffe7a8 : 0xf4e9d4;
-      this.beams.push(beam);
-      app.stage.addChild(beam);
-    }
+    // A few torn scraps of paper: irregular quads with a lighter cut edge.
+    this.scraps = [0, 1, 2, 3].map((k) =>
+      canvasTexture(32, 32, (g) => {
+        const r = (i: number) => 3 + ((Math.sin(k * 7.3 + i * 3.1) + 1) / 2) * 6;
+        g.beginPath();
+        g.moveTo(r(0), r(1));
+        g.lineTo(32 - r(2), r(3) * 0.6);
+        g.lineTo(32 - r(4) * 0.5, 16 + r(5) * 0.4);
+        g.lineTo(32 - r(6), 32 - r(7));
+        g.lineTo(r(8) * 0.7, 32 - r(9));
+        g.closePath();
+        g.fillStyle = '#f4f0e8';
+        g.fill();
+        g.lineWidth = 2.5;
+        g.strokeStyle = '#ffffff';
+        g.stroke();
+      }),
+    );
 
     const spotTex = canvasTexture(256, 256, (g) => {
       const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
@@ -113,7 +108,7 @@ class StudioFx {
     this.app = null;
     this.host = null;
     this.particles = [];
-    this.beams = [];
+    this.scraps = [];
     this.spot = null;
     this.layer = new Container();
   }
@@ -135,13 +130,13 @@ class StudioFx {
         y: c.y + (Math.random() - 0.5) * rect.height * 0.6,
         vx: Math.cos(a) * speed,
         vy: Math.sin(a) * speed - 200,
-        size: 3 + Math.random() * 5,
-        tint: Math.random() < 0.7 ? 0xffd66b : 0xf4e9d4,
-        life: 0.5 + Math.random() * 0.5,
+        size: 6 + Math.random() * 7,
+        tint: Math.random() < 0.6 ? 0xd9a13b : 0xefe3c8,
+        life: 0.6 + Math.random() * 0.5,
         gravity: 900,
         drag: 2.5,
         fade: true,
-        blend: true,
+        spin: (Math.random() - 0.5) * 16,
       });
     }
   }
@@ -167,7 +162,7 @@ class StudioFx {
     }
   }
 
-  /** Little golden points streaming from one element to another (e.g. tile → desk). */
+  /** Little golden paper bits streaming from one element to another (e.g. tile → desk). */
   fly(from: DOMRect, to: DOMRect, count = 14): void {
     if (!this.app) return;
     const a = this.centre(from);
@@ -178,13 +173,13 @@ class StudioFx {
         y: a.y + (Math.random() - 0.5) * from.height * 0.5,
         vx: (Math.random() - 0.5) * 900,
         vy: -300 - Math.random() * 500,
-        size: 7,
-        tint: 0xffd66b,
+        size: 10,
+        tint: 0xebc26a,
         life: 1.4,
         gravity: 0,
         drag: 1.5,
         fade: false,
-        blend: true,
+        spin: (Math.random() - 0.5) * 10,
         target: b,
       });
     }
@@ -212,7 +207,8 @@ class StudioFx {
     blend?: boolean;
     target?: { x: number; y: number };
   }): void {
-    const sprite = new Sprite(Texture.WHITE);
+    const scrap = this.scraps[Math.floor(Math.random() * this.scraps.length)];
+    const sprite = new Sprite(scrap ?? Texture.WHITE);
     sprite.anchor.set(0.5);
     sprite.width = o.size;
     sprite.height = o.size * (o.aspect ?? 1);
@@ -236,15 +232,7 @@ class StudioFx {
 
   private tick(dt: number): void {
     if (!this.app) return;
-    this.time += dt;
-    const { width, height } = this.app.screen;
-
-    this.beams.forEach((beam, i) => {
-      beam.position.set(width * (0.2 + i * 0.3), -height * 0.05);
-      beam.height = height * 1.25;
-      beam.width = width * 0.22;
-      beam.rotation = Math.sin(this.time * (0.35 + i * 0.12) + i * 2) * 0.32;
-    });
+    const { height } = this.app.screen;
 
     if (this.spot) {
       const target = this.spotTarget;

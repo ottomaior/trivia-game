@@ -3,7 +3,8 @@ import type { CSSProperties } from 'react';
 import { Character } from '../../ui/Character.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Otto } from '../../ui/Otto.tsx';
-import { LETTERS, letterOf, optionTile, TILE } from '../../ui/answers.ts';
+import { letterOf, optionTile, TILE, tileStyle } from '../../ui/answers.ts';
+import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import { withUnit } from '../../ui/format.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
@@ -73,10 +74,12 @@ function McTiles({ choices, result, picks, byId, mode }: { choices: string[]; re
           <li
             key={i}
             className={`${styles.tile} ${isCorrect ? styles.tileCorrect : styles.tileWrong}`}
-            style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}
+            style={tileStyle(TILE[i]!, i)}
             data-testid={isCorrect ? 'correct-tile' : undefined}
           >
-            <span className={styles.tileLetter}>{LETTERS[i]}</span>
+            <span className={styles.tileLetter}>
+              <AnswerShape index={i} color={TILE[i]!.bg} />
+            </span>
             <span className={styles.tileText}>{c}</span>
             <span className={styles.pickers}>
               {picks
@@ -107,7 +110,7 @@ function BluffTiles({ result, picks, byId }: { result: ResultOf<'bluff'>; picks:
           <li
             key={i}
             className={`${styles.tile} ${o.truth ? styles.tileCorrect : styles.tileLie}`}
-            style={{ background: tile.bg, color: tile.fg, '--i': i } as CSSProperties}
+            style={tileStyle(tile, i)}
             data-testid={o.truth ? 'correct-tile' : 'bluff-option'}
           >
             <span className={styles.tileLetter}>{letterOf(i)}</span>
@@ -136,7 +139,7 @@ function OrderReveal({ items, result, picks, byId }: { items: string[]; result: 
           <li
             key={shown}
             className={`${styles.tile} ${styles.timelineCard}`}
-            style={{ background: optionTile(shown).bg, color: optionTile(shown).fg, '--i': k } as CSSProperties}
+            style={tileStyle(optionTile(shown), k, true)}
             data-testid={k === 0 ? 'correct-tile' : undefined}
           >
             <span className={styles.timelineYear}>{result.years[k]}</span>

@@ -8,7 +8,8 @@ import { FlipClock } from '../../ui/FlipClock.tsx';
 import { OttoFace } from '../../ui/Otto.tsx';
 import { PowerIcon } from '../../ui/PowerIcon.tsx';
 import { TimerBar } from '../../ui/TimerBar.tsx';
-import { LETTERS, TILE } from '../../ui/answers.ts';
+import { TILE, tileStyle } from '../../ui/answers.ts';
+import { AnswerShape } from '../../ui/AnswerShape.tsx';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
@@ -88,8 +89,10 @@ export function Question({ view, stage }: { view: HostView; stage: McQuestionSta
       </h2>
       <ol className={`${styles.tiles} ${open ? styles.tilesOpen : inStudio ? styles.tilesHidden : styles.tilesWaiting}`}>
         {question.choices.map((c, i) => (
-          <li key={i} className={styles.tile} style={{ background: TILE[i]!.bg, color: TILE[i]!.fg, '--i': i } as CSSProperties}>
-            <span className={styles.tileLetter}>{LETTERS[i]}</span>
+          <li key={i} className={styles.tile} style={tileStyle(TILE[i]!, i)}>
+            <span className={styles.tileLetter}>
+              <AnswerShape index={i} color={TILE[i]!.bg} />
+            </span>
             <span className={styles.tileText}>{c}</span>
           </li>
         ))}

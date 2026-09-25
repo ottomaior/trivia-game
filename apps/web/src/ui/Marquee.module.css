@@ -12,7 +12,8 @@
   border-radius: 2rem;
   outline: 0.35rem solid var(--rust);
   outline-offset: 0.35rem;
-  background: var(--burgundy);
+  /* The paper sunburst, still (flat mode sees it; the studio draws its own on top). */
+  background: var(--burgundy) url('/art/bg-rays.svg') center / cover no-repeat;
   overflow: hidden;
 }
 

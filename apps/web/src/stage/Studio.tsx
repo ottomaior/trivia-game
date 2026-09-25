@@ -54,6 +54,7 @@ export function Studio({ view, lite, onTooSlow }: { view: HostView; lite: boolea
               players={view.players}
               bubbleDelayMs={phase === 'reveal' ? REVEAL_BEATS.otto * 1000 : 0}
               bubbleHideMs={phase === 'question_read' || isInputPhase(phase) ? 1_800 : phase === 'scoreboard' ? 2_600 : undefined}
+              lively={!lite}
             />
           </div>
           <div className={styles.deskArea}>

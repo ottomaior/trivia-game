@@ -49,31 +49,42 @@ export const torso = `<g transform="translate(0 20)"><g filter="url(#oT)">
 <g filter="url(#oS)"><path d="M170 244 L190 244 L188 262 L172 262 Z" fill="${O.tieDk}"/></g>
 <g filter="url(#oS)"><path d="M228 302 L236 288 L243 298 L251 290 L254 300 Z" fill="${O.tie}"/></g></g>`;
 
-/** The head, in rig space; `blink` closes the eyes, `mouth` 0..1 opens the mouth, `look` shifts the pupils. */
-export function head({ blink = false, mouth = 0, look = 0 } = {}) {
-  const eyes = blink
-    ? `<ellipse cx="152" cy="126" rx="14" ry="10" fill="${O.lid}"/><ellipse cx="210" cy="126" rx="14" ry="10" fill="${O.lid}"/>
-<path d="M138 127 Q152 134 166 127 M196 127 Q210 134 224 127" stroke="${C.ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`
-    : `<ellipse cx="152" cy="126" rx="13" ry="9" fill="#fbf5e6"/><ellipse cx="210" cy="126" rx="13" ry="9" fill="#fbf5e6"/>
+const HEAD_WRAP = 'translate(0 20) rotate(-5 180 150)';
+
+const eyesShut = `<ellipse cx="152" cy="126" rx="14" ry="10" fill="${O.lid}"/><ellipse cx="210" cy="126" rx="14" ry="10" fill="${O.lid}"/>
+<path d="M138 127 Q152 134 166 127 M196 127 Q210 134 224 127" stroke="${C.ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+
+const eyesOpen = (look) => `<ellipse cx="152" cy="126" rx="13" ry="9" fill="#fbf5e6"/><ellipse cx="210" cy="126" rx="13" ry="9" fill="#fbf5e6"/>
 <circle cx="${154 + look}" cy="129" r="5.5" fill="${O.iris}"/><circle cx="${212 + look}" cy="129" r="5.5" fill="${O.iris}"/>
 <circle cx="${154 + look}" cy="129" r="2.6" fill="${C.ink}"/><circle cx="${212 + look}" cy="129" r="2.6" fill="${C.ink}"/>
 <circle cx="${156 + look}" cy="128" r="1.4" fill="#fbf5e6"/><circle cx="${214 + look}" cy="128" r="1.4" fill="#fbf5e6"/>
 <path d="M136 129 C138 112 166 110 168 127 Z" fill="${O.lid}"/><path d="M194 129 C196 112 224 110 226 127 Z" fill="${O.lid}"/>
 <path d="M137 128 C146 123 160 122 167 126 M195 128 C204 123 218 122 225 126" stroke="${C.ink}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
-  const h = 3 + 17 * Math.max(0, Math.min(1, mouth));
-  const mouthSvg = mouth < 0.08
-    ? `<path d="M170 195 C178 199 190 198 197 193 C190 195 178 196 170 195 Z" fill="#c98072"/><path d="M166 192 C176 194 189 193 201 185" stroke="#4a2a22" stroke-width="3.5" fill="none" stroke-linecap="round"/>`
-    : `<ellipse cx="183" cy="${(189 + h / 2).toFixed(1)}" rx="${(13 + 3 * mouth).toFixed(1)}" ry="${(h / 2).toFixed(1)}" fill="#4a1a1e"/>
+
+const mouthClosed = `<path d="M170 195 C178 199 190 198 197 193 C190 195 178 196 170 195 Z" fill="#c98072"/><path d="M166 192 C176 194 189 193 201 185" stroke="#4a2a22" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
+
+/** The open mouth, `mouth` 0..1 (0 draws nothing). */
+function mouthShape(mouth) {
+  if (mouth < 0.08) return '';
+  const h = 3 + 17 * Math.min(1, mouth);
+  return `<ellipse cx="183" cy="${(189 + h / 2).toFixed(1)}" rx="${(13 + 3 * mouth).toFixed(1)}" ry="${(h / 2).toFixed(1)}" fill="#4a1a1e"/>
 ${h > 9 ? `<path d="M${(173 - 2 * mouth).toFixed(1)} 190 L${(193 + 2 * mouth).toFixed(1)} 190 L${(191 + 2 * mouth).toFixed(1)} 194 L${(175 - 2 * mouth).toFixed(1)} 194 Z" fill="#fbf5e6"/>` : ''}
 <path d="M${(172 - 2 * mouth).toFixed(1)} ${(190 + h).toFixed(1)} Q183 ${(195 + h).toFixed(1)} ${(194 + 2 * mouth).toFixed(1)} ${(190 + h).toFixed(1)}" stroke="#c98072" stroke-width="4" fill="none" stroke-linecap="round"/>`;
-  return `<g transform="translate(0 20) rotate(-5 180 150)">
+}
+
+const stache = `<path d="M150 182 C158 172 172 172 180 176 C188 172 202 172 210 182 C200 185 190 184 180 182 C170 184 160 185 150 182 Z" fill="${O.stache}"/>`;
+
+/** Head, face and beard, with the eyes open or shut and a mouth that is closed or open 0..1 (the moustache on top). */
+function headSvg({ blink, mouth, look }) {
+  const open = mouthShape(mouth);
+  return `<g transform="${HEAD_WRAP}">
 <g filter="url(#oH)">
 <ellipse cx="112" cy="150" rx="14" ry="22" fill="${O.skinDk}"/><ellipse cx="250" cy="150" rx="14" ry="22" fill="${O.skinDk}"/>
 <path d="M180 30 C234 30 256 76 254 132 C252 184 228 226 180 230 C132 226 108 184 106 132 C104 76 126 30 180 30 Z" fill="${O.skin}"/>
 <path d="M228 56 C248 82 256 118 252 150 C246 190 224 218 190 228 C220 206 236 176 238 140 C240 110 238 80 228 56 Z" fill="${O.skinDk}" opacity="0.6"/>
 <ellipse cx="150" cy="58" rx="24" ry="9" fill="#fff4e8" opacity="0.6" transform="rotate(-22 150 58)"/>
 <ellipse cx="136" cy="156" rx="12" ry="7" fill="${C.blush}" opacity="0.35"/><ellipse cx="224" cy="156" rx="12" ry="7" fill="${C.blush}" opacity="0.35"/>
-${eyes}
+${blink ? eyesShut : eyesOpen(look)}
 <path d="M130 114 C142 106 158 106 169 113 L167 119 C156 114 144 114 132 120 Z" fill="${O.brow}"/>
 <path d="M192 111 C202 104 218 103 231 110 L229 116 C216 110 204 111 194 117 Z" fill="${O.brow}"/>
 <path d="M180 118 C176 138 170 152 172 160 C176 168 192 168 194 160 C194 152 186 138 180 118 Z" fill="#e3ad8f"/>
@@ -82,9 +93,37 @@ ${eyes}
 <path d="M112 136 C112 178 128 212 152 228 C166 238 194 238 208 228 C232 212 248 178 248 136 C244 160 238 178 228 188 C220 178 210 174 200 174 C192 174 186 176 180 176 C174 176 168 174 160 174 C150 174 140 178 132 188 C122 178 116 160 112 136 Z" fill="${O.beard}"/>
 <path d="M162 222 C172 230 190 230 200 222 C194 234 168 234 162 222 Z" fill="${O.beardDk}"/>
 <path d="M126 192 l4 6 M140 208 l4 6 M222 192 l-4 6 M210 208 l-4 6 M176 220 l1 6 M188 220 l-1 6" stroke="${O.beardLt}" stroke-width="2.5" stroke-linecap="round"/>
-${mouthSvg}
-<path d="M150 182 C158 172 172 172 180 176 C188 172 202 172 210 182 C200 185 190 184 180 182 C170 184 160 185 150 182 Z" fill="${O.stache}"/>
+${open || mouthClosed}
+${stache}
 </g></g>`;
+}
+
+/** The head, in rig space; `blink` closes the eyes, `mouth` 0..1 opens the mouth, `look` shifts the pupils. */
+export function head({ blink = false, mouth = 0, look = 0 } = {}) {
+  return headSvg({ blink, mouth, look });
+}
+
+/**
+ * The head as separate layers for the live game, where the mouth and the
+ * blinks are CSS on top of still images (no filters redrawn per frame):
+ * the face with the mouth closed, the fully open mouth (scaled 0..1 from its
+ * top lip), the moustache that sits over it, and the shut eyelids. All in
+ * rig space, so they stack exactly. They use the `oI` filter (paper grain and
+ * wobble without the cut-out border), defined by `ottoLayerDefs`.
+ */
+export const headLayers = {
+  face: headSvg({ blink: false, mouth: 0, look: 0 }),
+  mouth: `<g transform="${HEAD_WRAP}"><g filter="url(#oI)">${mouthShape(1)}</g></g>`,
+  stache: `<g transform="${HEAD_WRAP}"><g filter="url(#oI)">${stache}</g></g>`,
+  lids: `<g transform="${HEAD_WRAP}"><g filter="url(#oI)">${eyesShut}</g></g>`,
+};
+
+/** The top of the open mouth in rig space: the pivot the live mouth scales from. */
+export const MOUTH_TOP = [186.4, 208.6];
+
+/** Filters for `headLayers`' inner pieces (no border or shadow: they sit on the face). */
+export function ottoLayerDefs(boil = 0) {
+  return paper('oI', { seed: 43 + boil * 97, border: 0, shadow: 0, wobble: 1.5 });
 }
 
 export const frontArm = `<g transform="translate(0 20)"><g filter="url(#oR)">

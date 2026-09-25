@@ -1,28 +1,40 @@
-export const LETTERS = ['A', 'B', 'C', 'D'] as const;
+import type { CSSProperties } from 'react';
 
-/** Tile colors A–D, and the text color that reads on each. */
-export const TILE = [
-  { bg: 'var(--answer-a)', fg: 'var(--cream)' },
-  { bg: 'var(--answer-b)', fg: 'var(--cream)' },
-  { bg: 'var(--answer-c)', fg: 'var(--cream)' },
-  { bg: 'var(--answer-d)', fg: 'var(--burgundy)' },
-] as const;
+/** Spoken names of the four answer shapes (for screen readers). */
+export const SHAPE_NAMES = ['háromszög', 'rombusz', 'kör', 'négyzet'] as const;
 
-/** Colors for longer option lists (Blöffölő, Időrend): the four answer colors, then four more. */
+/**
+ * The eight option colours, in order, and the text colour that reads on each.
+ * Each has a paper tile (`art`, wide, with an empty badge for a letter) and a
+ * paper card (`panel`), drawn by apps/motion/art/stage.mjs.
+ */
 export const OPTION_TILE = [
-  ...TILE,
-  { bg: 'var(--ice)', fg: 'var(--burgundy)' },
-  { bg: 'var(--cream)', fg: 'var(--burgundy)' },
-  { bg: 'var(--slime-deep)', fg: 'var(--cream)' },
-  { bg: 'var(--burgundy-deep)', fg: 'var(--cream)' },
-] as const;
+  { bg: 'var(--rust)', fg: 'var(--paper)' },
+  { bg: 'var(--teal)', fg: 'var(--paper)' },
+  { bg: 'var(--plum)', fg: 'var(--paper)' },
+  { bg: 'var(--mustard)', fg: 'var(--ink)' },
+  { bg: 'var(--ice)', fg: 'var(--ink)' },
+  { bg: 'var(--cream)', fg: 'var(--ink)' },
+  { bg: 'var(--char-szellem)', fg: 'var(--ink)' },
+  { bg: 'var(--char-bogyo)', fg: 'var(--ink)' },
+].map((o, n) => ({ ...o, art: `/art/opt-${n}.svg`, panel: `/art/panel-${n}.svg` }));
+
+export type Tile = (typeof OPTION_TILE)[number];
+
+/** The four quiz answers: the first four colours; each answer also has a shape (▲ ◆ ● ■, `AnswerShape`). */
+export const TILE: readonly Tile[] = OPTION_TILE.slice(0, 4);
 
 /** The tile for option `i` of a long list; colors repeat after eight. */
-export function optionTile(i: number): (typeof OPTION_TILE)[number] {
+export function optionTile(i: number): Tile {
   return OPTION_TILE[i % OPTION_TILE.length]!;
 }
 
-/** Option letters beyond D: A, B, … Z. */
+/** Option letters: A, B, … Z. */
 export function letterOf(i: number): string {
   return String.fromCharCode(65 + (i % 26));
+}
+
+/** Inline style for a paper tile on the TV (`--i` staggers its animations). */
+export function tileStyle(tile: Tile, i: number, panel = false): CSSProperties {
+  return { '--tile-art': `url(${panel ? tile.panel : tile.art})`, '--tile-bg': tile.bg, color: tile.fg, '--i': i } as CSSProperties;
 }
