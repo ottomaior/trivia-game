@@ -122,7 +122,7 @@ export async function autoplay(phone: Page, choice = 0): Promise<void> {
   while (!(await final.isVisible())) {
     const vote = phone.getByRole('heading', { name: 'Válaszd ki a következő kategóriát' });
     if (await vote.isVisible()) {
-      await phone.locator('button').filter({ hasNotText: 'Belépés' }).first().click({ timeout: 1_000 }).catch(() => {});
+      await phone.getByTestId('vote-0').click({ timeout: 1_000 }).catch(() => {});
     }
     // Milliomos-létra: keep climbing.
     const stay = phone.getByRole('button', { name: 'Maradok' });

@@ -21,6 +21,7 @@ export function VoteScreen({ view, stage, socket }: { view: PlayerView; stage: V
           key={o.id}
           className={`${styles.choice} ${mine === i ? styles.choiceMine : ''} ${mine !== null && mine !== i ? styles.choiceDim : ''}`}
           style={phoneAnswerStyle(i)}
+          data-testid={`vote-${i}`}
           onClick={() => {
             navigator.vibrate?.(30);
             void send(socket, 'vote:cast', { option: i });
