@@ -1048,8 +1048,8 @@
   text-shadow: 0 2px 0 var(--slime-deep);
 }
 
+/* Still catches taps while it fades: the tap that broke it must not land on an answer. */
 .coverGone {
-  pointer-events: none;
   animation: coverOut 380ms ease-in forwards;
 }
 

@@ -40,6 +40,7 @@ export const t = {
   round: (n: number, total: number) => `${n}. kör / ${total}`,
   pickCategory: 'Válasszatok kategóriát',
   voteOnPhone: 'Szavazz a telefonodon',
+  voteTie: 'Döntetlen – sorsolás!',
   getReady: 'Figyelem…',
   answerOnPhone: 'Válaszolj a telefonodon',
   difficulty: { 1: 'Könnyű', 2: 'Közepes', 3: 'Nehéz' } as Record<number, string>,
