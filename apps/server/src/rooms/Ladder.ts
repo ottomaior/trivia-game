@@ -2,6 +2,7 @@ import {
   fallbackRung,
   LADDER_RUNGS,
   LADDER_WALK_FROM,
+  LIFELINES,
   type ErrorCode,
   type LadderHelp,
   type LadderSeat,
@@ -232,7 +233,9 @@ export class LadderGame {
   seatsView(order: string[]): LadderSeat[] {
     return order.flatMap((id) => {
       const s = this.seats.get(id);
-      return s ? [{ playerId: id, status: s.status, rung: s.rung, used: [...s.used] }] : [];
+      if (!s) return [];
+      const now = LIFELINES.filter((l) => (l === 'fifty' ? s.fifty : l === 'audience' ? s.audience : s.friendId !== null));
+      return [{ playerId: id, status: s.status, rung: s.rung, used: [...s.used], now }];
     });
   }
 }

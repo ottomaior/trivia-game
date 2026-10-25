@@ -14,7 +14,6 @@ import styles from './Tv.module.css';
 export function TvStage({ view }: { view: HostView }) {
   const { stage } = view;
   const quiz = mcQuestionStage(stage);
-  const vipName = view.pauseReason === 'vip' ? view.players.find((p) => p.isVip)?.name : undefined;
   return (
     <>
       {stage.phase === 'lobby' && <Lobby view={view} />}
@@ -32,12 +31,18 @@ export function TvStage({ view }: { view: HostView }) {
       {stage.phase === 'reveal' && <Reveal view={view} stage={stage} />}
       {stage.phase === 'scoreboard' && <Scoreboard view={view} standings={stage.standings} />}
       {stage.phase === 'final' && <Final view={view} standings={stage.standings} />}
-      {view.paused && (
-        <div className={styles.pausedOverlay} role="status" data-testid="tv-paused">
-          <span>{t.paused}</span>
-          {vipName && <span className={styles.pausedBy}>{t.pausedBy(vipName)}</span>}
-        </div>
-      )}
     </>
+  );
+}
+
+/** Over the whole screen (outside the studio's camera) while the game is paused. */
+export function PausedOverlay({ view }: { view: HostView }) {
+  if (!view.paused) return null;
+  const vipName = view.pauseReason === 'vip' ? view.players.find((p) => p.isVip)?.name : undefined;
+  return (
+    <div className={styles.pausedOverlay} role="status" data-testid="tv-paused">
+      <span>{t.paused}</span>
+      {vipName && <span className={styles.pausedBy}>{t.pausedBy(vipName)}</span>}
+    </div>
   );
 }

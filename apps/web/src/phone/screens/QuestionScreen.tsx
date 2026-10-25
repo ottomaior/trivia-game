@@ -164,6 +164,7 @@ function LifelineBar({ view, seat, socket }: { view: PlayerView; seat: LadderSea
           >
             <img src={art(`life-${kind}${used ? '-used' : ''}`)} alt="" className={styles.lifelineArt} draggable={false} />
             {t.lifelines[kind]}
+            <small className={styles.lifelineHelp}>{t.lifelineHelp[kind]}</small>
           </button>
         );
       })}

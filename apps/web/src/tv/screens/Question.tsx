@@ -11,6 +11,7 @@ import { BACK_OUT, staggerIn } from '../../ui/staggerIn.ts';
 import { TimerBar } from '../../ui/TimerBar.tsx';
 import { TILE, tileStyle } from '../../ui/answers.ts';
 import { AnswerShape } from '../../ui/AnswerShape.tsx';
+import { art } from '../../ui/art.ts';
 import styles from '../Tv.module.css';
 import { RoundLabel } from './common.tsx';
 
@@ -86,6 +87,7 @@ export function Question({ view, stage }: { view: HostView; stage: McQuestionSta
       <h2 className={styles.prompt} data-testid="prompt" ref={promptRef}>
         {question.prompt}
       </h2>
+      {open && view.ladder && <LifelineNews view={view} />}
       <ol className={`${styles.tiles} ${open ? styles.tilesOpen : inStudio ? styles.tilesHidden : styles.tilesWaiting}`}>
         {question.choices.map((c, i) => (
           <li key={i} className={styles.tile} style={tileStyle(TILE[i]!, i)}>
@@ -121,5 +123,24 @@ export function Question({ view, stage }: { view: HostView; stage: McQuestionSta
         </footer>
       )}
     </div>
+  );
+}
+
+/** Milliomos-létra: who asked for which help on this question, so the room knows. */
+function LifelineNews({ view }: { view: HostView }) {
+  const news = (view.ladder?.seats ?? []).flatMap((s) => {
+    const name = view.players.find((p) => p.id === s.playerId)?.name;
+    return name ? s.now.map((l) => ({ key: `${s.playerId}-${l}`, l, text: t.usedLifeline(name, t.lifelines[l]) })) : [];
+  });
+  if (news.length === 0) return null;
+  return (
+    <ul className={styles.lifelineNews} role="status">
+      {news.map((n) => (
+        <li key={n.key}>
+          <img src={art(`life-${n.l}`)} alt="" className={styles.lifeBadge} draggable={false} />
+          {n.text}
+        </li>
+      ))}
+    </ul>
   );
 }

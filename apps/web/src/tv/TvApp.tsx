@@ -16,7 +16,7 @@ import { MuteButton } from './MuteButton.tsx';
 import { ShowOpenClip } from './ShowOpenClip.tsx';
 import { preloadShowOpen, showOpenPlayable } from './showOpen.ts';
 import { StartScreen } from './StartScreen.tsx';
-import { TvStage } from './TvStage.tsx';
+import { PausedOverlay, TvStage } from './TvStage.tsx';
 import styles from './Tv.module.css';
 
 type Screen = { kind: 'boot' } | { kind: 'start' } | { kind: 'live'; view: HostView | null };
@@ -169,6 +169,7 @@ export function TvApp() {
               <Studio view={screen.view} lite={fxMode === 'lite'} onTooSlow={onTooSlow} />
             ))}
           {showOpen && liveView?.stage.phase === 'intro' && <ShowOpenClip paused={liveView.paused} onFail={onClipFailed} />}
+          {screen.kind === 'live' && screen.view && <PausedOverlay view={screen.view} />}
           {(screen.kind === 'boot' || (screen.kind === 'live' && !screen.view)) && (
             <p className={styles.center}>{t.connecting}</p>
           )}

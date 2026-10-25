@@ -475,7 +475,12 @@ describe('RoomRunner: Milliomos-létra', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     expect(room.phase).toBe('ladder_step');
     expect(runner.walk(a.id, true)).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // nothing to keep yet
-    await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep + TIMINGS.questionRead);
+    // The first rung's step is the rules card: longer than the others.
+    await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep);
+    expect(room.phase).toBe('ladder_step');
+    await vi.advanceTimersByTimeAsync(TIMINGS.ladderRules - TIMINGS.ladderStep);
+    expect(room.phase).toBe('question_read');
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
     for (const p of players) runner.answer(p.id, room.question!.id, mcq(room).correct);
     expect(room.phase).toBe('reveal');
@@ -513,7 +518,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     const { runner, room, players } = setup({ players: 3 });
     const [a, b, c] = players as [Player, Player, Player];
     await beginLadder(runner, room, a.id);
-    await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderStep + TIMINGS.questionRead);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderRules + TIMINGS.questionRead);
     const q1 = mcq(room);
     expect(runner.lifeline(a.id, 'audience')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // no audience yet
     runner.answer(a.id, q1.id, q1.correct);
@@ -528,6 +533,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     const q = mcq(room);
     const now = () => Date.now();
     expect(runner.lifeline(a.id, 'fifty')).toEqual({ ok: true });
+    expect(room.ladder!.seatsView([a.id])[0]!.now).toEqual(['fifty']); // the TV announces it
     const hidden = toPlayerView(room, a.id, now())!.mine.ladder!.hidden;
     expect(hidden).toHaveLength(2);
     expect(hidden).not.toContain(q.correct);

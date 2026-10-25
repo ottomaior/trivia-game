@@ -80,6 +80,8 @@ export interface LadderSeat {
   rung: number;
   /** Lifelines already used this game. */
   used: Lifeline[];
+  /** Lifelines asked for on the current question. */
+  now: Lifeline[];
 }
 
 interface PublicQuestionBase {

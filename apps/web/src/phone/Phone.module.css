@@ -705,6 +705,14 @@
   gap: 8px;
 }
 
+.lifelineHelp {
+  max-width: 7.5em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  line-height: 1.15;
+  opacity: 0.8;
+}
+
 .lifeline {
   display: flex;
   flex-direction: column;
@@ -1307,4 +1315,25 @@
 
 .betChips img + img {
   margin-left: -14px;
+}
+
+/* A line under a choice's label: what picking it means. */
+.choiceSub {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-ui);
+  font-style: normal;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1rem;
+  line-height: 1.35;
 }

@@ -527,7 +527,7 @@ export class RoomRunner {
       return;
     }
     this.room.enterLadderStep(option);
-    this.schedule('ladderStep');
+    this.schedule(this.room.round === 1 ? 'ladderRules' : 'ladderStep');
     this.changed();
   }
 

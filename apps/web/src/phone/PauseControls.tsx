@@ -45,21 +45,21 @@ export function PauseOverlay({ view, socket }: { view: PlayerView; socket: GameS
         (confirming ? (
           <>
             <p className={styles.hint}>{t.cancelSure}</p>
-            <button className={styles.secondary} disabled={busy} onClick={() => void run('vip:cancel')} data-testid="cancel-yes">
+            <button key="yes" className={styles.secondary} disabled={busy} onClick={() => void run('vip:cancel')} data-testid="cancel-yes">
               {t.cancelYes}
             </button>
-            <button className={styles.textButton} disabled={busy} onClick={() => setConfirming(false)}>
-              {t.cancelNo}
+            <button key="no" className={styles.textButton} disabled={busy} onClick={() => setConfirming(false)}>
+              {t.cancel}
             </button>
           </>
         ) : (
           <>
             {view.pauseReason === 'vip' && (
-              <button className={styles.primary} disabled={busy} onClick={() => void run('vip:resume')} data-testid="resume">
+              <button key="resume" className={styles.primary} disabled={busy} onClick={() => void run('vip:resume')} data-testid="resume">
                 {t.resume}
               </button>
             )}
-            <button className={styles.textButton} disabled={busy} onClick={() => setConfirming(true)} data-testid="cancel-game">
+            <button key="cancel" className={styles.textButton} disabled={busy} onClick={() => setConfirming(true)} data-testid="cancel-game">
               {t.cancelGame}
             </button>
           </>

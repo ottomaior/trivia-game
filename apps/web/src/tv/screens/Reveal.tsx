@@ -1,4 +1,4 @@
-import { BLUFF_BLANK, t, type Expression, type HostView, type Pick, type PlayerSummary, type RevealResult, type Stage } from '@trivia/shared';
+import { BLUFF_BLANK, t, type Expression, type HostView, type LadderSeat, type Pick, type PlayerSummary, type RevealResult, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { Character } from '../../ui/Character.tsx';
 import { useInStudio } from '../../stage/StudioContext.ts';
@@ -29,6 +29,7 @@ export function Reveal({ view, stage }: { view: HostView; stage: RevealStage }) 
         <span />
       </header>
       <h2 className={`${styles.prompt} ${styles.promptSmall}`}>{prompt}</h2>
+      {view.mode === 'ladder' && view.ladder && <LadderOutcomes picks={picks} seats={view.ladder.seats} byId={byId} />}
       {result.kind === 'mc' && question.kind === 'mc' && (
         <McTiles choices={question.choices} result={result} picks={picks} byId={byId} mode={view.mode} />
       )}
@@ -109,6 +110,30 @@ function McTiles({ choices, result, picks, byId, mode }: { choices: string[]; re
         );
       })}
     </ol>
+  );
+}
+
+/** Milliomos-létra: what this rung did to each climber (up a step, out to the safe rung, or the top). */
+function LadderOutcomes({ picks, seats, byId }: { picks: Pick[]; seats: LadderSeat[]; byId: ById }) {
+  return (
+    <ul className={styles.ladderOutcomes} data-testid="ladder-outcomes">
+      {picks.map((p, j) => {
+        const player = byId.get(p.playerId);
+        const seat = seats.find((s) => s.playerId === p.playerId);
+        if (!player || !seat) return null;
+        const text = seat.status === 'top' ? t.rungOutcome.top : p.correct ? t.rungOutcome.up(seat.rung) : t.rungOutcome.fell(seat.rung);
+        return (
+          <li key={p.playerId} className={styles.ladderOutcome} data-good={p.correct} style={{ '--j': j } as CSSProperties}>
+            <Character id={player.avatar.character} size="2.6em" expression={p.correct ? 'correct' : 'out'} />
+            <span>
+              <b>{player.name}</b> {p.correct ? '✓' : '✗'}
+              <br />
+              {text}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
