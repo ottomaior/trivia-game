@@ -7,7 +7,7 @@ import { TimerBar } from '../../ui/TimerBar.tsx';
 import { TILE, tileStyle } from '../../ui/answers.ts';
 import { audio } from '../../audio/engine.ts';
 import { useLowFx } from '../../ui/lowfx.ts';
-import { useSlotSpin } from '../../ui/slotSpin.ts';
+import { tiedLeaders, useSlotSpin } from '../../ui/slotSpin.ts';
 import styles from '../Tv.module.css';
 import { PowerHits } from '../PowerHits.tsx';
 import { RoundLabel } from './common.tsx';
@@ -19,9 +19,12 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
   const lowFx = useLowFx();
   const result = stage.phase === 'vote_result';
   const chosen = result ? stage.chosen : 0;
-  // The decided category is revealed like a slot machine (instantly in low-motion mode).
+  const tied = tiedLeaders(stage.votes, stage.options.length);
+  // The decided category is revealed like a slot machine (instantly in low-motion mode);
+  // a tie is drawn among the leaders only, so everyone sees it was luck.
   const spin = useSlotSpin(result, chosen, stage.options.length, {
     instant: lowFx,
+    among: tied ?? undefined,
     onStep: () => audio.play('spinTick'),
     onLand: () => audio.play('spinLand'),
   });
@@ -29,7 +32,7 @@ export function Vote({ view, stage }: { view: HostView; stage: VoteStage }) {
     <div className={styles.game}>
       <header className={styles.gameHeader}>
         <RoundLabel view={view} />
-        <h2 className={styles.gameTitle}>{t.pickCategory}</h2>
+        <h2 className={styles.gameTitle}>{result && tied ? t.voteTie : t.pickCategory}</h2>
         <span className={styles.hint}>{t.voteOnPhone}</span>
       </header>
       <ul className={styles.voteOptions}>

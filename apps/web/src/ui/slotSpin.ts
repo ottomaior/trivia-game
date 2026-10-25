@@ -22,16 +22,29 @@ export function spinSequence(chosen: number, count: number, steps = 11, totalMs 
   });
 }
 
+/** spinSequence over only the cards in `pool` (a tie's leaders), landing on `chosen`. */
+export function spinAmong(chosen: number, pool: readonly number[]): SpinStep[] {
+  return spinSequence(Math.max(0, pool.indexOf(chosen)), pool.length).map((s) => ({ ...s, index: pool[s.index]! }));
+}
+
 /**
  * Runs the spin while `active`; returns the lit card and whether it landed.
- * `onStep` fires per step (for a tick sound), `onLand` once at the end.
+ * `among` limits it to some cards (default all). `onStep` fires per step
+ * (for a tick sound), `onLand` once at the end.
  */
 export function useSlotSpin(
   active: boolean,
   chosen: number,
   count: number,
-  { instant = false, onStep, onLand }: { instant?: boolean; onStep?: () => void; onLand?: () => void } = {},
+  {
+    instant = false,
+    among,
+    onStep,
+    onLand,
+  }: { instant?: boolean; among?: readonly number[]; onStep?: () => void; onLand?: () => void } = {},
 ): { lit: number | null; landed: boolean } {
+  const pool = among ?? Array.from({ length: count }, (_, i) => i);
+  const poolKey = pool.join(',');
   const [lit, setLit] = useState<number | null>(null);
   const [landed, setLanded] = useState(false);
   useEffect(() => {
@@ -45,7 +58,7 @@ export function useSlotSpin(
       setLanded(true);
       return;
     }
-    const seq = spinSequence(chosen, count);
+    const seq = spinAmong(chosen, pool);
     const timers = seq.map((step, i) =>
       setTimeout(() => {
         setLit(step.index);
@@ -56,6 +69,15 @@ export function useSlotSpin(
       }, step.at),
     );
     return () => timers.forEach(clearTimeout);
-  }, [active, chosen, count, instant]); // callbacks are fire-and-forget; not dependencies
+  }, [active, chosen, poolKey, instant]); // callbacks are fire-and-forget; not dependencies
   return { lit, landed };
+}
+
+/** The options sharing the most votes, when two or more do and anyone voted; otherwise null. */
+export function tiedLeaders(votes: Record<string, number>, count: number): number[] | null {
+  const tally = Array.from({ length: count }, () => 0);
+  for (const v of Object.values(votes)) if (v >= 0 && v < count) tally[v]! += 1;
+  const best = Math.max(...tally);
+  const leaders = tally.flatMap((n, i) => (n === best ? [i] : []));
+  return best > 0 && leaders.length > 1 ? leaders : null;
 }

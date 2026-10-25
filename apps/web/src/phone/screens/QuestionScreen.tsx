@@ -1,5 +1,5 @@
 import { LIFELINES, t, type LadderHelp, type LadderSeat, type Lifeline, type McQuestionStage, type PlayerView, type PowerPlay } from '@trivia/shared';
-import { useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { phoneAnswerStyle, phoneCardStyle, TILE } from '../../ui/answers.ts';
@@ -12,6 +12,8 @@ type QuestionStage = McQuestionStage;
 
 /** With both on you, the slime comes off first, then the ice underneath. */
 const COVER_ORDER: PowerPlay[] = ['slime', 'freeze'];
+/** After a cover is gone, taps are ignored this long (on top of its fade). */
+const AFTER_COVER_CALM_MS = 600;
 
 export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stage: QuestionStage; socket: GameSocket }) {
   const { question } = stage;
@@ -28,6 +30,8 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
 
   // Power plays thrown at me this round; a cleared one goes at once, before the server confirms.
   const [clearedHere, setClearedHere] = useState<string[]>([]);
+  // Players still hammering the ice when it breaks: their next taps aren't answers.
+  const calmUntil = useRef(0);
   const onMe = stage.hits.filter((h) => h.target === view.me.id);
   const cover = COVER_ORDER.find(
     (power) => onMe.some((h) => h.power === power && !h.cleared) && !clearedHere.includes(`${question.id}:${power}`),
@@ -35,6 +39,7 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
 
   async function answer(choice: number) {
     if (!open || mine !== null || cover || hidden.has(choice)) return;
+    if (performance.now() < calmUntil.current) return;
     setPending({ questionId: question.id, choice });
     navigator.vibrate?.(40);
     const res = await send(socket, 'answer:submit', { questionId: question.id, choice });
@@ -42,6 +47,7 @@ export function QuestionScreen({ view, stage, socket }: { view: PlayerView; stag
   }
 
   function cleared(power: PowerPlay) {
+    calmUntil.current = performance.now() + AFTER_COVER_CALM_MS;
     setClearedHere((keys) => [...keys, `${question.id}:${power}`]);
     void send(socket, 'power:clear', { power });
   }
@@ -158,6 +164,7 @@ function LifelineBar({ view, seat, socket }: { view: PlayerView; seat: LadderSea
           >
             <img src={art(`life-${kind}${used ? '-used' : ''}`)} alt="" className={styles.lifelineArt} draggable={false} />
             {t.lifelines[kind]}
+            <small className={styles.lifelineHelp}>{t.lifelineHelp[kind]}</small>
           </button>
         );
       })}

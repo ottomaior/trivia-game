@@ -1,4 +1,4 @@
-import { LADDER_RUNGS, LADDER_SAFE_RUNGS, LIFELINES, t, TIMINGS, type HostView, type LadderSeat, type Stage } from '@trivia/shared';
+import { fallbackRung, LADDER_RUNGS, LADDER_SAFE_RUNGS, LIFELINES, t, TIMINGS, type HostView, type LadderSeat, type Stage } from '@trivia/shared';
 import type { CSSProperties } from 'react';
 import { useInStudio } from '../../stage/StudioContext.ts';
 import { Character } from '../../ui/Character.tsx';
@@ -25,13 +25,14 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
     <div className={`${styles.game} ${inStudio ? styles.gameStudio : ''}`} data-testid="ladder-board">
       <header className={styles.gameHeader}>
         <RoundLabel view={view} pack={false} />
-        <h2 className={styles.gameTitle}>{t.ladderTitle}</h2>
+        <h2 className={styles.gameTitle}>{stage.rung === 1 ? t.ladderTitle : t.walkQuestion}</h2>
         <span className={styles.categoryChip}>
           {stage.category.name} · {t.difficulty[stage.difficulty]}
         </span>
       </header>
 
-      <ol className={styles.stairs} aria-label={t.ladderTitle}>
+      {stage.rung === 1 && <LadderRules />}
+      <ol className={`${styles.stairs} ${stage.rung === 1 ? styles.stairsBehind : ''}`} aria-label={t.ladderTitle}>
         {STEPS.map((rung) => {
           const safe = LADDER_SAFE_RUNGS.includes(rung);
           const here = seats.filter((s) => s.rung === rung);
@@ -69,6 +70,7 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
               <Character id={p.avatar.character} size="3.2em" dimmed={!p.connected} expression={s.status === 'out' ? 'out' : undefined} />
               <span>{p.name}</span>
               <span className={styles.climberState}>{climberState(s, stage)}</span>
+              {s.status === 'in' && stage.rung > 1 && <span className={styles.stakes}>{t.stakes(s.rung, fallbackRung(stage.rung))}</span>}
               <span className={styles.lifeBadges}>
                 {LIFELINES.map((l) => {
                   const used = s.used.includes(l);
@@ -93,10 +95,34 @@ export function LadderBoard({ view, stage }: { view: HostView; stage: StepStage 
       <footer className={styles.gameFooter}>
         {!inStudio && <Otto line={view.otto} players={view.players} size="8em" />}
         <div className={styles.footerTimer}>
-          <TimerBar endsAt={view.phaseEndsAt} totalMs={TIMINGS.ladderStep} />
+          <TimerBar endsAt={view.phaseEndsAt} totalMs={stage.rung === 1 ? TIMINGS.ladderRules : TIMINGS.ladderStep} />
         </div>
       </footer>
     </div>
+  );
+}
+
+/** Before the first rung: how the ladder works, and what each lifeline does. */
+function LadderRules() {
+  return (
+    <section className={styles.ladderRules} data-testid="ladder-rules">
+      <h3 className={styles.ladderRulesTitle}>{t.ladderRulesTitle}</h3>
+      <ul className={styles.ladderRulesList}>
+        {t.ladderRules(LADDER_SAFE_RUNGS).map((line) => (
+          <li key={line}>{line}</li>
+        ))}
+      </ul>
+      <ul className={styles.ladderRulesLifelines}>
+        {LIFELINES.map((l) => (
+          <li key={l}>
+            <img src={art(`life-${l}`)} alt="" className={styles.lifeBadge} draggable={false} />
+            <span>
+              <b>{t.lifelines[l]}</b>: {t.lifelineHelp[l]}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 

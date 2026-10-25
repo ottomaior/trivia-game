@@ -101,13 +101,15 @@ export const TIMINGS = {
   /** The TV spins to the winning category, and Otto reacts to it. */
   voteResult: 2_600,
   questionRead: 2_000,
-  questionOpen: 20_000,
+  questionOpen: 30_000,
   reveal: 7_000,
   scoreboard: 4_000,
   /** Ladder: the next rung's category shows, and players may walk away. */
   ladderStep: 7_000,
+  /** Ladder, before the first rung: the rules are on screen (there is nothing to walk away with yet). */
+  ladderRules: 16_000,
   /** Ladder answers get longer: there are lifelines to use. */
-  ladderOpen: 30_000,
+  ladderOpen: 40_000,
   /** Blöffölő: everyone types a believable lie… */
   bluffWrite: 45_000,
   /** …then picks the answer they think is true. */

@@ -1,4 +1,4 @@
-import { t, type PlayerView, type Stage } from '@trivia/shared';
+import { fallbackRung, LADDER_SAFE_RUNGS, t, type PlayerView, type Stage } from '@trivia/shared';
 import { send } from '../../net/send.ts';
 import type { GameSocket } from '../../net/socket.ts';
 import { MeBlob } from '../MeBlob.tsx';
@@ -34,6 +34,11 @@ export function LadderStepScreen({ view, stage, socket }: { view: PlayerView; st
       <div className={styles.column}>
         {header}
         <p className={styles.bigNote}>{t.firstRung}</p>
+        <ul className={styles.rulesList}>
+          {t.ladderRules(LADDER_SAFE_RUNGS).map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
       </div>
     );
   }
@@ -52,16 +57,21 @@ export function LadderStepScreen({ view, stage, socket }: { view: PlayerView; st
         aria-pressed={mine === false}
         onClick={() => choose(false)}
       >
-        <span className={styles.choiceText}>{t.stay}</span>
+        <span className={styles.choiceText}>
+          {t.stay}
+          <small className={styles.choiceSub}>{t.stayRisk(fallbackRung(stage.rung))}</small>
+        </span>
       </button>
       <button
         className={`${styles.choice} ${styles.walkButton} ${mine === true ? styles.choiceMine : ''} ${mine === false ? styles.choiceDim : ''}`}
         aria-pressed={mine === true}
         onClick={() => choose(true)}
       >
-        <span className={styles.choiceText}>{t.walk}</span>
+        <span className={styles.choiceText}>
+          {t.walk}
+          <small className={styles.choiceSub}>{t.walkKeeps(seat.rung)}</small>
+        </span>
       </button>
-      <p className={styles.hint}>{t.walkKeeps(seat.rung)}</p>
     </div>
   );
 }

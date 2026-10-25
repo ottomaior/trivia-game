@@ -239,6 +239,9 @@ export function attachSocketHandlers({ io, rooms, store, clock, log }: SocketDep
     socket.on('vip:start', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:playAgain', playerCommand(emptyPayload, (runner, playerId) => runner.start(playerId)));
     socket.on('vip:newLobby', playerCommand(emptyPayload, (runner, playerId) => runner.newLobby(playerId)));
+    socket.on('vip:pause', playerCommand(emptyPayload, (runner, playerId) => runner.pause(playerId)));
+    socket.on('vip:resume', playerCommand(emptyPayload, (runner, playerId) => runner.resume(playerId)));
+    socket.on('vip:cancel', playerCommand(emptyPayload, (runner, playerId) => runner.cancel(playerId)));
     socket.on('vote:cast', playerCommand(voteSchema, (runner, playerId, { option }) => runner.vote(playerId, option)));
     socket.on(
       'answer:submit',

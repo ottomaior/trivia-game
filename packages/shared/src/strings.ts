@@ -40,6 +40,7 @@ export const t = {
   round: (n: number, total: number) => `${n}. kör / ${total}`,
   pickCategory: 'Válasszatok kategóriát',
   voteOnPhone: 'Szavazz a telefonodon',
+  voteTie: 'Döntetlen – sorsolás!',
   getReady: 'Figyelem…',
   answerOnPhone: 'Válaszolj a telefonodon',
   difficulty: { 1: 'Könnyű', 2: 'Közepes', 3: 'Nehéz' } as Record<number, string>,
@@ -50,6 +51,13 @@ export const t = {
   finalResults: 'Végeredmény',
   playAgainOnPhone: 'A VIP a telefonjáról indíthat új játékot',
   tvDisconnected: 'A tévé kapcsolata megszakadt — egy pillanat…',
+  pause: 'Szünet',
+  paused: 'Szünet',
+  pausedBy: (name: string) => `${name} szünetet kért`,
+  resume: 'Folytatás',
+  cancelGame: 'Játék megszakítása',
+  cancelSure: 'Biztosan? Az eddigi pontok elvesznek, és mindenki visszakerül a váróba.',
+  cancelYes: 'Igen, megszakítom',
   // phone
   enterCode: 'Szobakód',
   enterName: 'Neved',
@@ -143,6 +151,26 @@ export const t = {
   walk: 'Megállok',
   walkQuestion: 'Mész tovább, vagy megállsz?',
   walkKeeps: (n: number) => `Ha most megállsz, ${n}. lépcsővel zársz.`,
+  /** Under "Maradok": where a wrong answer would drop them. */
+  stayRisk: (n: number) => (n === 0 ? 'Rossz válasznál mindent elveszítesz.' : `Rossz válasznál visszaesel a ${n}. lépcsőre.`),
+  /** A climber's stakes on the TV: what stopping keeps, and where a wrong answer drops them. */
+  stakes: (keep: number, fall: number) => `Megáll: ${rungText(keep)} · Hibánál: ${rungText(fall)}`,
+  ladderRulesTitle: 'Így megy a létra',
+  ladderRules: (safe: readonly number[]) => [
+    'Tizenöt kérdés, egyre nehezebben. Minden jó válasz egy lépcső feljebb.',
+    `Rossz válasznál kiesel, és visszaesel az utolsó biztos pontra (${safe.map((n) => `${n}.`).join(' és ')} lépcső).`,
+    'A második kérdéstől minden kérdés előtt megállhatsz: amit addig elértél, megmarad.',
+    'Aki kiesett vagy megállt, az a közönség: tovább tippel, és a versenyzők kérhetik a segítségét.',
+  ],
+  lifelineHelp: {
+    fifty: 'két rossz válasz eltűnik',
+    audience: 'megnézed, mire tippelt a közönség',
+    phone: 'egy másik játékos megsúgja a tippjét',
+  } as Record<Lifeline, string>,
+  /** On the TV when a climber asks for help. */
+  usedLifeline: (name: string, lifeline: string) => `${name} segítséget kért: ${lifeline}`,
+  /** What a rung did to a climber, on the TV after the reveal. */
+  rungOutcome: { up: (n: number) => `Feljebb: ${rungText(n)}`, fell: (n: number) => `Kiesett, marad: ${rungText(n)}`, top: 'Csúcs!' },
   firstRung: 'Indul a létra! Az első lépcsőn még nincs mit megtartani.',
   staying: 'Marad',
   walking: 'Megáll',

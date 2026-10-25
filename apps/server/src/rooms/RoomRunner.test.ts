@@ -1,4 +1,4 @@
-import { bluffRevealMs, GUESS_CHIPS, LADDER_RUNGS, ottoLineOffsetMs, PARTY_ROUNDS, QUESTION_VOICE_DELAY_MS, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS, type GameMode } from '@trivia/shared';
+import { bluffRevealMs, GUESS_CHIPS, LADDER_RUNGS, ottoLineOffsetMs, PARTY_ROUNDS, QUESTION_VOICE_DELAY_MS, scoreAnswer, SPEECH_TAIL_MS, TIMINGS, TOTAL_ROUNDS, type GameMode } from '@trivia/shared';
 import { fileURLToPath } from 'node:url';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { McQuestion } from '../content/types.ts';
@@ -102,8 +102,8 @@ describe('RoomRunner', () => {
     }
     expect(room.phase).toBe('final');
     expect(room.standings).toEqual([expect.objectContaining({ playerId: solo!.id, rank: 1 })]);
-    // Answered 1s into the 20s window every round; the last round scores double.
-    expect(solo!.score).toBe((TOTAL_ROUNDS + 1) * 975);
+    // Answered 1s into the window every round; the last round scores double.
+    expect(solo!.score).toBe((TOTAL_ROUNDS + 1) * scoreAnswer(true, 1_000, TIMINGS.questionOpen));
     expect(room.otto?.key).toBe('soloFinalHigh');
   });
 
@@ -151,7 +151,7 @@ describe('RoomRunner', () => {
     expect(room.phase).toBe('question_open');
     runner.answer(players[1]!.id, q.id, (q.correct + 1) % 4);
     expect(room.phase).toBe('reveal');
-    expect(players[0]!.score).toBe(900); // 4s of 20s used
+    expect(players[0]!.score).toBe(scoreAnswer(true, 4_000, TIMINGS.questionOpen));
     expect(players[1]!.score).toBe(0);
   });
 
@@ -209,10 +209,78 @@ describe('RoomRunner', () => {
 
     runner.hostBack();
     expect(room.paused).toBe(false);
-    expect(room.phaseEndsAt).toBe(Date.now() + 15_000);
+    expect(room.phaseEndsAt).toBe(Date.now() + TIMINGS.questionOpen - 5_000);
     // The minute away does not count against answer time.
     runner.answer(players[0]!.id, room.question!.id, mcq(room).correct);
     expect(room.answers.get(players[0]!.id)?.responseMs).toBe(5_000);
+  });
+
+  it('lets the VIP pause and carry on, without the break counting as answer time', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    const [vip, other] = players;
+    await begin(runner, vip!.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead + 5_000);
+    expect(room.phase).toBe('question_open');
+
+    expect(runner.pause(other!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(runner.pause(vip!.id)).toEqual({ ok: true });
+    expect(room.paused).toBe(true);
+    expect(room.pausedByVip).toBe(true);
+    await vi.advanceTimersByTimeAsync(10 * 60_000);
+    expect(room.phase).toBe('question_open');
+
+    expect(runner.resume(other!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(runner.resume(vip!.id)).toEqual({ ok: true });
+    expect(room.paused).toBe(false);
+    expect(room.phaseEndsAt).toBe(Date.now() + TIMINGS.questionOpen - 5_000);
+    runner.answer(vip!.id, room.question!.id, mcq(room).correct);
+    expect(room.answers.get(vip!.id)?.responseMs).toBe(5_000);
+  });
+
+  it('stays paused until both the TV is back and the VIP carries on', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    const vip = players[0]!;
+    await begin(runner, vip.id);
+    runner.pause(vip.id);
+    runner.hostLeft();
+    runner.hostBack();
+    expect(room.paused).toBe(true); // the TV coming back doesn't end the VIP's break
+    runner.hostLeft();
+    runner.resume(vip.id);
+    expect(room.paused).toBe(true); // nor does the VIP's resume bring back a missing TV
+    expect(room.pausedByVip).toBe(false);
+    runner.hostBack();
+    expect(room.paused).toBe(false);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    expect(room.phase).toBe('vote');
+  });
+
+  it('lets the VIP cancel a game: everyone is back in the lobby, still joined, scores cleared', async () => {
+    const { runner, room, players } = setup({ players: 2 });
+    const [vip, other] = players;
+    await begin(runner, vip!.id);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro);
+    for (const p of players) runner.vote(p.id, 0);
+    await vi.advanceTimersByTimeAsync(TIMINGS.voteResult + TIMINGS.questionRead);
+    runner.answer(vip!.id, room.question!.id, mcq(room).correct);
+
+    expect(runner.cancel(other!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    runner.pause(vip!.id);
+    expect(runner.cancel(vip!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('lobby');
+    expect(room.paused).toBe(false);
+    expect(room.players.size).toBe(2);
+    expect([...room.players.values()].every((p) => p.score === 0)).toBe(true);
+    expect(room.question).toBeNull();
+    expect(room.answers.size).toBe(0);
+    // Nothing left over keeps running, and a new game starts cleanly.
+    await vi.advanceTimersByTimeAsync(5 * 60_000);
+    expect(room.phase).toBe('lobby');
+    expect(runner.cancel(vip!.id)).toEqual({ ok: false, error: 'NOT_ALLOWED' });
+    expect(await begin(runner, vip!.id)).toEqual({ ok: true });
+    expect(room.phase).toBe('intro');
   });
 
   it('gives power-play votes longer, and lets a frozen player answer once the ice is broken', async () => {
@@ -249,7 +317,7 @@ describe('RoomRunner', () => {
     runner.answer(a!.id, q.id, q.correct);
     expect(room.phase).toBe('reveal');
     // Instant in round 1; in round 2 the ice cost three seconds of speed bonus.
-    expect(room.picks.find((p) => p.playerId === b!.id)?.points).toBe(925);
+    expect(room.picks.find((p) => p.playerId === b!.id)?.points).toBe(scoreAnswer(true, 3_000, TIMINGS.questionOpen));
     expect(toPlayerView(room, b!.id, Date.now())?.mine.power).toBe('held');
   });
 
@@ -407,7 +475,12 @@ describe('RoomRunner: Milliomos-létra', () => {
     await vi.advanceTimersByTimeAsync(TIMINGS.intro);
     expect(room.phase).toBe('ladder_step');
     expect(runner.walk(a.id, true)).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // nothing to keep yet
-    await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep + TIMINGS.questionRead);
+    // The first rung's step is the rules card: longer than the others.
+    await vi.advanceTimersByTimeAsync(TIMINGS.ladderStep);
+    expect(room.phase).toBe('ladder_step');
+    await vi.advanceTimersByTimeAsync(TIMINGS.ladderRules - TIMINGS.ladderStep);
+    expect(room.phase).toBe('question_read');
+    await vi.advanceTimersByTimeAsync(TIMINGS.questionRead);
     expect(room.phase).toBe('question_open');
     for (const p of players) runner.answer(p.id, room.question!.id, mcq(room).correct);
     expect(room.phase).toBe('reveal');
@@ -445,7 +518,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     const { runner, room, players } = setup({ players: 3 });
     const [a, b, c] = players as [Player, Player, Player];
     await beginLadder(runner, room, a.id);
-    await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderStep + TIMINGS.questionRead);
+    await vi.advanceTimersByTimeAsync(TIMINGS.intro + TIMINGS.ladderRules + TIMINGS.questionRead);
     const q1 = mcq(room);
     expect(runner.lifeline(a.id, 'audience')).toEqual({ ok: false, error: 'NOT_ALLOWED' }); // no audience yet
     runner.answer(a.id, q1.id, q1.correct);
@@ -460,6 +533,7 @@ describe('RoomRunner: Milliomos-létra', () => {
     const q = mcq(room);
     const now = () => Date.now();
     expect(runner.lifeline(a.id, 'fifty')).toEqual({ ok: true });
+    expect(room.ladder!.seatsView([a.id])[0]!.now).toEqual(['fifty']); // the TV announces it
     const hidden = toPlayerView(room, a.id, now())!.mine.ladder!.hidden;
     expect(hidden).toHaveLength(2);
     expect(hidden).not.toContain(q.correct);

@@ -102,6 +102,38 @@ describe('reconnection', () => {
   });
 });
 
+describe('category vote', () => {
+  const option = (id: number) => ({ category: { id, slug: `c${id}`, name: `K${id}` }, question });
+
+  it('settles a tie at random, not by who voted last', () => {
+    const wins = [0, 0, 0];
+    for (let game = 0; game < 200; game++) {
+      const room = new Room('BCDF', HOUSEHOLD, 0, seededRng(game + 1));
+      const a = joinOk(room, 'Anna');
+      const b = joinOk(room, 'Béla');
+      room.enterIntro();
+      room.enterVote([option(1), option(2), option(3)]);
+      room.castVote(a.id, 0);
+      room.castVote(b.id, 2); // Béla always votes last
+      wins[room.resolveVote()]! += 1;
+    }
+    expect(wins[1]).toBe(0);
+    expect(wins[0]).toBeGreaterThan(60);
+    expect(wins[2]).toBeGreaterThan(60);
+  });
+
+  it('lets the most votes win', () => {
+    const room = newRoom();
+    const [a, b, c] = ['Anna', 'Béla', 'Cili'].map((n) => joinOk(room, n));
+    room.enterIntro();
+    room.enterVote([option(1), option(2), option(3)]);
+    room.castVote(a!.id, 1);
+    room.castVote(b!.id, 1);
+    room.castVote(c!.id, 2);
+    expect(room.resolveVote()).toBe(1);
+  });
+});
+
 describe('answering and scoring', () => {
   function roomAtQuestion() {
     const room = newRoom();

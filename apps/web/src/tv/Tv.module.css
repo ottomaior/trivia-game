@@ -379,12 +379,21 @@
   position: absolute;
   inset: 0;
   z-index: 5;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2em;
   background: color-mix(in srgb, var(--burgundy-deep) 85%, transparent);
   font-family: var(--font-display);
   font-size: 3.4em;
   color: var(--mustard);
+}
+
+.pausedBy {
+  font-family: var(--font-ui);
+  font-size: 0.45em;
+  color: var(--paper);
 }
 
 .tagline {
@@ -2137,5 +2146,114 @@
   from {
     transform: translateY(-2.5em) rotate(-12deg);
     opacity: 0;
+  }
+}
+
+.stakes {
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+/* Before the first rung the rules sit over the (empty) stairs. */
+.stairsBehind {
+  opacity: 0.25;
+}
+
+.ladderRules {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  z-index: 3;
+  width: min(60em, 88%);
+  translate: -50% 0;
+  padding: 1em 1.6em 1.2em;
+  border-radius: 0.6em;
+  background: color-mix(in srgb, var(--burgundy-deep) 88%, transparent);
+  box-shadow: 0 0.3em 1.2em rgb(0 0 0 / 0.45);
+}
+
+.ladderRulesTitle {
+  margin: 0 0 0.4em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 2.2em;
+  color: var(--mustard);
+}
+
+.ladderRulesList {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 1.45em;
+  line-height: 1.4;
+  color: var(--paper);
+}
+
+.ladderRulesLifelines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em 1.6em;
+  margin: 0.8em 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.3em;
+  color: var(--cream);
+}
+
+.ladderRulesLifelines li,
+.lifelineNews li {
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.lifelineNews {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4em 1.4em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--mustard);
+}
+
+.ladderOutcomes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6em 2em;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 1.9em;
+  line-height: 1.15;
+  color: var(--paper);
+}
+
+.ladderOutcome {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  opacity: 0;
+  animation: outcomeIn 400ms ease-out forwards;
+  /* After the drumroll and the tiles' reveal. */
+  animation-delay: calc(3.4s + var(--j) * 150ms);
+}
+
+.ladderOutcome[data-good='false'] {
+  color: var(--ice);
+}
+
+@keyframes outcomeIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }

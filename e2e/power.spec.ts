@@ -9,7 +9,7 @@ test.use({ baseURL: SLOW_BASE_URL });
 /** Votes for the first category, or answers A, whenever this phone asks (so rounds end early). */
 async function playAlong(phone: Page) {
   if (await phone.getByRole('heading', { name: 'Válaszd ki a következő kategóriát' }).isVisible()) {
-    await phone.getByRole('button').first().click({ timeout: 1_000 }).catch(() => {});
+    await phone.getByTestId('vote-0').click({ timeout: 1_000 }).catch(() => {});
   }
   const answer = phone.getByTestId('choice-0');
   if ((await answer.isVisible()) && (await answer.isEnabled({ timeout: 500 }).catch(() => false))) {
@@ -59,6 +59,9 @@ test('a power play freezes a phone until its player breaks the ice', async ({ br
   // Free again: Béla answers in time, so the reveal counts his answer (right or wrong, not
   // "Lejárt az idő"). Not "Beküldve!": as the last to answer he ends the question, and that
   // screen can be gone before a check sees it. The reveal comes once the question ends (≤8s).
+  // Taps right after the ice breaks are ignored (they're the tail of the tapping, not an answer),
+  // so he waits that moment out like a person aiming for an answer would.
+  await bela.waitForTimeout(700);
   await bela.getByTestId('choice-0').click();
   await expect(bela.getByTestId('verdict')).toContainText(/Helyes!|Nem egészen/, { timeout: 15_000 });
   await tvShowsIce;

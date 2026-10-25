@@ -20,6 +20,7 @@ export function useAudioCues(view: HostView | null, { showOpen = false }: { show
     const before = prev.current;
     const clip = showOpen && view.stage.phase === 'intro';
     if (!clip) for (const { cue, at } of cuesFor(before, view)) audio.play(cue, at);
+    audio.hold(view.paused);
     audio.music(musicFor(view.stage.phase, view.paused));
     // Otto speaks each new line (only once it's actually new, not on every update).
     const line = view.otto;

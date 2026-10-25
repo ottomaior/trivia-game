@@ -14,6 +14,7 @@ function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
     serverNow: 0,
     phaseEndsAt: null,
     paused: false,
+    pauseReason: null,
     players: [player('a'), player('b'), player('c')],
     pack: null,
     mode: 'classic',
@@ -90,8 +91,8 @@ describe('heldExpression', () => {
   it('keeps a player who fell off the ladder looking out', () => {
     const ladder = {
       seats: [
-        { playerId: 'a', status: 'out' as const, rung: 3, used: [] },
-        { playerId: 'b', status: 'walked' as const, rung: 5, used: [] },
+        { playerId: 'a', status: 'out' as const, rung: 3, used: [], now: [] },
+        { playerId: 'b', status: 'walked' as const, rung: 5, used: [], now: [] },
       ],
     };
     const v = view({ phase: 'scoreboard', standings: [] }, { mode: 'ladder', ladder });

@@ -80,6 +80,8 @@ export interface LadderSeat {
   rung: number;
   /** Lifelines already used this game. */
   used: Lifeline[];
+  /** Lifelines asked for on the current question. */
+  now: Lifeline[];
 }
 
 interface PublicQuestionBase {
@@ -313,8 +315,10 @@ interface BaseView {
   serverNow: number;
   /** Server time the current phase ends, or null when it waits on something else. */
   phaseEndsAt: number | null;
-  /** True while the TV is disconnected mid-game: timers are frozen. */
+  /** True while the game is frozen mid-game: timers stop. */
   paused: boolean;
+  /** Why: the VIP called a break, or the TV dropped. Null when not paused. */
+  pauseReason: 'vip' | 'tv' | null;
   players: PlayerSummary[];
   /** Name of the locked question pack, once there is one. */
   pack: string | null;
