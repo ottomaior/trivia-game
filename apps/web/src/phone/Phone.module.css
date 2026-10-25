@@ -166,6 +166,40 @@
   color: var(--mustard);
 }
 
+.stageBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* The VIP's break button, at the end of the header bar. */
+.pauseButton {
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid var(--mustard);
+  border-radius: 50%;
+  background: none;
+  color: var(--mustard);
+  font-size: 0.9rem;
+  letter-spacing: -2px;
+  cursor: pointer;
+}
+
+.pauseOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  background: color-mix(in srgb, var(--burgundy-deep) 92%, transparent);
+  text-align: center;
+}
+
 .column {
   display: flex;
   flex-direction: column;

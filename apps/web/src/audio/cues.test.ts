@@ -25,6 +25,7 @@ function view(stage: Stage, extra: Partial<HostView> = {}): HostView {
     serverNow: 0,
     phaseEndsAt: null,
     paused: false,
+    pauseReason: null,
     players: [player('a'), player('b')],
     pack: null,
     mode: 'classic',

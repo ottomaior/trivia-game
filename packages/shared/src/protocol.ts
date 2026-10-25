@@ -78,6 +78,11 @@ export interface ClientToServerEvents {
   'vip:kick': (payload: KickPayload, ack: Ack) => void;
   'vip:playAgain': (payload: object, ack: Ack) => void;
   'vip:newLobby': (payload: object, ack: Ack) => void;
+  /** The VIP stops every clock for a break, and carries on. */
+  'vip:pause': (payload: object, ack: Ack) => void;
+  'vip:resume': (payload: object, ack: Ack) => void;
+  /** The VIP calls the game off: back to the lobby, everyone still joined. */
+  'vip:cancel': (payload: object, ack: Ack) => void;
   'vote:cast': (payload: VotePayload, ack: Ack) => void;
   'answer:submit': (payload: AnswerPayload, ack: Ack) => void;
   'ladder:walk': (payload: LadderWalkPayload, ack: Ack) => void;

@@ -158,6 +158,7 @@ function base(room: Room, now: number) {
     serverNow: now,
     phaseEndsAt: room.phaseEndsAt,
     paused: room.paused,
+    pauseReason: (room.paused ? (room.pausedByVip ? 'vip' : 'tv') : null) as HostView['pauseReason'],
     players: [...room.players.values()].map((p) => summarize(room, p)),
     pack: room.pack?.name ?? null,
     mode: room.mode,

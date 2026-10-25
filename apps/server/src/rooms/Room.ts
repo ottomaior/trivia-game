@@ -108,7 +108,10 @@ export class Room {
 
   round = 0;
   phaseEndsAt: number | null = null;
+  /** Timers are frozen: the TV dropped, or the VIP called a break. */
   paused = false;
+  /** The VIP called the break (the TV may also be gone). */
+  pausedByVip = false;
 
   voteOptions: VoteOption[] = [];
   chosenOption = 0;
@@ -901,6 +904,12 @@ export class Room {
     this.revealResult = null;
     this.question = null;
     this.otto = null;
+    // A game cancelled midway leaves its round behind; a finished one has none.
+    this.voteOptions = [];
+    this.votes.clear();
+    this.answers.clear();
+    this.answersOpenedAt = null;
+    this.phaseEndsAt = null;
   }
 
   /**

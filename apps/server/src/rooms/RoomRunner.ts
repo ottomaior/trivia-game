@@ -26,6 +26,9 @@ import type { Room, VoteOption } from './Room.ts';
 
 type Result = { ok: true } | { ok: false; error: ErrorCode };
 
+/** Why the game is frozen; it carries on once every reason has gone. */
+type Hold = 'tv' | 'vip';
+
 export interface RunnerDeps {
   store: Store;
   clock: Clock;
@@ -54,6 +57,7 @@ export class RoomRunner {
   private epoch = 0;
   private pausedAt: number | null = null;
   private pausedRemaining: number | null = null;
+  private readonly holds = new Set<Hold>();
   private matchId: Promise<string | null> = Promise.resolve(null);
   /** Bumped on every pack-offer load so only the latest result lands. */
   private offersLoad = 0;
@@ -121,6 +125,38 @@ export class RoomRunner {
     if (this.room.phase !== 'final') return { ok: false, error: 'IN_PROGRESS' };
     this.stopTimer();
     this.epoch++;
+    this.room.enterLobby();
+    this.loadOffers();
+    this.changed();
+    return { ok: true };
+  }
+
+  /** The VIP calls a break: every clock stops until they carry on. */
+  pause(byId: string): Result {
+    if (byId !== this.room.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (!this.inGame()) return { ok: false, error: 'NOT_ALLOWED' };
+    this.hold('vip');
+    return { ok: true };
+  }
+
+  resume(byId: string): Result {
+    if (byId !== this.room.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    this.release('vip');
+    return { ok: true };
+  }
+
+  /** The VIP calls the game off (started by mistake, say): everyone is back in the lobby, still joined. */
+  cancel(byId: string): Result {
+    if (byId !== this.room.vipId) return { ok: false, error: 'NOT_ALLOWED' };
+    if (!this.inGame()) return { ok: false, error: 'NOT_ALLOWED' };
+    this.stopTimer();
+    this.epoch++;
+    this.holds.clear();
+    this.room.paused = false;
+    this.room.pausedByVip = false;
+    this.pausedAt = null;
+    this.pausedRemaining = null;
+    this.speechUntil = 0;
     this.room.enterLobby();
     this.loadOffers();
     this.changed();
@@ -222,21 +258,41 @@ export class RoomRunner {
 
   /** The TV dropped: freeze the game so nobody plays blind. */
   hostLeft(): void {
-    const now = this.deps.clock();
-    this.room.hostDisconnectedNow(now);
-    const phase = this.room.phase;
-    if (phase === 'lobby' || phase === 'final' || this.room.paused) return;
-    this.pausedAt = now;
-    this.pausedRemaining = this.room.phaseEndsAt === null ? null : Math.max(0, this.room.phaseEndsAt - now);
-    this.stopTimer();
-    this.room.paused = true;
-    this.room.phaseEndsAt = null;
-    this.changed();
+    this.room.hostDisconnectedNow(this.deps.clock());
+    if (this.inGame()) this.hold('tv');
   }
 
   hostBack(): void {
     this.room.hostConnectedNow();
-    if (this.room.paused) {
+    this.release('tv');
+    this.changed();
+  }
+
+  private inGame(): boolean {
+    return this.room.phase !== 'lobby' && this.room.phase !== 'final';
+  }
+
+  /** Freezes the phase timer, Otto and the answer clocks (if not frozen already). */
+  private hold(reason: Hold): void {
+    const already = this.holds.size > 0;
+    this.holds.add(reason);
+    this.room.pausedByVip = this.holds.has('vip');
+    if (!already) {
+      const now = this.deps.clock();
+      this.pausedAt = now;
+      this.pausedRemaining = this.room.phaseEndsAt === null ? null : Math.max(0, this.room.phaseEndsAt - now);
+      this.stopTimer();
+      this.room.paused = true;
+      this.room.phaseEndsAt = null;
+    }
+    this.changed();
+  }
+
+  /** Drops one reason to stay frozen; with none left, the game carries on where it stopped. */
+  private release(reason: Hold): void {
+    if (!this.holds.delete(reason)) return;
+    this.room.pausedByVip = this.holds.has('vip');
+    if (this.holds.size === 0 && this.room.paused) {
       const now = this.deps.clock();
       this.room.paused = false;
       if (this.pausedAt !== null) {

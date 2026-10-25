@@ -95,6 +95,8 @@ class AudioEngine {
   private listeners = new Set<Listener>();
   muted = readJson<Settings>(KEYS.audio)?.muted ?? false;
 
+  private held = false;
+
   /** Call from a click/keypress handler. Safe to call repeatedly. */
   unlock(): void {
     if (typeof AudioContext === 'undefined') return;
@@ -133,8 +135,21 @@ class AudioEngine {
       void this.loadVoiceManifests();
       for (const track of synthesizedTracks()) void this.synthLoop(track);
     }
-    if (this.ctx.state === 'suspended') void this.ctx.resume();
+    if (this.ctx.state === 'suspended' && !this.held) void this.ctx.resume();
     if (this.wanted && !this.current) this.music(this.wanted);
+  }
+
+  /**
+   * Freezes every sound where it is (Otto mid-word included) while the game is
+   * paused, and carries on from there. Everything is timed on the audio clock,
+   * so nothing drifts.
+   */
+  hold(held: boolean): void {
+    if (held === this.held) return;
+    this.held = held;
+    if (!this.ctx) return;
+    if (held) void this.ctx.suspend();
+    else void this.ctx.resume();
   }
 
   get ready(): boolean {
