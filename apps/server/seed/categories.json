@@ -110,5 +110,25 @@
   {
     "slug": "allatok",
     "name": "Állatvilág"
+  },
+  {
+    "slug": "pszichologia",
+    "name": "Pszichológia és agy"
+  },
+  {
+    "slug": "testunk",
+    "name": "Az emberi test"
+  },
+  {
+    "slug": "furcsasagok",
+    "name": "Furcsa, de igaz"
+  },
+  {
+    "slug": "hetkoznapok",
+    "name": "Hétköznapi számok"
+  },
+  {
+    "slug": "tarsasjatekok",
+    "name": "Társasjátékok és kártyák"
   }
 ]
