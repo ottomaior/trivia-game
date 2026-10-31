@@ -68,7 +68,7 @@
   { "category": "utazas", "difficulty": 1, "prompt": "Hány csillag van az Európai Unió zászlaján?", "answer": 12, "unit": "csillag" },
   { "category": "utazas", "difficulty": 1, "prompt": "Hány csillag van az Egyesült Államok zászlaján?", "answer": 50, "unit": "csillag" },
   { "category": "gyerekkor", "difficulty": 1, "prompt": "Hány lapból áll egy magyar kártyapakli?", "answer": 32, "unit": "lap" },
-  { "category": "gyerekkor", "difficulty": 2, "prompt": "Hány színes négyzet van egy klasszikus Rubik-kocka felületén?", "answer": 54, "unit": "négyzet" },
+  { "category": "gyerekkor", "difficulty": 2, "prompt": "Hány színes négyzet van egy klasszikus Rubik-kocka felületén?", "answer": 54, "unit": "négyzet" },
   { "category": "pszichologia", "difficulty": 2, "prompt": "George Miller híres 1956-os cikke szerint hány elemet tud egyszerre fejben tartani a rövid távú memória (plusz-mínusz kettő)?", "answer": 7, "unit": "elem", "explanation": "A cikk címe: „A mágikus hetes szám”." },
   { "category": "pszichologia", "difficulty": 1, "prompt": "Elisabeth Kübler-Ross modellje szerint hány szakaszon megy át a gyászoló ember?", "answer": 5, "unit": "szakasz", "explanation": "Tagadás, harag, alkudozás, depresszió, elfogadás." },
   { "category": "pszichologia", "difficulty": 2, "prompt": "Melyik évben zajlott a hírhedt stanfordi börtönkísérlet?", "answer": 1971 },
